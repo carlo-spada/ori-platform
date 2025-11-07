@@ -106,7 +106,10 @@ const searchSchema = z.object({
     .min(1, 'Query too short')
     .max(100, 'Query too long')
     .regex(/^[a-zA-Z0-9\s\-_.]+$/, 'Invalid characters in query'),
-  location: z.string().optional().max(100, 'Location too long')
+  location: z.string()
+    .trim()
+    .max(100, 'Location too long')
+    .optional()
 });
 
 router.post('/initial-search', async (req: AuthRequest, res, next) => {
