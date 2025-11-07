@@ -37,6 +37,22 @@ jobs:
           permission-issues: 'write'
           permission-pull-requests: 'write'
 
+      - name: Configure Gemini auth
+        shell: bash
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -n "${GEMINI_API_KEY:-}" ]; then
+            mkdir -p "$HOME/.gemini"
+            # create a minimal settings.json; adjust fields if your CLI requires a different shape
+            printf '%s\n' "{"api_key": "${GEMINI_API_KEY}"}" > "$HOME/.gemini/settings.json"
+            chmod 600 "$HOME/.gemini/settings.json"
+            echo "Gemini auth configured."
+          else
+            echo "GEMINI_API_KEY is not set. Please add it to repo secrets or configure ~/.gemini/settings.json."
+            exit 1
+          fi
+
       - name: 'Run Gemini CLI'
         id: 'run_gemini'
         uses: 'google-github-actions/run-gemini-cli@v0' # ratchet:exclude
