@@ -2,9 +2,57 @@
 
 **Always remember to treat this repository as a living, evolving system, not just a codebase. Every file —including internal AI guides— must contribute to a continuous, compounding loop of learning and improvement. Treat every change as an act of careful architecture: favor clarity, safety, and long-term adaptability. Collaborate in ways that deepen collective understanding: even if it means doing a little more now to unlock much more later in the future.**
 
+## Collaborative Workflow & Branching Strategy
+
+To ensure the `main` branch remains stable and deployable at all times, we will adhere to the following Git workflow. This process is enforced automatically by GitHub branch protection rules.
+
+### Branching Model
+
+*   **`main`**: This is the production branch. It must always be stable and ready for deployment. **Direct pushes to `main` are disabled.**
+*   **Agent Branches**: Each agent will perform their work on a dedicated, long-lived branch.
+    *   Gemini's branch: `gemini-branch`
+    *   Claude's branch: `claude-branch`
+    *   Codex's branch: `codex-branch`
+
+The human supervisor will not have a dedicated branch and will instead assist agents on their respective branches.
+
+### Core Development Workflow
+
+All development must follow this sequence to ensure compatibility and stability:
+
+1.  **Sync with `main`**: Before starting new work, always update your personal branch with the latest changes from `main`:
+    ```bash
+    git checkout <your-agent-branch>
+    git pull origin main
+    ```
+2.  **Develop**: Work on your task on your agent branch. Commit changes regularly with clear, conventional commit messages.
+3.  **Prepare for Merge (Compatibility Check)**: When your work is complete, you **must** sync with `main` again to resolve any potential conflicts locally *before* creating a Pull Request.
+    ```bash
+    # Fetch the latest changes from the main branch
+    git fetch origin main
+    
+    # Rebase your changes on top of the latest main branch
+    git rebase origin/main
+    ```
+4.  **Test Locally**: After a successful rebase, run all essential checks to guarantee your changes are compatible with the latest code from `main`:
+    ```bash
+    pnpm install
+    pnpm lint
+    pnpm build
+    # pnpm test (when applicable)
+    ```
+5.  **Create a Pull Request**: Once all local checks pass, push your branch and open a Pull Request to merge your branch into `main`. The PR description should clearly explain the changes.
+
+### Enforcement & Automation
+
+This workflow is not just a guideline; it is enforced by the repository's configuration:
+*   **Pull Requests (PRs) are Required**: All code must enter the `main` branch through a PR.
+*   **Automated CI Checks**: A GitHub Actions workflow automatically runs `lint`, `build`, and `test` commands on every PR. The PR cannot be merged unless all checks pass.
+*   **Code Review**: At least one other agent or the human supervisor must review and approve a PR before it can be merged.
+
 ## GitHub Considerations
 
-Keep the repository synchronized across all platforms and servers. After completing a set of changes, follow GitHub’s standard workflow: **add**, **commit**, and **push** with clear, descriptive messages. Consistency preserves version integrity, simplifies collaboration, and ensures every environment reflects the latest state of the system.
+All code changes must be integrated into the `main` branch via Pull Requests (PRs) from an agent's dedicated branch. Direct pushes to `main` are disabled. Before creating a PR, ensure your branch is up-to-date with `main` and passes all local checks. This workflow preserves version integrity, prevents integration errors, and ensures the `main` branch is always stable.
 
 ## Human–AI Collaboration
 
