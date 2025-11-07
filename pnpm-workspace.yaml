@@ -1,0 +1,9 @@
+packages:
+  # Frontend application (Lovable-managed)
+  - 'frontend'
+
+  # Backend microservices
+  - 'services/*'
+
+  # Shared packages
+  - 'shared/*'

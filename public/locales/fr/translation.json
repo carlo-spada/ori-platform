@@ -1,0 +1,753 @@
+{
+  "nav": {
+    "items": {
+      "features": "Fonctionnalités",
+      "pricing": "Tarifs",
+      "about": "À propos",
+      "blog": "Blog"
+    }
+  },
+  "footer": {
+    "columns": {
+      "product": {
+        "title": "Produit",
+        "features": "Fonctionnalités",
+        "pricing": "Tarifs",
+        "about": "À propos",
+        "blog": "Blog"
+      },
+      "legal": {
+        "title": "Légal",
+        "terms": "Conditions d'utilisation",
+        "privacy": "Politique de confidentialité",
+        "cookies": "Politique de cookies"
+      }
+    }
+  },
+  "social": {
+    "twitter": "Suivez Ori sur X (anciennement Twitter)",
+    "linkedin": "Connectez-vous avec Ori sur LinkedIn"
+  },
+  "brand": {
+    "mission": "L'avenir du travail est humain.",
+    "name": "Ori"
+  },
+  "cta": {
+    "login": "Se connecter",
+    "signup": "S'inscrire",
+    "skipToContent": "Aller au contenu",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
+  },
+  "notFound": {
+    "title": "404 : Page introuvable | Ori",
+    "description": "La page que vous cherchez n'existe pas ou a peut-être été déplacée.",
+    "heading": "Page introuvable",
+    "body": "La page que vous cherchez a peut-être été déplacée, renommée ou n'existe plus.",
+    "primaryCta": "Retour à l'accueil"
+  },
+  "landing": {
+    "hero": {
+      "eyebrow": "Votre carrière, continuellement alignée",
+      "headline": "Libérez votre potentiel. Alignez le travail avec qui vous êtes.",
+      "subheadline": "Ori est votre compagnon IA à vie pour découvrir, poursuivre et évoluer dans des rôles qui correspondent à vos compétences, valeurs et ambitions.",
+      "primaryCta": "Inscrivez-vous gratuitement",
+      "secondaryCta": "En savoir plus",
+      "reassurance": "Plan gratuit. Pas de spam. Annulez à tout moment."
+    },
+    "values": [
+      {
+        "title": "Découverte intelligente d'emplois",
+        "description": "Trouvez des rôles qui correspondent vraiment, au-delà des mots-clés."
+      },
+      {
+        "title": "Montée en compétences adaptative",
+        "description": "Apprentissage guidé qui s'accumule au fil du temps."
+      },
+      {
+        "title": "Créateur d'applications IA",
+        "description": "CV, lettres et profils personnalisés, rapidement."
+      },
+      {
+        "title": "Croissance réflexive",
+        "description": "Voyez les tendances, célébrez les victoires, ajustez avec clarté."
+      }
+    ],
+    "howItWorks": [
+      {
+        "title": "Profil",
+        "description": "Partagez vos compétences, valeurs et objectifs."
+      },
+      {
+        "title": "Correspondance et apprentissage",
+        "description": "Recevez des rôles classés et des suggestions d'apprentissage."
+      },
+      {
+        "title": "Postulez en toute confiance",
+        "description": "Créez des documents et itérez avec des retours."
+      }
+    ],
+    "testimonials": [
+      {
+        "quote": "Ori m'a aidé à pivoter en quelques semaines, pas des mois.",
+        "author": "Jordan M.",
+        "role": "Analyste de données"
+      },
+      {
+        "quote": "Enfin, un outil qui comprend que la croissance de carrière n'est pas linéaire.",
+        "author": "Alex P.",
+        "role": "Chef de produit"
+      },
+      {
+        "quote": "Le créateur d'applications IA m'a fait gagner des heures chaque semaine.",
+        "author": "Sam K.",
+        "role": "Ingénieur logiciel"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Ori est-il gratuit ?",
+        "a": "Oui, commencez avec le plan gratuit. Passez à une version supérieure à tout moment pour des fonctionnalités avancées."
+      },
+      {
+        "q": "Qui contrôle mes données ?",
+        "a": "Vous. Vous pouvez les exporter ou les supprimer depuis les Paramètres à tout moment."
+      },
+      {
+        "q": "Ori postulera-t-il pour moi ?",
+        "a": "Avec votre permission, Ori peut rédiger et soumettre des documents en votre nom."
+      },
+      {
+        "q": "Comment Ori protège-t-il ma vie privée ?",
+        "a": "Vos données sont cryptées, jamais vendues et uniquement utilisées pour améliorer votre expérience."
+      },
+      {
+        "q": "Puis-je utiliser Ori pendant que je suis employé ?",
+        "a": "Absolument. Ori vous aide à grandir dans votre rôle actuel ou à explorer de nouveaux chemins discrètement."
+      },
+      {
+        "q": "Qu'est-ce qui rend Ori différent des sites d'emploi ?",
+        "a": "Ori est un compagnon à vie, pas un moteur de recherche. Il apprend avec vous et s'adapte à vos objectifs en évolution."
+      }
+    ],
+    "strapline": "Parce que l'épanouissement devrait être évolutif.",
+    "bottomCta": {
+      "headline": "Prêt à aligner votre carrière ?",
+      "description": "Rejoignez des milliers de personnes découvrant un travail qui correspond.",
+      "primaryCta": "Commencez gratuitement",
+      "secondaryCta": "Explorer les fonctionnalités"
+    }
+  },
+  "featuresPage": {
+    "header": {
+      "eyebrow": "CAPACITÉS",
+      "title": "Un copilote intelligent pour votre carrière",
+      "subheadline": "Découvrez comment les fonctionnalités personnalisées d'Ori travaillent ensemble pour construire une vie professionnelle plus épanouissante.",
+      "reassurance": "Guidage calme et précis, à vos conditions"
+    },
+    "toc": [
+      { "id": "intelligent-job-discovery", "label": "Découverte" },
+      { "id": "adaptive-upskilling", "label": "Montée en compétences" },
+      { "id": "ai-application-builder", "label": "Applications" },
+      { "id": "reflective-growth", "label": "Croissance" },
+      { "id": "empathetic-companion", "label": "Compagnon" },
+      { "id": "market-intelligence", "label": "Marché" },
+      { "id": "earned-autonomy", "label": "Autonomie" }
+    ],
+    "features": [
+      {
+        "id": "intelligent-job-discovery",
+        "eyebrow": "DÉCOUVERTE",
+        "name": "Découverte intelligente d'emplois",
+        "description": "Ori va au-delà de la correspondance de mots-clés pour comprendre votre combinaison unique de compétences, de valeurs et de trajectoire de carrière. En utilisant l'analyse sémantique et la reconnaissance de motifs, il identifie des rôles qui correspondent vraiment, pas seulement ceux qui correspondent à un titre de poste.",
+        "points": [
+          "Correspondance sémantique au-delà des titres et mots-clés",
+          "Signaux de culture et de potentiel de croissance",
+          "Préférences qui guident réellement les résultats"
+        ]
+      },
+      {
+        "id": "adaptive-upskilling",
+        "eyebrow": "MONTÉE EN COMPÉTENCES",
+        "name": "Montée en compétences adaptative",
+        "description": "À mesure que vous explorez des rôles et postulez, Ori identifie les lacunes de compétences et suggère des ressources d'apprentissage ciblées. Ces recommandations évoluent avec les tendances du marché et vos progrès, créant un parcours d'apprentissage personnalisé qui s'accumule au fil du temps.",
+        "points": [
+          "Recommandations d'apprentissage conscientes du contexte",
+          "Suit vos progrès et ajuste les conseils",
+          "Ressources organisées à partir de sources fiables"
+        ]
+      },
+      {
+        "id": "ai-application-builder",
+        "eyebrow": "APPLICATIONS",
+        "name": "Créateur d'applications IA",
+        "description": "Rédigez des CV, lettres de motivation et profils personnalisés en quelques secondes. Ori apprend votre voix et adapte les documents à chaque rôle tout en maintenant l'authenticité. Chaque candidature reflète votre expérience et vos aspirations réelles.",
+        "points": [
+          "Ébauches de CV et de lettre spécifiques au rôle",
+          "Maintient votre voix authentique",
+          "Raffinement itératif avec retour"
+        ]
+      },
+      {
+        "id": "reflective-growth",
+        "eyebrow": "CROISSANCE",
+        "name": "Suivi de croissance réflexive",
+        "description": "Ori révèle des tendances dans vos candidatures, entretiens et résultats. Voyez ce qui fonctionne, célébrez les victoires et ajustez votre approche avec clarté. Au fil du temps, cette boucle de rétroaction s'accumule en un véritable élan de carrière.",
+        "points": [
+          "Aperçus visuels de votre parcours de carrière",
+          "Identifiez les tendances et célébrez les victoires",
+          "Ajustez la stratégie avec confiance"
+        ]
+      },
+      {
+        "id": "empathetic-companion",
+        "eyebrow": "COMPAGNON",
+        "name": "Compagnon privé et empathique",
+        "description": "Ori est conçu pour être calme, sans jugement et véritablement utile. Vos données sont privées et toutes les interactions se font à vos conditions. Pas de pression, pas de manipulation, juste des conseils qui respectent votre autonomie et votre rythme.",
+        "points": [
+          "Privé par conception : vous contrôlez vos données",
+          "Guidage sans jugement et patient",
+          "Respecte votre rythme et vos limites"
+        ]
+      },
+      {
+        "id": "market-intelligence",
+        "eyebrow": "INTELLIGENCE",
+        "name": "Intelligence de marché continue",
+        "description": "Ori surveille les changements de demande, les compétences émergentes et les tendances de l'industrie pour que vous n'ayez pas à le faire. Il révèle les changements et opportunités pertinents, vous aidant à rester en avance sans recherche manuelle constante.",
+        "points": [
+          "Suivi en temps réel des tendances du marché",
+          "Alertes de compétences et de rôles émergents",
+          "Notifications d'opportunités proactives"
+        ]
+      },
+      {
+        "id": "earned-autonomy",
+        "eyebrow": "AUTONOMIE",
+        "name": "Autonomie qui grandit avec vous",
+        "description": "Ori peut automatiser les candidatures et la sensibilisation, mais uniquement avec votre permission explicite. À mesure que la confiance se construit, vous pouvez déléguer davantage tout en maintenant une visibilité et un contrôle complets. L'autonomie est gagnée, pas supposée.",
+        "points": [
+          "Automatisation opt-in avec transparence totale",
+          "Contrôle granulaire sur ce que fait Ori",
+          "Confiance qui se construit au fil du temps"
+        ]
+      }
+    ],
+    "privacy": {
+      "title": "Privé par conception",
+      "bullets": [
+        "Vous contrôlez vos données : exportez ou supprimez à tout moment",
+        "L'autonomie est facultative et nécessite une autorisation",
+        "Raisonnement transparent derrière les recommandations"
+      ],
+      "linkText": "Lire notre politique de confidentialité",
+      "linkHref": "/legal/privacy-policy"
+    },
+    "bottomCta": {
+      "title": "Faites le prochain pas dans votre parcours de carrière",
+      "description": "Commencez avec notre plan gratuit et passez à une version supérieure au fur et à mesure de votre croissance.",
+      "primaryCta": "Inscrivez-vous gratuitement",
+      "primaryHref": "/pricing",
+      "secondaryCta": "Voir les tarifs",
+      "secondaryHref": "/pricing"
+    }
+  },
+  "pricingPage": {
+    "header": {
+      "title": "Choisissez votre chemin vers une carrière épanouissante",
+      "subheadline": "Tarifs simples et transparents. Commencez gratuitement et passez à une version supérieure à tout moment."
+    },
+    "billingToggle": {
+      "monthly": "Mensuel",
+      "annual": "Annuel",
+      "saveBadge": "Économisez 20%"
+    },
+    "plans": [
+      {
+        "id": "free",
+        "name": "Gratuit",
+        "description": "Pour explorer Ori et essayer vos premières correspondances guidées.",
+        "limitsSummary": "1 lot d'offres d'emploi personnalisées par mois.",
+        "cta": "Commencer",
+        "ctaHref": "/signup?plan=free",
+        "features": [
+          "Découverte intelligente d'emplois",
+          "Suggestions de base pour la montée en compétences",
+          "Ébauches d'applications IA (limité)",
+          "Conception axée sur la confidentialité"
+        ],
+        "popular": false
+      },
+      {
+        "id": "plus",
+        "name": "Plus",
+        "description": "Pour les chercheurs d'emploi actifs et la croissance de carrière.",
+        "priceMonthly": 5,
+        "priceAnnual": 4,
+        "limitsSummary": "Jusqu'à 6 lots d'offres d'emploi personnalisées par mois.",
+        "cta": "Choisir le plan",
+        "ctaHref": "/signup?plan=plus",
+        "features": [
+          "Tout dans Gratuit",
+          "Découverte intelligente d'emplois",
+          "Recommandations adaptatives de montée en compétences",
+          "Ébauches d'applications IA (illimité)",
+          "Suivi de croissance réflexive",
+          "Support prioritaire"
+        ],
+        "popular": true
+      },
+      {
+        "id": "premium",
+        "name": "Premium",
+        "description": "Pour les utilisateurs avancés qui veulent des conseils continus à volume élevé.",
+        "priceMonthly": 10,
+        "priceAnnual": 8,
+        "limitsSummary": "Jusqu'à 30 lots et jusqu'à 180 offres d'emploi organisées par IA par mois.",
+        "cta": "Choisir le plan",
+        "ctaHref": "/signup?plan=premium",
+        "features": [
+          "Tout dans Plus",
+          "Intelligence de marché prioritaire",
+          "Analyses et informations avancées",
+          "Applications automatisées en opt-in",
+          "Support dédié",
+          "Accès anticipé aux nouvelles fonctionnalités"
+        ],
+        "popular": false
+      }
+    ],
+    "comparisonFeatures": [
+      {
+        "feature": "Lots d'offres d'emploi personnalisées par mois",
+        "free": "1",
+        "plus": "Jusqu'à 6",
+        "premium": "Jusqu'à 30 (jusqu'à 180 offres)"
+      },
+      {
+        "feature": "Ébauches de CV et lettre de motivation IA",
+        "free": "Limité",
+        "plus": "Illimité",
+        "premium": "Illimité"
+      },
+      {
+        "feature": "Recommandations d'apprentissage adaptatives",
+        "free": true,
+        "plus": true,
+        "premium": true
+      },
+      {
+        "feature": "Suivi de croissance réflexive",
+        "free": false,
+        "plus": true,
+        "premium": true
+      },
+      {
+        "feature": "Analyse et informations prioritaires",
+        "free": false,
+        "plus": false,
+        "premium": true
+      },
+      {
+        "feature": "Application automatisée (opt-in)",
+        "free": false,
+        "plus": false,
+        "premium": true
+      },
+      {
+        "feature": "Support prioritaire",
+        "free": false,
+        "plus": true,
+        "premium": true
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Puis-je changer de plan plus tard ?",
+        "a": "Oui, vous pouvez mettre à niveau ou rétrograder votre plan à tout moment depuis les paramètres de votre compte. Les modifications prennent effet immédiatement et nous calculerons au prorata tous les frais."
+      },
+      {
+        "q": "Quelle est votre politique de remboursement ou d'annulation ?",
+        "a": "Vous pouvez annuler à tout moment, sans poser de questions. Si vous êtes sur un plan payant et annulez dans les 7 premiers jours, nous émettrons un remboursement complet. Après cela, vous aurez accès jusqu'à la fin de votre période de facturation."
+      },
+      {
+        "q": "Y a-t-il des frais cachés ?",
+        "a": "Non. Ce que vous voyez est ce que vous payez. Il n'y a pas de frais d'installation, de frais d'annulation ou de frais cachés."
+      },
+      {
+        "q": "Comment fonctionne le plan gratuit ?",
+        "a": "Le plan gratuit vous donne un accès complet aux fonctionnalités principales d'Ori avec une limite d'1 lot d'offres d'emploi personnalisées par mois. Il est conçu pour vous permettre d'explorer la plateforme et de découvrir la valeur avant de vous engager."
+      },
+      {
+        "q": "Puis-je basculer entre la facturation mensuelle et annuelle ?",
+        "a": "Oui. Vous pouvez basculer à tout moment depuis les paramètres de votre compte. Si vous passez à l'annuel, vous économiserez 20% et serez facturé immédiatement pour l'année complète."
+      },
+      {
+        "q": "Qu'est-ce qu'un \"lot\" d'offres d'emploi ?",
+        "a": "Un lot est un ensemble d'offres d'emploi personnalisées organisées par Ori en fonction de votre profil, de vos préférences et de vos objectifs actuels. Chaque lot peut contenir plusieurs rôles adaptés à votre profil."
+      }
+    ]
+  },
+  "aboutPage": {
+    "title": "À propos d'Ori | Notre mission",
+    "description": "Découvrez la mission d'Ori de rendre le travail épanouissant accessible à tous. Découvrez l'histoire, la vision et les valeurs derrière notre compagnon de carrière alimenté par l'IA.",
+    "header": {
+      "eyebrow": "Notre histoire",
+      "title": "L'avenir du travail est humain.",
+      "subheadline": "Nous croyons que l'épanouissement ne devrait pas être un privilège. Nous construisons la technologie pour le rendre évolutif pour tous."
+    },
+    "problem": {
+      "title": "Pourquoi nous avons lancé Ori",
+      "paragraphs": [
+        "Le marché du travail est cassé. Trouver un travail qui correspond vraiment, un travail qui s'aligne avec vos passions, vos forces et vos ambitions, ressemble à gagner à la loterie. La plupart des gens se contentent de rôles qui paient les factures mais épuisent leur esprit, non pas parce qu'ils manquent de potentiel, mais parce que le système est aléatoire et inefficace.",
+        "Des millions de personnes talentueuses sont coincées dans des emplois qui ne les épanouissent pas, tandis que les employeurs ont du mal à trouver les bons candidats. Le potentiel humain est gaspillé à une échelle stupéfiante. Nous avons vu cette déconnexion et nous savions que cela ne devait pas être ainsi.",
+        "Ori est né d'une croyance simple : tout le monde mérite l'accès à un travail qui apporte du sens, de la croissance et de la joie. La technologie devrait autonomiser les individus, pas seulement optimiser les processus. Nous nous sommes donc lancés pour construire une IA qui comprend vraiment les gens, pas seulement les CV."
+      ]
+    },
+    "vision": {
+      "title": "Un compagnon à vie pour votre voyage",
+      "paragraphs": [
+        "Ori est plus qu'un outil de mise en relation d'emplois. C'est un mentor empathique qui écoute, apprend et se soucie. Il comprend vos passions, vos doutes, vos ambitions. Il ne vous met pas seulement en relation avec des offres, il vous aide à découvrir des chemins que vous n'auriez peut-être pas imaginés.",
+        "Ori fonctionne ainsi : vous nous dites ce qui compte pour vous et nous prêtons attention. Au fur et à mesure que vous vous engagez avec des opportunités, apprenez de nouvelles compétences et grandissez, Ori apprend aussi. Il ajuste doucement votre chemin avec vous, prédisant ce qui vous apportera de l'épanouissement et vous aidant à y parvenir.",
+        "Ce n'est pas de l'automatisation statique. Ori évolue avec vous, offrant des suggestions adaptatives de montée en compétences, créant des documents de candidature personnalisés et affinant continuellement sa compréhension de ce qui vous fait prospérer. Le résultat ? Un parcours de carrière façonné par votre vrai moi, pas par le hasard."
+      ]
+    },
+    "values": {
+      "title": "Les principes qui nous guident",
+      "items": [
+        {
+          "name": "L'empathie d'abord",
+          "description": "Nous concevons avec compassion. Ori respecte votre autonomie, reconnaît vos luttes et célèbre votre croissance. Chaque décision que nous prenons commence par la question : cela sert-il le bien-être de l'utilisateur ?"
+        },
+        {
+          "name": "Transparence radicale",
+          "description": "Pas de boîtes noires. Nous sommes clairs sur la façon dont Ori apprend, quelles données nous utilisons et comment les décisions sont prises. Vous avez le contrôle de vos informations et de votre voyage."
+        },
+        {
+          "name": "Apprentissage à vie",
+          "description": "Les carrières ne sont pas linéaires. Ori embrasse la réalité que les gens changent, pivotent et évoluent. Nous sommes conçus pour soutenir la croissance continue, pas seulement le placement ponctuel."
+        },
+        {
+          "name": "Autonomie avec principes",
+          "description": "Ori guide, mais vous décidez. Nous fournissons des informations et des suggestions, mais le choix final vous appartient toujours. Nous croyons que la technologie devrait autonomiser, pas dicter."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Rejoignez-nous pour remodeler l'avenir du travail",
+      "body": "Ori est là pour vous aider à trouver un travail qui s'adapte à votre vie, pas l'inverse. Commencez votre voyage aujourd'hui.",
+      "primaryLabel": "Explorer Ori",
+      "secondaryLabel": "En savoir plus sur nos fonctionnalités"
+    }
+  },
+  "blogPage": {
+    "title": "Ori Insights | Articles sur l'IA et l'avenir du travail",
+    "description": "Explorez des articles sur le développement de carrière, l'intelligence artificielle, la technologie empathique et l'avenir du travail de l'équipe Ori.",
+    "index": {
+      "header": {
+        "title": "Ori Insights",
+        "subheadline": "Réflexions sur l'avenir du travail, la croissance personnelle et la technologie empathique."
+      },
+      "pagination": {
+        "previous": "Précédent",
+        "next": "Suivant"
+      }
+    },
+    "post": {
+      "defaultAuthor": "Ori IA",
+      "backToAll": "Retour à tous les articles"
+    }
+  },
+  "legal": {
+    "termsOfService": {
+      "title": "Conditions d'utilisation",
+      "lastUpdated": "Dernière mise à jour : 1er mars 2025"
+    },
+    "privacyPolicy": {
+      "title": "Politique de confidentialité",
+      "lastUpdated": "Dernière mise à jour : 1er mars 2025"
+    },
+    "cookiePolicy": {
+      "title": "Politique de cookies",
+      "lastUpdated": "Dernière mise à jour : 1er mars 2025"
+    }
+  },
+  "dashboardPage": {
+    "header": {
+      "eyebrow": "Votre aperçu Ori",
+      "title": "Bon retour, {{name}}.",
+      "subtitle": "Voici ce qu'Ori vous recommande de vous concentrer ensuite."
+    },
+    "whatsNext": {
+      "defaultTitle": "Quelle est la prochaine étape de votre parcours ?",
+      "defaultMessage": "Complétez votre profil pour débloquer des recommandations profondément personnalisées.",
+      "defaultPrimaryCta": "Compléter le profil",
+      "defaultPrimaryHref": "/app/profile",
+      "defaultSecondaryCta": "Voir toutes les recommandations",
+      "defaultSecondaryHref": "/app/recommendations"
+    },
+    "chat": {
+      "title": "Parlez à Ori",
+      "placeholder": "Demandez à Ori vos prochaines étapes, options ou tout rôle que vous envisagez…",
+      "sendLabel": "Envoyer",
+      "emptyStateMessage": "Commencez une conversation avec Ori. Posez des questions sur les parcours de carrière, les compétences à développer ou les rôles spécifiques qui vous intéressent."
+    }
+  },
+  "profilePage": {
+    "header": {
+      "title": "Profil et objectifs",
+      "subtitle": "Gardez vos informations à jour pour aider Ori à fournir les meilleurs conseils."
+    },
+    "tabs": {
+      "profile": "Profil personnel",
+      "qualifications": "Qualifications",
+      "goals": "Objectifs de carrière"
+    },
+    "profileForm": {
+      "fullNameLabel": "Nom complet",
+      "fullNamePlaceholder": "Jane Doe",
+      "emailLabel": "E-mail",
+      "headlineLabel": "Titre",
+      "headlinePlaceholder": "Ingénieure logiciel | Passionnée d'IA",
+      "locationLabel": "Lieu",
+      "locationPlaceholder": "San Francisco, CA",
+      "aboutLabel": "À propos de moi",
+      "aboutPlaceholder": "Parlez à Ori de vous, de vos passions et de ce qui vous motive...",
+      "saveButton": "Enregistrer les modifications"
+    },
+    "qualifications": {
+      "heading": "Vos qualifications",
+      "skillsHeading": "Compétences",
+      "skillsHelper": "Ajoutez des compétences qui représentent votre expertise et vos intérêts",
+      "addSkillPlaceholder": "Ajouter une compétence",
+      "addSkillButton": "Ajouter",
+      "experienceHeading": "Expérience professionnelle",
+      "experienceHelper": "Partagez votre parcours professionnel",
+      "addExperienceButton": "Ajouter une expérience",
+      "educationHeading": "Éducation",
+      "educationHelper": "Votre parcours académique",
+      "addEducationButton": "Ajouter une formation",
+      "editLabel": "Modifier",
+      "removeLabel": "Supprimer",
+      "emptySkills": "Aucune compétence ajoutée pour le moment. Commencez par ajouter vos compétences clés.",
+      "emptyExperience": "Aucune expérience professionnelle ajoutée pour le moment.",
+      "emptyEducation": "Aucune formation ajoutée pour le moment.",
+      "experienceModal": {
+        "addTitle": "Ajouter une expérience professionnelle",
+        "editTitle": "Modifier l'expérience professionnelle",
+        "companyLabel": "Entreprise",
+        "companyPlaceholder": "Nom de l'entreprise",
+        "roleLabel": "Rôle",
+        "rolePlaceholder": "Titre du poste",
+        "startDateLabel": "Date de début",
+        "endDateLabel": "Date de fin",
+        "isCurrentLabel": "Je travaille actuellement ici",
+        "descriptionLabel": "Description (facultatif)",
+        "descriptionPlaceholder": "Décrivez vos principales responsabilités et réalisations...",
+        "saveButton": "Enregistrer l'expérience",
+        "cancelButton": "Annuler"
+      },
+      "educationModal": {
+        "addTitle": "Ajouter une formation",
+        "editTitle": "Modifier la formation",
+        "institutionLabel": "Institution",
+        "institutionPlaceholder": "Nom de l'université ou de l'école",
+        "degreeLabel": "Diplôme",
+        "degreePlaceholder": "par ex., Licence en informatique",
+        "startDateLabel": "Date de début",
+        "endDateLabel": "Date de fin",
+        "isCurrentLabel": "Je suis actuellement inscrit",
+        "descriptionLabel": "Description (facultatif)",
+        "descriptionPlaceholder": "Honneurs, activités ou détails supplémentaires...",
+        "saveButton": "Enregistrer la formation",
+        "cancelButton": "Annuler"
+      }
+    },
+    "goals": {
+      "heading": "Objectifs de carrière",
+      "longTermVisionLabel": "Vision à long terme",
+      "longTermVisionPlaceholder": "Décrivez la carrière et l'impact vers lesquels vous travaillez…",
+      "longTermVisionHelper": "À quoi ressemble le succès pour vous dans 5 à 10 ans ?",
+      "targetRolesLabel": "Rôles cibles",
+      "targetRolesHelper": "Rôles que vous souhaitez poursuivre",
+      "addTargetRolePlaceholder": "Ajoutez un rôle que vous aimeriez viser",
+      "addTargetRoleButton": "Ajouter un rôle",
+      "removeTargetRoleLabel": "Supprimer le rôle cible : {{role}}",
+      "milestonesLabel": "Jalons clés",
+      "milestonesHelper": "Réalisations spécifiques ou objectifs d'apprentissage",
+      "addMilestonePlaceholder": "Ajouter un jalon (par ex., Apprendre Python, Diriger un projet)",
+      "addMilestoneButton": "Ajouter un jalon",
+      "saveButton": "Enregistrer les objectifs",
+      "emptyTargetRoles": "Aucun rôle cible ajouté pour le moment.",
+      "emptyMilestones": "Aucun jalon ajouté pour le moment."
+    }
+  },
+  "recommendationsPage": {
+    "header": {
+      "title": "Vos recommandations",
+      "subtitle": "Les informations d'Ori pour guider votre prochain mouvement de carrière."
+    },
+    "jobs": {
+      "heading": "Nouvelles opportunités d'emploi pour vous",
+      "matchLabel": "{{score}}% de correspondance de compétences",
+      "datePostedLabel": "Publié {{date}}",
+      "viewDetailsLabel": "Voir les détails",
+      "applyNowLabel": "Postuler maintenant",
+      "emptyTitle": "Aucune nouvelle recommandation d'emploi pour le moment",
+      "emptyBody": "Au fur et à mesure qu'Ori en apprend davantage sur vous et le marché, nous découvrirons de nouveaux rôles ici. En attendant, affiner votre profil peut aider à débloquer de meilleures correspondances.",
+      "improveProfileLabel": "Améliorer mon profil"
+    },
+    "advice": {
+      "heading": "Informations de carrière personnalisées",
+      "categoryPrefix": "Catégorie :",
+      "learnMoreLabel": "En savoir plus",
+      "exploreMoreCopy": "Vous voulez aller plus loin ?",
+      "exploreMoreLabel": "Explorer plus de conseils",
+      "emptyTitle": "Aucune recommandation de conseils pour le moment",
+      "emptyBody": "Une fois qu'Ori en saura plus sur vos objectifs et votre activité, nous suggérerons des informations personnalisées pour vous aider à avancer."
+    }
+  },
+  "applicationsPage": {
+    "header": {
+      "title": "Vos candidatures",
+      "subtitle": "Suivez vos progrès et gérez votre pipeline de candidatures."
+    },
+    "table": {
+      "jobTitle": "Titre du poste",
+      "company": "Entreprise",
+      "applicationDate": "Date de candidature",
+      "status": "Statut",
+      "lastUpdated": "Dernière mise à jour",
+      "actions": "Actions",
+      "updateStatus": "Mettre à jour le statut",
+      "viewDetails": "Voir les détails"
+    },
+    "statusLabels": {
+      "applied": "Postulé",
+      "interviewing": "En entretien",
+      "offer": "Offre",
+      "rejected": "Rejeté",
+      "paused": "En pause"
+    },
+    "addButtonLabel": "Ajouter une nouvelle candidature",
+    "emptyState": {
+      "headline": "Aucune candidature active pour le moment",
+      "message": "Commencez à suivre votre recherche d'emploi en ajoutant votre première candidature.",
+      "ctaLabel": "Ajouter votre première candidature"
+    }
+  },
+  "settingsPage": {
+    "header": {
+      "title": "Paramètres",
+      "subtitle": "Gérez votre compte, vos notifications et votre abonnement."
+    },
+    "account": {
+      "heading": "Compte",
+      "emailLabel": "E-mail",
+      "changePasswordLabel": "Changer le mot de passe",
+      "exportDataLabel": "Demander l'exportation des données",
+      "exportDataHelper": "Nous préparerons une copie de vos données clés de compte et d'activité et vous enverrons un lien de téléchargement sécurisé.",
+      "dangerZoneHeading": "Zone de danger",
+      "deleteAccountLabel": "Supprimer le compte",
+      "deleteAccountWarning": "Cela supprimera définitivement votre compte et vos données, là où c'est légalement autorisé. Cette action ne peut pas être annulée.",
+      "deleteAccountConfirmTitle": "Supprimer votre compte ?",
+      "deleteAccountConfirmBody": "Pour confirmer, veuillez taper DELETE ci-dessous. Cela supprimera définitivement votre compte et, là où c'est autorisé, vos données d'Ori.",
+      "deleteAccountConfirmPlaceholder": "Tapez DELETE pour confirmer",
+      "deleteAccountConfirmButton": "Supprimer définitivement le compte",
+      "deleteAccountCancelButton": "Annuler",
+      "exportSuccess": "Demande d'exportation des données envoyée avec succès",
+      "deleteSuccess": "Votre compte a été supprimé"
+    },
+    "notifications": {
+      "heading": "Notifications",
+      "description": "Choisissez ce dont Ori doit vous tenir informé.",
+      "newJobRecommendations": "Nouvelles recommandations d'emploi",
+      "applicationStatusUpdates": "Mises à jour du statut de candidature",
+      "insightsAndTips": "Informations et conseils d'Ori",
+      "saveButton": "Enregistrer les préférences",
+      "saveSuccess": "Préférences de notification enregistrées"
+    },
+    "billing": {
+      "heading": "Abonnement et facturation",
+      "noSubscriptionMessage": "Vous n'avez actuellement pas de plan payant Ori.",
+      "currentPlanLabel": "Plan actuel",
+      "billingCycleLabel": "Cycle de facturation",
+      "nextBillingLabel": "Prochaine facturation",
+      "paymentMethodLabel": "Méthode de paiement",
+      "changePlanLabel": "Changer de plan",
+      "updatePaymentMethodLabel": "Mettre à jour la méthode de paiement",
+      "viewBillingHistoryLabel": "Voir l'historique de facturation",
+      "cancelSubscriptionLabel": "Annuler l'abonnement"
+    }
+  },
+  "jobDetailPage": {
+    "backToList": "Retour aux recommandations",
+    "actions": {
+      "applyNow": "Postuler Maintenant"
+    },
+    "analysis": {
+      "heading": "Analyse d'Ori",
+      "skillMatchLabel": "Correspondance des compétences",
+      "goalAlignmentLabel": "Alignement des objectifs",
+      "companyInsightLabel": "Aperçu de l'entreprise"
+    },
+    "details": {
+      "heading": "Détails du Poste",
+      "datePosted": "Date de publication",
+      "employmentType": "Type d'emploi",
+      "salaryRange": "Fourchette salariale"
+    },
+    "sections": {
+      "description": "Description du Poste",
+      "responsibilities": "Responsabilités Principales",
+      "qualifications": "Qualifications"
+    }
+  },
+  "adviceDetailPage": {
+    "backToList": "Retour aux recommandations"
+  },
+  "onboardingPage": {
+    "progressLabel": "Étape {{current}} sur {{total}}",
+    "welcome": {
+      "headline": "Bienvenue chez Ori, {{name}}.",
+      "body": "Pour commencer, nous poserons quelques questions ciblées sur vos compétences et objectifs. Cela ne prend que quelques minutes et aide Ori à vous guider plus efficacement.",
+      "primaryButton": "Commençons"
+    },
+    "basicInfo": {
+      "headline": "Parlez-nous un peu de vous.",
+      "description": "Ori utilise ces informations pour mieux contextualiser vos opportunités.",
+      "headlineLabel": "Titre professionnel",
+      "headlinePlaceholder": "Ingénieur logiciel | Passionné d'IA",
+      "locationLabel": "Lieu",
+      "locationPlaceholder": "San Francisco, CA"
+    },
+    "skills": {
+      "headline": "Quelles sont vos principales compétences ?",
+      "description": "Nous les utiliserons pour vous mettre en relation avec des rôles et des parcours d'apprentissage qui vous conviennent.",
+      "inputPlaceholder": "Ajouter une compétence (par ex., Python, Recherche UX, Stratégie produit)",
+      "helper": "Visez 5 à 10 de vos compétences les plus pertinentes.",
+      "validationError": "Veuillez ajouter au moins 3 compétences pour continuer"
+    },
+    "goals": {
+      "headline": "Que visez-vous ?",
+      "description": "Partagez la direction dans laquelle vous aimeriez que votre carrière évolue.",
+      "longTermVisionLabel": "Vision à long terme",
+      "longTermVisionPlaceholder": "Décrivez brièvement le type de travail et d'impact que vous aimeriez avoir à l'avenir…",
+      "targetRolesLabel": "Rôles cibles",
+      "targetRolesPlaceholder": "Ajouter un rôle (par ex., Data Scientist Senior, Chef de produit)",
+      "helper": "Ajoutez 1 à 3 rôles dans lesquels vous seriez enthousiasmé de grandir."
+    },
+    "finalizing": {
+      "headline": "Calibrage de votre Ori…",
+      "body": "Nous alignons votre profil avec les opportunités actuelles et les parcours de croissance. Vous verrez votre tableau de bord personnalisé dans un instant."
+    },
+    "nav": {
+      "backLabel": "Retour",
+      "nextLabel": "Suivant",
+      "finishLabel": "Terminer"
+    }
+  },
+  "tooltips": {
+    "comingSoon": "Fonctionnalité à venir"
+  }
+}

@@ -1,0 +1,750 @@
+{
+  "nav": {
+    "items": {
+      "features": "Features",
+      "pricing": "Pricing",
+      "about": "About",
+      "blog": "Blog"
+    }
+  },
+  "footer": {
+    "columns": {
+      "product": {
+        "title": "Product",
+        "features": "Features",
+        "pricing": "Pricing",
+        "about": "About",
+        "blog": "Blog"
+      },
+      "legal": {
+        "title": "Legal",
+        "terms": "Terms of Service",
+        "privacy": "Privacy Policy",
+        "cookies": "Cookie Policy"
+      }
+    }
+  },
+  "social": {
+    "twitter": "Follow Ori on X (formerly Twitter)",
+    "linkedin": "Connect with Ori on LinkedIn"
+  },
+  "brand": {
+    "mission": "The future of work is human.",
+    "name": "Ori"
+  },
+  "cta": {
+    "login": "Log in",
+    "signup": "Sign up",
+    "skipToContent": "Skip to content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "notFound": {
+    "title": "404: Page Not Found | Ori",
+    "description": "The page you are looking for does not exist or may have been moved.",
+    "heading": "Page not found",
+    "body": "The page you're looking for may have been moved, renamed, or no longer exists.",
+    "primaryCta": "Back to home"
+  },
+  "landing": {
+    "hero": {
+      "eyebrow": "Your career, continuously aligned",
+      "headline": "Unlock your potential. Align work with who you are.",
+      "subheadline": "Ori is your lifelong AI companion for discovering, pursuing, and evolving within roles that fit your skills, values, and ambitions.",
+      "primaryCta": "Sign Up for Free",
+      "secondaryCta": "Learn More",
+      "reassurance": "Free plan. No spam. Cancel anytime."
+    },
+    "values": [
+      {
+        "title": "Intelligent Job Discovery",
+        "description": "Find roles that truly fit—beyond keywords."
+      },
+      {
+        "title": "Adaptive Upskilling",
+        "description": "Guided learning that compounds over time."
+      },
+      {
+        "title": "AI Application Builder",
+        "description": "Tailored resumes, letters, and profiles—fast."
+      },
+      {
+        "title": "Reflective Growth",
+        "description": "See patterns, celebrate wins, adjust with clarity."
+      }
+    ],
+    "howItWorks": [
+      {
+        "title": "Profile",
+        "description": "Share your skills, values, and goals."
+      },
+      {
+        "title": "Match & Learn",
+        "description": "Receive ranked roles & learning prompts."
+      },
+      {
+        "title": "Apply Confidently",
+        "description": "Craft materials and iterate with feedback."
+      }
+    ],
+    "testimonials": [
+      {
+        "quote": "Ori helped me pivot in weeks, not months.",
+        "author": "Jordan M.",
+        "role": "Data Analyst"
+      },
+      {
+        "quote": "Finally, a tool that understands career growth is non-linear.",
+        "author": "Alex P.",
+        "role": "Product Manager"
+      },
+      {
+        "quote": "The AI-powered application builder saved me hours every week.",
+        "author": "Sam K.",
+        "role": "Software Engineer"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Is Ori free?",
+        "a": "Yes—start on the Free plan. Upgrade anytime for advanced features."
+      },
+      {
+        "q": "Who controls my data?",
+        "a": "You do. You can export or delete it from Settings at any time."
+      },
+      {
+        "q": "Will Ori apply for me?",
+        "a": "With your permission, Ori can draft and submit materials on your behalf."
+      },
+      {
+        "q": "How does Ori protect my privacy?",
+        "a": "Your data is encrypted, never sold, and only used to power your experience."
+      },
+      {
+        "q": "Can I use Ori while employed?",
+        "a": "Absolutely. Ori helps you grow within your current role or explore new paths discreetly."
+      },
+      {
+        "q": "What makes Ori different from job boards?",
+        "a": "Ori is a lifelong companion, not a search engine. It learns with you and adapts to your evolving goals."
+      }
+    ],
+    "strapline": "Because fulfillment should be scalable.",
+    "bottomCta": {
+      "headline": "Ready to align your career?",
+      "description": "Join thousands discovering work that fits.",
+      "primaryCta": "Get Started Free",
+      "secondaryCta": "Explore Features"
+    }
+  },
+  "featuresPage": {
+    "header": {
+      "eyebrow": "CAPABILITIES",
+      "title": "An Intelligent Co-pilot for Your Career",
+      "subheadline": "Discover how Ori's personalized features work together to build a more fulfilling professional life.",
+      "reassurance": "Calm, precise guidance—on your terms"
+    },
+    "toc": [
+      { "id": "intelligent-job-discovery", "label": "Discovery" },
+      { "id": "adaptive-upskilling", "label": "Upskilling" },
+      { "id": "ai-application-builder", "label": "Applications" },
+      { "id": "reflective-growth", "label": "Growth" },
+      { "id": "empathetic-companion", "label": "Companion" },
+      { "id": "market-intelligence", "label": "Market" },
+      { "id": "earned-autonomy", "label": "Autonomy" }
+    ],
+    "features": [
+      {
+        "id": "intelligent-job-discovery",
+        "eyebrow": "DISCOVERY",
+        "name": "Intelligent Job Discovery",
+        "description": "Ori goes beyond keyword matching to understand your unique combination of skills, values, and career trajectory. Using semantic analysis and pattern recognition, it identifies roles that truly fit—not just those that match a job title.",
+        "points": [
+          "Semantic matching beyond titles and keywords",
+          "Culture and growth potential signals",
+          "Preferences that actually guide results"
+        ]
+      },
+      {
+        "id": "adaptive-upskilling",
+        "eyebrow": "UPSKILLING",
+        "name": "Adaptive Upskilling",
+        "description": "As you explore roles and apply, Ori identifies skill gaps and suggests targeted learning resources. These recommendations evolve with market trends and your progress, creating a personalized learning path that compounds over time.",
+        "points": [
+          "Context-aware learning recommendations",
+          "Tracks your progress and adjusts guidance",
+          "Curated resources from trusted sources"
+        ]
+      },
+      {
+        "id": "ai-application-builder",
+        "eyebrow": "APPLICATIONS",
+        "name": "AI-Powered Application Builder",
+        "description": "Draft tailored resumes, cover letters, and profiles in seconds. Ori learns your voice and adapts materials to each role while maintaining authenticity. Every application reflects your actual experience and aspirations.",
+        "points": [
+          "Role-specific resume and letter drafts",
+          "Maintains your authentic voice",
+          "Iterative refinement with feedback"
+        ]
+      },
+      {
+        "id": "reflective-growth",
+        "eyebrow": "GROWTH",
+        "name": "Reflective Growth Tracking",
+        "description": "Ori surfaces patterns in your applications, interviews, and outcomes. See what's working, celebrate wins, and adjust your approach with clarity. Over time, this feedback loop compounds into genuine career momentum.",
+        "points": [
+          "Visual insights into your career journey",
+          "Identify patterns and celebrate wins",
+          "Adjust strategy with confidence"
+        ]
+      },
+      {
+        "id": "empathetic-companion",
+        "eyebrow": "COMPANION",
+        "name": "Private & Empathetic Companion",
+        "description": "Ori is designed to be calm, non-judgmental, and genuinely helpful. Your data is private, and all interactions are on your terms. No pressure, no manipulation—just guidance that respects your agency and pace.",
+        "points": [
+          "Private by design—you control your data",
+          "Non-judgmental, patient guidance",
+          "Respects your pace and boundaries"
+        ]
+      },
+      {
+        "id": "market-intelligence",
+        "eyebrow": "INTELLIGENCE",
+        "name": "Continuous Market Intelligence",
+        "description": "Ori monitors shifts in demand, emerging skills, and industry trends so you don't have to. It surfaces relevant changes and opportunities, helping you stay ahead without constant manual research.",
+        "points": [
+          "Real-time tracking of market trends",
+          "Emerging skill and role alerts",
+          "Proactive opportunity notifications"
+        ]
+      },
+      {
+        "id": "earned-autonomy",
+        "eyebrow": "AUTONOMY",
+        "name": "Autonomy that Grows with You",
+        "description": "Ori can automate applications and outreach—but only with your explicit permission. As trust builds, you can delegate more while maintaining full visibility and control. Autonomy is earned, not assumed.",
+        "points": [
+          "Opt-in automation with full transparency",
+          "Granular control over what Ori does",
+          "Trust that builds over time"
+        ]
+      }
+    ],
+    "privacy": {
+      "title": "Private by design",
+      "bullets": [
+        "You control your data—export or delete anytime",
+        "Autonomy is opt-in and permissioned",
+        "Transparent reasoning behind recommendations"
+      ],
+      "linkText": "Read our Privacy Policy",
+      "linkHref": "/legal/privacy-policy"
+    },
+    "bottomCta": {
+      "title": "Take the Next Step in Your Career Journey",
+      "description": "Start with our free plan and upgrade as you grow.",
+      "primaryCta": "Sign Up for Free",
+      "primaryHref": "/pricing",
+      "secondaryCta": "View Pricing",
+      "secondaryHref": "/pricing"
+    }
+  },
+  "pricingPage": {
+    "header": {
+      "title": "Choose Your Path to a Fulfilling Career",
+      "subheadline": "Simple, transparent pricing. Start for free and upgrade anytime."
+    },
+    "billingToggle": {
+      "monthly": "Monthly",
+      "annual": "Annually",
+      "saveBadge": "Save 20%"
+    },
+    "plans": [
+      {
+        "id": "free",
+        "name": "Free",
+        "description": "For exploring Ori and trying your first guided matches.",
+        "limitsSummary": "1 batch of personalized job openings per month.",
+        "cta": "Get Started",
+        "ctaHref": "/signup?plan=free",
+        "features": [
+          "Intelligent job discovery",
+          "Basic upskilling suggestions",
+          "AI-powered application drafts (limited)",
+          "Privacy-first design"
+        ],
+        "popular": false
+      },
+      {
+        "id": "plus",
+        "name": "Plus",
+        "description": "For active job seekers and career growers.",
+        "priceMonthly": 5,
+        "priceAnnual": 4,
+        "limitsSummary": "Up to 6 batches of personalized job openings per month.",
+        "cta": "Choose Plan",
+        "ctaHref": "/signup?plan=plus",
+        "features": [
+          "Everything in Free",
+          "Intelligent job discovery",
+          "Adaptive upskilling recommendations",
+          "AI-powered application drafts (unlimited)",
+          "Reflective growth tracking",
+          "Priority support"
+        ],
+        "popular": true
+      },
+      {
+        "id": "premium",
+        "name": "Premium",
+        "description": "For power users who want continuous, high-volume guidance.",
+        "priceMonthly": 10,
+        "priceAnnual": 8,
+        "limitsSummary": "Up to 30 batches and up to 180 AI-curated job openings per month.",
+        "cta": "Choose Plan",
+        "ctaHref": "/signup?plan=premium",
+        "features": [
+          "Everything in Plus",
+          "Priority market intelligence",
+          "Advanced analytics and insights",
+          "Opt-in automated applications",
+          "Dedicated support",
+          "Early access to new features"
+        ],
+        "popular": false
+      }
+    ],
+    "comparisonFeatures": [
+      {
+        "feature": "Personalized job-opening batches per month",
+        "free": "1",
+        "plus": "Up to 6",
+        "premium": "Up to 30 (up to 180 openings)"
+      },
+      {
+        "feature": "AI-crafted resume & cover letter drafts",
+        "free": "Limited",
+        "plus": "Unlimited",
+        "premium": "Unlimited"
+      },
+      {
+        "feature": "Adaptive learning recommendations",
+        "free": true,
+        "plus": true,
+        "premium": true
+      },
+      {
+        "feature": "Reflective growth tracking",
+        "free": false,
+        "plus": true,
+        "premium": true
+      },
+      {
+        "feature": "Priority analysis and insights",
+        "free": false,
+        "plus": false,
+        "premium": true
+      },
+      {
+        "feature": "Automated application (opt-in)",
+        "free": false,
+        "plus": false,
+        "premium": true
+      },
+      {
+        "feature": "Priority support",
+        "free": false,
+        "plus": true,
+        "premium": true
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Can I change my plan later?",
+        "a": "Yes, you can upgrade or downgrade your plan at any time from your account settings. Changes take effect immediately, and we'll prorate any charges."
+      },
+      {
+        "q": "What is your refund or cancellation policy?",
+        "a": "You can cancel anytime—no questions asked. If you're on a paid plan and cancel within the first 7 days, we'll issue a full refund. After that, you'll have access until the end of your billing period."
+      },
+      {
+        "q": "Are there any hidden fees?",
+        "a": "No. What you see is what you pay. There are no setup fees, cancellation fees, or hidden charges."
+      },
+      {
+        "q": "How does the free plan work?",
+        "a": "The Free plan gives you full access to Ori's core features with a limit of 1 personalized job-opening batch per month. It's designed to let you explore the platform and experience the value before committing."
+      },
+      {
+        "q": "Can I switch between monthly and annual billing?",
+        "a": "Yes. You can switch at any time from your account settings. If you switch to annual, you'll save 20% and be billed immediately for the full year."
+      },
+      {
+        "q": "What counts as a \"batch\" of job openings?",
+        "a": "A batch is a set of personalized job openings curated by Ori based on your profile, preferences, and current goals. Each batch can contain multiple roles tailored to your fit."
+      }
+    ]
+  },
+  "aboutPage": {
+    "title": "About Ori | Our Mission",
+    "description": "Learn about Ori's mission to make fulfilling work accessible to everyone. Discover the story, vision, and values behind our AI-powered career companion.",
+    "header": {
+      "eyebrow": "Our Story",
+      "title": "The Future of Work is Human.",
+      "subheadline": "We believe fulfillment should not be a privilege. We are building the technology to make it scalable for everyone."
+    },
+    "problem": {
+      "title": "Why We Started Ori",
+      "paragraphs": [
+        "The labor market is broken. Finding work that truly fits—work that aligns with your passions, strengths, and ambitions—feels like winning the lottery. Most people settle for roles that pay the bills but drain their spirit, not because they lack potential, but because the system is random and inefficient.",
+        "Millions of talented people are stuck in jobs that do not fulfill them, while employers struggle to find the right candidates. Human potential is wasted at a staggering scale. We saw this disconnect and knew it did not have to be this way.",
+        "Ori was born from a simple belief: everyone deserves access to work that brings meaning, growth, and joy. Technology should empower individuals, not just optimize processes. So we set out to build an AI that truly understands people—not just resumes."
+      ]
+    },
+    "vision": {
+      "title": "A Lifelong Companion for Your Journey",
+      "paragraphs": [
+        "Ori is more than a job-matching tool. It is an empathetic mentor that listens, learns, and cares. It understands your passions, your doubts, your ambitions. It does not just match you to openings—it helps you discover paths you might not have imagined.",
+        "Ori works like this: you tell us what matters to you, and we pay attention. As you engage with opportunities, learn new skills, and grow, Ori learns too. It gently adjusts your path with you, predicting what will bring you fulfillment and helping you get there.",
+        "This is not static automation. Ori evolves with you, offering adaptive upskilling suggestions, crafting personalized application materials, and continuously refining its understanding of what makes you thrive. The result? A career journey shaped by your true self, not by chance."
+      ]
+    },
+    "values": {
+      "title": "The Principles That Guide Us",
+      "items": [
+        {
+          "name": "Empathy First",
+          "description": "We design with compassion. Ori respects your autonomy, acknowledges your struggles, and celebrates your growth. Every decision we make starts with the question: does this serve the user's well-being?"
+        },
+        {
+          "name": "Radical Transparency",
+          "description": "No black boxes. We are clear about how Ori learns, what data we use, and how decisions are made. You are in control of your information and your journey."
+        },
+        {
+          "name": "Lifelong Learning",
+          "description": "Careers are not linear. Ori embraces the reality that people change, pivot, and evolve. We are built to support continuous growth, not just one-time placement."
+        },
+        {
+          "name": "Principled Autonomy",
+          "description": "Ori guides, but you decide. We provide insights and suggestions, but the final choice is always yours. We believe technology should empower, not dictate."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Join Us in Reshaping the Future of Work",
+      "body": "Ori is here to help you find work that fits your life, not the other way around. Start your journey today.",
+      "primaryLabel": "Explore Ori",
+      "secondaryLabel": "Learn about our features"
+    }
+  },
+  "blogPage": {
+    "title": "Ori Insights | Articles on AI & the Future of Work",
+    "description": "Explore articles on career development, artificial intelligence, empathetic technology, and the future of work from the Ori team.",
+    "index": {
+      "header": {
+        "title": "Ori Insights",
+        "subheadline": "Thoughts on the future of work, personal growth, and empathetic technology."
+      },
+      "pagination": {
+        "previous": "Previous",
+        "next": "Next"
+      }
+    },
+    "post": {
+      "defaultAuthor": "Ori AI",
+      "backToAll": "Back to all articles"
+    }
+  },
+  "legal": {
+    "termsOfService": {
+      "title": "Terms of Service",
+      "lastUpdated": "Last updated: March 1, 2025"
+    },
+    "privacyPolicy": {
+      "title": "Privacy Policy",
+      "lastUpdated": "Last updated: March 1, 2025"
+    },
+    "cookiePolicy": {
+      "title": "Cookie Policy",
+      "lastUpdated": "Last updated: March 1, 2025"
+    }
+  },
+  "dashboardPage": {
+    "header": {
+      "eyebrow": "Your Ori overview",
+      "title": "Welcome back, {{name}}.",
+      "subtitle": "Here's what Ori recommends you focus on next."
+    },
+    "whatsNext": {
+      "defaultTitle": "What's next on your path?",
+      "defaultMessage": "Complete your profile to unlock deeply personalized recommendations.",
+      "defaultPrimaryCta": "Complete profile",
+      "defaultPrimaryHref": "/app/profile",
+      "defaultSecondaryCta": "View all recommendations",
+      "defaultSecondaryHref": "/app/recommendations"
+    },
+    "chat": {
+      "title": "Talk to Ori",
+      "placeholder": "Ask Ori about your next steps, options, or any role you're considering…",
+      "sendLabel": "Send",
+      "emptyStateMessage": "Start a conversation with Ori. Ask about career paths, skills to develop, or specific roles you're interested in."
+    }
+  },
+  "profilePage": {
+    "header": {
+      "title": "Profile & Goals",
+      "subtitle": "Keep your information up-to-date to help Ori provide the best guidance."
+    },
+    "tabs": {
+      "profile": "Personal Profile",
+      "qualifications": "Qualifications",
+      "goals": "Career Goals"
+    },
+    "profileForm": {
+      "fullNameLabel": "Full Name",
+      "fullNamePlaceholder": "Jane Doe",
+      "emailLabel": "Email",
+      "headlineLabel": "Headline",
+      "headlinePlaceholder": "Software Engineer | AI Enthusiast",
+      "locationLabel": "Location",
+      "locationPlaceholder": "San Francisco, CA",
+      "aboutLabel": "About Me",
+      "aboutPlaceholder": "Tell Ori about yourself, your passions, and what drives you...",
+      "saveButton": "Save Changes"
+    },
+    "qualifications": {
+      "heading": "Your Qualifications",
+      "skillsHeading": "Skills",
+      "skillsHelper": "Add skills that represent your expertise and interests",
+      "addSkillPlaceholder": "Add a skill",
+      "addSkillButton": "Add",
+      "experienceHeading": "Work Experience",
+      "experienceHelper": "Share your professional journey",
+      "addExperienceButton": "Add Experience",
+      "educationHeading": "Education",
+      "educationHelper": "Your academic background",
+      "addEducationButton": "Add Education",
+      "editLabel": "Edit",
+      "removeLabel": "Remove",
+      "emptySkills": "No skills added yet. Start by adding your key competencies.",
+      "emptyExperience": "No work experience added yet.",
+      "emptyEducation": "No education added yet.",
+      "experienceModal": {
+        "addTitle": "Add Work Experience",
+        "editTitle": "Edit Work Experience",
+        "companyLabel": "Company",
+        "companyPlaceholder": "Company name",
+        "roleLabel": "Role",
+        "rolePlaceholder": "Job title",
+        "startDateLabel": "Start Date",
+        "endDateLabel": "End Date",
+        "isCurrentLabel": "I currently work here",
+        "descriptionLabel": "Description (optional)",
+        "descriptionPlaceholder": "Describe your key responsibilities and achievements...",
+        "saveButton": "Save Experience",
+        "cancelButton": "Cancel"
+      },
+      "educationModal": {
+        "addTitle": "Add Education",
+        "editTitle": "Edit Education",
+        "institutionLabel": "Institution",
+        "institutionPlaceholder": "University or school name",
+        "degreeLabel": "Degree",
+        "degreePlaceholder": "e.g., Bachelor of Science in Computer Science",
+        "startDateLabel": "Start Date",
+        "endDateLabel": "End Date",
+        "isCurrentLabel": "I am currently enrolled",
+        "descriptionLabel": "Description (optional)",
+        "descriptionPlaceholder": "Honors, activities, or additional details...",
+        "saveButton": "Save Education",
+        "cancelButton": "Cancel"
+      }
+    },
+    "goals": {
+      "heading": "Career Goals",
+      "longTermVisionLabel": "Long-term Vision",
+      "longTermVisionPlaceholder": "Describe the career and impact you're working toward…",
+      "longTermVisionHelper": "What does success look like for you in 5-10 years?",
+      "targetRolesLabel": "Target Roles",
+      "targetRolesHelper": "Roles you're interested in pursuing",
+      "addTargetRolePlaceholder": "Add a role you'd like to aim for",
+      "addTargetRoleButton": "Add role",
+      "removeTargetRoleLabel": "Remove target role: {{role}}",
+      "milestonesLabel": "Key Milestones",
+      "milestonesHelper": "Specific achievements or learning goals",
+      "addMilestonePlaceholder": "Add a milestone (e.g., Learn Python, Lead a project)",
+      "addMilestoneButton": "Add milestone",
+      "saveButton": "Save Goals",
+      "emptyTargetRoles": "No target roles added yet.",
+      "emptyMilestones": "No milestones added yet."
+    }
+  },
+  "recommendationsPage": {
+    "header": {
+      "title": "Your Recommendations",
+      "subtitle": "Ori's insights to guide your next career move."
+    },
+    "jobs": {
+      "heading": "New job opportunities for you",
+      "matchLabel": "{{score}}% skill match",
+      "datePostedLabel": "Posted {{date}}",
+      "viewDetailsLabel": "View details",
+      "applyNowLabel": "Apply now",
+      "emptyTitle": "No new job recommendations yet",
+      "emptyBody": "As Ori learns more about you and the market, we'll surface new roles here. In the meantime, refining your profile can help unlock better matches.",
+      "improveProfileLabel": "Improve my profile"
+    },
+    "advice": {
+      "heading": "Personalized career insights",
+      "categoryPrefix": "Category:",
+      "learnMoreLabel": "Learn more",
+      "exploreMoreCopy": "Want to go deeper?",
+      "exploreMoreLabel": "Explore more advice",
+      "emptyTitle": "No advice recommendations yet",
+      "emptyBody": "Once Ori understands more about your goals and activity, we'll suggest tailored insights to help you move forward."
+    }
+  },
+  "applicationsPage": {
+    "header": {
+      "title": "Your Applications",
+      "subtitle": "Track your progress and manage your job application pipeline."
+    },
+    "table": {
+      "jobTitle": "Job title",
+      "company": "Company",
+      "applicationDate": "Application date",
+      "status": "Status",
+      "lastUpdated": "Last updated",
+      "actions": "Actions",
+      "updateStatus": "Update status",
+      "viewDetails": "View details"
+    },
+    "statusLabels": {
+      "applied": "Applied",
+      "interviewing": "Interviewing",
+      "offer": "Offer",
+      "rejected": "Rejected",
+      "paused": "Paused"
+    },
+    "addButtonLabel": "Add new application",
+    "emptyState": {
+      "headline": "No active applications yet",
+      "message": "Start tracking your job search by adding your first application.",
+      "ctaLabel": "Add your first application"
+    }
+  },
+  "settingsPage": {
+    "header": {
+      "title": "Settings",
+      "subtitle": "Manage your account, notifications, and subscription."
+    },
+    "account": {
+      "heading": "Account",
+      "emailLabel": "Email",
+      "changePasswordLabel": "Change password",
+      "exportDataLabel": "Request data export",
+      "exportDataHelper": "We'll prepare a copy of your key account and activity data and send you a secure download link.",
+      "dangerZoneHeading": "Danger zone",
+      "deleteAccountLabel": "Delete account",
+      "deleteAccountWarning": "This will permanently delete your account and data, where legally permitted. This action cannot be undone.",
+      "deleteAccountConfirmTitle": "Delete your account?",
+      "deleteAccountConfirmBody": "To confirm, please type DELETE below. This will permanently remove your account and, where allowed, your data from Ori.",
+      "deleteAccountConfirmPlaceholder": "Type DELETE to confirm",
+      "deleteAccountConfirmButton": "Permanently delete account",
+      "deleteAccountCancelButton": "Cancel"
+    },
+    "notifications": {
+      "heading": "Notifications",
+      "description": "Choose what Ori should keep you updated about.",
+      "newJobRecommendations": "New job recommendations",
+      "applicationStatusUpdates": "Application status updates",
+      "insightsAndTips": "Ori insights & tips",
+      "saveButton": "Save preferences"
+    },
+    "billing": {
+      "heading": "Subscription & Billing",
+      "noSubscriptionMessage": "You're not currently on a paid Ori plan.",
+      "currentPlanLabel": "Current plan",
+      "billingCycleLabel": "Billing cycle",
+      "nextBillingLabel": "Next billing",
+      "paymentMethodLabel": "Payment method",
+      "changePlanLabel": "Change plan",
+      "updatePaymentMethodLabel": "Update payment method",
+      "viewBillingHistoryLabel": "View billing history",
+      "cancelSubscriptionLabel": "Cancel subscription"
+    }
+  },
+  "jobDetailPage": {
+    "backToList": "Back to recommendations",
+    "actions": {
+      "applyNow": "Apply Now"
+    },
+    "analysis": {
+      "heading": "Ori's Analysis",
+      "skillMatchLabel": "Skill match",
+      "goalAlignmentLabel": "Goal alignment",
+      "companyInsightLabel": "Company insight"
+    },
+    "details": {
+      "heading": "Job Details",
+      "datePosted": "Date posted",
+      "employmentType": "Employment type",
+      "salaryRange": "Salary range"
+    },
+    "sections": {
+      "description": "Job Description",
+      "responsibilities": "Key Responsibilities",
+      "qualifications": "Qualifications"
+    }
+  },
+  "adviceDetailPage": {
+    "backToList": "Back to recommendations"
+  },
+  "onboardingPage": {
+    "progressLabel": "Step {{current}} of {{total}}",
+    "welcome": {
+      "headline": "Welcome to Ori, {{name}}.",
+      "body": "To get started, we'll ask a few focused questions about your skills and goals. This only takes a couple of minutes, and it helps Ori guide you more effectively.",
+      "primaryButton": "Let's begin"
+    },
+    "basicInfo": {
+      "headline": "Tell us a bit about yourself.",
+      "description": "Ori uses this information to better contextualize your opportunities.",
+      "headlineLabel": "Professional headline",
+      "headlinePlaceholder": "Software Engineer | AI Enthusiast",
+      "locationLabel": "Location",
+      "locationPlaceholder": "San Francisco, CA"
+    },
+    "skills": {
+      "headline": "What are your top skills?",
+      "description": "We'll use these to match you with roles and learning paths that fit you.",
+      "inputPlaceholder": "Add a skill (e.g., Python, UX Research, Product Strategy)",
+      "helper": "Aim for 5–10 of your most relevant skills.",
+      "validationError": "Please add at least 3 skills to continue"
+    },
+    "goals": {
+      "headline": "What are you aiming for?",
+      "description": "Share the direction you'd like your career to move in.",
+      "longTermVisionLabel": "Long-term vision",
+      "longTermVisionPlaceholder": "Briefly describe the kind of work and impact you'd like to have in the future…",
+      "targetRolesLabel": "Target roles",
+      "targetRolesPlaceholder": "Add a role (e.g., Senior Data Scientist, Head of Product)",
+      "helper": "Add 1–3 roles you'd be excited to grow into."
+    },
+    "finalizing": {
+      "headline": "Calibrating your Ori…",
+      "body": "We're aligning your profile with current opportunities and growth paths. You'll see your personalized dashboard in just a moment."
+    },
+    "nav": {
+      "backLabel": "Back",
+      "nextLabel": "Next",
+      "finishLabel": "Finish"
+    }
+  },
+  "tooltips": {
+    "comingSoon": "Feature coming soon"
+  }
+}
