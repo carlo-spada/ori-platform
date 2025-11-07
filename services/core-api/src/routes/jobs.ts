@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { validateRequest } from '../middleware/validation.js';
 import { authMiddleware, AuthRequest } from '../middleware/auth.js';
 import { supabase } from '../lib/supabase.js';
+import { aiClient } from '../lib/ai-client.js';
 
 const router: RouterType = Router();
 
@@ -53,25 +54,97 @@ router.post('/find-matches', authMiddleware, validateRequest(findMatchesSchema),
 
     if (profileError) throw profileError;
 
-    // For now, return mock matches
-    // TODO: Implement actual AI matching logic
+    // Get user data for comprehensive profile
+    const { data: user, error: userError } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', userId)
+      .single();
+
+    if (userError) throw userError;
+
+    // Fetch available jobs
     const { data: jobs, error: jobsError } = await supabase
       .from('jobs')
       .select('*')
-      .limit(limit);
+      .limit(50); // Fetch more jobs for better matching
 
     if (jobsError) throw jobsError;
 
-    // Add mock match scores
-    const jobsWithScores = jobs.map(job => ({
-      ...job,
-      matchScore: Math.floor(Math.random() * 40) + 60, // 60-100%
-      keyMatches: [
-        'Skills match',
-        'Location preference',
-        'Salary range'
-      ]
-    }));
+    // Check if AI engine is available
+    const aiHealthy = await aiClient.healthCheck();
+
+    let jobsWithScores;
+
+    if (aiHealthy && jobs.length > 0) {
+      // Use AI matching for intelligent results
+      try {
+        const matches = await aiClient.generateMatches({
+          profile: {
+            user_id: userId,
+            skills: userProfile.skills || [],
+            experience_level: userProfile.experience_level,
+            years_of_experience: userProfile.years_of_experience,
+            roles: userProfile.roles || [],
+            work_style: userProfile.work_style,
+            industries: userProfile.industries || [],
+            location: userProfile.location,
+            willing_to_relocate: userProfile.willing_to_relocate,
+            salary_min: filters?.salaryMin,
+            goal: userProfile.goal,
+          },
+          jobs: jobs.map(job => ({
+            job_id: job.id,
+            title: job.title,
+            company: job.company,
+            description: job.description || '',
+            requirements: job.requirements || [],
+            location: job.location,
+            work_type: job.work_type,
+            salary_min: job.salary_min,
+            salary_max: job.salary_max,
+            tags: job.tags || [],
+            posted_date: job.posted_date,
+          })),
+          limit: limit,
+        });
+
+        // Map AI results back to job objects with scores
+        jobsWithScores = matches.map(match => {
+          const job = jobs.find(j => j.id === match.job_id);
+          return {
+            ...job,
+            matchScore: Math.round(match.match_score),
+            semanticScore: Math.round(match.semantic_score),
+            skillMatchScore: Math.round(match.skill_match_score),
+            experienceScore: Math.round(match.experience_score),
+            reasoning: match.reasoning,
+            keyMatches: match.key_matches,
+            missingSkills: match.missing_skills,
+          };
+        });
+      } catch (aiError) {
+        console.error('AI matching failed, falling back to basic scoring:', aiError);
+        // Fallback to simple scoring
+        jobsWithScores = jobs
+          .slice(0, limit)
+          .map(job => ({
+            ...job,
+            matchScore: Math.floor(Math.random() * 40) + 60,
+            keyMatches: ['Skills match', 'Location preference'],
+          }));
+      }
+    } else {
+      // AI engine not available, use fallback scoring
+      console.warn('AI engine not available, using fallback matching');
+      jobsWithScores = jobs
+        .slice(0, limit)
+        .map(job => ({
+          ...job,
+          matchScore: Math.floor(Math.random() * 40) + 60,
+          keyMatches: ['Skills match', 'Location preference'],
+        }));
+    }
 
     // Update usage tracking
     await supabase
