@@ -1,16 +1,10 @@
 import { Router, type Router as RouterType } from 'express';
 import { z } from 'zod';
-import { createClient } from '@supabase/supabase-js';
 import { validateRequest } from '../middleware/validation.js';
 import { AuthRequest } from '../middleware/auth.js';
+import { supabase } from '../lib/supabase.js';
 
 const router: RouterType = Router();
-
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
 
 // Schema for job matching request
 const findMatchesSchema = z.object({

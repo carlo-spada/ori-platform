@@ -7,15 +7,14 @@ exports.paymentRoutes = void 0;
 const express_1 = require("express");
 const stripe_1 = __importDefault(require("stripe"));
 const zod_1 = require("zod");
-const supabase_js_1 = require("@supabase/supabase-js");
 const validation_js_1 = require("../middleware/validation.js");
 const auth_js_1 = require("../middleware/auth.js");
+const supabase_js_1 = require("../lib/supabase.js");
 const router = (0, express_1.Router)();
 exports.paymentRoutes = router;
 const stripe = new stripe_1.default(process.env.STRIPE_SECRET_KEY, {
     apiVersion: '2024-06-20'
 });
-const supabase = (0, supabase_js_1.createClient)(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 // Schema for checkout session
 const createCheckoutSchema = zod_1.z.object({
     userId: zod_1.z.string().uuid(),
@@ -32,7 +31,7 @@ router.post('/checkout', auth_js_1.authMiddleware, (0, validation_js_1.validateR
             return res.status(403).json({ error: 'Forbidden - Can only create checkout for yourself' });
         }
         // Get user from database
-        const { data: user, error: userError } = await supabase
+        const { data: user, error: userError } = await supabase_js_1.supabase
             .from('users')
             .select('*')
             .eq('id', userId)
@@ -50,7 +49,7 @@ router.post('/checkout', auth_js_1.authMiddleware, (0, validation_js_1.validateR
             });
             customerId = customer.id;
             // Save customer ID to database
-            await supabase
+            await supabase_js_1.supabase
                 .from('users')
                 .update({ stripe_customer_id: customerId })
                 .eq('id', userId);
@@ -87,7 +86,7 @@ router.post('/portal', auth_js_1.authMiddleware, async (req, res, next) => {
             return res.status(403).json({ error: 'Forbidden - Can only access your own portal' });
         }
         // Get user's Stripe customer ID
-        const { data: user, error: userError } = await supabase
+        const { data: user, error: userError } = await supabase_js_1.supabase
             .from('users')
             .select('stripe_customer_id')
             .eq('id', userId)
@@ -122,7 +121,7 @@ router.post('/webhook', async (req, res, next) => {
                 const userId = session.metadata?.userId;
                 if (userId) {
                     // Update user subscription status
-                    await supabase
+                    await supabase_js_1.supabase
                         .from('users')
                         .update({
                         subscription_status: 'active',
@@ -135,7 +134,7 @@ router.post('/webhook', async (req, res, next) => {
             case 'customer.subscription.deleted': {
                 const subscription = event.data.object;
                 // Update user subscription status
-                await supabase
+                await supabase_js_1.supabase
                     .from('users')
                     .update({
                     subscription_status: 'canceled',

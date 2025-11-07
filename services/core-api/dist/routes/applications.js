@@ -3,11 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.applicationRoutes = void 0;
 const express_1 = require("express");
 const zod_1 = require("zod");
-const supabase_js_1 = require("@supabase/supabase-js");
 const validation_js_1 = require("../middleware/validation.js");
+const supabase_js_1 = require("../lib/supabase.js");
 const router = (0, express_1.Router)();
 exports.applicationRoutes = router;
-const supabase = (0, supabase_js_1.createClient)(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 // Schema for creating application
 const createApplicationSchema = zod_1.z.object({
     userId: zod_1.z.string().uuid(),
@@ -22,7 +21,7 @@ router.get('/:userId', async (req, res, next) => {
         if (req.user?.id !== userId) {
             return res.status(403).json({ error: 'Forbidden - Can only view your own applications' });
         }
-        const { data: applications, error } = await supabase
+        const { data: applications, error } = await supabase_js_1.supabase
             .from('applications')
             .select(`
         *,
@@ -46,7 +45,7 @@ router.post('/', (0, validation_js_1.validateRequest)(createApplicationSchema), 
         if (req.user?.id !== userId) {
             return res.status(403).json({ error: 'Forbidden - Can only create applications for yourself' });
         }
-        const { data: application, error } = await supabase
+        const { data: application, error } = await supabase_js_1.supabase
             .from('applications')
             .insert({
             user_id: userId,
@@ -70,7 +69,7 @@ router.patch('/:id', async (req, res, next) => {
         const { id } = req.params;
         const { status } = req.body;
         // First verify the application belongs to the user
-        const { data: existingApp } = await supabase
+        const { data: existingApp } = await supabase_js_1.supabase
             .from('applications')
             .select('user_id')
             .eq('id', id)
@@ -78,7 +77,7 @@ router.patch('/:id', async (req, res, next) => {
         if (!existingApp || existingApp.user_id !== req.user?.id) {
             return res.status(403).json({ error: 'Forbidden - Can only update your own applications' });
         }
-        const { data: application, error } = await supabase
+        const { data: application, error } = await supabase_js_1.supabase
             .from('applications')
             .update({
             status,

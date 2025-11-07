@@ -1,20 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authMiddleware = void 0;
-const supabase_js_1 = require("@supabase/supabase-js");
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseAnonKey = process.env.SUPABASE_PUBLISHABLE_KEY;
+const supabase_js_1 = require("../lib/supabase.js");
 const authMiddleware = async (req, res, next) => {
     const token = req.headers.authorization?.replace('Bearer ', '');
     if (!token) {
         return res.status(401).json({ error: 'Unauthorized - No token provided' });
     }
     try {
-        // Use anon key for user operations
-        const supabase = (0, supabase_js_1.createClient)(supabaseUrl, supabaseAnonKey, {
-            global: { headers: { Authorization: `Bearer ${token}` } }
-        });
-        const { data: { user }, error } = await supabase.auth.getUser();
+        // Use the shared service role client to verify the user token
+        const { data: { user }, error } = await supabase_js_1.supabase.auth.getUser(token);
         if (error || !user) {
             return res.status(401).json({ error: 'Unauthorized - Invalid token' });
         }

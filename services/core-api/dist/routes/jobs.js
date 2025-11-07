@@ -3,12 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.jobRoutes = void 0;
 const express_1 = require("express");
 const zod_1 = require("zod");
-const supabase_js_1 = require("@supabase/supabase-js");
 const validation_js_1 = require("../middleware/validation.js");
+const supabase_js_1 = require("../lib/supabase.js");
 const router = (0, express_1.Router)();
 exports.jobRoutes = router;
-// Initialize Supabase client
-const supabase = (0, supabase_js_1.createClient)(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 // Schema for job matching request
 const findMatchesSchema = zod_1.z.object({
     userId: zod_1.z.string().uuid(),
@@ -22,7 +20,7 @@ const findMatchesSchema = zod_1.z.object({
 // GET /api/jobs - Get all jobs
 router.get('/', async (_req, res, next) => {
     try {
-        const { data: jobs, error } = await supabase
+        const { data: jobs, error } = await supabase_js_1.supabase
             .from('jobs')
             .select('*')
             .order('created_at', { ascending: false })
@@ -44,7 +42,7 @@ router.post('/find-matches', (0, validation_js_1.validateRequest)(findMatchesSch
             return res.status(403).json({ error: 'Forbidden - Can only request your own matches' });
         }
         // Get user profile and preferences
-        const { data: userProfile, error: profileError } = await supabase
+        const { data: userProfile, error: profileError } = await supabase_js_1.supabase
             .from('user_profiles')
             .select('*')
             .eq('user_id', userId)
@@ -53,7 +51,7 @@ router.post('/find-matches', (0, validation_js_1.validateRequest)(findMatchesSch
             throw profileError;
         // For now, return mock matches
         // TODO: Implement actual AI matching logic
-        const { data: jobs, error: jobsError } = await supabase
+        const { data: jobs, error: jobsError } = await supabase_js_1.supabase
             .from('jobs')
             .select('*')
             .limit(limit);
@@ -70,7 +68,7 @@ router.post('/find-matches', (0, validation_js_1.validateRequest)(findMatchesSch
             ]
         }));
         // Update usage tracking
-        await supabase
+        await supabase_js_1.supabase
             .from('users')
             .update({
             monthly_job_matches_used: userProfile.monthly_job_matches_used + 1
@@ -107,7 +105,7 @@ router.post('/initial-search', async (req, res, next) => {
         const { query, location: _location } = validated;
         // Additional sanitization: remove SQL wildcards
         const sanitizedQuery = query.replace(/[%_]/g, '').substring(0, 100);
-        const { data: jobs, error } = await supabase
+        const { data: jobs, error } = await supabase_js_1.supabase
             .from('jobs')
             .select('*')
             .ilike('title', `%${sanitizedQuery}%`)

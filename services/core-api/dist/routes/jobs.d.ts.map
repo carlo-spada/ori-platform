@@ -1,1 +1,1 @@
-{"version":3,"file":"jobs.d.ts","sourceRoot":"","sources":["../../src/routes/jobs.ts"],"names":[],"mappings":"AAAA,OAAO,EAAU,KAAK,MAAM,IAAI,UAAU,EAAE,MAAM,SAAS,CAAC;AAM5D,QAAA,MAAM,MAAM,EAAE,UAAqB,CAAC;AAsIpC,OAAO,EAAE,MAAM,IAAI,SAAS,EAAE,CAAC"}
+{"version":3,"file":"jobs.d.ts","sourceRoot":"","sources":["../../src/routes/jobs.ts"],"names":[],"mappings":"AAAA,OAAO,EAAU,KAAK,MAAM,IAAI,UAAU,EAAE,MAAM,SAAS,CAAC;AAM5D,QAAA,MAAM,MAAM,EAAE,UAAqB,CAAC;AAgIpC,OAAO,EAAE,MAAM,IAAI,SAAS,EAAE,CAAC"}

@@ -1,20 +1,15 @@
 import { Router, type Router as RouterType } from 'express';
 import Stripe from 'stripe';
 import { z } from 'zod';
-import { createClient } from '@supabase/supabase-js';
 import { validateRequest } from '../middleware/validation.js';
 import { authMiddleware, AuthRequest } from '../middleware/auth.js';
+import { supabase } from '../lib/supabase.js';
 
 const router: RouterType = Router();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2024-06-20'
 });
-
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
 
 // Schema for checkout session
 const createCheckoutSchema = z.object({
