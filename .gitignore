@@ -51,3 +51,6 @@ next-env.d.ts
 # Services
 services/**/dist
 services/**/.next
+
+.gemini/
+gha-creds-*.json

@@ -128,7 +128,7 @@ docker run -p 3000:3000 ori-platform
 
 ## 🤝 Contributing
 
-We welcome contributions! Please read our contributing guidelines before submitting PRs.
+We welcome contributions! Before you open a PR, read the living contributor handbook in [`AGENTS.md`](./AGENTS.md) and follow it closely. Major feature, infra, or workflow changes should always be reflected back into `AGENTS.md` so the rest of the agent team stays aligned.
 
 ## 📄 License
 
