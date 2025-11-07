@@ -16,6 +16,11 @@ export interface SEOConfig {
  * Set document title and meta description
  */
 export function setDocumentMeta(config: SEOConfig): void {
+  // Guard against SSR - only run in browser
+  if (typeof document === 'undefined') {
+    return;
+  }
+
   // Title
   document.title = config.title;
 
@@ -78,6 +83,11 @@ function setLinkTag(rel: string, href: string): void {
  * Inject JSON-LD structured data
  */
 export function setJSONLD(data: Record<string, unknown>): void {
+  // Guard against SSR - only run in browser
+  if (typeof document === 'undefined') {
+    return;
+  }
+
   // Remove existing script if present
   const existingScript = document.querySelector('script[type="application/ld+json"]');
   if (existingScript) {

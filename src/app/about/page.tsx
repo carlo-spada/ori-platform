@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PublicLayout } from '@/components/layout/PublicLayout';
@@ -13,12 +15,19 @@ export default function AboutPage() {
 
   // Set SEO metadata
   useEffect(() => {
-    setDocumentMeta({
-      title: t('aboutPage.title'),
-      description: t('aboutPage.description'),
-      canonical: `${window.location.origin}/about`,
-    });
+    if (typeof window !== 'undefined') {
+      setDocumentMeta({
+        title: t('aboutPage.title'),
+        description: t('aboutPage.description'),
+        canonical: `${window.location.origin}/about`,
+      });
+    }
   }, [t]);
+
+  // Helper to safely get arrays from translations
+  const safeArray = <T,>(value: unknown): T[] => {
+    return Array.isArray(value) ? value : [];
+  };
 
   return (
     <PublicLayout>
@@ -43,7 +52,7 @@ export default function AboutPage() {
           {t('aboutPage.problem.title')}
         </h2>
         <div className="space-y-6">
-          {(t('aboutPage.problem.paragraphs', { returnObjects: true }) as string[]).map((paragraph: string, index: number) => (
+          {safeArray<string>(t('aboutPage.problem.paragraphs', { returnObjects: true })).map((paragraph: string, index: number) => (
             <p
               key={index}
               className="text-lg text-muted-foreground leading-relaxed"
@@ -60,7 +69,7 @@ export default function AboutPage() {
           {t('aboutPage.vision.title')}
         </h2>
         <div className="space-y-6">
-          {(t('aboutPage.vision.paragraphs', { returnObjects: true }) as string[]).map((paragraph: string, index: number) => (
+          {safeArray<string>(t('aboutPage.vision.paragraphs', { returnObjects: true })).map((paragraph: string, index: number) => (
             <p
               key={index}
               className="text-lg text-muted-foreground leading-relaxed"
@@ -77,7 +86,7 @@ export default function AboutPage() {
           {t('aboutPage.values.title')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {(t('aboutPage.values.items', { returnObjects: true }) as Array<{ name: string; description: string }>).map((value, index) => (
+          {safeArray<{ name: string; description: string }>(t('aboutPage.values.items', { returnObjects: true })).map((value, index) => (
             <ValueCard
               key={index}
               name={value.name}

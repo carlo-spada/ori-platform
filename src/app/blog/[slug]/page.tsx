@@ -169,7 +169,7 @@ export default function BlogPostPage() {
   const post = slug ? mockPosts[slug] : null;
 
   useEffect(() => {
-    if (post) {
+    if (post && typeof window !== 'undefined') {
       // Set SEO metadata
       setDocumentMeta({
         title: `${post.title} | AURA Insights`,

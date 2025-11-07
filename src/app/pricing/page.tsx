@@ -20,6 +20,11 @@ export default function PricingPage() {
   const { t } = useTranslation();
   const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>('monthly');
 
+  // Helper to safely get arrays from translations
+  const safeArray = <T,>(value: unknown): T[] => {
+    return Array.isArray(value) ? value : [];
+  };
+
   useEffect(() => {
     setDocumentMeta({
       title: t('pricingPage.header.title'),
@@ -48,7 +53,7 @@ export default function PricingPage() {
     });
   }, [t]);
 
-  const plans = t('pricingPage.plans', { returnObjects: true }) as Array<{
+  const plans = safeArray<{
     id: string;
     name: string;
     description: string;
@@ -59,19 +64,19 @@ export default function PricingPage() {
     ctaHref: string;
     features: string[];
     popular: boolean;
-  }>;
+  }>(t('pricingPage.plans', { returnObjects: true }));
 
-  const comparisonFeatures = t('pricingPage.comparisonFeatures', { returnObjects: true }) as Array<{
+  const comparisonFeatures = safeArray<{
     feature: string;
     free: string | boolean;
     plus: string | boolean;
     premium: string | boolean;
-  }>;
+  }>(t('pricingPage.comparisonFeatures', { returnObjects: true }));
 
-  const faqs = t('pricingPage.faqs', { returnObjects: true }) as Array<{
+  const faqs = safeArray<{
     q: string;
     a: string;
-  }>;
+  }>(t('pricingPage.faqs', { returnObjects: true }));
 
   return (
     <PublicLayout

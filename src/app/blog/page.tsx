@@ -61,11 +61,13 @@ export default function BlogIndexPage() {
 
   // Set SEO metadata
   useEffect(() => {
-    setDocumentMeta({
-      title: t('blogPage.title'),
-      description: t('blogPage.description'),
-      canonical: `${window.location.origin}/blog`,
-    });
+    if (typeof window !== 'undefined') {
+      setDocumentMeta({
+        title: t('blogPage.title'),
+        description: t('blogPage.description'),
+        canonical: `${window.location.origin}/blog`,
+      });
+    }
   }, [t]);
 
   // Pagination logic

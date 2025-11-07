@@ -15,28 +15,35 @@ export default function FeaturesPage() {
 
   // Set SEO meta tags
   useEffect(() => {
-    setDocumentMeta({
-      title: 'Features - AURA | Intelligent Career Co-pilot',
-      description: t('featuresPage.header.subheadline'),
-      ogType: 'website',
-      canonical: window.location.href,
-    });
+    if (typeof window !== 'undefined') {
+      setDocumentMeta({
+        title: 'Features - AURA | Intelligent Career Co-pilot',
+        description: t('featuresPage.header.subheadline'),
+        ogType: 'website',
+        canonical: window.location.href,
+      });
+    }
   }, [t]);
 
-  const features = t('featuresPage.features', { returnObjects: true }) as Array<{
+  // Helper to safely get arrays from translations
+  const safeArray = <T,>(value: unknown): T[] => {
+    return Array.isArray(value) ? value : [];
+  };
+
+  const features = safeArray<{
     id: string;
     eyebrow: string;
     name: string;
     description: string;
     points: string[];
-  }>;
+  }>(t('featuresPage.features', { returnObjects: true }));
 
-  const tocItems = t('featuresPage.toc', { returnObjects: true }) as Array<{
+  const tocItems = safeArray<{
     id: string;
     label: string;
-  }>;
+  }>(t('featuresPage.toc', { returnObjects: true }));
 
-  const privacyBullets = t('featuresPage.privacy.bullets', { returnObjects: true }) as string[];
+  const privacyBullets = safeArray<string>(t('featuresPage.privacy.bullets', { returnObjects: true }));
 
   return (
     <PublicLayout>

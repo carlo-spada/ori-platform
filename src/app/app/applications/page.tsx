@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useEffect, useState } from 'react';
 import { setDocumentMeta } from '@/lib/seo';
 import { useTranslation } from 'react-i18next';
