@@ -1,7 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { X, Plus, Briefcase, GraduationCap } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { Modal } from '@/components/ui/modal';
 import { ExperienceForm, ExperienceFormData } from './ExperienceForm';
 import { EducationForm, EducationFormData } from './EducationForm';

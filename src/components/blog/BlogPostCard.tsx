@@ -1,4 +1,6 @@
 import { type ComponentPropsWithoutRef } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { type BlogPost } from '@/lib/types';
 import { Clock } from 'lucide-react';
@@ -31,7 +33,7 @@ export function BlogPostCard({
       )}
       {...props}
     >
-      <a
+      <Link
         href={`/blog/${post.slug}`}
         className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-xl"
         aria-label={`Read article: ${post.title}`}
@@ -39,16 +41,15 @@ export function BlogPostCard({
         {post.featureImageUrl && (
           <div
             className={cn(
-              'aspect-[16/9] overflow-hidden bg-muted',
+              'relative aspect-[16/9] overflow-hidden bg-muted',
               isFeatured && 'md:aspect-[21/9]'
             )}
           >
-            <img
+            <Image
               src={post.featureImageUrl}
-              alt=""
-              loading="lazy"
-              decoding="async"
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              alt={post.title}
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
           </div>
         )}
@@ -97,7 +98,7 @@ export function BlogPostCard({
             </span>
           </div>
         </div>
-      </a>
+      </Link>
     </article>
   );
 }

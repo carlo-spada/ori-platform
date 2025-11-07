@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 
 interface WelcomeStepProps {
-  userName: string;
   copy: {
     headline: string;
     body: string;
@@ -10,7 +9,7 @@ interface WelcomeStepProps {
   onNext: () => void;
 }
 
-export function WelcomeStep({ userName, copy, onNext }: WelcomeStepProps) {
+export function WelcomeStep({ copy, onNext }: WelcomeStepProps) {
   // Note: headline interpolation is handled by parent component passing pre-formatted copy
   return (
     <div className="flex flex-col gap-6 py-4">

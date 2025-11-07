@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { PublicLayout } from '@/components/layout/PublicLayout';
 import { HeroSection } from '@/components/landing/HeroSection';
 import { ValuePropositionSection } from '@/components/landing/ValuePropositionSection';
@@ -12,8 +11,6 @@ import { BottomCTASection } from '@/components/landing/BottomCTASection';
 import { setDocumentMeta, setJSONLD } from '@/lib/seo';
 
 const Index = () => {
-  const { t } = useTranslation();
-
   // Set SEO meta tags and JSON-LD on mount
   useEffect(() => {
     setDocumentMeta({

@@ -152,7 +152,7 @@ export default function PricingPage() {
             Compare Plans
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A detailed breakdown of what's included in each plan.
+            A detailed breakdown of what&apos;s included in each plan.
           </p>
         </div>
         <div className="max-w-5xl mx-auto">

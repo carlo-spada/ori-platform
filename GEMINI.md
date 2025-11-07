@@ -2,7 +2,7 @@
 
 ## Guide Maintenance
 
-Whenever you land a major feature, infrastructure change, or new workflow, not just update this .md file but also update the relevant sections in the AGENTS.md file and reference the PR so every agent stays in sync at all times.
+Always make sure this guide is kept updated with whatever new information might be in the AGENTS.md file and whenever you land a major feature, infrastructure change, or new workflow, not just update this .md file but also update the relevant sections in the AGENTS.md file and reference the PR so every agent stays in sync at all times. This is crucial for good collaboration.
 
 ## GitHub Considerations
 

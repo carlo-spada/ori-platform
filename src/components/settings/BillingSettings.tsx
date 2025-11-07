@@ -4,8 +4,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { SubscriptionDetails } from '@/lib/types';
 import { Button } from '@/components/ui/button';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { useTranslation } from 'react-i18next';
 import { getSupabaseClient } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -29,7 +27,6 @@ export function BillingSettings({
   subscription,
   labels,
 }: BillingSettingsProps) {
-  const { t } = useTranslation();
   const { toast } = useToast();
   const supabase = getSupabaseClient();
   const [isPortalLoading, setIsPortalLoading] = useState(false);

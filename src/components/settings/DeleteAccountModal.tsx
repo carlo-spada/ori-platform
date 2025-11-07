@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -32,12 +32,10 @@ export function DeleteAccountModal({
   const [confirmText, setConfirmText] = useState('');
   const isConfirmed = confirmText === 'DELETE';
 
-  // Reset confirmation text when modal opens/closes
-  useEffect(() => {
-    if (!isOpen) {
-      setConfirmText('');
-    }
-  }, [isOpen]);
+  const handleClose = () => {
+    setConfirmText('');
+    onClose();
+  };
 
   const handleConfirm = () => {
     if (isConfirmed) {
@@ -47,7 +45,7 @@ export function DeleteAccountModal({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-red-400">{labels.title}</DialogTitle>
@@ -70,7 +68,7 @@ export function DeleteAccountModal({
         <DialogFooter className="flex-col sm:flex-row gap-2">
           <Button
             variant="outline"
-            onClick={onClose}
+            onClick={handleClose}
             className="w-full sm:w-auto"
           >
             {labels.cancelButton}

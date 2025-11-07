@@ -1,4 +1,4 @@
-import express, { Router, type Router as RouterType } from 'express';
+import { Router, type Router as RouterType } from 'express';
 import Stripe from 'stripe';
 import { z } from 'zod';
 import { validateRequest } from '../middleware/validation.js';

@@ -73,7 +73,7 @@ export default function Login() {
         title: 'Welcome back!',
         description: 'You have successfully logged in.',
       });
-    } catch (err) {
+    } catch {
       toast({
         variant: 'destructive',
         title: 'Unexpected error',
@@ -144,8 +144,7 @@ export default function Login() {
           </div>
 
           <p className="text-center text-sm text-muted-foreground">
-            Don't have an account?{' '}
-            <Link
+            Don&apos;t have an account?{' '}            <Link
               href="/signup"
               className="text-accent hover:text-accent/80 underline underline-offset-2"
             >

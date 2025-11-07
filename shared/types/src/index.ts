@@ -32,6 +32,13 @@ export interface UserProfile {
   willing_to_relocate?: boolean;
 }
 
+// AI Analysis types
+export interface AIAnalysis {
+  summary: string;
+  pros: string[];
+  cons: string[];
+}
+
 // Job related types
 export interface Job {
   id: string;
@@ -45,7 +52,7 @@ export interface Job {
   work_type?: 'remote' | 'hybrid' | 'onsite';
   highlights?: string[];
   match_score?: number;
-  ai_analysis?: any;
+  ai_analysis?: AIAnalysis;
   tags?: string[];
   posted_date?: string;
   expires_date?: string;

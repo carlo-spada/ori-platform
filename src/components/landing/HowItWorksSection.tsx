@@ -2,12 +2,6 @@ import { Section } from '@/components/ui/Section';
 import { useTranslation } from 'react-i18next';
 import { UserCircle, Lightbulb, Send } from 'lucide-react';
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  Profile: UserCircle,
-  'Match & Learn': Lightbulb,
-  'Apply Confidently': Send,
-};
-
 export function HowItWorksSection() {
   const { t } = useTranslation();
   

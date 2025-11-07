@@ -43,7 +43,7 @@ export function SocialProofSection() {
           >
             <Quote className="w-8 h-8 text-accent/30 mb-4" aria-hidden="true" />
             <blockquote className="text-base text-foreground leading-relaxed mb-4">
-              "{testimonial.quote}"
+              &quot;{testimonial.quote}&quot;
             </blockquote>
             <div className="mt-4 pt-4 border-t border-border">
               <cite className="not-italic">

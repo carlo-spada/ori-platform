@@ -3,13 +3,6 @@ import { Card } from '@/components/ui/card';
 import { useTranslation } from 'react-i18next';
 import { Target, TrendingUp, FileText, Activity } from 'lucide-react';
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  'Intelligent Job Discovery': Target,
-  'Adaptive Upskilling': TrendingUp,
-  'AI Application Builder': FileText,
-  'Reflective Growth': Activity,
-};
-
 export function ValuePropositionSection() {
   const { t } = useTranslation();
   

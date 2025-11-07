@@ -1,4 +1,6 @@
 import { type BlogPost } from '@/lib/types';
+import Link from 'next/link';
+import Image from 'next/image';
 import { Clock, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
@@ -18,10 +20,10 @@ export function PostLayout({ post }: PostLayoutProps) {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
       <Button asChild variant="ghost" size="sm" className="mb-8 -ml-2">
-        <a href="/blog" className="flex items-center gap-2">
+        <Link href="/blog" className="flex items-center gap-2">
           <ArrowLeft className="h-4 w-4" />
           {t('blogPage.post.backToBlogLabel')}
-        </a>
+        </Link>
       </Button>
 
       <article>
@@ -68,13 +70,13 @@ export function PostLayout({ post }: PostLayoutProps) {
 
         {/* Feature Image */}
         {post.featureImageUrl && (
-          <div className="aspect-[16/9] overflow-hidden rounded-xl bg-muted mb-8">
-            <img
+          <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-muted mb-8">
+            <Image
               src={post.featureImageUrl}
-              alt=""
+              alt={post.title}
               className="w-full h-full object-cover"
-              loading="eager"
-              decoding="async"
+              fill
+              priority
             />
           </div>
         )}
@@ -101,10 +103,10 @@ export function PostLayout({ post }: PostLayoutProps) {
       {/* Post Footer */}
       <footer className="mt-16 pt-8 border-t border-border">
         <Button asChild variant="outline" size="lg">
-          <a href="/blog" className="flex items-center gap-2">
+          <Link href="/blog" className="flex items-center gap-2">
           <ArrowLeft className="h-4 w-4" />
             {t('blogPage.post.backToBlogLabel')}
-          </a>
+          </Link>
         </Button>
       </footer>
     </div>

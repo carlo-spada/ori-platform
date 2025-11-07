@@ -72,7 +72,7 @@ export default function Signup() {
 
       // Show confirmation screen
       setShowConfirmation(true);
-    } catch (err) {
+    } catch {
       toast({
         variant: 'destructive',
         title: 'Unexpected error',
@@ -106,7 +106,7 @@ export default function Signup() {
                 Check your email
               </h1>
               <p className="text-muted-foreground">
-                We've sent you a confirmation link. Please check your email and click the link to verify your account.
+                We&apos;ve sent you a confirmation link. Please check your email and click the link to verify your account.
               </p>
             </div>
 
