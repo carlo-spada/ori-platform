@@ -1,0 +1,39 @@
+# .github/workflows/verify.yml
+
+name: Verification Ritual
+
+# Run this workflow on every pull request targeting the main branch
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # This job is named 'verify'
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Get the code from the PR
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Set up the environment (e.g., Node.js)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Adjusted to project's Node.js 18+ requirement
+          cache: 'pnpm'     # Changed to pnpm cache
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: pnpm install # Changed from npm ci to pnpm install
+
+      # 4. Run your verification scripts (defined in your package.json)
+      - name: Run Linter (Check rules)
+        run: pnpm lint # Changed from npm run lint to pnpm lint
+      
+      - name: Run Tests (Check for landmines)
+        run: pnpm test # Changed from npm test to pnpm test (assuming root test script exists)
+
+      - name: Run Build (Check if it builds)
+        run: pnpm build # Changed from npm run build to pnpm build
