@@ -36,7 +36,6 @@ This is a pnpm workspace with three main areas:
 - **Shared (`shared/`)**: Cross-service packages
   - `shared/types/`: TypeScript type definitions (User, Job, Application, etc.)
   - `shared/utils/`: Shared utility functions
-  - `shared/database/`: Database-related shared code
 
 ## Development Commands
 
