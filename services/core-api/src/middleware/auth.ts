@@ -1,35 +1,45 @@
 import { Request, Response, NextFunction } from 'express';
-import { supabase } from '../lib/supabase.js';
+import { createClient, User } from '@supabase/supabase-js';
 
 export interface AuthRequest extends Request {
-  user?: {
-    id: string;
-    email?: string;
-  };
+  user?: User;
 }
 
-export const authMiddleware = async (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-) => {
-  const token = req.headers.authorization?.replace('Bearer ', '');
+export const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  const token = req.headers.authorization?.split(' ')[1];
 
   if (!token) {
-    return res.status(401).json({ error: 'Unauthorized - No token provided' });
+    return res.status(401).json({ error: 'No token provided' });
   }
 
   try {
-    // Use the shared service role client to verify the user token
-    const { data: { user }, error } = await supabase.auth.getUser(token);
-    
+    // Create a new Supabase client for this specific request,
+    // authenticated with the user's token. This is the correct pattern
+    // for validating a JWT on the server.
+    const supabase = createClient(
+      process.env.SUPABASE_URL!,
+      process.env.SUPABASE_PUBLISHABLE_KEY!, // Use the public anon key for this
+      {
+        global: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+        auth: {
+          persistSession: false,
+        }
+      }
+    );
+
+    const { data: { user }, error } = await supabase.auth.getUser();
+
     if (error || !user) {
-      return res.status(401).json({ error: 'Unauthorized - Invalid token' });
+      return res.status(401).json({ error: 'Invalid token' });
     }
 
     req.user = user;
     return next();
   } catch (error) {
-    return res.status(401).json({ error: 'Unauthorized - Token verification failed' });
+    return res.status(401).json({ error: 'Authentication failed' });
   }
 };
