@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import { applicationRoutes } from './routes/applications.js';
 import { jobRoutes } from './routes/jobs.js';
 import { paymentRoutes } from './routes/payments.js';
+import usersRouter from './routes/users.js';
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.get('/health', (_req, res) => {
 app.use('/api/v1/applications', applicationRoutes);
 app.use('/api/v1/jobs', jobRoutes);
 app.use('/api/v1/payments', paymentRoutes);
+app.use('/api/v1/users', usersRouter);
 
 app.listen(port, () => {
   console.log(`[core-api]: Server is running at http://localhost:${port}`);
