@@ -4,6 +4,7 @@ exports.jobRoutes = void 0;
 const express_1 = require("express");
 const zod_1 = require("zod");
 const validation_js_1 = require("../middleware/validation.js");
+const auth_js_1 = require("../middleware/auth.js");
 const supabase_js_1 = require("../lib/supabase.js");
 const router = (0, express_1.Router)();
 exports.jobRoutes = router;
@@ -34,7 +35,7 @@ router.get('/', async (_req, res, next) => {
     }
 });
 // POST /api/jobs/find-matches - Find job matches for a user
-router.post('/find-matches', (0, validation_js_1.validateRequest)(findMatchesSchema), async (req, res, next) => {
+router.post('/find-matches', auth_js_1.authMiddleware, (0, validation_js_1.validateRequest)(findMatchesSchema), async (req, res, next) => {
     try {
         const { userId, limit, filters: _filters } = req.body;
         // Validate user can only request their own matches
@@ -98,7 +99,7 @@ const searchSchema = zod_1.z.object({
         .max(100, 'Location too long')
         .optional()
 });
-router.post('/initial-search', async (req, res, next) => {
+router.post('/initial-search', auth_js_1.authMiddleware, async (req, res, next) => {
     try {
         // Validate and sanitize input
         const validated = searchSchema.parse(req.body);

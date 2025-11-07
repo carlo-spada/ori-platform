@@ -1,7 +1,7 @@
 import { Router, type Router as RouterType } from 'express';
 import { z } from 'zod';
 import { validateRequest } from '../middleware/validation.js';
-import { AuthRequest } from '../middleware/auth.js';
+import { authMiddleware, AuthRequest } from '../middleware/auth.js';
 import { supabase } from '../lib/supabase.js';
 
 const router: RouterType = Router();
@@ -35,7 +35,7 @@ router.get('/', async (_req, res, next) => {
 });
 
 // POST /api/jobs/find-matches - Find job matches for a user
-router.post('/find-matches', validateRequest(findMatchesSchema), async (req: AuthRequest, res, next) => {
+router.post('/find-matches', authMiddleware, validateRequest(findMatchesSchema), async (req: AuthRequest, res, next) => {
   try {
     const { userId, limit, filters: _filters } = req.body;
     
@@ -106,7 +106,7 @@ const searchSchema = z.object({
     .optional()
 });
 
-router.post('/initial-search', async (req: AuthRequest, res, next) => {
+router.post('/initial-search', authMiddleware, async (req: AuthRequest, res, next) => {
   try {
     // Validate and sanitize input
     const validated = searchSchema.parse(req.body);
