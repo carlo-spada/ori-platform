@@ -1,4 +1,4 @@
-import { Router, type Router as RouterType } from 'express';
+import express, { Router, type Router as RouterType } from 'express';
 import Stripe from 'stripe';
 import { z } from 'zod';
 import { validateRequest } from '../middleware/validation.js';
@@ -118,8 +118,8 @@ router.post('/portal', authMiddleware, async (req: AuthRequest, res, next) => {
 
 // POST /api/payments/webhook - Handle Stripe webhooks
 // Note: No auth middleware - validates Stripe signature instead
-// Raw body middleware applied in index.ts before json middleware
-router.post('/webhook', async (req, res, next) => {
+// Raw body middleware applied directly to this route
+router.post('/webhook', express.raw({ type: 'application/json' }), async (req, res, next) => {
   try {
     const sig = req.headers['stripe-signature'] as string;
     const event = stripe.webhooks.constructEvent(
