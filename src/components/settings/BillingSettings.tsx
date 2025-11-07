@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import Link from 'next/link';
 import { SubscriptionDetails } from '@/lib/types';
@@ -170,4 +172,3 @@ export function BillingSettings({
     </section>
   );
 }
-"use client";
