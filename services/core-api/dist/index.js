@@ -6,6 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
+// Import the routers
+const applications_js_1 = require("./routes/applications.js");
+const jobs_js_1 = require("./routes/jobs.js");
+const payments_js_1 = require("./routes/payments.js");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3001;
@@ -15,6 +19,10 @@ app.use(express_1.default.json());
 app.get('/health', (_req, res) => {
     res.status(200).send('OK');
 });
+// Mount API routers
+app.use('/api/v1/applications', applications_js_1.applicationRoutes);
+app.use('/api/v1/jobs', jobs_js_1.jobRoutes);
+app.use('/api/v1/payments', payments_js_1.paymentRoutes);
 app.listen(port, () => {
     console.log(`[core-api]: Server is running at http://localhost:${port}`);
 });
