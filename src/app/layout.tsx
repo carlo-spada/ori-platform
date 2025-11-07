@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import { Providers } from './providers';
 import { Toaster } from '@/components/ui/toaster';
 import { Sonner } from '@/components/ui/sonner';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -25,6 +26,7 @@ export default function RootLayout({
           <Sonner />
           {children}
         </Providers>
+        <SpeedInsights />
       </body>
     </html>
   );
