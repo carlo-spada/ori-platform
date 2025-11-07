@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 import { PublicLayout } from '@/components/layout/PublicLayout';
 import { setDocumentMeta } from '@/lib/seo';
