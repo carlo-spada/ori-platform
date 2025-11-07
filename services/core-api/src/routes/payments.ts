@@ -5,7 +5,9 @@ import { validateRequest } from '../middleware/validation.js';
 import { authMiddleware, AuthRequest } from '../middleware/auth.js';
 import { supabase } from '../lib/supabase.js';
 
-const router: RouterType = Router();
+const paymentRoutes: RouterType = Router();
+const paymentWebhookRoutes: RouterType = Router();
+
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2024-06-20'
@@ -20,7 +22,7 @@ const createCheckoutSchema = z.object({
 });
 
 // POST /api/payments/checkout - Create Stripe checkout session
-router.post('/checkout', authMiddleware, validateRequest(createCheckoutSchema), async (req: AuthRequest, res, next) => {
+paymentRoutes.post('/checkout', authMiddleware, validateRequest(createCheckoutSchema), async (req: AuthRequest, res, next) => {
   try {
     const { userId, priceId, successUrl, cancelUrl } = req.body;
     
@@ -83,7 +85,7 @@ router.post('/checkout', authMiddleware, validateRequest(createCheckoutSchema), 
 });
 
 // POST /api/payments/portal - Create customer portal session
-router.post('/portal', authMiddleware, async (req: AuthRequest, res, next) => {
+paymentRoutes.post('/portal', authMiddleware, async (req: AuthRequest, res, next) => {
   try {
     const { userId } = req.body;
     
@@ -118,8 +120,8 @@ router.post('/portal', authMiddleware, async (req: AuthRequest, res, next) => {
 
 // POST /api/payments/webhook - Handle Stripe webhooks
 // Note: No auth middleware - validates Stripe signature instead
-// Raw body middleware applied directly to this route
-router.post('/webhook', express.raw({ type: 'application/json' }), async (req, res, next) => {
+// Raw body middleware applied in index.ts
+paymentWebhookRoutes.post('/', async (req, res, next) => {
   try {
     const sig = req.headers['stripe-signature'] as string;
     const event = stripe.webhooks.constructEvent(
@@ -167,4 +169,4 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
   }
 });
 
-export { router as paymentRoutes };
+export { paymentRoutes, paymentWebhookRoutes };

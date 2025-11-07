@@ -18,7 +18,7 @@ export const authMiddleware = async (req: AuthRequest, res: Response, next: Next
     // for validating a JWT on the server.
     const supabase = createClient(
       process.env.SUPABASE_URL!,
-      process.env.SUPABASE_PUBLISHABLE_KEY!, // Use the public anon key for this
+      process.env.SUPABASE_SERVICE_ROLE_KEY!, // Use the service role key for server-side validation
       {
         global: {
           headers: {

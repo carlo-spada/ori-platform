@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 // Import the routers
 import { applicationRoutes } from './routes/applications.js';
 import { jobRoutes } from './routes/jobs.js';
-import { paymentRoutes } from './routes/payments.js';
+import { paymentRoutes, paymentWebhookRoutes } from './routes/payments.js';
 import usersRouter from './routes/users.js';
 
 dotenv.config();
@@ -14,12 +14,17 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 app.use(cors());
-app.use(express.json());
 
 // Health check route
 app.get('/health', (_req, res) => {
   res.status(200).send('OK');
 });
+
+// Stripe webhook route needs to be before express.json()
+app.use('/api/v1/payments/webhook', express.raw({ type: 'application/json' }), paymentWebhookRoutes);
+
+app.use(express.json());
+
 
 // Mount API routers
 app.use('/api/v1/applications', applicationRoutes);
