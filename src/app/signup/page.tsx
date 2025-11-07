@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { setDocumentMeta } from '@/lib/seo';
 import { useAuth } from '@/contexts/AuthProvider';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 import { CheckCircle2 } from 'lucide-react';
 
 const signupSchema = z.object({

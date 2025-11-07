@@ -126,7 +126,7 @@ export default function PricingPage() {
               id={plan.id}
               name={plan.name}
               description={plan.description}
-              price={billingPeriod === 'monthly' ? plan.priceMonthly : plan.priceAnnual}
+              price={billingPeriod === 'monthly' ? (plan.priceMonthly ?? 0) : (plan.priceAnnual ?? 0)}
               billingPeriod={billingPeriod}
               limitsSummary={plan.limitsSummary}
               features={plan.features}

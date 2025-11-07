@@ -1,10 +1,10 @@
-import { Router } from 'express';
+import { Router, type Router as RouterType } from 'express';
 import { z } from 'zod';
 import { createClient } from '@supabase/supabase-js';
 import { validateRequest } from '../middleware/validation.js';
 import { AuthRequest } from '../middleware/auth.js';
 
-const router = Router();
+const router: RouterType = Router();
 
 const supabase = createClient(
   process.env.SUPABASE_URL!,
@@ -39,9 +39,9 @@ router.get('/:userId', async (req: AuthRequest, res, next) => {
 
     if (error) throw error;
 
-    res.json({ applications });
+    return res.json({ applications });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -68,9 +68,9 @@ router.post('/', validateRequest(createApplicationSchema), async (req: AuthReque
 
     if (error) throw error;
 
-    res.json({ application });
+    return res.json({ application });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -103,9 +103,9 @@ router.patch('/:id', async (req: AuthRequest, res, next) => {
 
     if (error) throw error;
 
-    res.json({ application });
+    return res.json({ application });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 

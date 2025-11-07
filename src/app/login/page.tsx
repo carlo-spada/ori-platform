@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { setDocumentMeta } from '@/lib/seo';
 import { useAuth } from '@/contexts/AuthProvider';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 
 const loginSchema = z.object({
   email: z.string().trim().email({ message: 'Please enter a valid email address' }),

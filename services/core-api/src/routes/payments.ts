@@ -1,11 +1,11 @@
-import { Router } from 'express';
+import { Router, type Router as RouterType } from 'express';
 import Stripe from 'stripe';
 import { z } from 'zod';
 import { createClient } from '@supabase/supabase-js';
 import { validateRequest } from '../middleware/validation.js';
 import { authMiddleware, AuthRequest } from '../middleware/auth.js';
 
-const router = Router();
+const router: RouterType = Router();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2024-06-20'
@@ -81,9 +81,9 @@ router.post('/checkout', authMiddleware, validateRequest(createCheckoutSchema), 
       }
     });
 
-    res.json({ url: session.url });
+    return res.json({ url: session.url });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -115,9 +115,9 @@ router.post('/portal', authMiddleware, async (req: AuthRequest, res, next) => {
       return_url: `${process.env.FRONTEND_URL}/dashboard/settings`
     });
 
-    res.json({ url: session.url });
+    return res.json({ url: session.url });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -166,9 +166,9 @@ router.post('/webhook', async (req, res, next) => {
       }
     }
 
-    res.json({ received: true });
+    return res.json({ received: true });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 

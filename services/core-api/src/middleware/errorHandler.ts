@@ -2,9 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 
 export function errorHandler(
   err: Error,
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) {
   console.error('Error:', err);
 
@@ -24,7 +24,7 @@ export function errorHandler(
   }
 
   // Default error response
-  res.status(500).json({
+  return res.status(500).json({
     error: 'Internal Server Error',
     message: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong'
   });

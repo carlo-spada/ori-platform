@@ -1,4 +1,4 @@
-import type { User, SubscriptionTier } from '@ori/types/dist/index.js';
+import type { User, SubscriptionTier } from '@ori/types';
 
 // Subscription tier definitions
 export const SUBSCRIPTION_TIERS: Record<string, SubscriptionTier> = {

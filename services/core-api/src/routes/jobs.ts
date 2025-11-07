@@ -1,10 +1,10 @@
-import { Router } from 'express';
+import { Router, type Router as RouterType } from 'express';
 import { z } from 'zod';
 import { createClient } from '@supabase/supabase-js';
 import { validateRequest } from '../middleware/validation.js';
 import { AuthRequest } from '../middleware/auth.js';
 
-const router = Router();
+const router: RouterType = Router();
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -24,7 +24,7 @@ const findMatchesSchema = z.object({
 });
 
 // GET /api/jobs - Get all jobs
-router.get('/', async (req, res, next) => {
+router.get('/', async (_req, res, next) => {
   try {
     const { data: jobs, error } = await supabase
       .from('jobs')
@@ -34,16 +34,16 @@ router.get('/', async (req, res, next) => {
 
     if (error) throw error;
 
-    res.json({ jobs });
+    return res.json({ jobs });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
 // POST /api/jobs/find-matches - Find job matches for a user
 router.post('/find-matches', validateRequest(findMatchesSchema), async (req: AuthRequest, res, next) => {
   try {
-    const { userId, limit, filters } = req.body;
+    const { userId, limit, filters: _filters } = req.body;
     
     // Validate user can only request their own matches
     if (req.user?.id !== userId) {
@@ -87,7 +87,7 @@ router.post('/find-matches', validateRequest(findMatchesSchema), async (req: Aut
       })
       .eq('id', userId);
 
-    res.json({
+    return res.json({
       matches: jobsWithScores,
       usage: {
         used: userProfile.monthly_job_matches_used + 1,
@@ -95,7 +95,7 @@ router.post('/find-matches', validateRequest(findMatchesSchema), async (req: Aut
       }
     });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -116,7 +116,7 @@ router.post('/initial-search', async (req: AuthRequest, res, next) => {
   try {
     // Validate and sanitize input
     const validated = searchSchema.parse(req.body);
-    const { query, location } = validated;
+    const { query, location: _location } = validated;
 
     // Additional sanitization: remove SQL wildcards
     const sanitizedQuery = query.replace(/[%_]/g, '').substring(0, 100);
@@ -129,12 +129,12 @@ router.post('/initial-search', async (req: AuthRequest, res, next) => {
 
     if (error) throw error;
 
-    res.json({ jobs });
+    return res.json({ jobs });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return res.status(400).json({ error: 'Invalid input', details: error.errors });
     }
-    next(error);
+    return next(error);
   }
 });
 
