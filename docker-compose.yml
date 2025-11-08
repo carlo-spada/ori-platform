@@ -8,7 +8,7 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: aura
+      POSTGRES_DB: ori
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./supabase/migrations:/docker-entrypoint-initdb.d
@@ -52,7 +52,7 @@ services:
   #     - ./services/core-api:/app
   #     - /app/node_modules
   #   environment:
-  #     - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/aura
+  #     - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/ori
   #     - REDIS_URL=redis://redis:6379
   #     - NODE_ENV=development
   #   depends_on:

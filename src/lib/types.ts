@@ -1,5 +1,5 @@
 /**
- * Type definitions for the AURA application
+ * Type definitions for the Ori application
  */
 
 export interface BlogPost {

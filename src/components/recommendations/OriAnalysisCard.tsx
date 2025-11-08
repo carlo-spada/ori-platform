@@ -3,11 +3,11 @@ import { Check } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import type { JobRecommendation } from '@/lib/types';
 
-export interface AuraAnalysisCardProps {
+export interface OriAnalysisCardProps {
   analysis?: JobRecommendation['analysis'];
 }
 
-export function AuraAnalysisCard({ analysis }: AuraAnalysisCardProps) {
+export function OriAnalysisCard({ analysis }: OriAnalysisCardProps) {
   const { t } = useTranslation();
 
   if (!analysis || (!analysis.skillMatch && !analysis.goalAlignment && !analysis.companyInsight)) {

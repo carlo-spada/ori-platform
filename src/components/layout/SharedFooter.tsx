@@ -34,8 +34,8 @@ export function SharedFooter() {
   ];
 
   const socialLinks = [
-    { platform: 'X/Twitter', href: 'https://x.com/aura', ariaLabel: t('social.twitter') },
-    { platform: 'LinkedIn', href: 'https://linkedin.com/company/aura', ariaLabel: t('social.linkedin') },
+    { platform: 'X/Twitter', href: 'https://x.com/ori-platform', ariaLabel: t('social.twitter') },
+    { platform: 'LinkedIn', href: 'https://linkedin.com/company/ori-platform', ariaLabel: t('social.linkedin') },
   ];
 
   return (

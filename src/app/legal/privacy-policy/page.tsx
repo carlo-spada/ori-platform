@@ -2,9 +2,9 @@ import { LegalPageLayout } from '@/components/legal/LegalPageLayout';
 
 const content = `
 <h2 id="introduction">1. Introduction</h2>
-<p>Welcome to <strong>AURA</strong> ("AURA", "we", "us", or "our"). These Terms of Service ("Terms") govern your access to and use of our websites, applications, and related services (collectively, the "Service").</p>
+<p>Welcome to <strong>Ori</strong> ("AURA", "we", "us", or "our"). These Terms of Service ("Terms") govern your access to and use of our websites, applications, and related services (collectively, the "Service").</p>
 <p>By creating an account, accessing, or using the Service, you agree to be bound by these Terms. If you do not agree, you must not use the Service.</p>
-<p>You are entering into an agreement with <strong>AURA Technologies S.A. de C.V.</strong>, with registered office at <strong>Via Antonio Fogazzaro, 5A, 35125 Padova PD, Italia</strong> ("Company").</p>
+<p>You are entering into an agreement with <strong>Ori Technologies S.A. de C.V.</strong>, with registered office at <strong>Via Antonio Fogazzaro, 5A, 35125 Padova PD, Italia</strong> ("Company").</p>
 
 <h2 id="eligibility">2. Eligibility</h2>
 <p>You may use the Service only if you:</p>
@@ -127,14 +127,14 @@ const content = `
 <h2 id="contact">20. Contact</h2>
 <p>If you have questions about these Terms, please contact us at:</p>
 <address>
-  <strong>AURA Technologies S.A. de C.V.</strong><br />
+  <strong>Ori Technologies S.A. de C.V.</strong><br />
   Via Antonio Fogazzaro, 5A, 35125 Padova PD, Italia<br />
   Email: <a href="mailto:support@carlospada.me">support@carlospada.me</a>
 </address>
 
 <hr />
 <footer>
-  &copy; 2025 AURA Technologies S.A. de C.V. – All rights reserved.
+  &copy; 2025 Ori Technologies S.A. de C.V. – All rights reserved.
 </footer>
 `;
 

@@ -3,7 +3,7 @@ import { LegalPageLayout } from '@/components/legal/LegalPageLayout';
 const content = `
 <h2 id="intro">1. Introduction</h2>
 <p>
-  This Cookie Policy explains how <strong>AURA</strong> ("AURA", "we", "us", or "our") uses cookies and similar technologies when you use our websites and applications (the "Service"). It should be read together with our Privacy Policy.
+  This Cookie Policy explains how <strong>Ori</strong> ("AURA", "we", "us", or "our") uses cookies and similar technologies when you use our websites and applications (the "Service"). It should be read together with our Privacy Policy.
 </p>
 
 <h2 id="what-are-cookies">2. What Are Cookies?</h2>
@@ -73,14 +73,14 @@ const content = `
   If you have questions about this Cookie Policy or our use of cookies and similar technologies, please contact us at:
 </p>
 <p>
-  <strong>AURA Technologies S.A. de C.V.</strong><br />
+  <strong>Ori Technologies S.A. de C.V.</strong><br />
   Via Antonio Fogazzaro, 5A, 35125 Padova PD, Italia<br />
   Email: <a href="mailto:support@carlospada.me">support@carlospada.me</a>
 </p>
 
 <hr />
 <footer>
-  &copy; 2025 AURA Technologies S.A. de C.V. – All rights reserved.
+  &copy; 2025 Ori Technologies S.A. de C.V. – All rights reserved.
 </footer>
 `;
 

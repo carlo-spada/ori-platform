@@ -48,11 +48,11 @@ git push origin development
 - **`development`**: Working branch where all development happens
 
 **Workflow:**
-1. Always work on `development` branch: `git checkout development && git pull`
-2. Make changes and commit regularly: `git commit -m "feat: description"`
-3. Push to development: `git push origin development`
-4. Create PR from `development` → `main` when ready to deploy
-5. PR requires: 1 approval, passing checks, conversation resolution, successful deployment
+Always work on `development` branch: `git checkout development && git pull`
+1. Make changes and commit regularly: `git commit -m "feat: description"`
+2. Push to development: `git push origin development`
+3. Create PR from `development` → `main` when ready to deploy
+4. PR requires: 1 approval, passing checks, conversation resolution, successful deployment
 6. After merge, Vercel automatically deploys to production
 
 **Never attempt to push directly to `main`** - it will be rejected by branch protection rules.
@@ -120,11 +120,11 @@ pnpm --filter <package> add <dep>  # Add dependency to specific package
 ## Architecture & Data Flow
 
 ### Authentication Flow
-1. Frontend uses `AuthProvider` context (src/contexts/AuthProvider.tsx) wrapping the app
-2. Supabase client is a singleton via `getSupabaseClient()` (src/integrations/supabase/client.ts)
-3. Auth state managed through Supabase auth listener + React context
-4. Protected routes in `/app/*` should check auth state before rendering
-5. Sign up redirects to `/app/dashboard` after email confirmation
+Frontend uses `AuthProvider` context (src/contexts/AuthProvider.tsx) wrapping the app
+1. Supabase client is a singleton via `getSupabaseClient()` (src/integrations/supabase/client.ts)
+2. Auth state managed through Supabase auth listener + React context
+3. Protected routes in `/app/*` should check auth state before rendering
+4. Sign up redirects to `/app/dashboard` after email confirmation
 
 ### API Integration Pattern
 - Frontend queries core-api via React Query (TanStack Query)
@@ -133,10 +133,10 @@ pnpm --filter <package> add <dep>  # Add dependency to specific package
 - Core-api expects CORS from frontend origin
 
 ### Payment Flow
-1. Stripe integration via `@stripe/react-stripe-js` on frontend (src/lib/stripe.ts)
-2. Payment routes in core-api: `/api/v1/payments/*`
-3. Webhook endpoint MUST be before `express.json()` middleware (uses raw body)
-4. Three subscription tiers: free, plus, premium (see shared/types for limits)
+Stripe integration via `@stripe/react-stripe-js` on frontend (src/lib/stripe.ts)
+1. Payment routes in core-api: `/api/v1/payments/*`
+2. Webhook endpoint MUST be before `express.json()` middleware (uses raw body)
+3. Three subscription tiers: free, plus, premium (see shared/types for limits)
 
 ### Component Organization
 - UI primitives in `src/components/ui/` (shadcn/ui components with Radix UI)
@@ -216,21 +216,21 @@ While test infrastructure isn't fully established, follow these patterns:
 ## Common Development Patterns
 
 ### Adding a New API Route
-1. Create route handler in `services/core-api/src/routes/`
-2. Import and mount in `services/core-api/src/index.ts`
-3. Add types to `shared/types/src/index.ts` if needed
-4. Build core-api: `pnpm --filter @ori/core-api build`
+Create route handler in `services/core-api/src/routes/`
+1. Import and mount in `services/core-api/src/index.ts`
+2. Add types to `shared/types/src/index.ts` if needed
+3. Build core-api: `pnpm --filter @ori/core-api build`
 
 ### Creating a New Protected Page
-1. Add route under `src/app/app/` (nested under authenticated section)
-2. Check auth state in page component using `useAuth()` hook
-3. Redirect to `/login` if not authenticated
-4. Add navigation item to `src/lib/navConfig.ts` if needed
+Add route under `src/app/app/` (nested under authenticated section)
+1. Check auth state in page component using `useAuth()` hook
+2. Redirect to `/login` if not authenticated
+3. Add navigation item to `src/lib/navConfig.ts` if needed
 
 ### Adding Shared Types
-1. Define in `shared/types/src/index.ts`
-2. Export from package
-3. Import in consuming packages as `@ori/types` (may need workspace setup)
+Define in `shared/types/src/index.ts`
+1. Export from package
+2. Import in consuming packages as `@ori/types` (may need workspace setup)
 
 ## Code Style Conventions
 
@@ -252,26 +252,25 @@ While test infrastructure isn't fully established, follow these patterns:
 ## My Role: Implementer & Builder
 
 **Primary Responsibilities:**
-1. **Claim Tasks**: Move task files from `.tasks/todo/` to `.tasks/in-progress/`
-2. **Implement**: Execute plans defined by Gemini with precision and creativity
-3. **Complete**: Move finished tasks to `.tasks/done/` after implementation
-4. **Test**: Ensure code works as expected before marking complete
+**Claim Tasks**: Move task files from `.tasks/todo/` to `.tasks/in-progress/`
+1. **Implement**: Execute plans defined by Gemini with precision and creativity
+2. **Complete**: Move finished tasks to `.tasks/done/` after implementation
+3. **Test**: Ensure code works as expected before marking complete
 
 **Task Workflow:**
-1. Review task file in `.tasks/todo/`
-2. Move to `.tasks/in-progress/` and commit
-3. Implement feature following task instructions
-4. Run tests (`pnpm lint`, `pnpm build`)
-5. Move to `.tasks/done/` and commit
+Review task file in `.tasks/todo/`
+1. Move to `.tasks/in-progress/` and commit
+2. Implement feature following task instructions
+3. Run tests (`pnpm lint`, `pnpm build`)
+4. Move to `.tasks/done/` and commit
 6. Update documentation if major change
 
 ## Important Notes
 
-1. Project rebranded from "Aura" to "Ori" - may see references to both names
-2. Always use pnpm, never npm or yarn (workspace dependency)
-3. Core-api uses `.js` extensions despite TypeScript (ES module compatibility)
-4. Stripe webhook route MUST be before `express.json()` (raw body requirement)
-5. Supabase client is singleton - always use `getSupabaseClient()`
+1. Always use pnpm, never npm or yarn (workspace dependency)
+2. Core-api uses `.js` extensions despite TypeScript (ES module compatibility)
+3. Stripe webhook route MUST be before `express.json()` (raw body requirement)
+4. Supabase client is singleton - always use `getSupabaseClient()`
 6. `@/` path alias only works in frontend, not in services/
 7. **AI Engine**: Core-api gracefully falls back if AI engine unavailable
 8. **AI Engine First Run**: Downloads ~80MB sentence-transformer model (one-time)
