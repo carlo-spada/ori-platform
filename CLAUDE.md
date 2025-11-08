@@ -70,11 +70,10 @@ Ori Platform is an AI-powered career companion built as a pnpm workspace monorep
 
 This is a pnpm workspace. The key directories are:
 
-- **`api/`**: **Vercel Serverless Functions**. This is the production backend API.
-- **`src/`**: The **Next.js** frontend application.
-- **`services/`**: Supporting backend services.
-  - `core-api`: A local-only Express server that mirrors the serverless API for development.
-  - `ai-engine`: The Python/FastAPI service for all AI features.
+- **`src/`**: The **Next.js 16** frontend application.
+- **`services/`**: Backend services.
+  - `core-api`: Node.js/Express backend API for user profiles, authentication, and business logic.
+  - `ai-engine`: Python/FastAPI service for all AI-powered features.
 - **`shared/`**: Cross-service packages for types and utilities.
 
 ## Development Commands
@@ -90,10 +89,8 @@ pnpm lint                   # Run ESLint (next/core-web-vitals config)
 
 ### Backend Development
 
-The production API runs as serverless functions in the `api/` directory and is served by `pnpm dev`. The following command is for running the local-only Express server for development and debugging.
-
 ```bash
-pnpm dev:api                           # Start local-only core-api at http://localhost:3001
+pnpm dev:api                           # Start core-api at http://localhost:3001
 pnpm --filter @ori/core-api dev        # Equivalent command
 pnpm --filter @ori/core-api build      # Build core-api TypeScript
 
@@ -182,7 +179,7 @@ FRONTEND_URL=http://localhost:3000
 ### TypeScript Configuration
 
 - Strict mode enabled across all packages
-- Target: ES2017 for Next.js compatibility
+- Target: ES2022
 - Module resolution: bundler (Next.js 13+ requirement)
 - Each service has its own tsconfig.json extending root config
 
@@ -260,6 +257,8 @@ Define in `shared/types/src/index.ts`
 ## Deployment Considerations
 
 - Frontend deploys to Vercel with Analytics and Speed Insights enabled
+- Core-api (Express.js) deploys alongside frontend on Vercel
+- AI Engine deploys to Google Cloud Run as a containerized service
 - Core-api needs PORT, Supabase, and Stripe env vars
 - Stripe webhook endpoint must be registered in Stripe dashboard
 - Supabase project: zkdgtofxtzqnzgncqlyc.supabase.co

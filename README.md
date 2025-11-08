@@ -21,8 +21,7 @@ Our mission is to prove that **fulfillment should be scalable, and purpose shoul
 This repository is a **pnpm workspace monorepo** containing the following core components:
 
 - **`src/`**: A **Next.js** application that serves as the main user interface.
-- **`api/`**: **Vercel Serverless Functions** that serve as the production backend, handling user profiles, authentication, and business logic.
-- **`services/core-api/`**: A **Node.js/Express** app that mirrors the production API for local development purposes.
+- **`services/core-api/`**: A **Node.js/Express** backend API that handles user profiles, authentication, and business logic.
 - **`services/ai-engine/`**: A **Python/FastAPI** service that provides all AI-powered features, including semantic job matching, skill gap analysis, and learning path generation.
 - **`shared/`**: Shared packages (e.g., types, utils) used across the monorepo.
 
@@ -30,23 +29,23 @@ This repository is a **pnpm workspace monorepo** containing the following core c
 
 Our platform is built with a modern, scalable, and polyglot architecture:
 
-- **Frontend**: Next.js 14 (App Router), React, TypeScript
-- **Backend (Core)**: Node.js, Express.js (migrating to Vercel Serverless Functions)
-- **Backend (AI)**: Python, FastAPI, Sentence-Transformers
-- **Database**: Supabase with Vercel Postgres
-- **UI**: shadcn-ui, Tailwind CSS
+- **Frontend**: Next.js 16 (App Router), React 19, TypeScript
+- **Backend (Core)**: Node.js 20, Express.js
+- **Backend (AI)**: Python 3.11, FastAPI, Sentence-Transformers
+- **Database**: Supabase PostgreSQL
+- **UI**: shadcn-ui, Tailwind CSS, Radix UI
 - **State Management**: React Query (TanStack Query)
-- **Deployment**: Vercel (Frontend & Core API) and Google Cloud Run (AI Engine)
+- **Deployment**: Vercel (Frontend) and Google Cloud Run (AI Engine)
 - **Monorepo Management**: pnpm workspaces, Turborepo
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ and pnpm
-- Python 3.10+ and pip
+- Node.js 20+ and pnpm
+- Python 3.11+ and pip
 - A Supabase account and project
-- Docker (for containerizing the AI Engine)
+- Docker (optional, for containerizing the AI Engine)
 
 ### Setup
 
@@ -78,14 +77,15 @@ You will need to run three separate services in different terminal windows.
 
     - Access the web app at `http://localhost:3000`.
 
-2.  **Run the Core API (for local development):**
-    This command starts the local Express.js server, which mirrors the production serverless API. The main `pnpm dev` command automatically uses the serverless functions in the `api/` directory.
+2.  **Run the Core API:**
 
     ```bash
+    pnpm dev:api
+    # or equivalently:
     pnpm --filter @ori/core-api dev
     ```
 
-    - The local API will be available at `http://localhost:3001`.
+    - The API will be available at `http://localhost:3001`.
 
 3.  **Run the AI Engine (Python):**
 
@@ -103,15 +103,16 @@ This project is managed using a **"Task-as-File"** system. All work is tracked i
 
 For a detailed explanation of our collaborative workflow, agent roles, and branching strategy, please see **[`AGENTS.md`](./AGENTS.md)**.
 
-## 🚀 Deployment: A Zero-Ops Vision
+## 🚀 Deployment
 
-Our production architecture is designed to be **Serverless-First**, requiring zero manual operations to deploy or scale.
+Our production architecture is designed for simplicity and scalability:
 
-- The **Next.js frontend** and **Core API** (as Serverless Functions) are deployed automatically to **Vercel** from the `main` branch.
+- The **Next.js frontend** is deployed automatically to **Vercel** from the `main` branch.
+- The **Core API** (Express.js) is currently deployed alongside the frontend on Vercel.
 - The **AI Engine** is containerized with Docker and deployed automatically to **Google Cloud Run**.
 - A unified CI/CD pipeline in GitHub Actions orchestrates testing, deployment, and database migrations on every merge to `main`.
 
-This architecture ensures ultra-low latency, infinite scalability, and a seamless development experience.
+This architecture ensures low latency, easy scalability, and a seamless development experience.
 
 ## 🤝 Contributing
 
