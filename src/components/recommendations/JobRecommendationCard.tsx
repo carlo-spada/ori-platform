@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { JobRecommendation, Skill } from '@/lib/types';
+import { JobRecommendation } from '@/lib/types';
 import { MapPin, Calendar } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { SkillsGapDisplay } from './SkillsGapDisplay';
@@ -20,14 +20,6 @@ export function JobRecommendationCard({ job, labels }: JobRecommendationCardProp
     '{date}',
     formatDistanceToNow(new Date(job.datePosted), { addSuffix: true })
   );
-
-  // TODO: Temporary mock data for UI verification - will be replaced with real API data in Task C
-  const mockSkills: Skill[] = [
-    { name: 'React', status: 'matched' },
-    { name: 'TypeScript', status: 'matched' },
-    { name: 'Node.js', status: 'missing' },
-    { name: 'AWS', status: 'missing' },
-  ];
 
   return (
     <article className="rounded-2xl border border-border bg-card p-4 flex flex-col gap-3 hover:bg-card/80 transition-colors">
@@ -60,8 +52,10 @@ export function JobRecommendationCard({ job, labels }: JobRecommendationCardProp
         {job.summary}
       </p>
 
-      {/* Temporary Skills Gap Display - will use real data from API in Task C */}
-      <SkillsGapDisplay skills={mockSkills} />
+      {/* Skills Gap Analysis - displays real data from API */}
+      {job.skills_analysis && job.skills_analysis.length > 0 && (
+        <SkillsGapDisplay skills={job.skills_analysis} />
+      )}
 
       <div className="flex items-center gap-1 text-xs text-muted-foreground">
         <Calendar className="w-3.5 h-3.5" aria-hidden="true" />

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
@@ -54,8 +55,8 @@ async function main() {
     results.push(await syncBranch(branch));
   }
 
-  console.log('
---- Synchronization Summary ---');
+  console.log(`
+--- Synchronization Summary ---`);
   results.forEach(result => {
     if (result.status === 'success') {
       console.log(`✅ ${result.branch}: Successfully synced.`);
@@ -66,12 +67,12 @@ async function main() {
 
   const failedSyncs = results.filter(r => r.status === 'failure');
   if (failedSyncs.length > 0) {
-    console.error('
-Some branches failed to sync. Please check the logs above for details and resolve conflicts manually.');
+    console.error(`
+Some branches failed to sync. Please check the logs above for details and resolve conflicts manually.`);
     process.exit(1);
   } else {
-    console.log('
-All branches synchronized successfully.');
+    console.log(`
+All branches synchronized successfully.`);
   }
 }
 

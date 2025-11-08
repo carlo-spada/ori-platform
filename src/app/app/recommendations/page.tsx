@@ -4,60 +4,17 @@ export const dynamic = 'force-dynamic';
 
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from '@tanstack/react-query';
 import { setDocumentMeta } from '@/lib/seo';
 import { RecommendationType, JobRecommendation, CareerAdvice } from '@/lib/types';
 import { JobRecommendationCard } from '@/components/recommendations/JobRecommendationCard';
 import { CareerAdviceCard } from '@/components/recommendations/CareerAdviceCard';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthProvider';
+import { fetchJobRecommendations } from '@/integrations/api/jobs';
 import Link from 'next/link';
 
-// Mock data for demonstration
-const MOCK_JOB_RECOMMENDATIONS: JobRecommendation[] = [
-  {
-    id: '1',
-    title: 'Senior Product Designer',
-    company: 'Acme Corp',
-    location: 'San Francisco, CA (Remote)',
-    matchScore: 92,
-    summary: 'Lead the design of our core product platform, working closely with engineering and product teams to create intuitive, beautiful experiences.',
-    datePosted: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    detailHref: '#',
-    applyHref: '#',
-  },
-  {
-    id: '2',
-    title: 'UX Researcher',
-    company: 'Tech Innovations',
-    location: 'New York, NY',
-    matchScore: 88,
-    summary: 'Drive user research initiatives to inform product strategy and design decisions. Conduct interviews, usability tests, and analyze behavioral data.',
-    datePosted: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-    detailHref: '#',
-    applyHref: '#',
-  },
-  {
-    id: '3',
-    title: 'Product Design Lead',
-    company: 'Future Labs',
-    location: 'Austin, TX',
-    matchScore: 85,
-    summary: 'Build and mentor a team of designers while crafting the vision for our next-generation healthcare products.',
-    datePosted: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-    detailHref: '#',
-  },
-  {
-    id: '4',
-    title: 'Design Systems Architect',
-    company: 'Scale Studio',
-    location: 'Remote',
-    matchScore: 90,
-    summary: 'Create and maintain a comprehensive design system that empowers teams to build consistent, accessible products at scale.',
-    datePosted: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
-    detailHref: '#',
-    applyHref: '#',
-  },
-];
-
+// Mock career advice data (jobs are now fetched from API)
 const MOCK_CAREER_ADVICE: CareerAdvice[] = [
   {
     id: '1',
@@ -91,9 +48,35 @@ const MOCK_CAREER_ADVICE: CareerAdvice[] = [
 
 export default function Recommendations() {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const [recommendationType, setRecommendationType] = useState<RecommendationType>('jobs');
-  const [jobRecommendations] = useState<JobRecommendation[]>(MOCK_JOB_RECOMMENDATIONS);
   const [careerAdvice] = useState<CareerAdvice[]>(MOCK_CAREER_ADVICE);
+
+  // Fetch job recommendations from API
+  const {
+    data: jobMatchData,
+    isLoading: isLoadingJobs,
+    error: jobsError,
+  } = useQuery({
+    queryKey: ['jobRecommendations', user?.id],
+    queryFn: () => fetchJobRecommendations({ userId: user!.id, limit: 6 }),
+    enabled: !!user?.id,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
+
+  // Transform API data to JobRecommendation format
+  const jobRecommendations: JobRecommendation[] = jobMatchData?.matches.map((match) => ({
+    id: match.id,
+    title: match.title,
+    company: match.company,
+    location: match.location,
+    matchScore: match.matchScore,
+    summary: match.description || `Join ${match.company} as a ${match.title}`,
+    datePosted: match.posted_date || match.created_at,
+    detailHref: `/app/jobs/${match.id}`,
+    applyHref: match.highlights?.[0], // If available
+    skills_analysis: match.skills_analysis,
+  })) || [];
 
   useEffect(() => {
     setDocumentMeta({
@@ -103,6 +86,41 @@ export default function Recommendations() {
   }, []);
 
   const renderJobsView = () => {
+    // Loading state
+    if (isLoadingJobs) {
+      return (
+        <div className="p-8 rounded-2xl border border-border bg-card text-center space-y-4">
+          <div className="animate-pulse space-y-4">
+            <div className="h-8 bg-muted rounded w-1/4 mx-auto" />
+            <div className="h-4 bg-muted rounded w-1/2 mx-auto" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-48 bg-muted rounded-2xl" />
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Error state
+    if (jobsError) {
+      return (
+        <div className="p-8 rounded-2xl border border-border bg-card text-center space-y-4">
+          <h2 className="text-xl font-semibold text-foreground">
+            Failed to load recommendations
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            {jobsError instanceof Error ? jobsError.message : 'An error occurred while fetching job recommendations'}
+          </p>
+          <Button onClick={() => window.location.reload()}>
+            Try Again
+          </Button>
+        </div>
+      );
+    }
+
+    // Empty state
     if (jobRecommendations.length === 0) {
       return (
         <div className="p-8 rounded-2xl border border-border bg-card text-center space-y-4">
@@ -119,11 +137,19 @@ export default function Recommendations() {
       );
     }
 
+    // Success state - display job recommendations
     return (
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold text-foreground">
-          {t('recommendationsPage.jobs.heading')}
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold text-foreground">
+            {t('recommendationsPage.jobs.heading')}
+          </h2>
+          {jobMatchData?.usage && (
+            <p className="text-sm text-muted-foreground">
+              {jobMatchData.usage.used} / {jobMatchData.usage.limit} matches used this month
+            </p>
+          )}
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
           {jobRecommendations.map((job) => (
             <JobRecommendationCard
