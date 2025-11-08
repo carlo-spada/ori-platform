@@ -1,18 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(pnpm run build:*)",
-      "Bash(pnpm add:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm build:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push)",
-      "Bash(pnpm install)",
-      "Bash(cat:*)",
-      "Bash(pnpm build:*)",
-      "Bash(git rm:*)",
-      "Bash(pnpm list:*)",
-      "Bash(git rebase:*)",
-      "Bash(git diff:*)"
+      "Bash(git push:*)",
+      "Bash(python -c:*)",
+      "Bash(git restore:*)",
+      "Bash(git reset:*)"
     ],
     "deny": [],
     "ask": []

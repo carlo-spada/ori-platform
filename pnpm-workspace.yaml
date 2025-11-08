@@ -1,6 +1,5 @@
 packages:
-  # Frontend application (Lovable-managed)
-  - 'frontend'
+  # Root Next.js app lives here at the workspace root
 
   # Backend microservices
   - 'services/*'
