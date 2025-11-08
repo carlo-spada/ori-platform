@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic'
 
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { setDocumentMeta } from '@/lib/seo'
@@ -28,9 +28,7 @@ export default function Dashboard() {
   const userName =
     user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User'
   const queryClient = useQueryClient()
-  const [conversationId, setConversationId] = useState<string | undefined>(
-    undefined,
-  )
+  const conversationId = useRef<string | undefined>(undefined)
 
   // Fetch chat history
   const { data: chatData, isLoading: isChatLoading } = useQuery({
@@ -46,13 +44,14 @@ export default function Dashboard() {
   // Update conversation ID when data loads
   useEffect(() => {
     if (chatData?.conversation?.id) {
-      setConversationId(chatData.conversation.id)
+      conversationId.current = chatData.conversation.id
     }
   }, [chatData])
 
   // Mutation for sending messages
   const sendMessageMutation = useMutation({
-    mutationFn: (content: string) => sendChatMessage(content, conversationId),
+    mutationFn: (content: string) =>
+      sendChatMessage(content, conversationId.current),
     onMutate: async (content) => {
       // Cancel outgoing refetches
       await queryClient.cancelQueries({ queryKey: ['chat-history'] })
@@ -71,7 +70,7 @@ export default function Dashboard() {
             ...(old?.messages || []),
             {
               id: `temp-${Date.now()}`,
-              conversation_id: conversationId || 'temp',
+              conversation_id: conversationId.current || 'temp',
               role: 'user' as const,
               content,
               created_at: new Date().toISOString(),
@@ -84,8 +83,8 @@ export default function Dashboard() {
     },
     onSuccess: (data) => {
       // Update conversation ID if this was the first message
-      if (!conversationId && data.conversation_id) {
-        setConversationId(data.conversation_id)
+      if (!conversationId.current && data.conversation_id) {
+        conversationId.current = data.conversation_id
       }
 
       // Update cache with assistant's response
@@ -127,39 +126,39 @@ export default function Dashboard() {
   }
 
   // Mock data for RecentActivity (will be replaced with real data)
-  const recentActivities: ActivityItem[] = useMemo(
-    () => [
+  const recentActivities: ActivityItem[] = useMemo(() => {
+    const now = new Date('2025-01-08T12:00:00Z')
+    return [
       {
         id: '1',
         type: 'application',
         title: 'Applied to Senior Product Manager',
         subtitle: 'Google Inc.',
-        timestamp: new Date(initialTime - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
+        timestamp: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
       },
       {
         id: '2',
         type: 'skill',
         title: 'Added new skill',
         subtitle: 'TypeScript',
-        timestamp: new Date(initialTime - 5 * 60 * 60 * 1000).toISOString(), // 5 hours ago
+        timestamp: new Date(now.getTime() - 5 * 60 * 60 * 1000).toISOString(), // 5 hours ago
       },
       {
         id: '3',
         type: 'favorite',
         title: 'Saved job',
         subtitle: 'Lead Designer at Meta',
-        timestamp: new Date(initialTime - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
+        timestamp: new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
       },
       {
         id: '4',
         type: 'profile',
         title: 'Updated your profile',
         subtitle: 'Added work experience',
-        timestamp: new Date(initialTime - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
+        timestamp: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
       },
-    ],
-    [initialTime],
-  )
+    ]
+  }, [])
 
   const whatsNext = {
     title: t('dashboardPage.whatsNext.defaultTitle'),

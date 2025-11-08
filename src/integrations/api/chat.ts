@@ -1,7 +1,6 @@
 import { getSupabaseClient } from '@/integrations/supabase/client'
 import type {
   ChatMessage as BackendChatMessage,
-  Conversation,
   ChatHistoryResponse,
   SendMessageRequest,
   SendMessageResponse,
