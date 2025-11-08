@@ -84,7 +84,7 @@ export async function fetchJobRecommendations(
   });
 
   if (!response.ok) {
-    let errorMessage = `API request failed with status ${response.status}`;
+    let errorMessage: string;
     
     try {
       const errorData: ApiErrorResponse = await response.json();
