@@ -60,7 +60,12 @@ export async function fetchJobRecommendations(
 
   // Get the API URL from environment or default to localhost
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+  const { data, error } = await supabase.auth.getSession();
 
+  if (error || !data.session) {
+    throw new Error('No active session or authentication error.');
+  }
+  const { session } = data;
   const response = await fetch(`${apiUrl}/api/v1/jobs/find-matches`, {
     method: 'POST',
     headers: {
