@@ -66,7 +66,10 @@ export async function fetchJobRecommendations(
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${session.access_token}`,
-    },
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (!apiUrl) {
+    throw new Error('NEXT_PUBLIC_API_URL is not defined');
+  }
     body: JSON.stringify({
       userId: request.userId,
       limit: request.limit || 6,
