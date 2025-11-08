@@ -50,6 +50,10 @@ This workflow is not just a guideline; it is enforced by the repository's config
 *   **Automated CI Checks**: A GitHub Actions workflow automatically runs `lint`, `build`, and `test` commands on every PR. The PR cannot be merged unless all checks pass.
 *   **Code Review**: At least one other agent or the human supervisor must review and approve a PR before it can be merged.
 
+### Branch Sync Agent
+
+`main` is the single source of truth. To prevent the agent branches from drifting away from the latest production-ready commits, a dedicated workflow (`.github/workflows/branch-sync-agent.yml`) runs every six hours, on every push to `main`, and on manual dispatch. The workflow executes `scripts/branch-sync-agent.js` which reads `agents/branch-sync.config.json` and merges `origin/main` into `codex-branch`, `claude-branch`, and `gemini-branch` sequentially. If it creates new merges it pushes them back upstream; if a merge conflict happens the workflow aborts, records the failure in the step summary, and exits non-zero so humans can resolve the conflict directly on the affected branch. You can run the same logic locally with `node scripts/branch-sync-agent.js`.
+
 ## GitHub Considerations
 
 All code changes must be integrated into the `main` branch via Pull Requests (PRs) from an agent's dedicated branch. Direct pushes to `main` are disabled. Before creating a PR, ensure your branch is up-to-date with `main` and passes all local checks. This workflow preserves version integrity, prevents integration errors, and ensures the `main` branch is always stable.
@@ -116,7 +120,7 @@ These roles are not fixed and will adapt as we test and learn from the workflow.
 
 ## Project Structure & Module Organization
 
-Ori Platform is a pnpm workspace monorepo. Web code resides in `src/` (`src/app` for the App Router, `src/components` for UI, `src/contexts` and `src/hooks` for state helpers, `src/integrations` and `src/lib` for clients) using the `@/` alias. Shared domain assets live in `shared/`, backend services in `services/` (`core-api`, `ai-engine`), static files in `public/`, and Supabase migrations in `supabase/`.
+Ori Platform is a pnpm workspace monorepo. Web code resides in `src/` (`src/app` for the App Router, `src/components` for UI, `src/contexts` and `src/hooks` for state helpers, `src/integrations` and `src/lib` for clients) using the ` @/` alias. Shared domain assets live in `shared/`, backend services in `services/` (`core-api`, `ai-engine`), static files in `public/`, and Supabase migrations in `supabase/`.
 
 **AI Engine (Nov 2025):** Fully implemented Python FastAPI service providing semantic job matching, skill gap analysis, and learning path generation. Uses sentence-transformers for local embedding generation (no API keys required). Multi-factor scoring algorithm weights semantic similarity (40%), skill match (30%), experience (15%), location (10%), and salary (5%). Core-api integrates via HTTP client with graceful fallback.
 
@@ -171,6 +175,7 @@ All agents must follow the same standards and recommendations when performing th
 - **claude-branch**: Drive long-form reasoning tasks—config coordination, backend contract updates in `services/`, and documentation refreshes that keep cross-cutting changes coherent.
   - **Completed (Nov 2025):** AI Engine foundation - semantic matching, skill analysis, learning paths, core-api integration
 - **Cross-branch guardrails**: Sequence dependent tasks `claude ➝ codex ➝ gemini` (API contract → implementation → UI polish) and schedule weekly rebases on `main` after each PR merge to minimize conflicts.
+- **Immediate next steps**: Curate the upcoming sprint backlog into codex/gemini/claude columns with clear owners, and have every agent run `pnpm install && pnpm lint` inside their clone to ensure environment parity before starting.
 - **Immediate next steps**: Curate the upcoming sprint backlog into codex/gemini/claude columns with clear owners, and have every agent run `pnpm install && pnpm lint` inside their clone to ensure environment parity before starting.
 
 ### Reference Documentation
