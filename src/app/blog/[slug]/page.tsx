@@ -47,11 +47,11 @@ const mockPosts: Record<string, BlogPost> = {
       </blockquote>
 
       <h2>The Path Forward</h2>
-      <p>At AURA, we believe the future of work is fundamentally human. AI should serve as an empathetic companion that helps people discover work that aligns with their unique strengths, passions, and values. Technology should empower individuals, not dictate their paths.</p>
+      <p>At Ori, we believe the future of work is fundamentally human. AI should serve as an empathetic companion that helps people discover work that aligns with their unique strengths, passions, and values. Technology should empower individuals, not dictate their paths.</p>
 
       <p>The organizations and individuals who will thrive are those who embrace AI as a tool for human flourishing rather than a threat to human relevance.</p>
     `,
-    author: 'AURA AI',
+    author: 'Ori AI',
     date: '2025-01-15T10:00:00Z',
     readingTimeMinutes: 8,
     category: 'Future of Work',
@@ -94,10 +94,10 @@ const mockPosts: Record<string, BlogPost> = {
         <li>Start small with pilot projects or side work</li>
       </ul>
 
-      <h2>How AURA Can Help</h2>
-      <p>AURA is designed to be your companion throughout your career journey. We help you discover opportunities that align with your evolving self, suggest upskilling pathways, and support you through transitions with personalized guidance.</p>
+      <h2>How Ori Can Help</h2>
+      <p>Ori is designed to be your companion throughout your career journey. We help you discover opportunities that align with your evolving self, suggest upskilling pathways, and support you through transitions with personalized guidance.</p>
     `,
-    author: 'AURA AI',
+    author: 'Ori AI',
     date: '2025-01-10T10:00:00Z',
     readingTimeMinutes: 6,
     category: 'Career Development',
@@ -132,17 +132,17 @@ const mockPosts: Record<string, BlogPost> = {
         <li>Does it contribute to user well-being or detract from it?</li>
       </ul>
 
-      <h2>Designing AURA with Empathy</h2>
-      <p>At AURA, empathy is not just a buzzword—it's fundamental to how we build. We recognize that job searching and career decisions are deeply personal and often stressful experiences. Our design principles reflect this:</p>
+      <h2>Designing Ori with Empathy</h2>
+      <p>At Ori, empathy is not just a buzzword—it's fundamental to how we build. We recognize that job searching and career decisions are deeply personal and often stressful experiences. Our design principles reflect this:</p>
 
       <h3>Respect for Autonomy</h3>
-      <p>AURA provides guidance and suggestions, but you always maintain control. We believe technology should empower decision-making, not make decisions for you.</p>
+      <p>Ori provides guidance and suggestions, but you always maintain control. We believe technology should empower decision-making, not make decisions for you.</p>
 
       <h3>Transparency</h3>
-      <p>We explain how AURA learns and makes recommendations. No black boxes. You deserve to understand the technology that influences your career.</p>
+      <p>We explain how Ori learns and makes recommendations. No black boxes. You deserve to understand the technology that influences your career.</p>
 
       <h3>Patience and Adaptability</h3>
-      <p>Career journeys are not linear. AURA is designed to support you through pivots, setbacks, and periods of uncertainty without judgment.</p>
+      <p>Career journeys are not linear. Ori is designed to support you through pivots, setbacks, and periods of uncertainty without judgment.</p>
 
       <h3>Privacy and Trust</h3>
       <p>Your career information is deeply personal. We handle your data with the highest standards of security and respect.</p>
@@ -154,7 +154,7 @@ const mockPosts: Record<string, BlogPost> = {
         "Technology is at its best when it makes us more human, not less."
       </blockquote>
     `,
-    author: 'AURA AI',
+    author: 'Ori AI',
     date: '2025-01-05T10:00:00Z',
     readingTimeMinutes: 7,
     category: 'Technology',
@@ -172,7 +172,7 @@ export default function BlogPostPage() {
     if (post && typeof window !== 'undefined') {
       // Set SEO metadata
       setDocumentMeta({
-        title: `${post.title} | AURA Insights`,
+        title: `${post.title} | Ori Insights`,
         description: post.excerpt,
         canonical: `${window.location.origin}/blog/${post.slug}`,
       });

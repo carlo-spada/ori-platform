@@ -18,7 +18,7 @@ const mockPosts: BlogPost[] = [
     excerpt:
       'Exploring how artificial intelligence is reshaping the workplace and creating new opportunities for meaningful human contribution.',
     content: '<p>Full article content would go here...</p>',
-    author: 'AURA AI',
+    author: 'Ori AI',
     date: '2025-01-15T10:00:00Z',
     readingTimeMinutes: 8,
     category: 'Future of Work',
@@ -31,7 +31,7 @@ const mockPosts: BlogPost[] = [
     excerpt:
       'How to navigate career transitions and build resilience in an ever-evolving job market.',
     content: '<p>Full article content would go here...</p>',
-    author: 'AURA AI',
+    author: 'Ori AI',
     date: '2025-01-10T10:00:00Z',
     readingTimeMinutes: 6,
     category: 'Career Development',
@@ -44,7 +44,7 @@ const mockPosts: BlogPost[] = [
     excerpt:
       'Why empathy-first design principles are essential for building technology that truly serves people.',
     content: '<p>Full article content would go here...</p>',
-    author: 'AURA AI',
+    author: 'Ori AI',
     date: '2025-01-05T10:00:00Z',
     readingTimeMinutes: 7,
     category: 'Technology',

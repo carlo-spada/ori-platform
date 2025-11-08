@@ -3,7 +3,7 @@ import { LegalPageLayout } from '@/components/legal/LegalPageLayout';
 const content = `
 <h2 id="intro">1. Introduction</h2>
 <p>
-  This Cookie Policy explains how <strong>Ori</strong> ("AURA", "we", "us", or "our") uses cookies and similar technologies when you use our websites and applications (the "Service"). It should be read together with our Privacy Policy.
+  This Cookie Policy explains how <strong>Ori</strong> ("Ori", "we", "us", or "our") uses cookies and similar technologies when you use our websites and applications (the "Service"). It should be read together with our Privacy Policy.
 </p>
 
 <h2 id="what-are-cookies">2. What Are Cookies?</h2>
@@ -89,7 +89,7 @@ export default function CookiePolicyPage() {
     <LegalPageLayout
       title="Cookie Policy"
       lastUpdated="Last updated: March 1, 2025"
-      metaDescription="Understand how AURA uses cookies and similar tracking technologies."
+      metaDescription="Understand how Ori uses cookies and similar tracking technologies."
       tocItems={[
         { id: 'intro', label: '1. Introduction' },
         { id: 'what-are-cookies', label: '2. What Are Cookies?' },
