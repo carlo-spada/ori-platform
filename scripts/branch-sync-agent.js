@@ -27,8 +27,7 @@ function getBranchHead(branchName) {
 }
 
 async function syncBranch(targetBranch) {
-  console.log(`
---- Syncing ${targetBranch} ---`);
+  console.log(`\n--- Syncing ${targetBranch} ---`);
   const initialHead = getBranchHead(targetBranch);
 
   try {
@@ -54,8 +53,7 @@ async function main() {
     results.push(await syncBranch(branch));
   }
 
-  console.log('
---- Synchronization Summary ---');
+  console.log('\n--- Synchronization Summary ---');
   results.forEach(result => {
     if (result.status === 'success') {
       console.log(`✅ ${result.branch}: Successfully synced.`);
@@ -66,12 +64,10 @@ async function main() {
 
   const failedSyncs = results.filter(r => r.status === 'failure');
   if (failedSyncs.length > 0) {
-    console.error('
-Some branches failed to sync. Please check the logs above for details and resolve conflicts manually.');
+    console.error('\nSome branches failed to sync. Please check the logs above for details and resolve conflicts manually.');
     process.exit(1);
   } else {
-    console.log('
-All branches synchronized successfully.');
+    console.log('\nAll branches synchronized successfully.');
   }
 }
 
