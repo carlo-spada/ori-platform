@@ -54,7 +54,7 @@ export default function Login() {
       // Validate input
       const validation = loginSchema.safeParse({ email, password })
       if (!validation.success) {
-        const firstError = validation.error.errors[0]
+        const firstError = validation.error.issues[0]
         toast({
           variant: 'destructive',
           title: 'Invalid input',
