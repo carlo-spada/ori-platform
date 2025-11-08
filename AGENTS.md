@@ -274,6 +274,7 @@ Treat this document as the shared playbook. Whenever you introduce a major featu
 
 ### Recent Completions
 
+- **CI Consolidation (Jan 2025):** Merged `verify.yml` and `auto-pr-review.yml` into a single, efficient `pull-request-ci.yml` to accelerate PR checks.
 - **Branch Rename (Jan 2025):** Simplified working branch from `development` to `dev` for cleaner workflow commands
 - **Lint & Build Fixes (Jan 2025):** Resolved all TypeScript strict mode violations and React purity issues in dashboard and test files
 - **CI/CD Updates (Jan 2025):** Updated GitHub workflows to use pnpm v10 for lockfile compatibility
