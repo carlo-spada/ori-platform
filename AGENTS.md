@@ -100,14 +100,15 @@ All tasks are managed within the `.tasks/` directory, which is organized into st
     *   **Workflow**:
         1.  Claims a task by moving its corresponding file or folder from `.tasks/todo/` to `.tasks/in-progress/`.
         2.  Implements the feature or fix as described in the task file.
-        3.  Upon completion, moves the task file/folder to `.tasks/done/`.
+        3.  Upon completion, moves the task file/folder to `.tasks/done/` and **updates the assignee in the file to Codex** to signal it's ready for review.
 
 3.  **Codex (Reviewer & Debugger)**:
     *   **Role**: Audits the code produced by Claude, identifying bugs, refactoring opportunities, and ensuring quality.
     *   **Workflow**:
-        1.  Claims a task by moving it from `.tasks/done/` to `.tasks/in-review/`.
-        2.  Performs debugging and refactoring.
-        3.  Once the review is complete, moves the task file/folder to `.tasks/reviewed/`.
+        1.  Proactively monitors both the `.tasks/done/` directory (for standard reviews) and the `.tasks/todo/` directory (for directly assigned refactor/debug tasks).
+        2.  Claims a task by moving it to `.tasks/in-review/`.
+        3.  Performs debugging and refactoring.
+        4.  Once the review is complete, moves the task file/folder to `.tasks/reviewed/`.
 
 4.  **Carlo (Integrator & Releaser)**:
     *   **Role**: Performs the final review and merges the completed feature into the `main` branch.
