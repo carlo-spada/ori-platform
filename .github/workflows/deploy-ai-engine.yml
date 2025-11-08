@@ -1,0 +1,38 @@
+# .github/workflows/deploy-ai-engine.yml
+name: 'Deploy AI Engine to Cloud Run'
+
+on:
+  workflow_call: # This workflow is designed to be called by another workflow
+  workflow_dispatch: # Allows manual triggering for testing
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write' # Required for authentication to Google Cloud
+
+    steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v4
+
+      - name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: 'projects/YOUR_GCP_PROJECT_ID/locations/global/workloadIdentityPools/YOUR_POOL_ID/providers/YOUR_PROVIDER_ID'
+          service_account: 'your-service-account@your-project.iam.gserviceaccount.com'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      - name: 'Build and Push Docker Image'
+        run: |-
+          gcloud builds submit --region us-central1 --tag gcr.io/YOUR_GCP_PROJECT_ID/ai-engine services/ai-engine
+
+      - name: 'Deploy to Cloud Run'
+        run: |-
+          gcloud run deploy ai-engine \
+            --image gcr.io/YOUR_GCP_PROJECT_ID/ai-engine \
+            --region us-central1 \
+            --platform managed \
+            --allow-unauthenticated

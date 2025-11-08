@@ -21,7 +21,8 @@ Our mission is to prove that **fulfillment should be scalable, and purpose shoul
 This repository is a **pnpm workspace monorepo** containing the following core components:
 
 - **`src/`**: A **Next.js** application that serves as the main user interface.
-- **`services/core-api/`**: A **Node.js/Express** backend (refactoring to Serverless Functions) that handles user profiles, authentication, and business logic.
+- **`api/`**: **Vercel Serverless Functions** that serve as the production backend, handling user profiles, authentication, and business logic.
+- **`services/core-api/`**: A **Node.js/Express** app that mirrors the production API for local development purposes.
 - **`services/ai-engine/`**: A **Python/FastAPI** service that provides all AI-powered features, including semantic job matching, skill gap analysis, and learning path generation.
 - **`shared/`**: Shared packages (e.g., types, utils) used across the monorepo.
 
@@ -77,13 +78,14 @@ You will need to run three separate services in different terminal windows.
 
     - Access the web app at `http://localhost:3000`.
 
-2.  **Run the Core API (Node.js):**
+2.  **Run the Core API (for local development):**
+    This command starts the local Express.js server, which mirrors the production serverless API. The main `pnpm dev` command automatically uses the serverless functions in the `api/` directory.
 
     ```bash
     pnpm --filter @ori/core-api dev
     ```
 
-    - The API will be available at `http://localhost:3001`.
+    - The local API will be available at `http://localhost:3001`.
 
 3.  **Run the AI Engine (Python):**
     ```bash

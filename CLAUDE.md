@@ -67,30 +67,14 @@ Ori Platform is an AI-powered career companion built as a pnpm workspace monorep
 
 ## Monorepo Structure
 
-This is a pnpm workspace with three main areas:
+This is a pnpm workspace. The key directories are:
 
-- **Root (`src/`)**: Next.js 16 App Router frontend with TypeScript
-  - `src/app/`: App Router routes and layouts (landing pages, auth, `/app/*` authenticated routes)
-  - `src/components/`: Reusable React components organized by feature (ui/, landing/, dashboard/, etc.)
-  - `src/contexts/`: React contexts (AuthProvider for Supabase auth)
-  - `src/hooks/`: Custom React hooks
-  - `src/integrations/`: Third-party service clients (Supabase)
-  - `src/lib/`: Utilities and configurations (stripe, react-query, seo, navConfig)
-  - Path alias: `@/*` maps to `./src/*`
-
-- **Services (`services/`)**: Backend microservices
-  - `services/core-api/`: Express + TypeScript REST API (port 3001)
-    - Routes: `/api/v1/{applications,jobs,payments,users}`
-    - Integrates with Supabase, Stripe, and AI Engine
-  - `services/ai-engine/`: Python FastAPI AI service (port 3002)
-    - Semantic job matching using sentence-transformers
-    - Skill gap analysis and learning path generation
-    - Multi-factor scoring: semantic (40%), skills (30%), experience (15%), location (10%), salary (5%)
-    - Endpoints: `/api/v1/{match,analyze-skills,learning-paths,recommend-roles}`
-
-- **Shared (`shared/`)**: Cross-service packages
-  - `shared/types/`: TypeScript type definitions (User, Job, Application, etc.)
-  - `shared/utils/`: Shared utility functions
+- **`api/`**: **Vercel Serverless Functions**. This is the production backend API.
+- **`src/`**: The **Next.js** frontend application.
+- **`services/`**: Supporting backend services.
+  - `core-api`: A local-only Express server that mirrors the serverless API for development.
+  - `ai-engine`: The Python/FastAPI service for all AI features.
+- **`shared/`**: Cross-service packages for types and utilities.
 
 ## Development Commands
 
@@ -104,9 +88,10 @@ pnpm lint                   # Run ESLint (next/core-web-vitals config)
 ```
 
 ### Backend Development
+The production API runs as serverless functions in the `api/` directory and is served by `pnpm dev`. The following command is for running the local-only Express server for development and debugging.
 
 ```bash
-pnpm dev:api                           # Start core-api at http://localhost:3001
+pnpm dev:api                           # Start local-only core-api at http://localhost:3001
 pnpm --filter @ori/core-api dev        # Equivalent command
 pnpm --filter @ori/core-api build      # Build core-api TypeScript
 

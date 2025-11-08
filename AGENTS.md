@@ -226,15 +226,22 @@ git push origin dev
 
 ## Project Structure & Module Organization
 
-Ori Platform is a pnpm workspace monorepo. Web code resides in `src/` (`src/app` for the App Router, `src/components` for UI, `src/contexts` and `src/hooks` for state helpers, `src/integrations` and `src/lib` for clients) using the ` @/` alias. Shared domain assets live in `shared/`, backend services in `services/` (`core-api`, `ai-engine`), static files in `public/`, and Supabase migrations in `supabase/`.
+Ori Platform is a pnpm workspace monorepo. Web code resides in `src/`, backend API code in `api/`, and shared packages in `shared/`.
+
+- **`api/`**: Production **Vercel Serverless Functions** that serve as the project's backend.
+- **`src/`**: The **Next.js** application that serves as the main user interface.
+- **`services/`**: Supporting backend services.
+  - `core-api`: A local-only Express server that mirrors the serverless functions for development.
+  - `ai-engine`: The Python/FastAPI service for all AI-powered features.
+- **`shared/`**: Shared packages (e.g., types, utils) used across the monorepo.
 
 **AI Engine (Nov 2025):** Fully implemented Python FastAPI service providing semantic job matching, skill gap analysis, and learning path generation. Uses sentence-transformers for local embedding generation (no API keys required). Multi-factor scoring algorithm weights semantic similarity (40%), skill match (30%), experience (15%), location (10%), and salary (5%). Core-api integrates via HTTP client with graceful fallback.
 
 ## Build, Test, and Development Commands
 
 - `pnpm install` — install workspace dependencies (avoid mixing npm/yarn).
-- `pnpm dev` — launch the Next.js app at `http://localhost:3000`.
-- `pnpm dev:api` or `pnpm --filter @ori/core-api dev` — run the core API with hot reload.
+- `pnpm dev` — launch the Next.js app at `http://localhost:3000`. This also serves the API routes from the `api/` directory.
+- `pnpm dev:api` or `pnpm --filter @ori/core-api dev` — run the local-only Express.js server for API development at `http://localhost:3001`.
 - `pnpm build && pnpm start` — compile and serve the production build.
 - `pnpm lint` — enforce the Next.js core-web-vitals ESLint configuration.
 - `pnpm turbo test --filter=<package>` — run package-specific tests; coverage output is written to `coverage/`.

@@ -39,6 +39,9 @@ app.use('/api/v1/payments', paymentRoutes)
 app.use('/api/v1/profile', profileRouter)
 app.use('/api/v1/users', usersRouter)
 
-app.listen(port, () => {
-  console.log(`[core-api]: Server is running at http://localhost:${port}`)
-})
+// Only run the server in non-production environments (e.g., local development)
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, () => {
+    console.log(`[core-api]: Server is running at http://localhost:${port}`)
+  })
+}
