@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTranslation } from 'react-i18next';
 import { Twitter, Linkedin } from 'lucide-react';
 
@@ -46,9 +47,18 @@ export function SharedFooter() {
           <div className="space-y-4">
             <Link
               href="/"
-              className="inline-block text-xl font-semibold tracking-tight text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md px-1 -ml-1"
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md w-fit"
             >
-              AURA
+              <Image
+                src="/ori-logo.svg"
+                alt="Ori"
+                width={28}
+                height={28}
+                className="text-primary"
+              />
+              <span className="text-xl font-semibold tracking-tight text-foreground">
+                Ori
+              </span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
               {t('brand.mission')}

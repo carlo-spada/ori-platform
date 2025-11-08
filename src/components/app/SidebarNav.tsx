@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { LogOut } from 'lucide-react';
 import { NAV_ITEMS } from '@/lib/navConfig';
@@ -38,9 +39,18 @@ export function SidebarNav({ className }: SidebarNavProps) {
       <div className="px-6 py-6 border-b border-white/10">
         <Link
           href="/app/dashboard"
-          className="text-xl font-semibold tracking-tight text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md"
+          className="flex items-center gap-2 hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md"
         >
-          AURA
+          <Image
+            src="/ori-logo.svg"
+            alt="Ori"
+            width={32}
+            height={32}
+            className="text-primary"
+          />
+          <span className="text-xl font-semibold tracking-tight text-foreground">
+            Ori
+          </span>
         </Link>
       </div>
 

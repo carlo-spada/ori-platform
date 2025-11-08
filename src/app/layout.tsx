@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: 'Ori Platform',
   description: 'Your AI-powered career companion. Discover fulfilling work, bridge skill gaps, and accelerate your professional growth.',
   manifest: '/manifest.webmanifest',
+  icons: {
+    icon: '/favicon.svg',
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',

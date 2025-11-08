@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import FocusTrap from 'focus-trap-react';
@@ -103,10 +104,19 @@ export function SharedHeader() {
           {/* Logo / Wordmark */}
           <Link
             href="/"
-            className="text-xl font-semibold tracking-tight text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md px-1 -ml-1"
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md"
             data-testid="logo"
           >
-            AURA
+            <Image
+              src="/ori-logo.svg"
+              alt="Ori"
+              width={28}
+              height={28}
+              className="text-primary"
+            />
+            <span className="text-xl font-semibold tracking-tight text-foreground">
+              Ori
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
