@@ -93,7 +93,7 @@ All tasks are managed within the `.tasks/` directory, which is organized into st
 
 1.  **Gemini (Planner & Researcher)**:
     *   **Role**: Conducts big-picture research, defines the project vision, and breaks it down into a cohesive, step-by-step plan.
-    *   **Workflow**: Creates feature folders and task files (`.md`) in the `.tasks/todo/` directory, outlining the objective, key files, and acceptance criteria for each.
+    *   **Workflow**: Creates feature folders and task files (`.md`) in the `.tasks/todo/` directory. While most implementation tasks are assigned to Claude, Gemini can assign tasks directly to Codex if the work is primarily refactoring, debugging, or cleanup, playing to each agent's strengths from the start.
 
 2.  **Claude (Implementer & Builder)**:
     *   **Role**: Materializes the plans defined by Gemini, focusing on implementation.

@@ -2,7 +2,7 @@
 Task ID: C
 Feature: Branding Unification
 Title: Comprehensive Codebase and Documentation Rename
-Assignee: Claude (Implementer & Builder)
+Assignee: Codex (Reviewer & Debugger)
 Status: To Do
 Depends On: B
 ---
