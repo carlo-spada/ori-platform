@@ -22,7 +22,7 @@ export function LegalPageLayout({
   useEffect(() => {
     setDocumentMeta({
       title,
-      description: metaDescription || `${title} - AURA`,
+      description: metaDescription || `${title} - Ori`,
     });
   }, [title, metaDescription]);
 

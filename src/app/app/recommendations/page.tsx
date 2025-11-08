@@ -81,7 +81,7 @@ export default function Recommendations() {
 
   useEffect(() => {
     setDocumentMeta({
-      title: 'Recommendations - AURA',
+      title: 'Recommendations - Ori',
       description: 'Personalized job recommendations and learning paths.',
     });
   }, []);
