@@ -6,9 +6,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Always make sure this guide is kept updated with whatever new information might be in the AGENTS.md file and whenever you land a major feature, infrastructure change, or new workflow, not just update this .md file but also update the relevant sections in the AGENTS.md file and reference the PR so every agent stays in sync at all times. This is crucial for good collaboration.
 
-## GitHub Considerations
+## Branching & GitHub Workflow
 
-Always keep the repository synchronized across all platforms and servers. After completing a set of changes, follow GitHub’s standard workflow: add, commit, and push your updates using clear messages and consistent practices. This ensures version integrity and collaboration reliability across environments.
+**IMPORTANT:** This repository uses a strict two-branch workflow:
+
+- **`main`**: Production branch (deployed to Vercel). **Direct pushes are BLOCKED.**
+- **`development`**: Working branch where all development happens
+
+**Workflow:**
+1. Always work on `development` branch: `git checkout development && git pull`
+2. Make changes and commit regularly: `git commit -m "feat: description"`
+3. Push to development: `git push origin development`
+4. Create PR from `development` → `main` when ready to deploy
+5. PR requires: 1 approval, passing checks, conversation resolution, successful deployment
+6. After merge, Vercel automatically deploys to production
+
+**Never attempt to push directly to `main`** - it will be rejected by branch protection rules.
 
 ## Project Overview
 

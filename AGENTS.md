@@ -8,63 +8,82 @@ To ensure the `main` branch remains stable and deployable at all times, we will 
 
 ### Branching Model
 
-*   **`main`**: This is the production branch. It must always be stable and ready for deployment. **Direct pushes to `main` are disabled.**
-*   **Agent Branches**: Each agent will perform their work on a dedicated, long-lived branch.
-    *   Gemini's branch: `gemini-branch`
-    *   Claude's branch: `claude-branch`
-    *   Codex's branch: `codex-branch`
+The repository uses a **simplified two-branch workflow**:
 
-The human supervisor will not have a dedicated branch and will instead assist agents on their respective branches.
+*   **`main`**: Production branch that is automatically deployed to Vercel. It must always be stable and ready for deployment. **Direct pushes to `main` are strictly prohibited** and enforced by GitHub branch protection rules.
+*   **`development`**: The working branch where all development happens. All features, fixes, and changes are made here before being merged to `main` via Pull Request.
 
 ### Core Development Workflow
 
-All development must follow this sequence to ensure compatibility and stability:
+All development follows this streamlined sequence:
 
-1.  **Sync with `main`**: Before starting new work, always update your personal branch with the latest changes from `main`:
+1.  **Start on Development**: Always work on the `development` branch:
     ```bash
-    git checkout <your-agent-branch>
-    git pull origin main
+    git checkout development
+    git pull origin development
     ```
-2.  **Develop**: Work on your task on your agent branch. Commit changes regularly with clear, conventional commit messages.
-3.  **Prepare for Merge (Compatibility Check)**: When your work is complete, you **must** sync with `main` again to resolve any potential conflicts locally *before* creating a Pull Request.
+
+2.  **Develop**: Make your changes on the `development` branch. Commit regularly with clear, conventional commit messages following the format:
     ```bash
-    # Fetch the latest changes from the main branch
-    git fetch origin main
-    
-    # Rebase your changes on top of the latest main branch
-    git rebase origin/main
+    git add .
+    git commit -m "feat: add new feature"  # or fix:, chore:, docs:, etc.
     ```
-4.  **Test Locally**: After a successful rebase, run all essential checks to guarantee your changes are compatible with the latest code from `main`:
+
+3.  **Push to Development**: Push your changes to the remote `development` branch:
+    ```bash
+    git push origin development
+    ```
+
+4.  **Test Locally**: Before creating a PR, run all essential checks:
     ```bash
     pnpm install
     pnpm lint
     pnpm build
     # pnpm test (when applicable)
     ```
-5.  **Create a Pull Request**: Once all local checks pass, push your branch and open a Pull Request to merge your branch into `main`. The PR description should clearly explain the changes.
+
+5.  **Create a Pull Request**: When ready to deploy to production, create a PR from `development` → `main`:
+    - The PR description should clearly explain the changes
+    - Link related issues with `Closes #123`
+    - All automated checks will run (linting, build, tests, CodeQL)
+    - Copilot will automatically review the code
+    - At least 1 approval is required
+    - All conversations must be resolved
+
+6.  **Merge to Main**: Once approved and all checks pass:
+    - The PR can be merged (squash merge recommended)
+    - Vercel will automatically deploy to production
+    - The deployment must succeed before merge is complete
 
 ### Enforcement & Automation
 
-This workflow is not just a guideline; it is enforced by the repository's configuration:
-*   **Pull Requests (PRs) are Required**: All code must enter the `main` branch through a PR.
-*   **Automated CI Checks**: A GitHub Actions workflow automatically runs `lint`, `build`, and `test` commands on every PR. The PR cannot be merged unless all checks pass.
-*   **Code Review**: At least one other agent or the human supervisor must review and approve a PR before it can be merged.
+This workflow is strictly enforced by GitHub branch protection rules:
 
-### Branch Sync Agent
-
-`main` is the single source of truth. To prevent the agent branches from drifting away from the latest production-ready commits, a dedicated workflow (`.github/workflows/branch-sync-agent.yml`) runs every six hours, on every push to `main`, and on manual dispatch. The workflow executes `scripts/branch-sync-agent.js` which reads `agents/branch-sync.config.json` and merges `origin/main` into `codex-branch`, `claude-branch`, and `gemini-branch` sequentially. If it creates new merges it pushes them back upstream; if a merge conflict happens the workflow aborts, records the failure in the step summary, and exits non-zero so humans can resolve the conflict directly on the affected branch. You can run the same logic locally with `node scripts/branch-sync-agent.js`.
+*   **Pull Requests Required**: All code must enter `main` through a PR from `development`
+*   **No Direct Pushes**: Direct pushes to `main` are blocked for everyone
+*   **Automated CI Checks**: GitHub Actions automatically runs `lint`, `build`, and `test` on every PR
+*   **Required Approvals**: At least 1 approving review is required
+*   **Code Owners Review**: Changes to files with designated owners require their approval
+*   **Conversation Resolution**: All PR conversations must be resolved before merging
+*   **Signed Commits**: All commits must have verified signatures
+*   **Linear History**: Merge commits are prevented; use squash or rebase merging
+*   **CodeQL Scanning**: Code must pass security analysis
+*   **Copilot Review**: Automatically requests code review on new PRs and pushes
+*   **Successful Deployment**: Vercel deployment must succeed before PR can merge
+*   **No Force Pushes**: Force pushes are blocked on `main`
+*   **No Deletions**: Branch deletion is restricted
 
 ## GitHub Considerations
 
-All code changes must be integrated into the `main` branch via Pull Requests (PRs) from an agent's dedicated branch. Direct pushes to `main` are disabled. Before creating a PR, ensure your branch is up-to-date with `main` and passes all local checks. This workflow preserves version integrity, prevents integration errors, and ensures the `main` branch is always stable.
+All code changes must be integrated into `main` via Pull Requests from `development`. Direct pushes to `main` are strictly prohibited and enforced by branch protection rules. Before creating a PR, ensure all local checks pass (`pnpm lint`, `pnpm build`). This workflow preserves version integrity, prevents integration errors, and ensures `main` is always production-ready.
 
 ## Human–AI Collaboration
 
 This is a shared and continuously evolving collaboration between humans and intelligent agents. Act deliberately: validate assumptions, question defaults, and safeguard shared resources. Prioritize clarity, safety, and precision in every operation.
 
-When advising or interacting with human collaborators, always propose the **safest**, **most efficient**, and **most elegant** course of action. Stay vigilant for opportunities to improve coordination—refine workflows, automation, or branching strategies to strengthen reliability and collective performance. For example, agents may develop in isolated branches and merge only after all conflicts and dependencies have been fully resolved.
+When advising or interacting with human collaborators, always propose the **safest**, **most efficient**, and **most elegant** course of action. Stay vigilant for opportunities to improve coordination—refine workflows, automation, or development strategies to strengthen reliability and collective performance.
 
-The objective is ongoing alignment, refinement, and progress toward a more resilient and harmonious system of collaboration. Align the tone and structure of your individual `.md` files with this guide to maintain consistency across all agents.
+The objective is ongoing alignment, refinement, and progress toward a more resilient and harmonious system of collaboration.
 
 ## Project Management: The Task-as-File System
 
@@ -77,46 +96,20 @@ All tasks are managed within the `.tasks/` directory, which is organized into th
 -   **`.tasks/done/`**: A record of all completed tasks and features.
 
 ### Workflow
-All agents must adhere to the following workflow before, during, and after their work.
 
-1.  **Review the Board**: Before starting any new work, an agent must review the contents of the `.tasks/` subdirectories to understand the current state of the project.
-2.  **Claim a Task**: To begin work on a task, an agent **moves** the corresponding task file or feature folder from `.tasks/todo/` to `.tasks/in-progress/`. This is a critical, atomic step to claim ownership and prevent multiple agents from working on the same task.
+1.  **Review the Board**: Before starting new work, review the `.tasks/` subdirectories to understand the current project state
+2.  **Claim a Task**: Move the task file or feature folder from `.tasks/todo/` to `.tasks/in-progress/` to claim ownership:
     ```bash
     # Example: Claiming task 'A.md'
     mv .tasks/todo/A.md .tasks/in-progress/A.md
     # Example: Claiming feature 'feature-name/'
     mv .tasks/todo/feature-name/ .tasks/in-progress/feature-name/
     ```
-3.  **Update Task File**: The agent should then edit the task file (or a central `README.md` within a feature folder) to add their name to the `Assignee` field.
-4.  **Perform the Work**: The agent works on their task, following the instructions within the task file.
-5.  **Complete a Task**: Upon completion and successful merging of the work, the agent moves the task file or feature folder from `.tasks/in-progress/` to `.tasks/done/`.
+3.  **Update Task File**: Edit the task file to add assignee information
+4.  **Perform the Work**: Complete the task following the instructions within the task file
+5.  **Complete a Task**: Upon completion and successful PR merge, move the task file from `.tasks/in-progress/` to `.tasks/done/`
 
 This system minimizes merge conflicts and provides a clear, real-time view of the project's status.
-
-### Agent Roles (Initial Draft)
-
-To leverage distinct strengths and optimize collaboration, we are experimenting with specialized roles for each AI agent:
-
-*   **Gemini (Planner & Researcher)**:
-    *   **Focus**: Condensing large amounts of information, researching novel ideas or solutions, and designing actionable implementation plans.
-    *   **Role**: Outlines *what* to do and *why*. Creates the initial task files and feature folders.
-
-*   **Claude (Implementer & Builder)**:
-    *   **Focus**: Executing the plans generated by Gemini with precision and creativity.
-    *   **Role**: Focuses on *how* to build or implement the feature in code or documentation, while maintaining coherence and consistency.
-
-*   **Codex (Reviewer & Debugger)**:
-    *   **Focus**: Auditing the code or artifacts produced by Claude.
-    *   **Role**: Identifies bugs, potential conflicts with the existing `main` branch, or opportunities for improvement. Codex should attempt to fix simple issues autonomously; for more complex cases, it should report them back to Gemini (for strategy) or Claude (for implementation).
-
-These roles are not fixed and will adapt as we test and learn from the workflow.
-
-### Branch Access Boundaries
-
-- Each agent must work exclusively inside their own local clone (`./codex-branch`, `./gemini-branch`, `./claude-branch`). Creating, editing, or deleting files in another agent’s workspace is prohibited.
-- Cross-branch changes (for example, updates that must appear in every AGENTS.md) require a handoff: notify the supervisor or the owning agent to perform the change, or coordinate an explicit automation step.
-- Shared artifacts should flow through the human supervisor (or dedicated sync scripts) so accountability for each workspace remains clear and audit-able.
-- If an agent accidentally edits outside their folder, revert locally and inform the affected agent before proceeding.
 
 ## Project Structure & Module Organization
 
@@ -158,25 +151,17 @@ Store secrets in untracked `.env.local` (web) or service-specific `.env` files, 
 
 Treat this document as the shared playbook. Whenever you introduce a major feature, infrastructure update, or new workflow, update the relevant sections here and reference the pull request so every agent—human or AI—remains aligned and informed. Synchronization across guides is essential for coherent, adaptive collaboration.
 
-### Documentation Maintenance Schedule
+### Recent Completions
 
-To ensure `AGENTS.md` and each agent's individual `.md` file (e.g., `GEMINI.md`, `CLAUDE.md`, `CODEX.md`) remain accurate, consistent, and up-to-date, a weekly refactoring and synchronization schedule is in place:
+- **AI Engine (Nov 2025):** Fully implemented Python FastAPI service with semantic matching, skill gap analysis, learning paths, and core-api integration
+- **Branch Simplification (Nov 2025):** Migrated from multi-agent branch structure to streamlined `main`/`development` workflow with comprehensive branch protection
+- **Automated Reviews:** Integrated Copilot code review for all PRs with automatic push reviews
 
-*   **Gemini**: Refactor and update on **Mondays** (or the next working day if Monday is not a working day).
-*   **Claude**: Refactor and update on **Wednesdays**.
-*   **Codex**: Refactor and update on **Fridays**.
+### Immediate Next Steps
 
-All agents must follow the same standards and recommendations when performing these updates. This ensures continuous alignment and quality across all documentation.
-
-### Work Ownership & Recent Completions
-
-- **codex-branch**: Own TypeScript-heavy core work (Next.js app, shared hooks, build tooling), rapid debugging loops, and schema-aware migrations when paired with Supabase notes.
-- **gemini-branch**: Focus on exploratory or net-new UX and AI-facing experiences across `src/components`, `src/app`, and `src/integrations`, where broad design ideation and multi-file patterning matter.
-- **claude-branch**: Drive long-form reasoning tasks—config coordination, backend contract updates in `services/`, and documentation refreshes that keep cross-cutting changes coherent.
-  - **Completed (Nov 2025):** AI Engine foundation - semantic matching, skill analysis, learning paths, core-api integration
-- **Cross-branch guardrails**: Sequence dependent tasks `claude ➝ codex ➝ gemini` (API contract → implementation → UI polish) and schedule weekly rebases on `main` after each PR merge to minimize conflicts.
-- **Immediate next steps**: Curate the upcoming sprint backlog into codex/gemini/claude columns with clear owners, and have every agent run `pnpm install && pnpm lint` inside their clone to ensure environment parity before starting.
-- **Immediate next steps**: Curate the upcoming sprint backlog into codex/gemini/claude columns with clear owners, and have every agent run `pnpm install && pnpm lint` inside their clone to ensure environment parity before starting.
+- Ensure `AGENTS.md` and `CLAUDE.md` stay synchronized with workflow changes
+- Run `pnpm install && pnpm lint` before starting any new work
+- Set up CodeQL scanning and CODEOWNERS file for enhanced security
 
 ### Reference Documentation
 

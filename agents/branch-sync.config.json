@@ -1,8 +1,0 @@
-{
-  "donorBranch": "main",
-  "targetBranches": [
-    "gemini-branch",
-    "claude-branch",
-    "codex-branch"
-  ]
-}
