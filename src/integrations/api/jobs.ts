@@ -67,8 +67,6 @@ export async function fetchJobRecommendations(
     throw new Error('No active session');
   }
 
-  // Get the API URL from environment or default to localhost
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
   // Get the API URL from environment
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
