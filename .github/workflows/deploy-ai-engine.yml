@@ -19,20 +19,20 @@ jobs:
       - name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v2'
         with:
-          workload_identity_provider: 'projects/YOUR_GCP_PROJECT_ID/locations/global/workloadIdentityPools/YOUR_POOL_ID/providers/YOUR_PROVIDER_ID'
-          service_account: 'your-service-account@your-project.iam.gserviceaccount.com'
+          workload_identity_provider: 'projects/749683311533/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+          service_account: 'github-actions-deployer@gen-lang-client-0437962165.iam.gserviceaccount.com'
 
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v2'
 
       - name: 'Build and Push Docker Image'
         run: |-
-          gcloud builds submit --region us-central1 --tag gcr.io/YOUR_GCP_PROJECT_ID/ai-engine services/ai-engine
+          gcloud builds submit --region us-central1 --tag gcr.io/gen-lang-client-0437962165/ai-engine services/ai-engine
 
       - name: 'Deploy to Cloud Run'
         run: |-
           gcloud run deploy ai-engine \
-            --image gcr.io/YOUR_GCP_PROJECT_ID/ai-engine \
+            --image gcr.io/gen-lang-client-0437962165/ai-engine \
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated
