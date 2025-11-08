@@ -2,18 +2,12 @@ import { fetchSkillsGapForJob } from '../jobs.js'
 import { aiClient } from '../../lib/ai-client.js'
 
 describe('fetchSkillsGapForJob', () => {
-  let originalGetSkillGap: typeof aiClient.getSkillGap
-
-  beforeEach(() => {
-    originalGetSkillGap = aiClient.getSkillGap
-  })
-
   afterEach(() => {
-    ;(aiClient as any).getSkillGap = originalGetSkillGap
+    jest.restoreAllMocks()
   })
 
   it('formats AI response data', async () => {
-    ;(aiClient as any).getSkillGap = jest.fn().mockResolvedValue({
+    jest.spyOn(aiClient, 'getSkillGap').mockResolvedValue({
       user_skills: ['React'],
       required_skills: ['React', 'TypeScript'],
       missing_skills: ['TypeScript'],
@@ -32,7 +26,7 @@ describe('fetchSkillsGapForJob', () => {
   })
 
   it('returns undefined when AI response is null', async () => {
-    ;(aiClient as any).getSkillGap = jest.fn().mockResolvedValue(null)
+    jest.spyOn(aiClient, 'getSkillGap').mockResolvedValue(null)
 
     const result = await fetchSkillsGapForJob(['React'], ['TypeScript'])
 
@@ -40,8 +34,7 @@ describe('fetchSkillsGapForJob', () => {
   })
 
   it('skips AI call when no requirements are provided', async () => {
-    const mockGetSkillGap = jest.fn()
-    ;(aiClient as any).getSkillGap = mockGetSkillGap
+    const mockGetSkillGap = jest.spyOn(aiClient, 'getSkillGap')
 
     const result = await fetchSkillsGapForJob(['React'], [])
 

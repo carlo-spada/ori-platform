@@ -42,7 +42,12 @@
       "Bash(pnpm test:*)",
       "Bash(pnpm --filter @ori/core-api add:*)",
       "Bash(python -m pytest:*)",
-      "Bash(git ls-tree:*)"
+      "Bash(git ls-tree:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh run view:*)",
+      "Bash(pnpm:*)",
+      "Bash(gh pr edit:*)",
+      "Bash(gh pr create:*)"
     ],
     "deny": [],
     "ask": []

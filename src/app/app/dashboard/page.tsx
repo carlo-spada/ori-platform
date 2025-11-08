@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { setDocumentMeta } from '@/lib/seo'
@@ -61,19 +61,24 @@ export default function Dashboard() {
       const previousChat = queryClient.getQueryData(['chat-history'])
 
       // Optimistically update with user message
-      queryClient.setQueryData(['chat-history'], (old: any) => ({
-        ...old,
-        messages: [
-          ...(old?.messages || []),
-          {
-            id: `temp-${Date.now()}`,
-            conversation_id: conversationId || 'temp',
-            role: 'user',
-            content,
-            created_at: new Date().toISOString(),
-          },
-        ],
-      }))
+      queryClient.setQueryData(
+        ['chat-history'],
+        (
+          old: { conversation?: { id: string }; messages?: ChatMessage[] } = {},
+        ) => ({
+          ...old,
+          messages: [
+            ...(old?.messages || []),
+            {
+              id: `temp-${Date.now()}`,
+              conversation_id: conversationId || 'temp',
+              role: 'user' as const,
+              content,
+              created_at: new Date().toISOString(),
+            },
+          ],
+        }),
+      )
 
       return { previousChat }
     },
@@ -84,18 +89,27 @@ export default function Dashboard() {
       }
 
       // Update cache with assistant's response
-      queryClient.setQueryData(['chat-history'], (old: any) => ({
-        ...old,
-        conversation: old?.conversation || { id: data.conversation_id },
-        messages: [
-          ...(old?.messages || []).filter(
-            (m: any) => !m.id.startsWith('temp-'),
-          ),
-          data.message,
-        ],
-      }))
+      queryClient.setQueryData(
+        ['chat-history'],
+        (
+          old: { conversation?: { id: string }; messages?: ChatMessage[] } = {},
+        ) => ({
+          ...old,
+          conversation: old?.conversation || { id: data.conversation_id },
+          messages: [
+            ...(old?.messages || []).filter(
+              (m) => !m.id.startsWith('temp-'),
+            ),
+            data.message,
+          ],
+        }),
+      )
     },
-    onError: (err, newMessage, context: any) => {
+    onError: (
+      err,
+      newMessage,
+      context: { previousChat?: unknown } | undefined,
+    ) => {
       // Rollback on error
       if (context?.previousChat) {
         queryClient.setQueryData(['chat-history'], context.previousChat)
@@ -113,36 +127,39 @@ export default function Dashboard() {
   }
 
   // Mock data for RecentActivity (will be replaced with real data)
-  const recentActivities: ActivityItem[] = [
-    {
-      id: '1',
-      type: 'application',
-      title: 'Applied to Senior Product Manager',
-      subtitle: 'Google Inc.',
-      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
-    },
-    {
-      id: '2',
-      type: 'skill',
-      title: 'Added new skill',
-      subtitle: 'TypeScript',
-      timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(), // 5 hours ago
-    },
-    {
-      id: '3',
-      type: 'favorite',
-      title: 'Saved job',
-      subtitle: 'Lead Designer at Meta',
-      timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
-    },
-    {
-      id: '4',
-      type: 'profile',
-      title: 'Updated your profile',
-      subtitle: 'Added work experience',
-      timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
-    },
-  ]
+  const recentActivities: ActivityItem[] = useMemo(
+    () => [
+      {
+        id: '1',
+        type: 'application',
+        title: 'Applied to Senior Product Manager',
+        subtitle: 'Google Inc.',
+        timestamp: new Date(initialTime - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
+      },
+      {
+        id: '2',
+        type: 'skill',
+        title: 'Added new skill',
+        subtitle: 'TypeScript',
+        timestamp: new Date(initialTime - 5 * 60 * 60 * 1000).toISOString(), // 5 hours ago
+      },
+      {
+        id: '3',
+        type: 'favorite',
+        title: 'Saved job',
+        subtitle: 'Lead Designer at Meta',
+        timestamp: new Date(initialTime - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
+      },
+      {
+        id: '4',
+        type: 'profile',
+        title: 'Updated your profile',
+        subtitle: 'Added work experience',
+        timestamp: new Date(initialTime - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
+      },
+    ],
+    [initialTime],
+  )
 
   const whatsNext = {
     title: t('dashboardPage.whatsNext.defaultTitle'),
