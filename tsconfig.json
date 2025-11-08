@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@ori/types": ["./shared/types/src/index.ts"]
     }
   },
   "include": [
