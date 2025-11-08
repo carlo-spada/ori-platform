@@ -1,63 +1,37 @@
 ---
 Task ID: A
 Feature: Skills Gap Analysis
-Title: Enhance Shared Types & Create SkillsGapDisplay UI Component
+Title: Enhance Backend API for Skills Gap Analysis
 Assignee: Claude (Implementer & Builder)
-Status: Done
+Status: To Do
+Depends On: C
 ---
 
 ### Objective
-Create the foundational data types for skill analysis and develop a reusable React component to visually represent a user's skills against job requirements. This task is independent and can be started immediately.
+Enhance the core backend API to integrate skills gap analysis data into the job recommendations endpoint. This involves calling the AI Engine's skill analysis service and embedding the results within the API response.
 
 ### Context
-The 'Skills Gap Analysis' feature requires a clear way to define and display individual skills, indicating whether they match a user's profile or are missing for a specific job. The existing `shared/types` package is the central place for data contracts, and `src/components/recommendations` is where related UI components reside.
+This is the first step in building the user-facing "Skills Gap Analysis" feature. The frontend (Task B) will consume the data provided by this enhanced endpoint. This task depends on the AI Engine (Task C) exposing a functional endpoint for skill analysis.
 
-### Key Files to Modify/Create
-- `shared/types/src/index.ts`
-- `src/components/recommendations/SkillsGapDisplay.tsx`
-- `src/components/recommendations/JobRecommendationCard.tsx` (for temporary integration)
+### Key Files to Modify
+- `services/core-api/src/routes/recommendations.ts` (or equivalent file handling job recommendations)
+- `services/core-api/src/lib/ai-client.ts` (or equivalent client for communicating with the AI Engine)
+- `shared/types/src/index.ts` (to update the data structures)
 
 ### Instructions for Claude
-1.  **Define `Skill` Interface:**
-    *   In `shared/types/src/index.ts`, add a new exported interface `Skill` with the following properties:
-        ```typescript
-        export interface Skill {
-          name: string;
-          status: 'matched' | 'missing'; // Indicates if the user has this skill for the job
-        }
-        ```
-2.  **Update `JobMatch` Interface:**
-    *   In `shared/types/src/index.ts`, modify the existing `JobMatch` interface to include a new property:
-        ```typescript
-        export interface JobMatch extends Job {
-          // ... existing properties ...
-          skills_analysis?: Skill[]; // Array of skills with their match status
-        }
-        ```
-3.  **Create `SkillsGapDisplay` Component:**
-    *   Create a new file: `src/components/recommendations/SkillsGapDisplay.tsx`.
-    *   This component should be a functional React component that accepts `skills: Skill[]` as a prop.
-    *   For each `Skill` in the array:
-        *   Display the `skill.name`.
-        *   If `skill.status` is `'matched'`, display a green checkmark icon (use `lucide-react`'s `CheckCircle` or similar) and a distinct text style (e.g., `text-green-500`).
-        *   If `skill.status` is `'missing'`, display a red 'x' icon (use `lucide-react`'s `XCircle` or similar) and a distinct text style (e.g., `text-red-500` or `text-muted-foreground`).
-    *   Ensure the component is responsive and visually clean, fitting within the existing UI aesthetic (Tailwind CSS, shadcn-ui).
-4.  **Temporary Integration into `JobRecommendationCard`:**
-    *   In `src/components/recommendations/JobRecommendationCard.tsx`, temporarily integrate the new `SkillsGapDisplay` component.
-    *   Pass it mock `Skill[]` data to verify its rendering within the card layout. Example mock data:
-        ```typescript
-        const mockSkills: Skill[] = [
-          { name: 'React', status: 'matched' },
-          { name: 'TypeScript', status: 'matched' },
-          { name: 'Node.js', status: 'missing' },
-          { name: 'AWS', status: 'missing' },
-        ];
-        // Pass this to <SkillsGapDisplay skills={mockSkills} />
-        ```
-    *   **Important:** This integration is temporary for UI verification. The actual data will come from the API in Task C.
+1.  **Update Shared Types**: In `shared/types/src/index.ts`, update the `JobRecommendation` type to include a new optional field, `skillsGap`, which should be an object containing `userSkills`, `requiredSkills`, and `missingSkills` (all likely `string[]`).
+2.  **Create AI Engine Client Method**: In `services/core-api/src/lib/ai-client.ts`, add a new method to call the AI Engine's `/skill_gap` endpoint. This method should accept user skills and required job skills as arguments and return the analysis.
+3.  **Modify Recommendations Endpoint**:
+    *   In the main job recommendations route (`services/core-api/src/routes/recommendations.ts`), for each job recommendation being processed:
+    *   Fetch the current user's skills from their profile.
+    *   Extract the required skills from the job data.
+    *   Call the new AI Engine client method with these two sets of skills.
+    *   Attach the returned `skillsGap` object to the job recommendation object being sent to the frontend.
+4.  **Error Handling**: Implement graceful error handling. If the AI Engine call fails, the `skillsGap` field should be `null` or omitted, and the core job recommendation should still be returned without errors.
+5.  **Testing**: Add a unit or integration test to verify that the endpoint correctly calls the AI client and returns the `skillsGap` data in the expected format.
 
 ### Acceptance Criteria
--   `shared/types/src/index.ts` contains the new `Skill` interface and `JobMatch` is updated.
--   `src/components/recommendations/SkillsGapDisplay.tsx` is created and correctly renders `Skill[]` data with appropriate icons and styling for 'matched' and 'missing' statuses.
--   `src/components/recommendations/JobRecommendationCard.tsx` temporarily renders `SkillsGapDisplay` with mock data, demonstrating correct visual integration.
--   All new code adheres to project coding standards (linting, TypeScript strictness).
+-   The `JobRecommendation` type in `shared/types` is updated to include the `skillsGap` object.
+-   The job recommendations API endpoint (`/api/recommendations` or similar) successfully enriches each job object with skills gap data from the AI Engine.
+-   The API gracefully handles potential errors from the AI Engine, ensuring the user still receives job recommendations.
+-   The changes are covered by tests.
