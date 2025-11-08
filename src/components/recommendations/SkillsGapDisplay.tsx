@@ -16,6 +16,13 @@ export function SkillsGapDisplay({ skills, skillsGap }: SkillsGapDisplayProps) {
 
     return (
       <div className="space-y-3">
+        {/* Skill Match Summary Header */}
+        <div className="flex items-center justify-between pb-1 border-b border-border/50">
+          <span className="text-sm font-medium text-foreground">Skills Analysis</span>
+          <span className="text-xs font-medium text-muted-foreground">
+            {matchedSkillsList.length} of {skillsGap.requiredSkills.length} matched
+          </span>
+        </div>
         {matchedSkillsList.length > 0 && (
           <div>
             <h4 className="text-xs font-medium text-muted-foreground mb-2">
