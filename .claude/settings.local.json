@@ -14,7 +14,9 @@
       "Bash(pnpm --filter @ori/core-api build:*)",
       "Bash(pkill:*)",
       "Bash(git checkout:*)",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Bash(sort:*)",
+      "Bash(git log:*)"
     ],
     "deny": [],
     "ask": []
