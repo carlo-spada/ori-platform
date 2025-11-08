@@ -20,8 +20,9 @@ All colors MUST be HSL.
   src: url('/fonts/Inter-italic.var.woff2') format('woff2');
 }
 
+/*
 @theme {
-  /* Expose custom properties to Tailwind's theme system */
+  // Expose custom properties to Tailwind's theme system
   --background: var(--background);
   --foreground: var(--foreground);
   --card: var(--card);
@@ -57,6 +58,7 @@ All colors MUST be HSL.
   --sidebar-border: var(--sidebar-border);
   --sidebar-ring: var(--sidebar-ring);
 }
+*/
 
 @layer base {
   :root {
@@ -172,8 +174,9 @@ All colors MUST be HSL.
   }
 }
 
+/*
 @layer utilities {
-  /* SR-only utility for skip links */
+  // SR-only utility for skip links
   .sr-only {
     position: absolute;
     width: 1px;
@@ -197,7 +200,7 @@ All colors MUST be HSL.
     white-space: normal;
   }
 
-  /* Gradient utility */
+  // Gradient utility
   .gradient-primary {
     background: linear-gradient(
       135deg,
@@ -206,7 +209,7 @@ All colors MUST be HSL.
     );
   }
 
-  /* Backdrop blur support */
+  // Backdrop blur support
   @supports (backdrop-filter: blur(12px)) {
     .backdrop-blur-header {
       backdrop-filter: blur(12px);
@@ -219,3 +222,5 @@ All colors MUST be HSL.
       background-color: hsl(var(--surface) / 0.95);
     }
   }
+}
+*/

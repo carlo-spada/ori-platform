@@ -50,7 +50,9 @@
       "Bash(gh pr create:*)",
       "Bash(git branch:*)",
       "Bash(tree:*)",
-      "Bash(xargs:*)"
+      "Bash(xargs:*)",
+      "Bash(psql:*)",
+      "Bash(supabase db lint:*)"
     ],
     "deny": [],
     "ask": []
