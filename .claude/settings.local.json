@@ -16,7 +16,11 @@
       "Bash(git checkout:*)",
       "Bash(git pull:*)",
       "Bash(sort:*)",
-      "Bash(git log:*)"
+      "Bash(git log:*)",
+      "Bash(gh pr view:*)",
+      "Bash(find:*)",
+      "Bash(gh auth login:*)",
+      "Bash(gh pr merge:*)"
     ],
     "deny": [],
     "ask": []
