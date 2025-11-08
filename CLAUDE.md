@@ -280,6 +280,18 @@ Define in `shared/types/src/index.ts`
 
 ## My Role: Implementer & Builder
 
+### UI/UX Development with v0.dev
+For any task that requires creating a new React component or UI element, you must follow this workflow:
+
+1.  **Generate with v0.dev**: Your first step is to navigate to v0.dev. Use a descriptive text prompt to generate the component. Iterate on the prompt until the generated component closely matches the task requirements.
+2.  **Copy Code**: Copy the generated JSX and code from v0.dev.
+3.  **Integrate**: Create a new component file in the appropriate directory (e.g., `src/components/feature-name/NewComponent.tsx`).
+4.  **Adapt**: Modify the pasted code as necessary. This may include:
+    *   Connecting it to our application's state management (React Query, hooks).
+    *   Passing the correct props.
+    *   Adjusting types to match our `shared/types`.
+    *   Refining styles to ensure perfect consistency with our design system.
+
 **Primary Responsibilities:**
 **Claim Tasks**: Move task files from `.tasks/todo/` to `.tasks/in-progress/`
 

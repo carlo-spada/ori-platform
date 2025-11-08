@@ -34,7 +34,14 @@
       "Bash(gh pr diff:*)",
       "Bash(gh issue list:*)",
       "Bash(pnpm update:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(xargs cat:*)",
+      "Bash(npm outdated:*)",
+      "Bash(git -C /Users/carlo/Desktop/Projects/ori-platform log --oneline --all --graph)",
+      "Bash(git -C /Users/carlo/Desktop/Projects/ori-platform branch:*)",
+      "Bash(pnpm test:*)",
+      "Bash(pnpm --filter @ori/core-api add:*)",
+      "Bash(python -m pytest:*)"
     ],
     "deny": [],
     "ask": []
