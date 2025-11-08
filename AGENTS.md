@@ -118,6 +118,8 @@ These roles are not fixed and will adapt as we test and learn from the workflow.
 
 Ori Platform is a pnpm workspace monorepo. Web code resides in `src/` (`src/app` for the App Router, `src/components` for UI, `src/contexts` and `src/hooks` for state helpers, `src/integrations` and `src/lib` for clients) using the `@/` alias. Shared domain assets live in `shared/`, backend services in `services/` (`core-api`, `ai-engine`), static files in `public/`, and Supabase migrations in `supabase/`.
 
+**AI Engine (Nov 2025):** Fully implemented Python FastAPI service providing semantic job matching, skill gap analysis, and learning path generation. Uses sentence-transformers for local embedding generation (no API keys required). Multi-factor scoring algorithm weights semantic similarity (40%), skill match (30%), experience (15%), location (10%), and salary (5%). Core-api integrates via HTTP client with graceful fallback.
+
 ## Build, Test, and Development Commands
 
 - `pnpm install` — install workspace dependencies (avoid mixing npm/yarn).
@@ -126,6 +128,11 @@ Ori Platform is a pnpm workspace monorepo. Web code resides in `src/` (`src/app`
 - `pnpm build && pnpm start` — compile and serve the production build.
 - `pnpm lint` — enforce the Next.js core-web-vitals ESLint configuration.
 - `pnpm turbo test --filter=<package>` — run package-specific tests; coverage output is written to `coverage/`.
+
+**AI Engine Commands:**
+- `cd services/ai-engine && pip install -r requirements.txt` — first-time setup (creates venv recommended).
+- `python main.py` — start AI engine at `http://localhost:3002` (downloads model on first run).
+- `pytest tests/ -v` — run AI engine tests with verbose output.
 
 ## Coding Style & Naming Conventions
 
@@ -157,10 +164,17 @@ To ensure `AGENTS.md` and each agent's individual `.md` file (e.g., `GEMINI.md`,
 
 All agents must follow the same standards and recommendations when performing these updates. This ensures continuous alignment and quality across all documentation.
 
-### Initial Work Split Suggestion - by Codex on the 7/11/25
+### Work Ownership & Recent Completions
 
 - **codex-branch**: Own TypeScript-heavy core work (Next.js app, shared hooks, build tooling), rapid debugging loops, and schema-aware migrations when paired with Supabase notes.
 - **gemini-branch**: Focus on exploratory or net-new UX and AI-facing experiences across `src/components`, `src/app`, and `src/integrations`, where broad design ideation and multi-file patterning matter.
 - **claude-branch**: Drive long-form reasoning tasks—config coordination, backend contract updates in `services/`, and documentation refreshes that keep cross-cutting changes coherent.
+  - **Completed (Nov 2025):** AI Engine foundation - semantic matching, skill analysis, learning paths, core-api integration
 - **Cross-branch guardrails**: Sequence dependent tasks `claude ➝ codex ➝ gemini` (API contract → implementation → UI polish) and schedule weekly rebases on `main` after each PR merge to minimize conflicts.
 - **Immediate next steps**: Curate the upcoming sprint backlog into codex/gemini/claude columns with clear owners, and have every agent run `pnpm install && pnpm lint` inside their clone to ensure environment parity before starting.
+
+### Reference Documentation
+
+- **AI Engine Quick Start:** See `AI_ENGINE_QUICKSTART.md` for setup instructions
+- **AI Engine Architecture:** See `services/ai-engine/README.md` for detailed technical documentation
+- **Core-API Integration:** See `services/core-api/src/lib/ai-client.ts` for integration patterns

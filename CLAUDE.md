@@ -30,8 +30,12 @@ This is a pnpm workspace with three main areas:
 - **Services (`services/`)**: Backend microservices
   - `services/core-api/`: Express + TypeScript REST API (port 3001)
     - Routes: `/api/v1/{applications,jobs,payments,users}`
-    - Integrates with Supabase and Stripe
-  - `services/ai-engine/`: Python-based AI service (structure TBD)
+    - Integrates with Supabase, Stripe, and AI Engine
+  - `services/ai-engine/`: Python FastAPI AI service (port 3002)
+    - Semantic job matching using sentence-transformers
+    - Skill gap analysis and learning path generation
+    - Multi-factor scoring: semantic (40%), skills (30%), experience (15%), location (10%), salary (5%)
+    - Endpoints: `/api/v1/{match,analyze-skills,learning-paths,recommend-roles}`
 
 - **Shared (`shared/`)**: Cross-service packages
   - `shared/types/`: TypeScript type definitions (User, Job, Application, etc.)
@@ -52,6 +56,12 @@ pnpm lint                   # Run ESLint (next/core-web-vitals config)
 pnpm dev:api                           # Start core-api at http://localhost:3001
 pnpm --filter @ori/core-api dev        # Equivalent command
 pnpm --filter @ori/core-api build      # Build core-api TypeScript
+
+# AI Engine (Python/FastAPI)
+cd services/ai-engine
+pip install -r requirements.txt        # First time setup
+python main.py                         # Start AI engine at http://localhost:3002
+pytest tests/ -v                       # Run AI engine tests
 ```
 
 ### Package Management
@@ -103,6 +113,17 @@ SUPABASE_URL=
 SUPABASE_SERVICE_ROLE_KEY=
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
+FRONTEND_URL=http://localhost:3000
+AI_ENGINE_URL=http://localhost:3002
+```
+
+### AI Engine (`services/ai-engine/.env`)
+```env
+PORT=3002
+ENVIRONMENT=development
+EMBEDDING_MODEL=all-MiniLM-L6-v2      # No API keys needed!
+LOG_LEVEL=INFO
+CORE_API_URL=http://localhost:3001
 FRONTEND_URL=http://localhost:3000
 ```
 
@@ -190,6 +211,9 @@ While test infrastructure isn't fully established, follow these patterns:
 5. Supabase client is a singleton - always use `getSupabaseClient()`, never create new instances
 6. All Radix UI components are pre-installed via shadcn/ui
 7. The `@/` path alias only works in the frontend package, not in services/
+8. **AI Engine Integration**: Core-api gracefully falls back to basic scoring if AI engine is unavailable
+9. **AI Engine First Run**: Initial startup downloads ~80MB sentence-transformer model (one-time)
+10. **Service Communication**: AI engine (3002) ← core-api (3001) ← frontend (3000)
 
 ## Known Patterns to Follow
 
