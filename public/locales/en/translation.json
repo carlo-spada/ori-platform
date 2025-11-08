@@ -486,11 +486,23 @@
       "defaultSecondaryCta": "View all recommendations",
       "defaultSecondaryHref": "/app/recommendations"
     },
+    "quickStats": {
+      "activeApplications": "Active Applications",
+      "jobMatches": "Job Matches",
+      "skillsAdded": "Skills Added",
+      "profileCompletion": "Profile Completion"
+    },
+    "recentActivity": {
+      "title": "Recent Activity",
+      "emptyMessage": "No recent activity"
+    },
     "chat": {
       "title": "Talk to Ori",
       "placeholder": "Ask Ori about your next steps, options, or any role you're considering…",
       "sendLabel": "Send",
-      "emptyStateMessage": "Start a conversation with Ori. Ask about career paths, skills to develop, or specific roles you're interested in."
+      "emptyStateMessage": "Start a conversation with Ori. Ask about career paths, skills to develop, or specific roles you're interested in.",
+      "initialMessage": "Hi! I'm Ori, your AI career companion. How can I help you today?",
+      "responseMessage": "I understand you'd like some guidance. Let me think about the best way to help you with that..."
     }
   },
   "profilePage": {
