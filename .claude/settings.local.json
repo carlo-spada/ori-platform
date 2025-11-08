@@ -20,7 +20,12 @@
       "Bash(gh pr view:*)",
       "Bash(find:*)",
       "Bash(gh auth login:*)",
-      "Bash(gh pr merge:*)"
+      "Bash(gh pr merge:*)",
+      "Bash(git remote set-url:*)",
+      "Bash(git config:*)",
+      "Bash(~/.git-credentials)",
+      "Bash(git stash:*)",
+      "Bash(gh pr close:*)"
     ],
     "deny": [],
     "ask": []
