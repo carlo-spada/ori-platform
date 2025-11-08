@@ -52,6 +52,7 @@ git push origin dev
 - **`dev`**: Working branch where all development happens
 
 **Workflow:**
+
 1. Always work on `dev` branch: `git checkout dev && git pull`
 2. Make changes and commit regularly: `git commit -m "feat: description"`
 3. Push to dev: `git push origin dev`
@@ -88,6 +89,7 @@ pnpm lint                   # Run ESLint (next/core-web-vitals config)
 ```
 
 ### Backend Development
+
 The production API runs as serverless functions in the `api/` directory and is served by `pnpm dev`. The following command is for running the local-only Express server for development and debugging.
 
 ```bash
@@ -265,16 +267,17 @@ Define in `shared/types/src/index.ts`
 ## My Role: Implementer & Builder
 
 ### UI/UX Development with v0.dev
+
 For any task that requires creating a new React component or UI element, you must follow this workflow:
 
 1.  **Generate with v0.dev**: Your first step is to navigate to v0.dev. Use a descriptive text prompt to generate the component. Iterate on the prompt until the generated component closely matches the task requirements.
 2.  **Copy Code**: Copy the generated JSX and code from v0.dev.
 3.  **Integrate**: Create a new component file in the appropriate directory (e.g., `src/components/feature-name/NewComponent.tsx`).
 4.  **Adapt**: Modify the pasted code as necessary. This may include:
-    *   Connecting it to our application's state management (React Query, hooks).
-    *   Passing the correct props.
-    *   Adjusting types to match our `shared/types`.
-    *   Refining styles to ensure perfect consistency with our design system.
+    - Connecting it to our application's state management (React Query, hooks).
+    - Passing the correct props.
+    - Adjusting types to match our `shared/types`.
+    - Refining styles to ensure perfect consistency with our design system.
 
 **Primary Responsibilities:**
 **Claim Tasks**: Move task files from `.tasks/todo/` to `.tasks/in-progress/`

@@ -129,6 +129,7 @@ This structured process ensures a clear separation of duties, maintains code qua
 ## Agent Responsibilities & Best Practices
 
 ### UI/UX Development Workflow using v0.dev
+
 To accelerate development and maintain a high standard of user experience, this project has adopted **v0.dev** as the primary tool for creating new UI components.
 
 1.  **Standard Practice**: For any task involving the creation of new UI, the assigned agent will first use v0.dev to generate the component code. The generated code, which is compatible with our Next.js, Tailwind CSS, and shadcn/ui stack, should then be integrated and adapted as needed.

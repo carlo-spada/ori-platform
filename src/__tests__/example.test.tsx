@@ -12,7 +12,11 @@ describe('NavLink Component', () => {
   })
 
   it('applies active class when href matches current path', () => {
-    render(<NavLink href="/" className="custom-class">Home</NavLink>)
+    render(
+      <NavLink href="/" className="custom-class">
+        Home
+      </NavLink>,
+    )
 
     const link = screen.getByRole('link', { name: /home/i })
     expect(link).toBeInTheDocument()

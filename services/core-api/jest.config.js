@@ -24,14 +24,17 @@ module.exports = {
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },
   transform: {
-    '^.+\\.ts$': ['ts-jest', {
-      useESM: false,
-      isolatedModules: true,
-      tsconfig: {
-        esModuleInterop: true,
-        allowSyntheticDefaultImports: true,
-      }
-    }],
+    '^.+\\.ts$': [
+      'ts-jest',
+      {
+        useESM: false,
+        isolatedModules: true,
+        tsconfig: {
+          esModuleInterop: true,
+          allowSyntheticDefaultImports: true,
+        },
+      },
+    ],
   },
   verbose: true,
   setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'],

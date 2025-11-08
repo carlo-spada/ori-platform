@@ -96,9 +96,7 @@ export default function Dashboard() {
           ...old,
           conversation: old?.conversation || { id: data.conversation_id },
           messages: [
-            ...(old?.messages || []).filter(
-              (m) => !m.id.startsWith('temp-'),
-            ),
+            ...(old?.messages || []).filter((m) => !m.id.startsWith('temp-')),
             data.message,
           ],
         }),
@@ -148,14 +146,18 @@ export default function Dashboard() {
         type: 'favorite',
         title: 'Saved job',
         subtitle: 'Lead Designer at Meta',
-        timestamp: new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
+        timestamp: new Date(
+          now.getTime() - 1 * 24 * 60 * 60 * 1000,
+        ).toISOString(), // 1 day ago
       },
       {
         id: '4',
         type: 'profile',
         title: 'Updated your profile',
         subtitle: 'Added work experience',
-        timestamp: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
+        timestamp: new Date(
+          now.getTime() - 2 * 24 * 60 * 60 * 1000,
+        ).toISOString(), // 2 days ago
       },
     ]
   }, [])

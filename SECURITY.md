@@ -6,10 +6,10 @@ The Ori Platform team takes security seriously. We appreciate your efforts to re
 
 Our project is currently in a pre-1.0 release phase. As such, we do not have a stable, numbered versioning scheme. Security updates are applied to our `main` branch, which represents the latest supported version.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| Latest `main` commit   | :white_check_mark: |
-| Previous commits   | :x:                |
+| Version              | Supported          |
+| -------------------- | ------------------ |
+| Latest `main` commit | :white_check_mark: |
+| Previous commits     | :x:                |
 
 ## Reporting a Vulnerability
 
@@ -33,9 +33,9 @@ When you report a vulnerability through this private channel, you can expect the
 
 To provide a secure platform, we follow these best practices:
 
--   **Dependency Scanning**: We use Dependabot to automatically scan our dependencies for known vulnerabilities and create pull requests to address them.
--   **Code Scanning**: We use GitHub's CodeQL static analysis in our CI/CD pipeline to identify potential vulnerabilities in our code before it's merged.
--   **No Hardcoded Secrets**: We never commit secrets, API keys, or other sensitive credentials to the repository. These are managed through environment variables and secure vaults.
--   **Automated Policy Review**: This security policy is automatically reviewed on a monthly basis by our AI agent (Gemini) to ensure it stays aligned with our project's evolving practices.
+- **Dependency Scanning**: We use Dependabot to automatically scan our dependencies for known vulnerabilities and create pull requests to address them.
+- **Code Scanning**: We use GitHub's CodeQL static analysis in our CI/CD pipeline to identify potential vulnerabilities in our code before it's merged.
+- **No Hardcoded Secrets**: We never commit secrets, API keys, or other sensitive credentials to the repository. These are managed through environment variables and secure vaults.
+- **Automated Policy Review**: This security policy is automatically reviewed on a monthly basis by our AI agent (Gemini) to ensure it stays aligned with our project's evolving practices.
 
 Thank you for helping keep the Ori Platform secure.

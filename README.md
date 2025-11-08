@@ -88,6 +88,7 @@ You will need to run three separate services in different terminal windows.
     - The local API will be available at `http://localhost:3001`.
 
 3.  **Run the AI Engine (Python):**
+
     ```bash
     cd services/ai-engine
     pip install -r requirements.txt

@@ -56,11 +56,9 @@ router.post(
 
       // Validate user can only create applications for themselves
       if (req.user?.id !== userId) {
-        return res
-          .status(403)
-          .json({
-            error: 'Forbidden - Can only create applications for yourself',
-          })
+        return res.status(403).json({
+          error: 'Forbidden - Can only create applications for yourself',
+        })
       }
 
       const { data: application, error } = await supabase
