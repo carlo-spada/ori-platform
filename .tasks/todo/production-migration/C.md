@@ -31,7 +31,7 @@ The `ai-engine` is a specialized, computationally-intensive service that is best
     *   Ensure the service is private (requires authentication to invoke).
 3.  **Create GitHub Action Workflow**:
     *   Create a new workflow file at `.github/workflows/deploy-ai-engine.yml`.
-    *   This workflow should trigger on pushes to the `main` branch.
+    *   This workflow should be designed to be triggered by the main production deployment pipeline after a PR is merged from `development` into `main`.
     *   **Steps**:
         1.  Check out the code.
         2.  Authenticate to Google Cloud (using a service account key stored as a GitHub Secret).

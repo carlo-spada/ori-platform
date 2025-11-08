@@ -24,7 +24,7 @@ This is the final step in achieving a Zero-Ops infrastructure. A fully automated
     *   It should run `pnpm lint` and `pnpm test` for the entire monorepo.
     *   Add a step to run `pytest` for the `ai-engine`.
 2.  **Create `deploy-production.yml` Workflow**:
-    *   Create a new workflow that triggers on every push to the `main` branch.
+    *   Create a new workflow that triggers automatically when a pull request is merged from `development` into the `main` branch.
     *   This workflow will orchestrate the entire deployment process.
     *   **Steps**:
         1.  **Run Verification**: The first job should run all the checks from the `verify.yml` workflow. The subsequent jobs should only run if this job succeeds.
@@ -38,6 +38,6 @@ This is the final step in achieving a Zero-Ops infrastructure. A fully automated
 ### Acceptance Criteria
 -   The `verify.yml` workflow is updated to run all necessary checks on pull requests.
 -   A new `deploy-production.yml` workflow is created.
--   On a push to `main`, the workflow automatically tests the entire codebase.
+-   On a PR merge from `development` to `main`, the workflow automatically tests the entire codebase.
 -   If tests pass, the workflow automatically deploys the frontend/`core-api` to Vercel and the `ai-engine` to Cloud Run.
 -   After successful deployments, the workflow automatically applies any new Supabase migrations to the production database.
