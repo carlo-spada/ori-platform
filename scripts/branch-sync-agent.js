@@ -1,6 +1,10 @@
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+import { execSync } from 'child_process';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const configPath = path.join(__dirname, '../agents/branch-sync.config.json');
 const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
@@ -54,8 +58,8 @@ async function main() {
     results.push(await syncBranch(branch));
   }
 
-  console.log('
---- Synchronization Summary ---');
+  console.log(`
+--- Synchronization Summary ---`);
   results.forEach(result => {
     if (result.status === 'success') {
       console.log(`✅ ${result.branch}: Successfully synced.`);
@@ -66,12 +70,12 @@ async function main() {
 
   const failedSyncs = results.filter(r => r.status === 'failure');
   if (failedSyncs.length > 0) {
-    console.error('
-Some branches failed to sync. Please check the logs above for details and resolve conflicts manually.');
+    console.error(`
+Some branches failed to sync. Please check the logs above for details and resolve conflicts manually.`);
     process.exit(1);
   } else {
-    console.log('
-All branches synchronized successfully.');
+    console.log(`
+All branches synchronized successfully.`);
   }
 }
 

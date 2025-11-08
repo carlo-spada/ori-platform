@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { JobRecommendation, Skill } from '@/lib/types';
+import { JobRecommendation } from '@/lib/types';
 import { MapPin, Calendar } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { SkillsGapDisplay } from './SkillsGapDisplay';
@@ -21,14 +21,6 @@ export function JobRecommendationCard({ job, labels }: JobRecommendationCardProp
     formatDistanceToNow(new Date(job.datePosted), { addSuffix: true })
   );
 
-  // TODO: Temporary mock data for UI verification - will be replaced with real API data in Task C
-  const mockSkills: Skill[] = [
-    { name: 'React', status: 'matched' },
-    { name: 'TypeScript', status: 'matched' },
-    { name: 'Node.js', status: 'missing' },
-    { name: 'AWS', status: 'missing' },
-  ];
-
   return (
     <article className="rounded-2xl border border-border bg-card p-4 flex flex-col gap-3 hover:bg-card/80 transition-colors">
       <div className="flex items-start justify-between gap-3">
@@ -42,7 +34,7 @@ export function JobRecommendationCard({ job, labels }: JobRecommendationCardProp
               <>
                 <span aria-hidden="true">·</span>
                 <span className="flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5" aria-hidden="true" />
+                  <MapPin className="w-3.h-3.5" aria-hidden="true" />
                   {job.location}
                 </span>
               </>
@@ -60,11 +52,10 @@ export function JobRecommendationCard({ job, labels }: JobRecommendationCardProp
         {job.summary}
       </p>
 
-      {/* Temporary Skills Gap Display - will use real data from API in Task C */}
-      <SkillsGapDisplay skills={mockSkills} />
+      <SkillsGapDisplay skills={job.skills_analysis || []} />
 
       <div className="flex items-center gap-1 text-xs text-muted-foreground">
-        <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
+        <Calendar className="w-3.h-3.5" aria-hidden="true" />
         <time dateTime={job.datePosted}>{datePostedText}</time>
       </div>
 

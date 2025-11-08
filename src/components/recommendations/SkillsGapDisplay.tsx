@@ -21,10 +21,9 @@ export function SkillsGapDisplay({ skills }: SkillsGapDisplayProps) {
             Matched Skills
           </h4>
           <div className="flex flex-wrap gap-2">
-            {matchedSkills.map((skill, index) => (
+            {matchedSkills.map((skill) => (
               <div
-                key={`${skill.name}-${index}`}
-                className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-green-500/10 border border-green-500/20"
+                key={skill.name}
               >
                 <CheckCircle className="w-3.5 h-3.5 text-green-500" aria-hidden="true" />
                 <span className="text-xs font-medium text-green-600 dark:text-green-400">
