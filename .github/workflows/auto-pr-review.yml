@@ -111,7 +111,7 @@ jobs:
           FILE_COUNT=$(echo "$CHANGED_FILES" | grep -c '^' || echo 0)
           
           # Get stats
-          ADDITIONS=$(git diff --shortstat main...HEAD | grep -oP '\d+(?= insertion)')
+          ADDITIONS=$(git diff --shortstat main...HEAD | grep -oP '\d+(?= insertion)' || echo "0")
           DELETIONS=$(git diff --shortstat main...HEAD | grep -oP '\d+(?= deletion)' || echo "0")
           
           echo "changed_files=$FILE_COUNT" >> $GITHUB_OUTPUT
