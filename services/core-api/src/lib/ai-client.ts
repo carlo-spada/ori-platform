@@ -233,7 +233,7 @@ export class AIClient {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ profile }),
+        body: JSON.stringify(profile),
         signal: AbortSignal.timeout(15000),
       });
 

@@ -6,6 +6,7 @@ import { supabase } from '../lib/supabase.js';
 import { aiClient } from '../lib/ai-client.js';
 
 const router: RouterType = Router();
+const MAX_JOBS_TO_EVALUATE = 50;
 
 // Helper function to generate skills gap analysis
 interface Skill {
@@ -46,6 +47,35 @@ function calculateMatchScore(userSkills: string[], jobRequirements: string[]): n
   }).length;
 
   return Math.round((matchedCount / jobRequirements.length) * 100);
+}
+
+const sanitizeFilterValue = (value: string) =>
+  value.replace(/[%_]/g, '').trim();
+
+export interface FormattedSkillGap {
+  userSkills: string[];
+  requiredSkills: string[];
+  missingSkills: string[];
+}
+
+export async function fetchSkillsGapForJob(
+  userSkills: string[] = [],
+  jobRequirements: string[] = []
+): Promise<FormattedSkillGap | undefined> {
+  if (!jobRequirements.length) {
+    return undefined;
+  }
+
+  const response = await aiClient.getSkillGap(userSkills, jobRequirements);
+  if (!response) {
+    return undefined;
+  }
+
+  return {
+    userSkills: response.user_skills,
+    requiredSkills: response.required_skills,
+    missingSkills: response.missing_skills,
+  };
 }
 
 // Schema for job matching request
@@ -105,10 +135,29 @@ router.post('/find-matches', authMiddleware, validateRequest(findMatchesSchema),
     if (userError) throw userError;
 
     // Fetch available jobs
-    const { data: jobs, error: jobsError } = await supabase
+    let jobQuery = supabase
       .from('jobs')
-      .select('*')
-      .limit(50); // Fetch more jobs for better matching
+      .select('*');
+
+    if (filters?.workType) {
+      jobQuery = jobQuery.eq('work_type', filters.workType);
+    }
+
+    if (filters?.location) {
+      const sanitizedLocation = sanitizeFilterValue(filters.location);
+      if (sanitizedLocation) {
+        jobQuery = jobQuery.ilike('location', `%${sanitizedLocation}%`);
+      }
+    }
+
+    if (typeof filters?.salaryMin === 'number') {
+      const salaryMin = filters.salaryMin;
+      jobQuery = jobQuery.or(`salary_min.gte.${salaryMin},salary_max.gte.${salaryMin}`);
+    }
+
+    const { data: jobs, error: jobsError } = await jobQuery
+      .order('created_at', { ascending: false })
+      .limit(MAX_JOBS_TO_EVALUATE); // Fetch more jobs for better matching
 
     if (jobsError) throw jobsError;
 
@@ -161,7 +210,7 @@ router.post('/find-matches', authMiddleware, validateRequest(findMatchesSchema),
             );
 
             // Fetch skill gap analysis from AI Engine
-            const skillsGap = await aiClient.getSkillGap(
+            const skillsGap = await fetchSkillsGapForJob(
               userProfile.skills || [],
               job?.requirements || []
             );
@@ -176,11 +225,7 @@ router.post('/find-matches', authMiddleware, validateRequest(findMatchesSchema),
               keyMatches: match.key_matches,
               missingSkills: match.missing_skills,
               skills_analysis: skillsAnalysis,
-              skillsGap: skillsGap ? {
-                userSkills: skillsGap.user_skills,
-                requiredSkills: skillsGap.required_skills,
-                missingSkills: skillsGap.missing_skills,
-              } : undefined,
+              skillsGap,
             };
           })
         );
@@ -199,7 +244,7 @@ router.post('/find-matches', authMiddleware, validateRequest(findMatchesSchema),
             const matchedSkills = skillsAnalysis.filter(s => s.status === 'matched');
 
             // Try to get skill gap even in fallback mode
-            const skillsGap = await aiClient.getSkillGap(
+            const skillsGap = await fetchSkillsGapForJob(
               userSkills,
               job.requirements || []
             );
@@ -209,11 +254,7 @@ router.post('/find-matches', authMiddleware, validateRequest(findMatchesSchema),
               matchScore,
               keyMatches: matchedSkills.slice(0, 3).map(s => s.name),
               skills_analysis: skillsAnalysis,
-              skillsGap: skillsGap ? {
-                userSkills: skillsGap.user_skills,
-                requiredSkills: skillsGap.required_skills,
-                missingSkills: skillsGap.missing_skills,
-              } : undefined,
+              skillsGap,
             };
           })
         );
