@@ -50,6 +50,10 @@ This workflow is not just a guideline; it is enforced by the repository's config
 *   **Automated CI Checks**: A GitHub Actions workflow automatically runs `lint`, `build`, and `test` commands on every PR. The PR cannot be merged unless all checks pass.
 *   **Code Review**: At least one other agent or the human supervisor must review and approve a PR before it can be merged.
 
+### Branch Sync Agent
+
+`main` is the single source of truth. To prevent the agent branches from drifting away from the latest production-ready commits, a dedicated workflow (`.github/workflows/branch-sync-agent.yml`) runs every six hours, on every push to `main`, and on manual dispatch. The workflow executes `scripts/branch-sync-agent.js` which reads `agents/branch-sync.config.json` and merges `origin/main` into `codex-branch`, `claude-branch`, and `gemini-branch` sequentially. If it creates new merges it pushes them back upstream; if a merge conflict happens the workflow aborts, records the failure in the step summary, and exits non-zero so humans can resolve the conflict directly on the affected branch. You can run the same logic locally with `node scripts/branch-sync-agent.js`.
+
 ## GitHub Considerations
 
 All code changes must be integrated into the `main` branch via Pull Requests (PRs) from an agent's dedicated branch. Direct pushes to `main` are disabled. Before creating a PR, ensure your branch is up-to-date with `main` and passes all local checks. This workflow preserves version integrity, prevents integration errors, and ensures the `main` branch is always stable.
@@ -116,7 +120,7 @@ These roles are not fixed and will adapt as we test and learn from the workflow.
 
 ## Project Structure & Module Organization
 
-Ori Platform is a pnpm workspace monorepo. Web code resides in `src/` (`src/app` for the App Router, `src/components` for UI, `src/contexts` and `src/hooks` for state helpers, `src/integrations` and `src/lib` for clients) using the `@/` alias. Shared domain assets live in `shared/`, backend services in `services/` (`core-api`, `ai-engine`), static files in `public/`, and Supabase migrations in `supabase/`.
+Ori Platform is a pnpm workspace monorepo. Web code resides in `src/` (`src/app` for the App Router, `src/components` for UI, `src/contexts` and `src/hooks` for state helpers, `src/integrations` and `src/lib` for clients) using the ` @/` alias. Shared domain assets live in `shared/`, backend services in `services/` (`core-api`, `ai-engine`), static files in `public/`, and Supabase migrations in `supabase/`.
 
 ## Build, Test, and Development Commands
 

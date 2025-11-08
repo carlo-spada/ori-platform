@@ -1,0 +1,37 @@
+name: Branch Sync Agent
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 */6 * * *' # Run every 6 hours
+  workflow_dispatch:
+
+jobs:
+  sync-branches:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for merge operations
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Configure Git User
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Run Branch Sync Script
+        run: node scripts/branch-sync-agent.js
+        env:
+          # Use GITHUB_TOKEN for pushing to protected branches
+          # This token is automatically provided by GitHub Actions
+          # and has permissions to push to branches within the same repository.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
