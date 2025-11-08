@@ -16,15 +16,17 @@ if [ ! -d .git ]; then
     exit 1
 fi
 
-# Check if we have push access (will fail early if not authenticated)
-echo "Checking GitHub authentication..."
+# Check if we can access the remote repository
+echo "Checking GitHub connection..."
 if ! git ls-remote origin main &>/dev/null; then
     echo "❌ Error: Cannot access remote repository. Please ensure you're authenticated."
     echo "   You may need to run: gh auth login"
     exit 1
 fi
 
-echo "✅ Authentication verified"
+echo "✅ Connection verified"
+echo "⚠️  Note: This script requires push access to the repository."
+echo "   If the sync fails due to permissions, please check your access rights."
 echo ""
 
 # Fetch latest changes
