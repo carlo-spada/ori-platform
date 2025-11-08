@@ -29,6 +29,15 @@ export interface UserProfile {
     location?: string;
     willing_to_relocate?: boolean;
 }
+export interface AIAnalysis {
+    summary: string;
+    pros: string[];
+    cons: string[];
+}
+export interface Skill {
+    name: string;
+    status: 'matched' | 'missing';
+}
 export interface Job {
     id: string;
     title: string;
@@ -41,17 +50,24 @@ export interface Job {
     work_type?: 'remote' | 'hybrid' | 'onsite';
     highlights?: string[];
     match_score?: number;
-    ai_analysis?: any;
+    ai_analysis?: AIAnalysis;
     tags?: string[];
     posted_date?: string;
     expires_date?: string;
     created_at: string;
     updated_at: string;
 }
+export interface SkillsGap {
+    userSkills: string[];
+    requiredSkills: string[];
+    missingSkills: string[];
+}
 export interface JobMatch extends Job {
     matchScore: number;
     keyMatches: string[];
     reasoning?: string;
+    skills_analysis?: Skill[];
+    skillsGap?: SkillsGap;
 }
 export type ApplicationStatus = 'saved' | 'applied' | 'interviewing' | 'offer' | 'rejected' | 'withdrawn';
 export interface Application {
@@ -105,5 +121,32 @@ export interface OnboardingData {
     preferences?: UserPreferences;
     skills?: string[];
     profile?: Partial<UserProfile>;
+}
+export interface ChatMessage {
+    id: string;
+    conversation_id: string;
+    role: 'user' | 'assistant';
+    content: string;
+    created_at: string;
+}
+export interface Conversation {
+    id: string;
+    user_id: string;
+    created_at: string;
+    updated_at: string;
+    summary?: string;
+    messages?: ChatMessage[];
+}
+export interface ChatHistoryResponse {
+    conversation: Conversation | null;
+    messages: ChatMessage[];
+}
+export interface SendMessageRequest {
+    content: string;
+    conversation_id?: string;
+}
+export interface SendMessageResponse {
+    message: ChatMessage;
+    conversation_id: string;
 }
 //# sourceMappingURL=index.d.ts.map
