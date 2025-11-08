@@ -66,11 +66,18 @@ export interface Job {
   updated_at: string;
 }
 
+export interface SkillsGap {
+  userSkills: string[];
+  requiredSkills: string[];
+  missingSkills: string[];
+}
+
 export interface JobMatch extends Job {
   matchScore: number;
   keyMatches: string[];
   reasoning?: string;
   skills_analysis?: Skill[]; // Array of skills with their match status
+  skillsGap?: SkillsGap; // Skills gap analysis from AI Engine
 }
 
 // Application related types

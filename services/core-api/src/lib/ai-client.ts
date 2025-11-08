@@ -53,6 +53,17 @@ interface MatchRequest {
   limit?: number;
 }
 
+interface SkillGapRequest {
+  user_skills: string[];
+  required_skills: string[];
+}
+
+interface SkillGapResponse {
+  user_skills: string[];
+  required_skills: string[];
+  missing_skills: string[];
+}
+
 interface SkillAnalysisResult {
   user_id: string;
   target_role?: string;
@@ -120,6 +131,39 @@ export class AIClient {
     } catch (error) {
       console.error('AI matching request failed:', error);
       throw error;
+    }
+  }
+
+  /**
+   * Calculate simple skill gap between user skills and required skills.
+   * Returns which required skills the user is missing.
+   */
+  async getSkillGap(userSkills: string[], requiredSkills: string[]): Promise<SkillGapResponse | null> {
+    try {
+      const request: SkillGapRequest = {
+        user_skills: userSkills,
+        required_skills: requiredSkills,
+      };
+
+      const response = await fetch(`${this.baseUrl}/api/v1/skill-gap`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(request),
+        signal: AbortSignal.timeout(10000), // 10 second timeout
+      });
+
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({ error: 'Unknown error' })) as { error?: string };
+        throw new Error(`Skill gap analysis failed: ${error.error || response.statusText}`);
+      }
+
+      return await response.json() as SkillGapResponse;
+    } catch (error) {
+      console.error('Skill gap request failed:', error);
+      // Return null on error - graceful degradation
+      return null;
     }
   }
 

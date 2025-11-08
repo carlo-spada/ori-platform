@@ -151,42 +151,74 @@ router.post('/find-matches', authMiddleware, validateRequest(findMatchesSchema),
         });
 
         // Map AI results back to job objects with scores
-        jobsWithScores = matches.map(match => {
-          const job = jobs.find(j => j.id === match.job_id);
-          const skillsAnalysis = generateSkillsAnalysis(
-            userProfile.skills || [],
-            job?.requirements || []
-          );
+        // Also fetch skill gap analysis for each match
+        const matchesWithSkillGaps = await Promise.all(
+          matches.map(async (match) => {
+            const job = jobs.find(j => j.id === match.job_id);
+            const skillsAnalysis = generateSkillsAnalysis(
+              userProfile.skills || [],
+              job?.requirements || []
+            );
 
-          return {
-            ...job,
-            matchScore: Math.round(match.match_score),
-            semanticScore: Math.round(match.semantic_score),
-            skillMatchScore: Math.round(match.skill_match_score),
-            experienceScore: Math.round(match.experience_score),
-            reasoning: match.reasoning,
-            keyMatches: match.key_matches,
-            missingSkills: match.missing_skills,
-            skills_analysis: skillsAnalysis,
-          };
-        });
+            // Fetch skill gap analysis from AI Engine
+            const skillsGap = await aiClient.getSkillGap(
+              userProfile.skills || [],
+              job?.requirements || []
+            );
+
+            return {
+              ...job,
+              matchScore: Math.round(match.match_score),
+              semanticScore: Math.round(match.semantic_score),
+              skillMatchScore: Math.round(match.skill_match_score),
+              experienceScore: Math.round(match.experience_score),
+              reasoning: match.reasoning,
+              keyMatches: match.key_matches,
+              missingSkills: match.missing_skills,
+              skills_analysis: skillsAnalysis,
+              skillsGap: skillsGap ? {
+                userSkills: skillsGap.user_skills,
+                requiredSkills: skillsGap.required_skills,
+                missingSkills: skillsGap.missing_skills,
+              } : undefined,
+            };
+          })
+        );
+
+        jobsWithScores = matchesWithSkillGaps;
       } catch (aiError) {
         console.error('AI matching failed, falling back to basic scoring:', aiError);
         // Fallback to simple skill-based scoring
         const userSkills = userProfile.skills || [];
-        jobsWithScores = jobs
-          .map(job => {
+
+        // Get skill gaps for fallback matches too
+        const jobsWithSkillGaps = await Promise.all(
+          jobs.map(async (job) => {
             const matchScore = calculateMatchScore(userSkills, job.requirements || []);
             const skillsAnalysis = generateSkillsAnalysis(userSkills, job.requirements || []);
             const matchedSkills = skillsAnalysis.filter(s => s.status === 'matched');
+
+            // Try to get skill gap even in fallback mode
+            const skillsGap = await aiClient.getSkillGap(
+              userSkills,
+              job.requirements || []
+            );
 
             return {
               ...job,
               matchScore,
               keyMatches: matchedSkills.slice(0, 3).map(s => s.name),
               skills_analysis: skillsAnalysis,
+              skillsGap: skillsGap ? {
+                userSkills: skillsGap.user_skills,
+                requiredSkills: skillsGap.required_skills,
+                missingSkills: skillsGap.missing_skills,
+              } : undefined,
             };
           })
+        );
+
+        jobsWithScores = jobsWithSkillGaps
           .filter(job => job.matchScore > 0) // Only show jobs with at least some skill match
           .sort((a, b) => b.matchScore - a.matchScore)
           .slice(0, limit);
@@ -195,19 +227,22 @@ router.post('/find-matches', authMiddleware, validateRequest(findMatchesSchema),
       // AI engine not available, use fallback skill-based scoring
       console.warn('AI engine not available, using fallback matching');
       const userSkills = userProfile.skills || [];
-      jobsWithScores = jobs
-        .map(job => {
-          const matchScore = calculateMatchScore(userSkills, job.requirements || []);
-          const skillsAnalysis = generateSkillsAnalysis(userSkills, job.requirements || []);
-          const matchedSkills = skillsAnalysis.filter(s => s.status === 'matched');
 
-          return {
-            ...job,
-            matchScore,
-            keyMatches: matchedSkills.slice(0, 3).map(s => s.name),
-            skills_analysis: skillsAnalysis,
-          };
-        })
+      const jobsWithBasicMatching = jobs.map(job => {
+        const matchScore = calculateMatchScore(userSkills, job.requirements || []);
+        const skillsAnalysis = generateSkillsAnalysis(userSkills, job.requirements || []);
+        const matchedSkills = skillsAnalysis.filter(s => s.status === 'matched');
+
+        return {
+          ...job,
+          matchScore,
+          keyMatches: matchedSkills.slice(0, 3).map(s => s.name),
+          skills_analysis: skillsAnalysis,
+          skillsGap: undefined, // No AI Engine available
+        };
+      });
+
+      jobsWithScores = jobsWithBasicMatching
         .filter(job => job.matchScore > 0) // Only show jobs with at least some skill match
         .sort((a, b) => b.matchScore - a.matchScore)
         .slice(0, limit);
