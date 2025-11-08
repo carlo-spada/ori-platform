@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import { setDocumentMeta } from '@/lib/seo'
 import { useTranslation } from 'react-i18next'
 import { JobApplication, ApplicationStatus } from '@/lib/types'
@@ -16,75 +16,15 @@ import {
 } from '@/components/ui/tooltip'
 import { Plus } from 'lucide-react'
 import { toast } from 'sonner'
-
-// Mock data for demonstration
-const MOCK_APPLICATIONS: JobApplication[] = [
-  {
-    id: '1',
-    jobTitle: 'Senior Product Designer',
-    company: 'Acme Corp',
-    location: 'San Francisco, CA',
-    applicationDate: new Date(
-      Date.now() - 5 * 24 * 60 * 60 * 1000,
-    ).toISOString(),
-    status: 'interviewing',
-    lastUpdated: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    detailsHref: '#',
-  },
-  {
-    id: '2',
-    jobTitle: 'UX Researcher',
-    company: 'Tech Innovations',
-    location: 'New York, NY',
-    applicationDate: new Date(
-      Date.now() - 10 * 24 * 60 * 60 * 1000,
-    ).toISOString(),
-    status: 'applied',
-    lastUpdated: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
-    detailsHref: '#',
-  },
-  {
-    id: '3',
-    jobTitle: 'Product Design Lead',
-    company: 'Future Labs',
-    location: 'Austin, TX',
-    applicationDate: new Date(
-      Date.now() - 15 * 24 * 60 * 60 * 1000,
-    ).toISOString(),
-    status: 'offer',
-    lastUpdated: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    detailsHref: '#',
-  },
-  {
-    id: '4',
-    jobTitle: 'Design Systems Architect',
-    company: 'Scale Studio',
-    location: 'Remote',
-    applicationDate: new Date(
-      Date.now() - 20 * 24 * 60 * 60 * 1000,
-    ).toISOString(),
-    status: 'rejected',
-    lastUpdated: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-    detailsHref: '#',
-  },
-  {
-    id: '5',
-    jobTitle: 'Staff Product Designer',
-    company: 'Growth Co',
-    location: 'Seattle, WA',
-    applicationDate: new Date(
-      Date.now() - 25 * 24 * 60 * 60 * 1000,
-    ).toISOString(),
-    status: 'paused',
-    lastUpdated: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
-    detailsHref: '#',
-  },
-]
+import { useApplications, useUpdateApplicationStatus } from '@/hooks/useApplications'
+import type { Application } from '@ori/types'
 
 export default function Applications() {
   const { t } = useTranslation()
-  const [applications, setApplications] =
-    useState<JobApplication[]>(MOCK_APPLICATIONS)
+
+  // Fetch applications from backend
+  const { data: applicationsData = [], isLoading } = useApplications()
+  const updateStatusMutation = useUpdateApplicationStatus()
 
   useEffect(() => {
     setDocumentMeta({
@@ -93,19 +33,41 @@ export default function Applications() {
     })
   }, [])
 
-  const handleUpdateStatus = (id: string, status: ApplicationStatus) => {
-    setApplications((prev) =>
-      prev.map((app) =>
-        app.id === id
-          ? { ...app, status, lastUpdated: new Date().toISOString() }
-          : app,
-      ),
-    )
-    toast.success('Application status updated')
+  // Transform backend Application data to frontend JobApplication format
+  const applications: JobApplication[] = useMemo(() => {
+    return applicationsData.map((app: Application) => ({
+      id: app.id,
+      jobTitle: app.job_title,
+      company: app.company,
+      location: app.location || undefined,
+      applicationDate: app.application_date,
+      status: app.status,
+      lastUpdated: app.last_updated,
+      detailsHref: app.job_url || undefined,
+    }))
+  }, [applicationsData])
+
+  const handleUpdateStatus = async (id: string, status: ApplicationStatus) => {
+    try {
+      await updateStatusMutation.mutateAsync({ id, status })
+      toast.success('Application status updated')
+    } catch (error) {
+      toast.error('Failed to update status')
+      console.error(error)
+    }
   }
 
   const handleViewDetails = (id: string) => {
     toast.info(`Viewing details for application ${id}`)
+  }
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="flex h-full items-center justify-center">
+        <p className="text-muted-foreground">Loading applications...</p>
+      </div>
+    )
   }
 
   return (
