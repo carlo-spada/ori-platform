@@ -24,8 +24,8 @@ export default function Signup() {
 
   useEffect(() => {
     setDocumentMeta({
-      title: 'Sign Up - AURA',
-      description: 'Create your AURA account and start your personalized career journey.',
+      title: 'Sign Up - Ori',
+      description: 'Create your Ori account and start your personalized career journey.',
     });
   }, []);
 
@@ -92,7 +92,7 @@ export default function Signup() {
               href="/"
               className="inline-block text-2xl font-semibold text-foreground hover:text-accent transition-colors mb-4"
             >
-              AURA
+              Ori
             </Link>
           </div>
 
@@ -140,7 +140,7 @@ export default function Signup() {
             href="/"
             className="inline-block text-2xl font-semibold text-foreground hover:text-accent transition-colors mb-4"
           >
-            AURA
+            Ori
           </Link>
           <h1 className="text-3xl font-bold text-foreground mb-2">Get started</h1>
           <p className="text-muted-foreground">

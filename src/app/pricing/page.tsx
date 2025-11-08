@@ -47,7 +47,7 @@ export default function PricingPage() {
     setJSONLD({
       '@context': 'https://schema.org',
       '@type': 'Product',
-      name: 'AURA',
+      name: 'Ori',
       description: t('pricingPage.header.subheadline'),
       offers: jsonLdOffers,
     });
@@ -80,8 +80,8 @@ export default function PricingPage() {
 
   return (
     <PublicLayout
-      title="AURA Pricing | Simple, Transparent Plans"
-      description="Choose the right AURA plan for your career journey. Start free and upgrade anytime with transparent pricing and no hidden fees."
+      title="Ori Pricing | Simple, Transparent Plans"
+      description="Choose the right Ori plan for your career journey. Start free and upgrade anytime with transparent pricing and no hidden fees."
     >
       {/* Page Header */}
       <Section data-testid="pricing-header" className="text-center">
@@ -167,7 +167,7 @@ export default function PricingPage() {
             Frequently Asked Questions
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Everything you need to know about AURA pricing.
+            Everything you need to know about Ori pricing.
           </p>
         </div>
 

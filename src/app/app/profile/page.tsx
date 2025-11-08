@@ -41,7 +41,7 @@ export default function Profile() {
 
   useEffect(() => {
     setDocumentMeta({
-      title: 'Profile & Goals - AURA',
+      title: 'Profile & Goals - Ori',
       description: 'Manage your profile, career goals, and preferences.',
     });
   }, []);

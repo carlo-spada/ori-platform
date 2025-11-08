@@ -14,9 +14,9 @@ const Index = () => {
   // Set SEO meta tags and JSON-LD on mount
   useEffect(() => {
     setDocumentMeta({
-      title: 'AURA - Your AI Career Companion',
+      title: 'Ori - Your AI Career Companion',
       description:
-        'Unlock your potential with AURA, the AI-powered platform for discovering, pursuing, and evolving within roles that fit your skills, values, and ambitions.',
+        'Unlock your potential with Ori, the AI-powered platform for discovering, pursuing, and evolving within roles that fit your skills, values, and ambitions.',
       ogType: 'website',
       twitterCard: 'summary_large_image',
     });
@@ -25,7 +25,7 @@ const Index = () => {
     setJSONLD({
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "AURA",
+      "name": "Ori",
       "description": "AI-powered career companion for personalized job discovery and professional growth",
       "applicationCategory": "BusinessApplication",
       "offers": {

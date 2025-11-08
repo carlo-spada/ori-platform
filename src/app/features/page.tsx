@@ -17,7 +17,7 @@ export default function FeaturesPage() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setDocumentMeta({
-        title: 'Features - AURA | Intelligent Career Co-pilot',
+        title: 'Features - Ori | Intelligent Career Co-pilot',
         description: t('featuresPage.header.subheadline'),
         ogType: 'website',
         canonical: window.location.href,

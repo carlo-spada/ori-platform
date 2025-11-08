@@ -22,8 +22,8 @@ export default function Login() {
 
   useEffect(() => {
     setDocumentMeta({
-      title: 'Log In - AURA',
-      description: 'Log in to your AURA account to continue your career journey.',
+      title: 'Log In - Ori',
+      description: 'Log in to your Ori account to continue your career journey.',
     });
   }, []);
 
@@ -92,7 +92,7 @@ export default function Login() {
             href="/"
             className="inline-block text-2xl font-semibold text-foreground hover:text-accent transition-colors mb-4"
           >
-            AURA
+            Ori
           </Link>
           <h1 className="text-3xl font-bold text-foreground mb-2">Welcome back</h1>
           <p className="text-muted-foreground">

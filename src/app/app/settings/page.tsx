@@ -16,7 +16,7 @@ export default function Settings() {
 
   useEffect(() => {
     setDocumentMeta({
-      title: 'Settings - AURA',
+      title: 'Settings - Ori',
       description: 'Manage your account settings and preferences.',
     });
   }, []);
@@ -32,7 +32,7 @@ export default function Settings() {
   });
 
   const [subscription] = useState<SubscriptionDetails | null>({
-    planName: 'AURA Plus',
+    planName: 'Ori Plus',
     planId: 'plus',
     billingInterval: 'monthly',
     nextBillingDate: '2025-12-06',

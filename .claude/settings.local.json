@@ -12,7 +12,9 @@
       "Bash(git reset:*)",
       "Bash(git fetch:*)",
       "Bash(pnpm --filter @ori/core-api build:*)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "Bash(git checkout:*)",
+      "Bash(git pull:*)"
     ],
     "deny": [],
     "ask": []

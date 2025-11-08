@@ -73,7 +73,7 @@ export default function Applications() {
 
   useEffect(() => {
     setDocumentMeta({
-      title: 'Applications - AURA',
+      title: 'Applications - Ori',
       description: 'Track and manage your job applications.',
     });
   }, []);
