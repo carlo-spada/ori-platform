@@ -55,29 +55,32 @@ export function RecentActivity({ activities, emptyMessage }: RecentActivityProps
 
   if (activities.length === 0) {
     return (
-      <div className="rounded-2xl border border-border bg-card p-6">
-        <h2 className="text-lg font-semibold text-foreground mb-4">
+      <section className="rounded-2xl border border-border bg-card p-6" aria-labelledby="recent-activity-heading">
+        <h2 id="recent-activity-heading" className="text-lg font-semibold text-foreground mb-4">
           {t('dashboardPage.recentActivity.title')}
         </h2>
         <p className="text-sm text-muted-foreground text-center py-8">
           {displayEmptyMessage}
         </p>
-      </div>
+      </section>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-6">
-      <h2 className="text-lg font-semibold text-foreground mb-4">
+    <section className="rounded-2xl border border-border bg-card p-6" aria-labelledby="recent-activity-heading">
+      <h2 id="recent-activity-heading" className="text-lg font-semibold text-foreground mb-4">
         {t('dashboardPage.recentActivity.title')}
       </h2>
-      <div className="space-y-4">
+      <ul className="space-y-4" role="list">
         {activities.map((activity) => (
-          <div
+          <li
             key={activity.id}
             className="flex items-start gap-3 group hover:bg-muted/50 -mx-2 px-2 py-2 rounded-lg transition-colors"
           >
-            <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${getActivityColor(activity.type)}`}>
+            <div
+              className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${getActivityColor(activity.type)}`}
+              aria-hidden="true"
+            >
               {getActivityIcon(activity.type)}
             </div>
             <div className="flex-1 min-w-0">
@@ -89,13 +92,16 @@ export function RecentActivity({ activities, emptyMessage }: RecentActivityProps
                   {activity.subtitle}
                 </p>
               )}
-              <p className="text-xs text-muted-foreground mt-1">
+              <time
+                className="text-xs text-muted-foreground mt-1 block"
+                dateTime={activity.timestamp}
+              >
                 {formatDistanceToNow(new Date(activity.timestamp), { addSuffix: true })}
-              </p>
+              </time>
             </div>
-          </div>
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+    </section>
   );
 }

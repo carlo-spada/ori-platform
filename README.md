@@ -1,163 +1,117 @@
-# Ori — Your AI-Powered Career Companion
+# Ori Platform — Your AI-Powered Career Companion
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/your-repo/assets/main/ori-logo.png" alt="Ori Logo" width="120px" />
+  <p>
+    <strong>Ori is an autonomous up-skilling and role-acquisition agent designed to guide every person toward the work that truly fits them.</strong>
+  </p>
+  <p>
+    <a href="#">View Demo</a> · <a href="#">Report Bug</a> · <a href="#">Request Feature</a>
+  </p>
+</div>
+
+---
 
 ## 🌟 Overview
 
-Ori is an autonomous up-skilling and role-acquisition agent designed to guide every person toward the work that truly fits them. As a lifelong companion for discovering, pursuing, and evolving within roles that align with your skills, values, and ambitions, Ori helps people not merely find jobs, but grow into their most fulfilling professional selves.
+Welcome to the Ori Platform monorepo. This project is an AI-powered career companion designed to help users find fulfilling work by providing personalized career guidance, continuous learning paths, and real-time market intelligence.
 
-## 🎯 Mission
+Our mission is to prove that **fulfillment should be scalable, and purpose should never be a privilege.** By merging real-time labor-market intelligence with personalized up-skilling and preference modeling, Ori creates an intelligent bridge between human potential and opportunity.
 
-Ori exists to prove that fulfillment should be scalable, and purpose should never be a privilege. By merging real-time labor-market intelligence with personalized up-skilling and preference modeling, Ori creates an intelligent bridge between human potential and opportunity.
+This repository is a **pnpm workspace monorepo** containing the following core components:
 
-## 🚀 Features
-
-- **Personalized Career Guidance**: AI-powered recommendations tailored to your unique skills, values, and aspirations
-- **Continuous Learning Paths**: Adaptive up-skilling programs that evolve with market demands
-- **Real-time Market Intelligence**: Access to current job market trends and opportunities
-- **Application Management**: Track and manage your job applications in one place
-- **Professional Profile Building**: Create and maintain a compelling professional presence
-- **Goal Setting & Tracking**: Set career milestones and track your progress
+-   **`src/`**: A **Next.js** application that serves as the main user interface.
+-   **`services/core-api/`**: A **Node.js/Express** backend (refactoring to Serverless Functions) that handles user profiles, authentication, and business logic.
+-   **`services/ai-engine/`**: A **Python/FastAPI** service that provides all AI-powered features, including semantic job matching, skill gap analysis, and learning path generation.
+-   **`shared/`**: Shared packages (e.g., types, utils) used across the monorepo.
 
 ## 🛠️ Technology Stack
 
-This project is built with:
+Our platform is built with a modern, scalable, and polyglot architecture:
 
-- **Framework**: Next.js 13+ with App Router
-- **Language**: TypeScript
-- **UI Components**: shadcn-ui
-- **Styling**: Tailwind CSS
-- **Database**: Supabase
-- **Authentication**: Supabase Auth
-- **Payments**: Stripe
-- **Internationalization**: i18next
-- **State Management**: React Query (TanStack Query)
+-   **Frontend**: Next.js 14 (App Router), React, TypeScript
+-   **Backend (Core)**: Node.js, Express.js (migrating to Vercel Serverless Functions)
+-   **Backend (AI)**: Python, FastAPI, Sentence-Transformers
+-   **Database**: Supabase with Vercel Postgres
+-   **UI**: shadcn-ui, Tailwind CSS
+-   **State Management**: React Query (TanStack Query)
+-   **Deployment**: Vercel (Frontend & Core API) and Google Cloud Run (AI Engine)
+-   **Monorepo Management**: pnpm workspaces, Turborepo
 
-## 📦 Installation
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ and npm/pnpm
-- A Supabase account and project
-- A Stripe account (for payment features)
+-   Node.js 18+ and pnpm
+-   Python 3.10+ and pip
+-   A Supabase account and project
+-   Docker (for containerizing the AI Engine)
 
 ### Setup
 
-1. Clone the repository:
-```bash
-git clone <YOUR_GIT_URL>
-cd ori-platform
-```
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/carlo-spada/ori-platform.git
+    cd ori-platform
+    ```
 
-2. Install dependencies:
-```bash
-pnpm install
-```
+2.  **Install dependencies:**
+    ```bash
+    pnpm install
+    ```
 
-3. Set up environment variables:
-Create a `.env.local` file in the root directory with:
-```env
-# Supabase Configuration
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+3.  **Set up environment variables:**
+    Create a `.env.local` file in the root directory. See `.env.example` for the required variables (Supabase keys, etc.).
 
-# Backend API (core-api) URL
-NEXT_PUBLIC_API_URL=http://localhost:3001
+### Running the Development Servers
 
-# Stripe Configuration
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+You will need to run three separate services in different terminal windows.
 
-# Optional: enable the PWA service worker build (defaults to off)
-NEXT_ENABLE_PWA=true
-```
+1.  **Run the Frontend (Next.js):**
+    ```bash
+    pnpm dev
+    ```
+    *   Access the web app at `http://localhost:3000`.
 
-4. Run the development server:
-```bash
-pnpm dev
-```
+2.  **Run the Core API (Node.js):**
+    ```bash
+    pnpm --filter @ori/core-api dev
+    ```
+    *   The API will be available at `http://localhost:3001`.
 
-Open [http://localhost:3000](http://localhost:3000) to see the application.
+3.  **Run the AI Engine (Python):**
+    ```bash
+    cd services/ai-engine
+    pip install -r requirements.txt
+    python main.py
+    ```
+    *   The AI service will be available at `http://localhost:3002`.
 
-## 🏗️ Project Structure
+## 🏗️ Project Management
 
-```
-ori-platform/
-├── src/
-│   ├── app/              # Next.js App Router pages
-│   ├── components/       # React components
-│   ├── contexts/         # React contexts (Auth, etc.)
-│   ├── integrations/     # Third-party integrations
-│   ├── lib/              # Utility functions and configurations
-│   └── i18n.ts          # Internationalization setup
-├── public/              # Static assets
-│   └── locales/         # Translation files
-├── ORI_MANIFESTO.md     # Project vision and philosophy
-└── package.json         # Project dependencies
-```
+This project is managed using a **"Task-as-File"** system. All work is tracked in the `.tasks/` directory, which is organized by status (`todo`, `in-progress`, `done`, etc.). This system is the single source of truth for our development roadmap.
 
-## 🌍 Internationalization
+For a detailed explanation of our collaborative workflow, agent roles, and branching strategy, please see **[`AGENTS.md`](./AGENTS.md)**.
 
-Ori supports multiple languages. Translation files are located in `public/locales/`. Currently supported languages:
-- English (en)
-- German (de)
-- Spanish (es)
-- French (fr)
-- Italian (it)
+## 🚀 Deployment: A Zero-Ops Vision
 
-## 🔐 Authentication
+Our production architecture is designed to be **Serverless-First**, requiring zero manual operations to deploy or scale.
 
-Ori uses Supabase Auth for secure user authentication, supporting:
-- Email/password authentication
-- Magic link authentication
-- OAuth providers (Google, GitHub, etc.)
+-   The **Next.js frontend** and **Core API** (as Serverless Functions) are deployed automatically to **Vercel** from the `main` branch.
+-   The **AI Engine** is containerized with Docker and deployed automatically to **Google Cloud Run**.
+-   A unified CI/CD pipeline in GitHub Actions orchestrates testing, deployment, and database migrations on every merge to `main`.
 
-## 💳 Subscription Tiers
-
-Ori offers three subscription tiers:
-- **Free**: Basic features for getting started
-- **Plus**: Enhanced features for active job seekers
-- **Premium**: Full access for professional growth
-
-## 🚀 Deployment
-
-The application can be deployed to various platforms:
-
-### Vercel (Recommended)
-```bash
-pnpm build
-vercel deploy
-```
-
-### Docker
-```bash
-docker build -t ori-platform .
-docker run -p 3000:3000 ori-platform
-```
+This architecture ensures ultra-low latency, infinite scalability, and a seamless development experience.
 
 ## 🤝 Contributing
 
-We welcome contributions! **Required reading before contributing:**
+We welcome contributions! Before you begin, please read our contributor handbook:
 
-1. **[`AGENTS.md`](./AGENTS.md)** - Complete contributor handbook with branching strategy, workflows, and best practices
-2. **Agent-specific guides:**
-   - [`CLAUDE.md`](./CLAUDE.md) - Implementation & building guidance
-   - [`GEMINI.md`](./GEMINI.md) - Planning & research guidance
-   - [`AI_ENGINE_QUICKSTART.md`](./AI_ENGINE_QUICKSTART.md) - AI Engine setup
+-   **[`AGENTS.md`](./AGENTS.md)**: The complete guide to our branching strategy, Git workflow, agent roles, and development best practices.
 
-**Workflow Overview:**
-- Work on `development` branch (direct pushes to `main` are blocked)
-- Follow conventional commits (`feat:`, `fix:`, `chore:`)
-- Update documentation after major changes
-- Create PR from `development` → `main` when ready to deploy
-
-Major feature, infrastructure, or workflow changes must be reflected in `AGENTS.md` to keep all collaborators aligned.
+All development happens on the `development` branch. Pull Requests are made from `development` into `main` for production deployment.
 
 ## 📄 License
 
 This project is proprietary software. All rights reserved.
 
-## 📧 Contact
-
-For questions or support, please contact: support@ori.ai
-
----
-
-**Ori** — because fulfillment should be scalable, and purpose should never be a privilege.
