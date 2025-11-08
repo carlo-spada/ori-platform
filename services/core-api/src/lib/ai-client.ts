@@ -89,7 +89,7 @@ export class AIClient {
 
       if (!response.ok) return false;
 
-      const data = await response.json();
+      const data = await response.json() as { status: string };
       return data.status === 'healthy' || data.status === 'degraded';
     } catch (error) {
       console.error('AI Engine health check failed:', error);
@@ -112,11 +112,11 @@ export class AIClient {
       });
 
       if (!response.ok) {
-        const error = await response.json().catch(() => ({ error: 'Unknown error' }));
+        const error = await response.json().catch(() => ({ error: 'Unknown error' })) as { error?: string };
         throw new Error(`AI matching failed: ${error.error || response.statusText}`);
       }
 
-      return await response.json();
+      return await response.json() as MatchResult[];
     } catch (error) {
       console.error('AI matching request failed:', error);
       throw error;
@@ -138,11 +138,11 @@ export class AIClient {
       });
 
       if (!response.ok) {
-        const error = await response.json().catch(() => ({ error: 'Unknown error' }));
+        const error = await response.json().catch(() => ({ error: 'Unknown error' })) as { error?: string };
         throw new Error(`Skill analysis failed: ${error.error || response.statusText}`);
       }
 
-      return await response.json();
+      return await response.json() as SkillAnalysisResult;
     } catch (error) {
       console.error('Skill analysis request failed:', error);
       throw error;
@@ -156,7 +156,7 @@ export class AIClient {
     profile: UserProfile,
     targetJobs: Job[],
     maxPaths: number = 5
-  ): Promise<any[]> {
+  ): Promise<unknown[]> {
     try {
       const response = await fetch(`${this.baseUrl}/api/v1/learning-paths`, {
         method: 'POST',
@@ -168,11 +168,11 @@ export class AIClient {
       });
 
       if (!response.ok) {
-        const error = await response.json().catch(() => ({ error: 'Unknown error' }));
+        const error = await response.json().catch(() => ({ error: 'Unknown error' })) as { error?: string };
         throw new Error(`Learning path generation failed: ${error.error || response.statusText}`);
       }
 
-      return await response.json();
+      return await response.json() as unknown[];
     } catch (error) {
       console.error('Learning paths request failed:', error);
       throw error;
@@ -194,11 +194,11 @@ export class AIClient {
       });
 
       if (!response.ok) {
-        const error = await response.json().catch(() => ({ error: 'Unknown error' }));
+        const error = await response.json().catch(() => ({ error: 'Unknown error' })) as { error?: string };
         throw new Error(`Role recommendation failed: ${error.error || response.statusText}`);
       }
 
-      const data = await response.json();
+      const data = await response.json() as { suggested_roles?: string[] };
       return data.suggested_roles || [];
     } catch (error) {
       console.error('Role recommendation request failed:', error);
