@@ -73,6 +73,10 @@ export async function fetchJobRecommendations(
   if (!apiUrl) {
     throw new Error('NEXT_PUBLIC_API_URL is not defined');
   }
+
+  const response = await fetch(`${apiUrl}/jobs/match`, {
+    method: 'POST',
+    headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${session.access_token}`,
     },
