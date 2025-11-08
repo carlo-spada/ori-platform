@@ -74,7 +74,7 @@ export default function Recommendations() {
     summary: match.description || `Join ${match.company} as a ${match.title}`,
     datePosted: match.posted_date || match.created_at,
     detailHref: `/app/jobs/${match.id}`,
-    applyHref: match.apply_url, // If available
+    // applyHref: match.apply_url, // Removed: field not present in API response
   })) || [];
 
   useEffect(() => {
