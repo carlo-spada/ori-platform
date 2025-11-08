@@ -139,3 +139,28 @@ class SkillGapResponse(BaseModel):
     user_skills: List[str] = Field(..., description="Skills the user has")
     required_skills: List[str] = Field(..., description="Skills required")
     missing_skills: List[str] = Field(..., description="Skills the user needs to acquire")
+
+
+# Conversational AI Models
+class UserProfileContext(BaseModel):
+    """Simplified user profile context for conversational AI."""
+    skills: List[str] = Field(default_factory=list, description="User's skills")
+    target_roles: List[str] = Field(default_factory=list, description="User's target roles")
+
+
+class ChatMessage(BaseModel):
+    """Individual chat message in conversation history."""
+    role: Literal["user", "assistant"]
+    content: str
+
+
+class AIRequest(BaseModel):
+    """Request for AI-generated conversational response."""
+    user_profile: UserProfileContext
+    message_history: List[ChatMessage] = Field(default_factory=list, description="Conversation history")
+    new_message: str = Field(..., description="New user message to respond to")
+
+
+class AIResponse(BaseModel):
+    """AI-generated conversational response."""
+    content: str = Field(..., description="Generated response content")

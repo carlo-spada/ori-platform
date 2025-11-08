@@ -12,6 +12,8 @@ from .schemas import (
     SkillGapResponse,
     LearningPath,
     HealthResponse,
+    AIRequest,
+    AIResponse,
 )
 from .embeddings import EmbeddingService
 
@@ -27,4 +29,6 @@ __all__ = [
     "LearningPath",
     "HealthResponse",
     "EmbeddingService",
+    "AIRequest",
+    "AIResponse",
 ]

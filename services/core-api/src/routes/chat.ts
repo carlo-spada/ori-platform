@@ -1,6 +1,7 @@
 import { Router, type Router as RouterType } from 'express';
 import { authMiddleware, AuthRequest } from '../middleware/auth.js';
 import { supabase } from '../lib/supabase.js';
+import { aiClient } from '../lib/ai-client.js';
 
 const router: RouterType = Router();
 
@@ -131,9 +132,47 @@ router.post('/message', authMiddleware, async (req: AuthRequest, res) => {
       return res.status(500).json({ error: 'Failed to save message' });
     }
 
-    // Generate a placeholder AI response
-    // In future tasks, this will be replaced with actual AI model integration
-    const assistantContent = generatePlaceholderResponse(content.trim());
+    // Fetch user profile to provide context to AI
+    const { data: userProfile } = await supabase
+      .from('user_profiles')
+      .select('skills, target_roles')
+      .eq('user_id', req.user.id)
+      .single();
+
+    // Default to empty arrays if profile doesn't exist or has errors
+    const skills = (userProfile?.skills as string[]) || [];
+    const targetRoles = (userProfile?.target_roles as string[]) || [];
+
+    // Fetch last 10 messages from this conversation for context
+    const { data: recentMessages } = await supabase
+      .from('messages')
+      .select('role, content')
+      .eq('conversation_id', conversationId)
+      .order('created_at', { ascending: false })
+      .limit(10);
+
+    // Reverse to get chronological order (oldest first)
+    const messageHistory = (recentMessages || [])
+      .reverse()
+      .map((msg: { role: 'user' | 'assistant'; content: string }) => ({
+        role: msg.role,
+        content: msg.content,
+      }));
+
+    // Generate AI response with context
+    let assistantContent: string;
+    try {
+      const aiResponse = await aiClient.generateResponse(
+        { skills, target_roles: targetRoles },
+        messageHistory,
+        content.trim()
+      );
+      assistantContent = aiResponse.content;
+    } catch (aiError) {
+      console.error('AI generation failed, falling back to placeholder:', aiError);
+      // Fallback to placeholder if AI engine is unavailable
+      assistantContent = generatePlaceholderResponse(content.trim());
+    }
 
     // Save the assistant's response
     const { data: assistantMessage, error: assistantMsgError } = await supabase

@@ -27,6 +27,8 @@ from models import (
     LearningPath,
     HealthResponse,
     EmbeddingService,
+    AIRequest,
+    AIResponse,
 )
 from services import (
     MatchingService,
@@ -356,6 +358,57 @@ async def get_next_steps(profile: UserProfile, current_applications: int = 0):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to generate next steps: {str(e)}"
+        )
+
+
+@app.post("/api/v1/generate_response", response_model=AIResponse)
+async def generate_response(request: AIRequest):
+    """
+    Generate context-aware conversational AI response.
+
+    This endpoint receives user profile context and conversation history
+    to generate intelligent, personalized responses.
+
+    **Current Implementation:**
+    Placeholder logic that proves context was received.
+    Will be replaced with actual LLM integration in future iterations.
+    """
+    try:
+        logger.info(
+            f"Generating AI response: user has {len(request.user_profile.skills)} skill(s), "
+            f"{len(request.message_history)} message(s) in history"
+        )
+
+        # Placeholder logic to prove context was received
+        num_skills = len(request.user_profile.skills)
+        num_target_roles = len(request.user_profile.target_roles)
+        history_len = len(request.message_history)
+
+        response_content = (
+            f"I understand you're asking about: '{request.new_message}'\n\n"
+            f"Based on your profile, I can see you have {num_skills} skill(s)"
+        )
+
+        if num_target_roles > 0:
+            roles = ", ".join(request.user_profile.target_roles)
+            response_content += f" and are targeting roles like: {roles}"
+
+        response_content += f".\n\nOur conversation has {history_len} prior message(s)."
+
+        if history_len > 0:
+            response_content += " I'm keeping track of our conversation context to provide better guidance."
+
+        response_content += "\n\n[Note: This is a placeholder response demonstrating context awareness. Full AI integration coming soon!]"
+
+        logger.info("AI response generated successfully")
+
+        return AIResponse(content=response_content)
+
+    except Exception as e:
+        logger.error(f"AI response generation failed: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to generate AI response: {str(e)}"
         )
 
 

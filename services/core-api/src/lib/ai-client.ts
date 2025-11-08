@@ -81,6 +81,27 @@ interface SkillAnalysisResult {
   overall_readiness: number;
 }
 
+// Conversational AI interfaces
+interface UserProfileContext {
+  skills: string[];
+  target_roles: string[];
+}
+
+interface ChatMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+interface AIRequest {
+  user_profile: UserProfileContext;
+  message_history: ChatMessage[];
+  new_message: string;
+}
+
+interface AIResponse {
+  content: string;
+}
+
 export class AIClient {
   private baseUrl: string;
 
@@ -246,6 +267,45 @@ export class AIClient {
       return data.suggested_roles || [];
     } catch (error) {
       console.error('Role recommendation request failed:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Generate context-aware conversational AI response.
+   *
+   * Sends user profile context and conversation history to the AI engine
+   * to generate intelligent, personalized responses.
+   */
+  async generateResponse(
+    userProfile: UserProfileContext,
+    messageHistory: ChatMessage[],
+    newMessage: string
+  ): Promise<AIResponse> {
+    try {
+      const request: AIRequest = {
+        user_profile: userProfile,
+        message_history: messageHistory,
+        new_message: newMessage,
+      };
+
+      const response = await fetch(`${this.baseUrl}/api/v1/generate_response`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(request),
+        signal: AbortSignal.timeout(30000), // 30 second timeout for AI generation
+      });
+
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({ error: 'Unknown error' })) as { error?: string };
+        throw new Error(`AI response generation failed: ${error.error || response.statusText}`);
+      }
+
+      return await response.json() as AIResponse;
+    } catch (error) {
+      console.error('AI response generation request failed:', error);
       throw error;
     }
   }
