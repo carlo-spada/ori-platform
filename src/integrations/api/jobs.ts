@@ -44,6 +44,15 @@ export interface JobMatchResponse {
 }
 
 /**
+ * API error response structure
+ */
+export interface ApiErrorResponse {
+  error?: string;
+  message?: string;
+  details?: string;
+}
+
+/**
  * Fetch job recommendations for a user from the core-api
  */
 export async function fetchJobRecommendations(
@@ -75,8 +84,23 @@ export async function fetchJobRecommendations(
   });
 
   if (!response.ok) {
-    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
-    throw new Error(errorData.error || `API request failed: ${response.statusText}`);
+    let errorMessage = `API request failed with status ${response.status}`;
+    
+    try {
+      const errorData: ApiErrorResponse = await response.json();
+      // Try to extract error message from various possible fields
+      const apiError = errorData.error || errorData.message || errorData.details;
+      if (apiError) {
+        errorMessage = `${apiError} (HTTP ${response.status})`;
+      } else {
+        errorMessage = `${response.statusText} (HTTP ${response.status})`;
+      }
+    } catch {
+      // If JSON parsing fails, use status text with status code
+      errorMessage = `${response.statusText} (HTTP ${response.status})`;
+    }
+    
+    throw new Error(errorMessage);
   }
 
   return await response.json() as JobMatchResponse;
