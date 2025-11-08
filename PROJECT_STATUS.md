@@ -15,13 +15,13 @@
 - Branding & Identity
 
 ### 🚧 Critical Path (Blocks Launch)
-**Core Feature APIs** - 3 tasks remaining
+**Core Feature APIs** - 2 tasks remaining
 1. ✅ Database schema (profiles, experiences, applications) - COMPLETE
-2. Backend CRUD APIs (IN PROGRESS - Ready to start)
-3. Frontend integration (Profile/Applications pages)
+2. ✅ Backend CRUD APIs - COMPLETE
+3. Frontend integration (Profile/Applications pages) - NEXT
 4. Dashboard with real data
 
-**Status:** Database ready. Need backend APIs and frontend integration.
+**Status:** Database + APIs ready. Need frontend integration to remove mock data.
 
 ### 🎨 Quick Polish (15-30 min each)
 - Skills Gap: Accessibility fixes (Task C)
