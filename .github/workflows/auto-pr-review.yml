@@ -108,7 +108,7 @@ jobs:
           
           # Get changed files
           CHANGED_FILES=$(git diff --name-only main...HEAD)
-          FILE_COUNT=$(echo "$CHANGED_FILES" | wc -l)
+          FILE_COUNT=$(echo "$CHANGED_FILES" | grep -c '^' || echo 0)
           
           # Get stats
           ADDITIONS=$(git diff --shortstat main...HEAD | grep -oP '\d+(?= insertion)')
