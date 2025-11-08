@@ -75,7 +75,12 @@ export default function Recommendations() {
     datePosted: match.posted_date || match.created_at,
     detailHref: `/app/jobs/${match.id}`,
     applyHref: match.highlights?.[0], // If available
-    skills_analysis: match.skills_analysis,
+    queryFn: () => {
+      if (!user?.id) {
+        return Promise.reject(new Error('User not authenticated'));
+      }
+      return fetchJobRecommendations({ userId: user.id, limit: 6 });
+    },
   })) || [];
 
   useEffect(() => {
