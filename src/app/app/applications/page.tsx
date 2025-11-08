@@ -1,17 +1,21 @@
-'use client';
+'use client'
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic'
 
-import { useEffect, useState } from 'react';
-import { setDocumentMeta } from '@/lib/seo';
-import { useTranslation } from 'react-i18next';
-import { JobApplication, ApplicationStatus } from '@/lib/types';
-import { ApplicationTable } from '@/components/applications/ApplicationTable';
-import { EmptyApplicationsState } from '@/components/applications/EmptyApplicationsState';
-import { Button } from '@/components/ui/button';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { Plus } from 'lucide-react';
-import { toast } from 'sonner';
+import { useEffect, useState } from 'react'
+import { setDocumentMeta } from '@/lib/seo'
+import { useTranslation } from 'react-i18next'
+import { JobApplication, ApplicationStatus } from '@/lib/types'
+import { ApplicationTable } from '@/components/applications/ApplicationTable'
+import { EmptyApplicationsState } from '@/components/applications/EmptyApplicationsState'
+import { Button } from '@/components/ui/button'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+import { Plus } from 'lucide-react'
+import { toast } from 'sonner'
 
 // Mock data for demonstration
 const MOCK_APPLICATIONS: JobApplication[] = [
@@ -20,7 +24,9 @@ const MOCK_APPLICATIONS: JobApplication[] = [
     jobTitle: 'Senior Product Designer',
     company: 'Acme Corp',
     location: 'San Francisco, CA',
-    applicationDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    applicationDate: new Date(
+      Date.now() - 5 * 24 * 60 * 60 * 1000,
+    ).toISOString(),
     status: 'interviewing',
     lastUpdated: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
     detailsHref: '#',
@@ -30,7 +36,9 @@ const MOCK_APPLICATIONS: JobApplication[] = [
     jobTitle: 'UX Researcher',
     company: 'Tech Innovations',
     location: 'New York, NY',
-    applicationDate: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    applicationDate: new Date(
+      Date.now() - 10 * 24 * 60 * 60 * 1000,
+    ).toISOString(),
     status: 'applied',
     lastUpdated: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
     detailsHref: '#',
@@ -40,7 +48,9 @@ const MOCK_APPLICATIONS: JobApplication[] = [
     jobTitle: 'Product Design Lead',
     company: 'Future Labs',
     location: 'Austin, TX',
-    applicationDate: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+    applicationDate: new Date(
+      Date.now() - 15 * 24 * 60 * 60 * 1000,
+    ).toISOString(),
     status: 'offer',
     lastUpdated: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
     detailsHref: '#',
@@ -50,7 +60,9 @@ const MOCK_APPLICATIONS: JobApplication[] = [
     jobTitle: 'Design Systems Architect',
     company: 'Scale Studio',
     location: 'Remote',
-    applicationDate: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
+    applicationDate: new Date(
+      Date.now() - 20 * 24 * 60 * 60 * 1000,
+    ).toISOString(),
     status: 'rejected',
     lastUpdated: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
     detailsHref: '#',
@@ -60,44 +72,47 @@ const MOCK_APPLICATIONS: JobApplication[] = [
     jobTitle: 'Staff Product Designer',
     company: 'Growth Co',
     location: 'Seattle, WA',
-    applicationDate: new Date(Date.now() - 25 * 24 * 60 * 60 * 1000).toISOString(),
+    applicationDate: new Date(
+      Date.now() - 25 * 24 * 60 * 60 * 1000,
+    ).toISOString(),
     status: 'paused',
     lastUpdated: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
     detailsHref: '#',
   },
-];
+]
 
 export default function Applications() {
-  const { t } = useTranslation();
-  const [applications, setApplications] = useState<JobApplication[]>(MOCK_APPLICATIONS);
+  const { t } = useTranslation()
+  const [applications, setApplications] =
+    useState<JobApplication[]>(MOCK_APPLICATIONS)
 
   useEffect(() => {
     setDocumentMeta({
       title: 'Applications - Ori',
       description: 'Track and manage your job applications.',
-    });
-  }, []);
+    })
+  }, [])
 
   const handleUpdateStatus = (id: string, status: ApplicationStatus) => {
     setApplications((prev) =>
       prev.map((app) =>
         app.id === id
           ? { ...app, status, lastUpdated: new Date().toISOString() }
-          : app
-      )
-    );
-    toast.success('Application status updated');
-  };
+          : app,
+      ),
+    )
+    toast.success('Application status updated')
+  }
 
   const handleViewDetails = (id: string) => {
-    toast.info(`Viewing details for application ${id}`);
-  };
+    toast.info(`Viewing details for application ${id}`)
+  }
 
   return (
-    <div className="h-full flex flex-col gap-4">
+    <div className="flex h-full flex-col gap-4">
       <header className="flex items-start justify-between gap-4">
         <div className="space-y-1">
-          <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
+          <h1 className="text-3xl font-bold text-foreground sm:text-4xl">
             {t('applicationsPage.header.title')}
           </h1>
           <p className="text-muted-foreground">
@@ -108,14 +123,12 @@ export default function Applications() {
           <TooltipTrigger asChild>
             <span tabIndex={0}>
               <Button disabled className="shrink-0">
-                <Plus className="w-4 h-4 mr-2" aria-hidden="true" />
+                <Plus className="mr-2 h-4 w-4" aria-hidden="true" />
                 {t('applicationsPage.addButtonLabel')}
               </Button>
             </span>
           </TooltipTrigger>
-          <TooltipContent>
-            {t('tooltips.comingSoon')}
-          </TooltipContent>
+          <TooltipContent>{t('tooltips.comingSoon')}</TooltipContent>
         </Tooltip>
       </header>
 
@@ -152,5 +165,5 @@ export default function Applications() {
         )}
       </section>
     </div>
-  );
+  )
 }

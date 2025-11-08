@@ -24,50 +24,50 @@ jobs:
     timeout-minutes: 15
     outputs:
       verification_passed: ${{ steps.check_results.outputs.passed }}
-    
+
     steps:
       - name: 'Checkout PR branch'
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
-      
+
       - name: 'Setup pnpm'
         uses: pnpm/action-setup@v3
         with:
           version: 8
-      
+
       - name: 'Setup Node.js'
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'pnpm'
-      
+
       - name: 'Install dependencies'
         run: pnpm install --frozen-lockfile
         continue-on-error: false
-      
+
       - name: 'Run linter'
         id: lint
         run: pnpm lint
         continue-on-error: true
-      
+
       - name: 'Run build'
         id: build
         run: pnpm build
         continue-on-error: true
-      
+
       - name: 'Run tests'
         id: test
         run: pnpm test || echo "No tests configured"
         continue-on-error: true
-      
+
       - name: 'Check verification results'
         id: check_results
         run: |
           LINT_STATUS="${{ steps.lint.outcome }}"
           BUILD_STATUS="${{ steps.build.outcome }}"
-          
+
           if [ "$LINT_STATUS" = "success" ] && [ "$BUILD_STATUS" = "success" ]; then
             echo "passed=true" >> $GITHUB_OUTPUT
             echo "✅ All verification checks passed"
@@ -89,59 +89,59 @@ jobs:
     outputs:
       review_approved: ${{ steps.review_decision.outputs.approved }}
       review_comment: ${{ steps.review_decision.outputs.comment }}
-    
+
     steps:
       - name: 'Checkout PR branch'
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
-      
+
       - name: 'Fetch base branch'
         run: |
           git fetch origin main:main
-      
+
       - name: 'Analyze PR changes'
         id: analyze
         run: |
           echo "Analyzing PR #${{ github.event.pull_request.number }}"
-          
+
           # Get changed files
           CHANGED_FILES=$(git diff --name-only main...HEAD)
           FILE_COUNT=$(echo "$CHANGED_FILES" | grep -c '^' || echo 0)
-          
+
           # Get stats
           ADDITIONS=$(git diff --shortstat main...HEAD | grep -oP '\d+(?= insertion)' || echo "0")
           DELETIONS=$(git diff --shortstat main...HEAD | grep -oP '\d+(?= deletion)' || echo "0")
-          
+
           echo "changed_files=$FILE_COUNT" >> $GITHUB_OUTPUT
           echo "additions=${ADDITIONS:-0}" >> $GITHUB_OUTPUT
           echo "deletions=${DELETIONS:-0}" >> $GITHUB_OUTPUT
-          
+
           # Check for risky patterns
           RISKY=false
-          
+
           # Check for package.json changes without lockfile
           if echo "$CHANGED_FILES" | grep -q "package.json" && ! echo "$CHANGED_FILES" | grep -q "pnpm-lock.yaml"; then
             echo "⚠️ package.json changed without pnpm-lock.yaml"
             RISKY=true
           fi
-          
+
           # Check for large PRs (over 500 lines changed)
           TOTAL_CHANGES=$((${ADDITIONS:-0} + ${DELETIONS:-0}))
           if [ $TOTAL_CHANGES -gt 500 ]; then
             echo "⚠️ Large PR detected: $TOTAL_CHANGES lines changed"
             RISKY=true
           fi
-          
+
           # Check for direct modification of critical files
           if echo "$CHANGED_FILES" | grep -qE "(\.github/workflows/|AGENTS\.md|package\.json)"; then
             echo "⚠️ Critical files modified"
             RISKY=true
           fi
-          
+
           echo "risky=$RISKY" >> $GITHUB_OUTPUT
-      
+
       - name: 'Make review decision'
         id: review_decision
         run: |
@@ -149,7 +149,7 @@ jobs:
           FILE_COUNT="${{ steps.analyze.outputs.changed_files }}"
           ADDITIONS="${{ steps.analyze.outputs.additions }}"
           DELETIONS="${{ steps.analyze.outputs.deletions }}"
-          
+
           # Generate review comment
           COMMENT="## 🤖 Automated Review Summary
 
@@ -157,13 +157,13 @@ jobs:
           - Files changed: $FILE_COUNT
           - Lines added: $ADDITIONS
           - Lines deleted: $DELETIONS
-          
+
           **Verification Checks:** ✅ Passed
           - Linting: ✅
           - Build: ✅
-          
+
           "
-          
+
           if [ "$RISKY" = "true" ]; then
             COMMENT="${COMMENT}**Review Status:** ⚠️ Manual review recommended
             
@@ -182,20 +182,20 @@ jobs:
             
             echo "approved=true" >> $GITHUB_OUTPUT
           fi
-          
+
           # Save comment to file for multi-line output
           echo "$COMMENT" > /tmp/review_comment.txt
           echo "comment<<EOF" >> $GITHUB_OUTPUT
           cat /tmp/review_comment.txt >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
-      
+
       - name: 'Post review comment'
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const comment = `${{ steps.review_decision.outputs.comment }}`;
-            
+
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
@@ -210,7 +210,7 @@ jobs:
     if: needs.review.outputs.review_approved == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    
+
     steps:
       - name: 'Approve PR'
         uses: actions/github-script@v7
@@ -230,7 +230,7 @@ jobs:
               // Ignore if already approved
               console.log('Approval status:', error.message);
             }
-      
+
       - name: 'Merge PR'
         uses: actions/github-script@v7
         with:
@@ -277,7 +277,7 @@ jobs:
     needs: verify
     if: needs.verify.outputs.verification_passed == 'false'
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: 'Post failure comment'
         uses: actions/github-script@v7

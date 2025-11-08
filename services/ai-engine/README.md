@@ -6,7 +6,7 @@ The intelligent heart of the Ori Platform - providing semantic job matching, ski
 
 The AI Engine transforms career discovery from keyword matching to deep understanding:
 
-- **Semantic Matching**: Uses sentence transformers to understand the *meaning* of profiles and jobs, not just keywords
+- **Semantic Matching**: Uses sentence transformers to understand the _meaning_ of profiles and jobs, not just keywords
 - **Multi-Factor Scoring**: Combines semantic similarity with structured data (skills, experience, location, salary)
 - **Skill Gap Analysis**: Identifies what users need to learn and prioritizes development paths
 - **Learning Paths**: Generates personalized, actionable upskilling recommendations
@@ -64,6 +64,7 @@ uvicorn main:app --reload --port 3002
 ```
 
 The service will be available at:
+
 - API: http://localhost:3002
 - Docs: http://localhost:3002/docs
 - Health: http://localhost:3002/health
@@ -121,15 +122,16 @@ Service information and status.
 
 The matching engine uses a weighted multi-factor approach:
 
-| Factor | Weight | Description |
-|--------|--------|-------------|
-| Semantic Similarity | 40% | Deep profile-job alignment via embeddings |
-| Skill Match | 30% | Explicit skill overlap |
-| Experience Alignment | 15% | Career level fit |
-| Location/Work Style | 10% | Lifestyle preferences |
-| Salary Fit | 5% | Compensation alignment |
+| Factor               | Weight | Description                               |
+| -------------------- | ------ | ----------------------------------------- |
+| Semantic Similarity  | 40%    | Deep profile-job alignment via embeddings |
+| Skill Match          | 30%    | Explicit skill overlap                    |
+| Experience Alignment | 15%    | Career level fit                          |
+| Location/Work Style  | 10%    | Lifestyle preferences                     |
+| Salary Fit           | 5%     | Compensation alignment                    |
 
 **Why this works:**
+
 - **Semantic layer** catches implicit fits that keywords miss (e.g., "Django" experience → "FastAPI" jobs)
 - **Skill matching** ensures explicit requirements are met
 - **Experience scoring** prevents mismatches (junior → exec roles)

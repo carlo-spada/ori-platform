@@ -1,12 +1,12 @@
-'use client';
+'use client'
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { NAV_ITEMS } from '@/lib/navConfig';
-import { cn } from '@/lib/utils';
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { NAV_ITEMS } from '@/lib/navConfig'
+import { cn } from '@/lib/utils'
 
 export interface BottomNavProps {
-  className?: string;
+  className?: string
 }
 
 /**
@@ -15,30 +15,30 @@ export interface BottomNavProps {
  * Fixed to bottom, icon-only navigation.
  */
 export function BottomNav({ className }: BottomNavProps) {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   const isActive = (href: string) => {
     if (href === '/app/dashboard') {
-      return pathname === href;
+      return pathname === href
     }
-    return pathname.startsWith(href);
-  };
+    return pathname.startsWith(href)
+  }
 
   return (
     <nav
       aria-label="Mobile navigation"
       className={cn(
         'fixed bottom-0 left-0 right-0 z-40',
-        'border-t border-white/10 bg-surface/95 backdrop-blur-sm',
+        'bg-surface/95 border-t border-white/10 backdrop-blur-sm',
         'pb-[env(safe-area-inset-bottom)]',
-        className
+        className,
       )}
       data-testid="bottom-nav"
     >
-      <ul className="flex justify-around items-center py-2 px-2" role="list">
+      <ul className="flex items-center justify-around px-2 py-2" role="list">
         {NAV_ITEMS.map((item) => {
-          const Icon = item.icon;
-          const active = isActive(item.href);
+          const Icon = item.icon
+          const active = isActive(item.href)
 
           return (
             <li key={item.href}>
@@ -47,11 +47,11 @@ export function BottomNav({ className }: BottomNavProps) {
                 aria-label={item.label}
                 aria-current={active ? 'page' : undefined}
                 className={cn(
-                  'flex flex-col items-center justify-center gap-1 px-4 py-2 rounded-xl transition-all duration-200',
-                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
+                  'flex flex-col items-center justify-center gap-1 rounded-xl px-4 py-2 transition-all duration-200',
+                  'focus-visible:ring-offset-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2',
                   active
                     ? 'text-accent'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
+                    : 'text-muted-foreground hover:bg-white/5 hover:text-foreground',
                 )}
                 data-testid={`mobile-nav-${item.href.slice(1)}`}
               >
@@ -60,12 +60,14 @@ export function BottomNav({ className }: BottomNavProps) {
                   aria-hidden="true"
                   strokeWidth={active ? 2.5 : 2}
                 />
-                <span className="text-[10px] font-medium">{item.label.split(' ')[0]}</span>
+                <span className="text-[10px] font-medium">
+                  {item.label.split(' ')[0]}
+                </span>
               </Link>
             </li>
-          );
+          )
         })}
       </ul>
     </nav>
-  );
+  )
 }

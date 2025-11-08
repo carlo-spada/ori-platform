@@ -10,7 +10,13 @@
     "dev": {
       "persistent": true,
       "cache": false,
-      "env": ["NODE_ENV", "VITE_*", "NEXT_PUBLIC_*", "DATABASE_URL", "SUPABASE_*"]
+      "env": [
+        "NODE_ENV",
+        "VITE_*",
+        "NEXT_PUBLIC_*",
+        "DATABASE_URL",
+        "SUPABASE_*"
+      ]
     },
     "test": {
       "dependsOn": ["build"],

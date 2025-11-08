@@ -1,4 +1,4 @@
-import type { User, SubscriptionTier } from '@ori/types';
+import type { User, SubscriptionTier } from '@ori/types'
 
 // Subscription tier definitions
 export const SUBSCRIPTION_TIERS: Record<string, SubscriptionTier> = {
@@ -11,9 +11,9 @@ export const SUBSCRIPTION_TIERS: Record<string, SubscriptionTier> = {
       '2 job matches per month',
       'Basic job search',
       'Application tracking',
-      'Community support'
+      'Community support',
     ],
-    matchLimit: 2
+    matchLimit: 2,
   },
   plus: {
     id: 'plus',
@@ -25,10 +25,10 @@ export const SUBSCRIPTION_TIERS: Record<string, SubscriptionTier> = {
       'AI-powered matching',
       'Application generation',
       'Priority ranking',
-      'Email support'
+      'Email support',
     ],
     matchLimit: 6,
-    highlighted: true
+    highlighted: true,
   },
   premium: {
     id: 'premium',
@@ -40,89 +40,93 @@ export const SUBSCRIPTION_TIERS: Record<string, SubscriptionTier> = {
       'Advanced AI matching',
       'Career coaching AI',
       'API access',
-      'Priority support'
+      'Priority support',
     ],
-    matchLimit: -1 // Unlimited
-  }
-};
+    matchLimit: -1, // Unlimited
+  },
+}
 
 // Check if user has reached their match limit
 export function hasReachedMatchLimit(user: User): boolean {
-  if (user.subscription_tier === 'premium') return false;
-  return user.monthly_job_matches_used >= user.monthly_job_matches_limit;
+  if (user.subscription_tier === 'premium') return false
+  return user.monthly_job_matches_used >= user.monthly_job_matches_limit
 }
 
 // Get remaining matches for user
 export function getRemainingMatches(user: User): number {
-  if (user.subscription_tier === 'premium') return -1; // Unlimited
-  return Math.max(0, user.monthly_job_matches_limit - user.monthly_job_matches_used);
+  if (user.subscription_tier === 'premium') return -1 // Unlimited
+  return Math.max(
+    0,
+    user.monthly_job_matches_limit - user.monthly_job_matches_used,
+  )
 }
 
 // Format salary range
 export function formatSalary(min?: number, max?: number): string {
-  if (!min && !max) return 'Not specified';
-  if (min && !max) return `$${min.toLocaleString()}+`;
-  if (!min && max) return `Up to $${max.toLocaleString()}`;
-  return `$${min!.toLocaleString()} - $${max!.toLocaleString()}`;
+  if (!min && !max) return 'Not specified'
+  if (min && !max) return `$${min.toLocaleString()}+`
+  if (!min && max) return `Up to $${max.toLocaleString()}`
+  return `$${min!.toLocaleString()} - $${max!.toLocaleString()}`
 }
 
 // Calculate match percentage (placeholder for actual AI logic)
 export function calculateMatchScore(
   userSkills: string[],
-  jobRequirements: string[]
+  jobRequirements: string[],
 ): number {
-  if (!userSkills.length || !jobRequirements.length) return 0;
+  if (!userSkills.length || !jobRequirements.length) return 0
 
-  const matches = jobRequirements.filter(req =>
-    userSkills.some(skill =>
-      skill.toLowerCase().includes(req.toLowerCase()) ||
-      req.toLowerCase().includes(skill.toLowerCase())
-    )
-  );
+  const matches = jobRequirements.filter((req) =>
+    userSkills.some(
+      (skill) =>
+        skill.toLowerCase().includes(req.toLowerCase()) ||
+        req.toLowerCase().includes(skill.toLowerCase()),
+    ),
+  )
 
-  return Math.round((matches.length / jobRequirements.length) * 100);
+  return Math.round((matches.length / jobRequirements.length) * 100)
 }
 
 // Validate email format
 export function isValidEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
 }
 
 // Generate initials from name
 export function getInitials(name?: string): string {
-  if (!name) return 'U';
-  const parts = name.split(' ');
-  if (parts.length === 1) return parts[0][0].toUpperCase();
-  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  if (!name) return 'U'
+  const parts = name.split(' ')
+  if (parts.length === 1) return parts[0][0].toUpperCase()
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
 }
 
 // Format date relative to now
 export function formatRelativeDate(date: string | Date): string {
-  const now = new Date();
-  const then = new Date(date);
-  const diff = now.getTime() - then.getTime();
+  const now = new Date()
+  const then = new Date(date)
+  const diff = now.getTime() - then.getTime()
 
-  const minutes = Math.floor(diff / 60000);
-  const hours = Math.floor(diff / 3600000);
-  const days = Math.floor(diff / 86400000);
+  const minutes = Math.floor(diff / 60000)
+  const hours = Math.floor(diff / 3600000)
+  const days = Math.floor(diff / 86400000)
 
-  if (minutes < 1) return 'just now';
-  if (minutes < 60) return `${minutes}m ago`;
-  if (hours < 24) return `${hours}h ago`;
-  if (days < 7) return `${days}d ago`;
-  if (days < 30) return `${Math.floor(days / 7)}w ago`;
-  if (days < 365) return `${Math.floor(days / 30)}mo ago`;
-  return `${Math.floor(days / 365)}y ago`;
+  if (minutes < 1) return 'just now'
+  if (minutes < 60) return `${minutes}m ago`
+  if (hours < 24) return `${hours}h ago`
+  if (days < 7) return `${days}d ago`
+  if (days < 30) return `${Math.floor(days / 7)}w ago`
+  if (days < 365) return `${Math.floor(days / 30)}mo ago`
+  return `${Math.floor(days / 365)}y ago`
 }
 
 // Truncate text with ellipsis
 export function truncate(text: string, length: number): string {
-  if (text.length <= length) return text;
-  return text.slice(0, length - 3) + '...';
+  if (text.length <= length) return text
+  return text.slice(0, length - 3) + '...'
 }
 
 // Generate random ID
 export function generateId(): string {
-  return Math.random().toString(36).substring(2) + Date.now().toString(36);
+  return Math.random().toString(36).substring(2) + Date.now().toString(36)
 }

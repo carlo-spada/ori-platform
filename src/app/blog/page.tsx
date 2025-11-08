@@ -1,14 +1,14 @@
-'use client';
+'use client'
 
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { PublicLayout } from '@/components/layout/PublicLayout';
-import { Section } from '@/components/ui/Section';
-import { BlogPostCard } from '@/components/blog/BlogPostCard';
-import { Button } from '@/components/ui/button';
-import { setDocumentMeta } from '@/lib/seo';
-import { type BlogPost } from '@/lib/types';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { PublicLayout } from '@/components/layout/PublicLayout'
+import { Section } from '@/components/ui/Section'
+import { BlogPostCard } from '@/components/blog/BlogPostCard'
+import { Button } from '@/components/ui/button'
+import { setDocumentMeta } from '@/lib/seo'
+import { type BlogPost } from '@/lib/types'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 // Mock data - in a real app, this would come from a CMS or API
 const mockPosts: BlogPost[] = [
@@ -23,7 +23,8 @@ const mockPosts: BlogPost[] = [
     readingTimeMinutes: 8,
     category: 'Future of Work',
     tags: ['AI', 'Technology', 'Career'],
-    featureImageUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=675&fit=crop',
+    featureImageUrl:
+      'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=675&fit=crop',
   },
   {
     slug: 'building-adaptive-career-pathways',
@@ -36,7 +37,8 @@ const mockPosts: BlogPost[] = [
     readingTimeMinutes: 6,
     category: 'Career Development',
     tags: ['Career', 'Growth', 'Skills'],
-    featureImageUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=675&fit=crop',
+    featureImageUrl:
+      'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=675&fit=crop',
   },
   {
     slug: 'empathy-in-technology-design',
@@ -49,15 +51,16 @@ const mockPosts: BlogPost[] = [
     readingTimeMinutes: 7,
     category: 'Technology',
     tags: ['Design', 'Empathy', 'UX'],
-    featureImageUrl: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&h=675&fit=crop',
+    featureImageUrl:
+      'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&h=675&fit=crop',
   },
-];
+]
 
-const POSTS_PER_PAGE = 9;
+const POSTS_PER_PAGE = 9
 
 export default function BlogIndexPage() {
-  const { t } = useTranslation();
-  const [currentPage, setCurrentPage] = useState(1);
+  const { t } = useTranslation()
+  const [currentPage, setCurrentPage] = useState(1)
 
   // Set SEO metadata
   useEffect(() => {
@@ -66,38 +69,38 @@ export default function BlogIndexPage() {
         title: t('blogPage.title'),
         description: t('blogPage.description'),
         canonical: `${window.location.origin}/blog`,
-      });
+      })
     }
-  }, [t]);
+  }, [t])
 
   // Pagination logic
-  const totalPages = Math.ceil(mockPosts.length / POSTS_PER_PAGE);
-  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-  const endIndex = startIndex + POSTS_PER_PAGE;
-  const currentPosts = mockPosts.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(mockPosts.length / POSTS_PER_PAGE)
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE
+  const endIndex = startIndex + POSTS_PER_PAGE
+  const currentPosts = mockPosts.slice(startIndex, endIndex)
 
   // Featured post is the first post
-  const featuredPost = mockPosts[0];
-  const remainingPosts = currentPosts.slice(1);
+  const featuredPost = mockPosts[0]
+  const remainingPosts = currentPosts.slice(1)
 
   const handlePreviousPage = () => {
-    setCurrentPage((prev) => Math.max(1, prev - 1));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+    setCurrentPage((prev) => Math.max(1, prev - 1))
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   const handleNextPage = () => {
-    setCurrentPage((prev) => Math.min(totalPages, prev + 1));
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+    setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   return (
     <PublicLayout>
       {/* Page Header */}
       <Section data-testid="blog-header" className="text-center">
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+        <h1 className="mb-6 text-4xl font-bold text-foreground sm:text-5xl lg:text-6xl">
           {t('blogPage.index.header.title')}
         </h1>
-        <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
+        <p className="mx-auto max-w-3xl text-lg text-muted-foreground sm:text-xl">
           {t('blogPage.index.header.subheadline')}
         </p>
       </Section>
@@ -112,7 +115,7 @@ export default function BlogIndexPage() {
       {/* Post Grid */}
       <Section data-testid="blog-list">
         <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+          className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8"
           data-testid="blog-grid"
         >
           {(currentPage === 1 ? remainingPosts : currentPosts).map((post) => (
@@ -132,7 +135,7 @@ export default function BlogIndexPage() {
               disabled={currentPage === 1}
               aria-label={t('blogPage.index.pagination.previous')}
             >
-              <ChevronLeft className="h-5 w-5 mr-2" />
+              <ChevronLeft className="mr-2 h-5 w-5" />
               {t('blogPage.index.pagination.previous')}
             </Button>
 
@@ -148,11 +151,11 @@ export default function BlogIndexPage() {
               aria-label={t('blogPage.index.pagination.next')}
             >
               {t('blogPage.index.pagination.next')}
-              <ChevronRight className="h-5 w-5 ml-2" />
+              <ChevronRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
         </Section>
       )}
     </PublicLayout>
-  );
+  )
 }

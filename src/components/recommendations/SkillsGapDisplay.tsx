@@ -1,40 +1,48 @@
-import { CheckCircle, XCircle } from 'lucide-react';
-import { Skill, SkillsGap } from '@/lib/types';
+import { CheckCircle, XCircle } from 'lucide-react'
+import { Skill, SkillsGap } from '@/lib/types'
 
 interface SkillsGapDisplayProps {
-  skills?: Skill[]; // Legacy format from skills_analysis
-  skillsGap?: SkillsGap; // New format from AI Engine
+  skills?: Skill[] // Legacy format from skills_analysis
+  skillsGap?: SkillsGap // New format from AI Engine
 }
 
 export function SkillsGapDisplay({ skills, skillsGap }: SkillsGapDisplayProps) {
   // Handle new skillsGap format (prioritize this if available)
   if (skillsGap && skillsGap.requiredSkills.length > 0) {
-    const matchedSkillsList = skillsGap.userSkills.filter(skill =>
-      skillsGap.requiredSkills.some(req => req.toLowerCase() === skill.toLowerCase())
-    );
-    const missingSkillsList = skillsGap.missingSkills;
+    const matchedSkillsList = skillsGap.userSkills.filter((skill) =>
+      skillsGap.requiredSkills.some(
+        (req) => req.toLowerCase() === skill.toLowerCase(),
+      ),
+    )
+    const missingSkillsList = skillsGap.missingSkills
 
     return (
       <div className="space-y-3">
         {/* Skill Match Summary Header */}
-        <div className="flex items-center justify-between pb-1 border-b border-border/50">
-          <span className="text-sm font-medium text-foreground">Skills Analysis</span>
+        <div className="flex items-center justify-between border-b border-border/50 pb-1">
+          <span className="text-sm font-medium text-foreground">
+            Skills Analysis
+          </span>
           <span className="text-xs font-medium text-muted-foreground">
-            {matchedSkillsList.length} of {skillsGap.requiredSkills.length} matched
+            {matchedSkillsList.length} of {skillsGap.requiredSkills.length}{' '}
+            matched
           </span>
         </div>
         {matchedSkillsList.length > 0 && (
           <div>
-            <h4 className="text-xs font-medium text-muted-foreground mb-2">
+            <h4 className="mb-2 text-xs font-medium text-muted-foreground">
               Your Matching Skills
             </h4>
             <div className="flex flex-wrap gap-2">
               {matchedSkillsList.map((skill, index) => (
                 <div
                   key={`matched-${skill}-${index}`}
-                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-green-500/10 border border-green-500/20"
+                  className="flex items-center gap-1.5 rounded-md border border-green-500/20 bg-green-500/10 px-2.5 py-1"
                 >
-                  <CheckCircle className="w-3.5 h-3.5 text-green-500" aria-hidden="true" />
+                  <CheckCircle
+                    className="h-3.5 w-3.5 text-green-500"
+                    aria-hidden="true"
+                  />
                   <span className="text-xs font-medium text-green-600 dark:text-green-400">
                     {skill}
                   </span>
@@ -46,16 +54,19 @@ export function SkillsGapDisplay({ skills, skillsGap }: SkillsGapDisplayProps) {
 
         {missingSkillsList.length > 0 && (
           <div>
-            <h4 className="text-xs font-medium text-muted-foreground mb-2">
+            <h4 className="mb-2 text-xs font-medium text-muted-foreground">
               Skills to Develop
             </h4>
             <div className="flex flex-wrap gap-2">
               {missingSkillsList.map((skill, index) => (
                 <div
                   key={`missing-${skill}-${index}`}
-                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-red-500/10 border border-red-500/20"
+                  className="flex items-center gap-1.5 rounded-md border border-red-500/20 bg-red-500/10 px-2.5 py-1"
                 >
-                  <XCircle className="w-3.5 h-3.5 text-red-500" aria-hidden="true" />
+                  <XCircle
+                    className="h-3.5 w-3.5 text-red-500"
+                    aria-hidden="true"
+                  />
                   <span className="text-xs font-medium text-red-600 dark:text-red-400">
                     {skill}
                   </span>
@@ -65,31 +76,34 @@ export function SkillsGapDisplay({ skills, skillsGap }: SkillsGapDisplayProps) {
           </div>
         )}
       </div>
-    );
+    )
   }
 
   // Fallback to legacy skills format
   if (!skills || skills.length === 0) {
-    return null;
+    return null
   }
 
-  const matchedSkills = skills.filter(skill => skill.status === 'matched');
-  const missingSkills = skills.filter(skill => skill.status === 'missing');
+  const matchedSkills = skills.filter((skill) => skill.status === 'matched')
+  const missingSkills = skills.filter((skill) => skill.status === 'missing')
 
   return (
     <div className="space-y-3">
       {matchedSkills.length > 0 && (
         <div>
-          <h4 className="text-xs font-medium text-muted-foreground mb-2">
+          <h4 className="mb-2 text-xs font-medium text-muted-foreground">
             Matched Skills
           </h4>
           <div className="flex flex-wrap gap-2">
             {matchedSkills.map((skill, index) => (
               <div
                 key={`${skill.name}-${index}`}
-                className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-green-500/10 border border-green-500/20"
+                className="flex items-center gap-1.5 rounded-md border border-green-500/20 bg-green-500/10 px-2.5 py-1"
               >
-                <CheckCircle className="w-3.5 h-3.5 text-green-500" aria-hidden="true" />
+                <CheckCircle
+                  className="h-3.5 w-3.5 text-green-500"
+                  aria-hidden="true"
+                />
                 <span className="text-xs font-medium text-green-600 dark:text-green-400">
                   {skill.name}
                 </span>
@@ -101,16 +115,19 @@ export function SkillsGapDisplay({ skills, skillsGap }: SkillsGapDisplayProps) {
 
       {missingSkills.length > 0 && (
         <div>
-          <h4 className="text-xs font-medium text-muted-foreground mb-2">
+          <h4 className="mb-2 text-xs font-medium text-muted-foreground">
             Skills to Develop
           </h4>
           <div className="flex flex-wrap gap-2">
             {missingSkills.map((skill, index) => (
               <div
                 key={`${skill.name}-${index}`}
-                className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-red-500/10 border border-red-500/20"
+                className="flex items-center gap-1.5 rounded-md border border-red-500/20 bg-red-500/10 px-2.5 py-1"
               >
-                <XCircle className="w-3.5 h-3.5 text-red-500" aria-hidden="true" />
+                <XCircle
+                  className="h-3.5 w-3.5 text-red-500"
+                  aria-hidden="true"
+                />
                 <span className="text-xs font-medium text-red-600 dark:text-red-400">
                   {skill.name}
                 </span>
@@ -120,5 +137,5 @@ export function SkillsGapDisplay({ skills, skillsGap }: SkillsGapDisplayProps) {
         </div>
       )}
     </div>
-  );
+  )
 }

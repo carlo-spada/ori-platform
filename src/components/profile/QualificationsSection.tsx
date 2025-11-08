@@ -1,91 +1,91 @@
-import { useState, FormEvent } from 'react';
-import { Button } from '@/components/ui/button';
-import { X, Plus, Briefcase, GraduationCap } from 'lucide-react';
-import { Modal } from '@/components/ui/modal';
-import { ExperienceForm, ExperienceFormData } from './ExperienceForm';
-import { EducationForm, EducationFormData } from './EducationForm';
+import { useState, FormEvent } from 'react'
+import { Button } from '@/components/ui/button'
+import { X, Plus, Briefcase, GraduationCap } from 'lucide-react'
+import { Modal } from '@/components/ui/modal'
+import { ExperienceForm, ExperienceFormData } from './ExperienceForm'
+import { EducationForm, EducationFormData } from './EducationForm'
 
 export interface Skill {
-  id: string;
-  name: string;
+  id: string
+  name: string
 }
 
 export interface Experience {
-  id: string;
-  company: string;
-  role: string;
-  startDate: string;
-  endDate?: string;
-  description?: string;
+  id: string
+  company: string
+  role: string
+  startDate: string
+  endDate?: string
+  description?: string
 }
 
 export interface Education {
-  id: string;
-  institution: string;
-  degree: string;
-  startDate: string;
-  endDate?: string;
-  description?: string;
+  id: string
+  institution: string
+  degree: string
+  startDate: string
+  endDate?: string
+  description?: string
 }
 
 export interface QualificationsSectionProps {
-  skills: Skill[];
-  experiences: Experience[];
-  education: Education[];
+  skills: Skill[]
+  experiences: Experience[]
+  education: Education[]
   labels: {
-    heading: string;
-    skillsHeading: string;
-    skillsHelper: string;
-    addSkillPlaceholder: string;
-    addSkillButton: string;
-    experienceHeading: string;
-    experienceHelper: string;
-    addExperienceButton: string;
-    educationHeading: string;
-    educationHelper: string;
-    addEducationButton: string;
-    editLabel: string;
-    removeLabel: string;
-    emptySkills: string;
-    emptyExperience: string;
-    emptyEducation: string;
-  };
+    heading: string
+    skillsHeading: string
+    skillsHelper: string
+    addSkillPlaceholder: string
+    addSkillButton: string
+    experienceHeading: string
+    experienceHelper: string
+    addExperienceButton: string
+    educationHeading: string
+    educationHelper: string
+    addEducationButton: string
+    editLabel: string
+    removeLabel: string
+    emptySkills: string
+    emptyExperience: string
+    emptyEducation: string
+  }
   experienceModalLabels: {
-    addTitle: string;
-    editTitle: string;
-    companyLabel: string;
-    companyPlaceholder: string;
-    roleLabel: string;
-    rolePlaceholder: string;
-    startDateLabel: string;
-    endDateLabel: string;
-    isCurrentLabel: string;
-    descriptionLabel: string;
-    descriptionPlaceholder: string;
-    saveButton: string;
-    cancelButton: string;
-  };
+    addTitle: string
+    editTitle: string
+    companyLabel: string
+    companyPlaceholder: string
+    roleLabel: string
+    rolePlaceholder: string
+    startDateLabel: string
+    endDateLabel: string
+    isCurrentLabel: string
+    descriptionLabel: string
+    descriptionPlaceholder: string
+    saveButton: string
+    cancelButton: string
+  }
   educationModalLabels: {
-    addTitle: string;
-    editTitle: string;
-    institutionLabel: string;
-    institutionPlaceholder: string;
-    degreeLabel: string;
-    degreePlaceholder: string;
-    startDateLabel: string;
-    endDateLabel: string;
-    isCurrentLabel: string;
-    descriptionLabel: string;
-    descriptionPlaceholder: string;
-    saveButton: string;
-    cancelButton: string;
-  };
-  onAddSkill?: (name: string) => void;
-  onRemoveSkill?: (id: string) => void;
-  onSaveExperience?: (id: string | null, data: ExperienceFormData) => void;
-  onRemoveExperience?: (id: string) => void;
-  onSaveEducation?: (id: string | null, data: EducationFormData) => void;
-  onRemoveEducation?: (id: string) => void;
+    addTitle: string
+    editTitle: string
+    institutionLabel: string
+    institutionPlaceholder: string
+    degreeLabel: string
+    degreePlaceholder: string
+    startDateLabel: string
+    endDateLabel: string
+    isCurrentLabel: string
+    descriptionLabel: string
+    descriptionPlaceholder: string
+    saveButton: string
+    cancelButton: string
+  }
+  onAddSkill?: (name: string) => void
+  onRemoveSkill?: (id: string) => void
+  onSaveExperience?: (id: string | null, data: ExperienceFormData) => void
+  onRemoveExperience?: (id: string) => void
+  onSaveEducation?: (id: string | null, data: EducationFormData) => void
+  onRemoveEducation?: (id: string) => void
 }
 
 /**
@@ -105,78 +105,82 @@ export function QualificationsSection({
   onSaveEducation,
   onRemoveEducation,
 }: QualificationsSectionProps) {
-  const [newSkill, setNewSkill] = useState('');
-  
+  const [newSkill, setNewSkill] = useState('')
+
   // Experience modal state
-  const [isExperienceModalOpen, setIsExperienceModalOpen] = useState(false);
-  const [editingExperience, setEditingExperience] = useState<Experience | null>(null);
-  
+  const [isExperienceModalOpen, setIsExperienceModalOpen] = useState(false)
+  const [editingExperience, setEditingExperience] = useState<Experience | null>(
+    null,
+  )
+
   // Education modal state
-  const [isEducationModalOpen, setIsEducationModalOpen] = useState(false);
-  const [editingEducation, setEditingEducation] = useState<Education | null>(null);
+  const [isEducationModalOpen, setIsEducationModalOpen] = useState(false)
+  const [editingEducation, setEditingEducation] = useState<Education | null>(
+    null,
+  )
 
   const handleAddSkill = (e: FormEvent) => {
-    e.preventDefault();
-    const trimmed = newSkill.trim();
+    e.preventDefault()
+    const trimmed = newSkill.trim()
     if (trimmed && onAddSkill) {
-      onAddSkill(trimmed);
-      setNewSkill('');
+      onAddSkill(trimmed)
+      setNewSkill('')
     }
-  };
+  }
 
   const formatDateRange = (start: string, end?: string) => {
-    const startYear = new Date(start).getFullYear();
-    const endYear = end ? new Date(end).getFullYear() : 'Present';
-    return `${startYear} - ${endYear}`;
-  };
+    const startYear = new Date(start).getFullYear()
+    const endYear = end ? new Date(end).getFullYear() : 'Present'
+    return `${startYear} - ${endYear}`
+  }
 
   // Experience modal handlers
   const handleAddExperience = () => {
-    setEditingExperience(null);
-    setIsExperienceModalOpen(true);
-  };
+    setEditingExperience(null)
+    setIsExperienceModalOpen(true)
+  }
 
   const handleEditExperience = (exp: Experience) => {
-    setEditingExperience(exp);
-    setIsExperienceModalOpen(true);
-  };
+    setEditingExperience(exp)
+    setIsExperienceModalOpen(true)
+  }
 
   const handleSaveExperience = (data: ExperienceFormData) => {
     if (onSaveExperience) {
-      onSaveExperience(editingExperience?.id || null, data);
+      onSaveExperience(editingExperience?.id || null, data)
     }
-    setIsExperienceModalOpen(false);
-    setEditingExperience(null);
-  };
+    setIsExperienceModalOpen(false)
+    setEditingExperience(null)
+  }
 
   const handleCloseExperienceModal = () => {
-    setIsExperienceModalOpen(false);
-    setEditingExperience(null);
-  };
+    setIsExperienceModalOpen(false)
+    setEditingExperience(null)
+  }
 
   // Education modal handlers
   const handleAddEducation = () => {
-    setEditingEducation(null);
-    setIsEducationModalOpen(true);
-  };
+    setEditingEducation(null)
+    setIsEducationModalOpen(true)
+  }
 
   const handleEditEducation = (edu: Education) => {
-    setEditingEducation(edu);
-    setIsEducationModalOpen(true);
-  };
+    setEditingEducation(edu)
+    setIsEducationModalOpen(true)
+  }
 
   const handleSaveEducation = (data: EducationFormData) => {
     if (onSaveEducation) {
-      onSaveEducation(editingEducation?.id || null, data);
+      onSaveEducation(editingEducation?.id || null, data)
     }
-    setIsEducationModalOpen(false);
-    setEditingEducation(null);
-  };
+    setIsEducationModalOpen(false)
+    setEditingEducation(null)
+  }
 
   const handleCloseEducationModal = () => {
-    setIsEducationModalOpen(false);
-    setEditingEducation(null);
-  };
+    setIsEducationModalOpen(false)
+    setEditingEducation(null)
+  }
 
   return (
     <div className="space-y-8">
@@ -186,17 +190,17 @@ export function QualificationsSection({
           <h3 className="text-lg font-semibold text-foreground">
             {labels.skillsHeading}
           </h3>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="mt-1 text-sm text-muted-foreground">
             {labels.skillsHelper}
           </p>
         </div>
 
         {skills.length > 0 ? (
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="mb-4 flex flex-wrap gap-2">
             {skills.map((skill) => (
               <span
                 key={skill.id}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 text-accent text-sm border border-accent/20"
+                className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/10 px-3 py-1.5 text-sm text-accent"
               >
                 {skill.name}
                 {onRemoveSkill && (
@@ -204,7 +208,7 @@ export function QualificationsSection({
                     type="button"
                     onClick={() => onRemoveSkill(skill.id)}
                     aria-label={`${labels.removeLabel} ${skill.name}`}
-                    className="hover:opacity-70 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-full"
+                    className="rounded-full transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   >
                     <X className="h-3 w-3" aria-hidden="true" />
                   </button>
@@ -213,7 +217,9 @@ export function QualificationsSection({
             ))}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground mb-4">{labels.emptySkills}</p>
+          <p className="mb-4 text-sm text-muted-foreground">
+            {labels.emptySkills}
+          </p>
         )}
 
         <form onSubmit={handleAddSkill} className="flex gap-2">
@@ -222,10 +228,10 @@ export function QualificationsSection({
             value={newSkill}
             onChange={(e) => setNewSkill(e.target.value)}
             placeholder={labels.addSkillPlaceholder}
-            className="flex-1 px-4 py-2 rounded-xl bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+            className="flex-1 rounded-xl border border-border bg-background px-4 py-2 text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent"
           />
           <Button type="submit" variant="outline" disabled={!newSkill.trim()}>
-            <Plus className="h-4 w-4 mr-2" aria-hidden="true" />
+            <Plus className="mr-2 h-4 w-4" aria-hidden="true" />
             {labels.addSkillButton}
           </Button>
         </form>
@@ -237,30 +243,37 @@ export function QualificationsSection({
           <h3 className="text-lg font-semibold text-foreground">
             {labels.experienceHeading}
           </h3>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="mt-1 text-sm text-muted-foreground">
             {labels.experienceHelper}
           </p>
         </div>
 
         {experiences.length > 0 ? (
-          <div className="space-y-3 mb-4">
+          <div className="mb-4 space-y-3">
             {experiences.map((exp) => (
               <article
                 key={exp.id}
-                className="p-4 rounded-xl border border-border bg-card/30 hover:bg-card/50 transition-colors"
+                className="rounded-xl border border-border bg-card/30 p-4 transition-colors hover:bg-card/50"
               >
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-                    <Briefcase className="h-5 w-5 text-accent" aria-hidden="true" />
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10">
+                    <Briefcase
+                      className="h-5 w-5 text-accent"
+                      aria-hidden="true"
+                    />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-foreground">{exp.role}</h4>
-                    <p className="text-sm text-muted-foreground">{exp.company}</p>
-                    <p className="text-xs text-muted-foreground mt-1">
+                  <div className="min-w-0 flex-1">
+                    <h4 className="font-semibold text-foreground">
+                      {exp.role}
+                    </h4>
+                    <p className="text-sm text-muted-foreground">
+                      {exp.company}
+                    </p>
+                    <p className="mt-1 text-xs text-muted-foreground">
                       {formatDateRange(exp.startDate, exp.endDate)}
                     </p>
                     {exp.description && (
-                      <p className="text-sm text-muted-foreground mt-2">
+                      <p className="mt-2 text-sm text-muted-foreground">
                         {exp.description}
                       </p>
                     )}
@@ -291,13 +304,17 @@ export function QualificationsSection({
             ))}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground mb-4">
+          <p className="mb-4 text-sm text-muted-foreground">
             {labels.emptyExperience}
           </p>
         )}
 
-        <Button variant="outline" onClick={handleAddExperience} className="w-full">
-          <Plus className="h-4 w-4 mr-2" aria-hidden="true" />
+        <Button
+          variant="outline"
+          onClick={handleAddExperience}
+          className="w-full"
+        >
+          <Plus className="mr-2 h-4 w-4" aria-hidden="true" />
           {labels.addExperienceButton}
         </Button>
       </section>
@@ -308,33 +325,37 @@ export function QualificationsSection({
           <h3 className="text-lg font-semibold text-foreground">
             {labels.educationHeading}
           </h3>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="mt-1 text-sm text-muted-foreground">
             {labels.educationHelper}
           </p>
         </div>
 
         {education.length > 0 ? (
-          <div className="space-y-3 mb-4">
+          <div className="mb-4 space-y-3">
             {education.map((edu) => (
               <article
                 key={edu.id}
-                className="p-4 rounded-xl border border-border bg-card/30 hover:bg-card/50 transition-colors"
+                className="rounded-xl border border-border bg-card/30 p-4 transition-colors hover:bg-card/50"
               >
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10">
                     <GraduationCap
                       className="h-5 w-5 text-accent"
                       aria-hidden="true"
                     />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-foreground">{edu.degree}</h4>
-                    <p className="text-sm text-muted-foreground">{edu.institution}</p>
-                    <p className="text-xs text-muted-foreground mt-1">
+                  <div className="min-w-0 flex-1">
+                    <h4 className="font-semibold text-foreground">
+                      {edu.degree}
+                    </h4>
+                    <p className="text-sm text-muted-foreground">
+                      {edu.institution}
+                    </p>
+                    <p className="mt-1 text-xs text-muted-foreground">
                       {formatDateRange(edu.startDate, edu.endDate)}
                     </p>
                     {edu.description && (
-                      <p className="text-sm text-muted-foreground mt-2">
+                      <p className="mt-2 text-sm text-muted-foreground">
                         {edu.description}
                       </p>
                     )}
@@ -365,13 +386,17 @@ export function QualificationsSection({
             ))}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground mb-4">
+          <p className="mb-4 text-sm text-muted-foreground">
             {labels.emptyEducation}
           </p>
         )}
 
-        <Button variant="outline" onClick={handleAddEducation} className="w-full">
-          <Plus className="h-4 w-4 mr-2" aria-hidden="true" />
+        <Button
+          variant="outline"
+          onClick={handleAddEducation}
+          className="w-full"
+        >
+          <Plus className="mr-2 h-4 w-4" aria-hidden="true" />
           {labels.addEducationButton}
         </Button>
       </section>
@@ -380,17 +405,25 @@ export function QualificationsSection({
       <Modal
         isOpen={isExperienceModalOpen}
         onClose={handleCloseExperienceModal}
-        title={editingExperience ? experienceModalLabels.editTitle : experienceModalLabels.addTitle}
+        title={
+          editingExperience
+            ? experienceModalLabels.editTitle
+            : experienceModalLabels.addTitle
+        }
       >
         <ExperienceForm
-          initialValues={editingExperience ? {
-            company: editingExperience.company,
-            role: editingExperience.role,
-            startDate: editingExperience.startDate,
-            endDate: editingExperience.endDate,
-            description: editingExperience.description,
-            isCurrent: !editingExperience.endDate,
-          } : undefined}
+          initialValues={
+            editingExperience
+              ? {
+                  company: editingExperience.company,
+                  role: editingExperience.role,
+                  startDate: editingExperience.startDate,
+                  endDate: editingExperience.endDate,
+                  description: editingExperience.description,
+                  isCurrent: !editingExperience.endDate,
+                }
+              : undefined
+          }
           onSave={handleSaveExperience}
           onCancel={handleCloseExperienceModal}
           labels={experienceModalLabels}
@@ -401,22 +434,30 @@ export function QualificationsSection({
       <Modal
         isOpen={isEducationModalOpen}
         onClose={handleCloseEducationModal}
-        title={editingEducation ? educationModalLabels.editTitle : educationModalLabels.addTitle}
+        title={
+          editingEducation
+            ? educationModalLabels.editTitle
+            : educationModalLabels.addTitle
+        }
       >
         <EducationForm
-          initialValues={editingEducation ? {
-            institution: editingEducation.institution,
-            degree: editingEducation.degree,
-            startDate: editingEducation.startDate,
-            endDate: editingEducation.endDate,
-            description: editingEducation.description,
-            isCurrent: !editingEducation.endDate,
-          } : undefined}
+          initialValues={
+            editingEducation
+              ? {
+                  institution: editingEducation.institution,
+                  degree: editingEducation.degree,
+                  startDate: editingEducation.startDate,
+                  endDate: editingEducation.endDate,
+                  description: editingEducation.description,
+                  isCurrent: !editingEducation.endDate,
+                }
+              : undefined
+          }
           onSave={handleSaveEducation}
           onCancel={handleCloseEducationModal}
           labels={educationModalLabels}
         />
       </Modal>
     </div>
-  );
+  )
 }

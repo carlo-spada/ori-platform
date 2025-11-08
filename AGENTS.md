@@ -10,31 +10,35 @@ To ensure the `main` branch remains stable and deployable at all times, we will 
 
 The repository uses a **simplified two-branch workflow**:
 
-*   **`main`**: Production branch that is automatically deployed to Vercel. It must always be stable and ready for deployment. **Direct pushes to `main` are strictly prohibited** and enforced by GitHub branch protection rules.
-*   **`development`**: The working branch where all development happens. All features, fixes, and changes are made here before being merged to `main` via Pull Request.
+- **`main`**: Production branch that is automatically deployed to Vercel. It must always be stable and ready for deployment. **Direct pushes to `main` are strictly prohibited** and enforced by GitHub branch protection rules.
+- **`development`**: The working branch where all development happens. All features, fixes, and changes are made here before being merged to `main` via Pull Request.
 
 ### Core Development Workflow
 
 All development follows this streamlined sequence:
 
 1.  **Start on Development**: Always work on the `development` branch:
+
     ```bash
     git checkout development
     git pull origin development
     ```
 
 2.  **Develop**: Make your changes on the `development` branch. Commit regularly with clear, conventional commit messages following the format:
+
     ```bash
     git add .
     git commit -m "feat: add new feature"  # or fix:, chore:, docs:, etc.
     ```
 
 3.  **Push to Development**: Push your changes to the remote `development` branch:
+
     ```bash
     git push origin development
     ```
 
 4.  **Test Locally**: Before creating a PR, run all essential checks:
+
     ```bash
     pnpm install
     pnpm lint
@@ -59,19 +63,19 @@ All development follows this streamlined sequence:
 
 This workflow is strictly enforced by GitHub branch protection rules:
 
-*   **Pull Requests Required**: All code must enter `main` through a PR from `development`
-*   **No Direct Pushes**: Direct pushes to `main` are blocked for everyone
-*   **Automated CI Checks**: GitHub Actions automatically runs `lint`, `build`, and `test` on every PR
-*   **Required Approvals**: At least 1 approving review is required
-*   **Code Owners Review**: Changes to files with designated owners require their approval
-*   **Conversation Resolution**: All PR conversations must be resolved before merging
-*   **Signed Commits**: All commits must have verified signatures
-*   **Linear History**: Merge commits are prevented; use squash or rebase merging
-*   **CodeQL Scanning**: Code must pass security analysis
-*   **Copilot Review**: Automatically requests code review on new PRs and pushes
-*   **Successful Deployment**: Vercel deployment must succeed before PR can merge
-*   **No Force Pushes**: Force pushes are blocked on `main`
-*   **No Deletions**: Branch deletion is restricted
+- **Pull Requests Required**: All code must enter `main` through a PR from `development`
+- **No Direct Pushes**: Direct pushes to `main` are blocked for everyone
+- **Automated CI Checks**: GitHub Actions automatically runs `lint`, `build`, and `test` on every PR
+- **Required Approvals**: At least 1 approving review is required
+- **Code Owners Review**: Changes to files with designated owners require their approval
+- **Conversation Resolution**: All PR conversations must be resolved before merging
+- **Signed Commits**: All commits must have verified signatures
+- **Linear History**: Merge commits are prevented; use squash or rebase merging
+- **CodeQL Scanning**: Code must pass security analysis
+- **Copilot Review**: Automatically requests code review on new PRs and pushes
+- **Successful Deployment**: Vercel deployment must succeed before PR can merge
+- **No Force Pushes**: Force pushes are blocked on `main`
+- **No Deletions**: Branch deletion is restricted
 
 ## GitHub Considerations
 
@@ -81,38 +85,44 @@ All code changes must be integrated into `main` via Pull Requests from `developm
 
 To ensure clarity, prevent redundant work, and leverage distinct agent strengths, we use a file-based task management system coupled with specialized AI roles. This is the single source of truth for what needs to be done, what is in progress, and what is complete.
 
+### Task Board Integrity
+
+**The file-based task board is the single source of truth for the project's status.** The accuracy of this system is critical for our collaborative workflow. All agents are required to meticulously follow the process of moving task files between their respective stages (`todo`, `in-progress`, `done`, `in-review`, `reviewed`). Failure to do so results in an inaccurate project status, hindering our ability to plan and execute effectively.
+
 ### Directory Structure
+
 All tasks are managed within the `.tasks/` directory, which is organized into stage-based subdirectories:
--   **`.tasks/todo/`**: Planned tasks and features. Large features ('epics') are represented as subfolders (e.g., `.tasks/todo/feature-name/`), with individual work units as Markdown files inside (e.g., `A.md`).
--   **`.tasks/in-progress/`**: Tasks actively being worked on by an agent.
--   **`.tasks/done/`**: Tasks that have been implemented by Claude.
--   **`.tasks/in-review/`**: Tasks currently under review, debugging, and refactoring by Codex.
--   **`.tasks/reviewed/`**: Tasks that have been successfully reviewed by Codex and are ready for final integration.
+
+- **`.tasks/todo/`**: Planned tasks and features. Large features ('epics') are represented as subfolders (e.g., `.tasks/todo/feature-name/`), with individual work units as Markdown files inside (e.g., `A.md`).
+- **`.tasks/in-progress/`**: Tasks actively being worked on by an agent.
+- **`.tasks/done/`**: Tasks that have been implemented by Claude.
+- **`.tasks/in-review/`**: Tasks currently under review, debugging, and refactoring by Codex.
+- **`.tasks/reviewed/`**: Tasks that have been successfully reviewed by Codex and are ready for final integration.
 
 ### Agent Roles & Workflow
 
 1.  **Gemini (Planner & Researcher)**:
-    *   **Role**: Conducts big-picture research, defines the project vision, and breaks it down into a cohesive, step-by-step plan.
-    *   **Workflow**: Creates feature folders and task files (`.md`) in the `.tasks/todo/` directory. While most implementation tasks are assigned to Claude, Gemini can assign tasks directly to Codex if the work is primarily refactoring, debugging, or cleanup, playing to each agent's strengths from the start.
+    - **Role**: Conducts big-picture research, defines the project vision, and breaks it down into a cohesive, step-by-step plan.
+    - **Workflow**: Creates feature folders and task files (`.md`) in the `.tasks/todo/` directory. While most implementation tasks are assigned to Claude, Gemini can assign tasks directly to Codex if the work is primarily refactoring, debugging, or cleanup, playing to each agent's strengths from the start.
 
 2.  **Claude (Implementer & Builder)**:
-    *   **Role**: Materializes the plans defined by Gemini, focusing on implementation.
-    *   **Workflow**:
-        1.  Claims a task by moving its corresponding file or folder from `.tasks/todo/` to `.tasks/in-progress/`.
-        2.  Implements the feature or fix as described in the task file.
-        3.  Upon completion, moves the task file/folder to `.tasks/done/` and **updates the assignee in the file to Codex** to signal it's ready for review.
+    - **Role**: Materializes the plans defined by Gemini, focusing on implementation.
+    - **Workflow**:
+      1.  Claims a task by moving its corresponding file or folder from `.tasks/todo/` to `.tasks/in-progress/`.
+      2.  Implements the feature or fix as described in the task file.
+      3.  Upon completion, moves the task file/folder to `.tasks/done/` and **updates the assignee in the file to Codex** to signal it's ready for review.
 
 3.  **Codex (Reviewer & Debugger)**:
-    *   **Role**: Audits the code produced by Claude, identifying bugs, refactoring opportunities, and ensuring quality.
-    *   **Workflow**:
-        1.  Proactively monitors both the `.tasks/done/` directory (for standard reviews) and the `.tasks/todo/` directory (for directly assigned refactor/debug tasks).
-        2.  Claims a task by moving it to `.tasks/in-review/`.
-        3.  Performs debugging and refactoring.
-        4.  Once the review is complete, moves the task file/folder to `.tasks/reviewed/`.
+    - **Role**: Audits the code produced by Claude, identifying bugs, refactoring opportunities, and ensuring quality.
+    - **Workflow**:
+      1.  Proactively monitors both the `.tasks/done/` directory (for standard reviews) and the `.tasks/todo/` directory (for directly assigned refactor/debug tasks).
+      2.  Claims a task by moving it to `.tasks/in-review/`.
+      3.  Performs debugging and refactoring.
+      4.  Once the review is complete, moves the task file/folder to `.tasks/reviewed/`.
 
 4.  **Carlo (Integrator & Releaser)**:
-    *   **Role**: Performs the final review and merges the completed feature into the `main` branch.
-    *   **Workflow**: Once an entire feature's tasks are in the `.tasks/reviewed/` directory, Carlo will merge the feature branch into `main` for release.
+    - **Role**: Performs the final review and merges the completed feature into the `main` branch.
+    - **Workflow**: Once an entire feature's tasks are in the `.tasks/reviewed/` directory, Carlo will merge the feature branch into `main` for release.
 
 This structured process ensures a clear separation of duties, maintains code quality, and provides a transparent, real-time view of the project's status.
 
@@ -224,6 +234,7 @@ Ori Platform is a pnpm workspace monorepo. Web code resides in `src/` (`src/app`
 - `pnpm turbo test --filter=<package>` — run package-specific tests; coverage output is written to `coverage/`.
 
 **AI Engine Commands:**
+
 - `cd services/ai-engine && pip install -r requirements.txt` — first-time setup (creates venv recommended).
 - `python main.py` — start AI engine at `http://localhost:3002` (downloads model on first run).
 - `pytest tests/ -v` — run AI engine tests with verbose output.

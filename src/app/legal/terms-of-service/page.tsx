@@ -1,4 +1,4 @@
-import { LegalPageLayout } from '@/components/legal/LegalPageLayout';
+import { LegalPageLayout } from '@/components/legal/LegalPageLayout'
 
 const content = `
 <h2 id="introduction">1. Introduction</h2>
@@ -136,7 +136,7 @@ const content = `
 <footer>
   &copy; 2025 Ori Technologies S.A. de C.V. – All rights reserved.
 </footer>
-`;
+`
 
 export default function TermsOfServicePage() {
   return (
@@ -147,26 +147,38 @@ export default function TermsOfServicePage() {
       tocItems={[
         { id: 'introduction', label: '1. Introduction' },
         { id: 'eligibility', label: '2. Eligibility' },
-        { id: 'account-registration', label: '3. Account Registration and Security' },
+        {
+          id: 'account-registration',
+          label: '3. Account Registration and Security',
+        },
         { id: 'subscriptions', label: '4. Plans, Subscriptions, and Billing' },
         { id: 'trials-promotions', label: '5. Trials and Promotions' },
         { id: 'usage-limits', label: '6. Usage Limits and Fair Use' },
         { id: 'acceptable-use', label: '7. Acceptable Use' },
-        { id: 'ai-guidance-disclaimer', label: '8. Ori Guidance and No Guarantees' },
+        {
+          id: 'ai-guidance-disclaimer',
+          label: '8. Ori Guidance and No Guarantees',
+        },
         { id: 'user-content', label: '9. Your Content' },
         { id: 'intellectual-property', label: '10. Intellectual Property' },
-        { id: 'third-party-services', label: '11. Third-Party Services and Links' },
+        {
+          id: 'third-party-services',
+          label: '11. Third-Party Services and Links',
+        },
         { id: 'privacy', label: '12. Privacy' },
         { id: 'termination', label: '13. Suspension and Termination' },
         { id: 'disclaimers', label: '14. Disclaimers' },
         { id: 'limitation-of-liability', label: '15. Limitation of Liability' },
         { id: 'indemnification', label: '16. Indemnification' },
-        { id: 'governing-law', label: '17. Governing Law and Dispute Resolution' },
+        {
+          id: 'governing-law',
+          label: '17. Governing Law and Dispute Resolution',
+        },
         { id: 'changes', label: '18. Changes to the Service or Terms' },
         { id: 'miscellaneous', label: '19. Miscellaneous' },
         { id: 'contact', label: '20. Contact' },
       ]}
       content={content}
     />
-  );
+  )
 }

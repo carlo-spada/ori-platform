@@ -20,42 +20,44 @@ Our mission is to prove that **fulfillment should be scalable, and purpose shoul
 
 This repository is a **pnpm workspace monorepo** containing the following core components:
 
--   **`src/`**: A **Next.js** application that serves as the main user interface.
--   **`services/core-api/`**: A **Node.js/Express** backend (refactoring to Serverless Functions) that handles user profiles, authentication, and business logic.
--   **`services/ai-engine/`**: A **Python/FastAPI** service that provides all AI-powered features, including semantic job matching, skill gap analysis, and learning path generation.
--   **`shared/`**: Shared packages (e.g., types, utils) used across the monorepo.
+- **`src/`**: A **Next.js** application that serves as the main user interface.
+- **`services/core-api/`**: A **Node.js/Express** backend (refactoring to Serverless Functions) that handles user profiles, authentication, and business logic.
+- **`services/ai-engine/`**: A **Python/FastAPI** service that provides all AI-powered features, including semantic job matching, skill gap analysis, and learning path generation.
+- **`shared/`**: Shared packages (e.g., types, utils) used across the monorepo.
 
 ## 🛠️ Technology Stack
 
 Our platform is built with a modern, scalable, and polyglot architecture:
 
--   **Frontend**: Next.js 14 (App Router), React, TypeScript
--   **Backend (Core)**: Node.js, Express.js (migrating to Vercel Serverless Functions)
--   **Backend (AI)**: Python, FastAPI, Sentence-Transformers
--   **Database**: Supabase with Vercel Postgres
--   **UI**: shadcn-ui, Tailwind CSS
--   **State Management**: React Query (TanStack Query)
--   **Deployment**: Vercel (Frontend & Core API) and Google Cloud Run (AI Engine)
--   **Monorepo Management**: pnpm workspaces, Turborepo
+- **Frontend**: Next.js 14 (App Router), React, TypeScript
+- **Backend (Core)**: Node.js, Express.js (migrating to Vercel Serverless Functions)
+- **Backend (AI)**: Python, FastAPI, Sentence-Transformers
+- **Database**: Supabase with Vercel Postgres
+- **UI**: shadcn-ui, Tailwind CSS
+- **State Management**: React Query (TanStack Query)
+- **Deployment**: Vercel (Frontend & Core API) and Google Cloud Run (AI Engine)
+- **Monorepo Management**: pnpm workspaces, Turborepo
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
--   Node.js 18+ and pnpm
--   Python 3.10+ and pip
--   A Supabase account and project
--   Docker (for containerizing the AI Engine)
+- Node.js 18+ and pnpm
+- Python 3.10+ and pip
+- A Supabase account and project
+- Docker (for containerizing the AI Engine)
 
 ### Setup
 
 1.  **Clone the repository:**
+
     ```bash
     git clone https://github.com/carlo-spada/ori-platform.git
     cd ori-platform
     ```
 
 2.  **Install dependencies:**
+
     ```bash
     pnpm install
     ```
@@ -68,16 +70,20 @@ Our platform is built with a modern, scalable, and polyglot architecture:
 You will need to run three separate services in different terminal windows.
 
 1.  **Run the Frontend (Next.js):**
+
     ```bash
     pnpm dev
     ```
-    *   Access the web app at `http://localhost:3000`.
+
+    - Access the web app at `http://localhost:3000`.
 
 2.  **Run the Core API (Node.js):**
+
     ```bash
     pnpm --filter @ori/core-api dev
     ```
-    *   The API will be available at `http://localhost:3001`.
+
+    - The API will be available at `http://localhost:3001`.
 
 3.  **Run the AI Engine (Python):**
     ```bash
@@ -85,7 +91,8 @@ You will need to run three separate services in different terminal windows.
     pip install -r requirements.txt
     python main.py
     ```
-    *   The AI service will be available at `http://localhost:3002`.
+
+    - The AI service will be available at `http://localhost:3002`.
 
 ## 🏗️ Project Management
 
@@ -97,9 +104,9 @@ For a detailed explanation of our collaborative workflow, agent roles, and branc
 
 Our production architecture is designed to be **Serverless-First**, requiring zero manual operations to deploy or scale.
 
--   The **Next.js frontend** and **Core API** (as Serverless Functions) are deployed automatically to **Vercel** from the `main` branch.
--   The **AI Engine** is containerized with Docker and deployed automatically to **Google Cloud Run**.
--   A unified CI/CD pipeline in GitHub Actions orchestrates testing, deployment, and database migrations on every merge to `main`.
+- The **Next.js frontend** and **Core API** (as Serverless Functions) are deployed automatically to **Vercel** from the `main` branch.
+- The **AI Engine** is containerized with Docker and deployed automatically to **Google Cloud Run**.
+- A unified CI/CD pipeline in GitHub Actions orchestrates testing, deployment, and database migrations on every merge to `main`.
 
 This architecture ensures ultra-low latency, infinite scalability, and a seamless development experience.
 
@@ -107,11 +114,10 @@ This architecture ensures ultra-low latency, infinite scalability, and a seamles
 
 We welcome contributions! Before you begin, please read our contributor handbook:
 
--   **[`AGENTS.md`](./AGENTS.md)**: The complete guide to our branching strategy, Git workflow, agent roles, and development best practices.
+- **[`AGENTS.md`](./AGENTS.md)**: The complete guide to our branching strategy, Git workflow, agent roles, and development best practices.
 
 All development happens on the `development` branch. Pull Requests are made from `development` into `main` for production deployment.
 
 ## 📄 License
 
 This project is proprietary software. All rights reserved.
-

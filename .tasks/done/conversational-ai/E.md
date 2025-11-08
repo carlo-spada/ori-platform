@@ -8,12 +8,15 @@ Depends On: B
 ---
 
 ### Objective
+
 Replace the placeholder chat response logic with a real, context-aware connection to the `ai-engine`. This will enable intelligent, personalized conversations by providing the AI with user profile data and conversation history.
 
 ### Context
+
 This is the critical task that elevates our chat feature from a simple messaging UI to an intelligent AI assistant. It establishes the data pipeline that will power all future AI-driven conversational features. This plan defers the actual LLM integration in the `ai-engine` to focus on creating a robust data pipeline first.
 
 ### Key Files to Modify
+
 - `services/core-api/src/routes/chat.ts`
 - `services/core-api/src/lib/ai-client.ts` (or equivalent)
 - `services/ai-engine/main.py`
@@ -24,7 +27,8 @@ This is the critical task that elevates our chat feature from a simple messaging
 #### Part 1: Enhance the `ai-engine`
 
 1.  **Define Context-Aware Schemas**:
-    *   In `services/ai-engine/models/schemas.py`, define new Pydantic models to handle a conversational turn.
+    - In `services/ai-engine/models/schemas.py`, define new Pydantic models to handle a conversational turn.
+
     ```python
     from pydantic import BaseModel
     from typing import Literal
@@ -47,9 +51,9 @@ This is the critical task that elevates our chat feature from a simple messaging
     ```
 
 2.  **Create New `ai-engine` Endpoint**:
-    *   In `services/ai-engine/main.py`, create a new endpoint: `POST /generate_response`.
-    *   This endpoint should accept a body conforming to the `AIRequest` schema.
-    *   **Logic**: For this initial implementation, the endpoint should **not** call a real LLM. Instead, it should prove that it received the context by returning a structured, hardcoded response.
+    - In `services/ai-engine/main.py`, create a new endpoint: `POST /generate_response`.
+    - This endpoint should accept a body conforming to the `AIRequest` schema.
+    - **Logic**: For this initial implementation, the endpoint should **not** call a real LLM. Instead, it should prove that it received the context by returning a structured, hardcoded response.
     ```python
     @app.post("/generate_response", response_model=AIResponse)
     async def generate_response(request: AIRequest):
@@ -68,24 +72,25 @@ This is the critical task that elevates our chat feature from a simple messaging
 #### Part 2: Update the `core-api`
 
 1.  **Create AI Client Method**:
-    *   In `services/core-api/src/lib/ai-client.ts`, add a new method to call the `/generate_response` endpoint of the `ai-engine`. It should accept the user profile, history, and new message.
+    - In `services/core-api/src/lib/ai-client.ts`, add a new method to call the `/generate_response` endpoint of the `ai-engine`. It should accept the user profile, history, and new message.
 
 2.  **Modify `POST /api/chat/message` Handler**:
-    *   In `services/core-api/src/routes/chat.ts`, refactor the existing logic.
-    *   After saving the user's new message to the database:
-        1.  Fetch the user's profile from the Supabase `profiles` table to get their skills and target roles.
-        2.  Fetch the last 5-10 messages from the current conversation to provide as history.
-        3.  Construct the `AIRequest` payload.
-        4.  Call the new `ai-engine` client method with this payload.
-        5.  Take the `content` from the `AIResponse` and save it as the new assistant message in your database.
-        6.  Return the assistant's message to the frontend.
+    - In `services/core-api/src/routes/chat.ts`, refactor the existing logic.
+    - After saving the user's new message to the database:
+      1.  Fetch the user's profile from the Supabase `profiles` table to get their skills and target roles.
+      2.  Fetch the last 5-10 messages from the current conversation to provide as history.
+      3.  Construct the `AIRequest` payload.
+      4.  Call the new `ai-engine` client method with this payload.
+      5.  Take the `content` from the `AIResponse` and save it as the new assistant message in your database.
+      6.  Return the assistant's message to the frontend.
 
 3.  **Update Tests**: Update the integration tests for the `core-api` to verify that the `POST /api/chat/message` endpoint correctly calls the `ai-engine` with the expected contextual payload.
 
 ### Acceptance Criteria
--   The `ai-engine` has a new, tested `POST /generate_response` endpoint that uses the new Pydantic schemas.
--   The `core-api`'s `POST /api/chat/message` endpoint is updated to:
-    -   Fetch user profile and conversation history.
-    -   Call the new `ai-engine` endpoint with this context.
-    -   Save and return the structured response from the `ai-engine`.
--   The placeholder "echo" logic is completely removed, and the foundation for a truly intelligent AI is in place.
+
+- The `ai-engine` has a new, tested `POST /generate_response` endpoint that uses the new Pydantic schemas.
+- The `core-api`'s `POST /api/chat/message` endpoint is updated to:
+  - Fetch user profile and conversation history.
+  - Call the new `ai-engine` endpoint with this context.
+  - Save and return the structured response from the `ai-engine`.
+- The placeholder "echo" logic is completely removed, and the foundation for a truly intelligent AI is in place.

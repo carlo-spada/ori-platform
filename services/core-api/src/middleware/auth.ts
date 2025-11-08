@@ -1,15 +1,19 @@
-import { Request, Response, NextFunction } from 'express';
-import { createClient, User } from '@supabase/supabase-js';
+import { Request, Response, NextFunction } from 'express'
+import { createClient, User } from '@supabase/supabase-js'
 
 export interface AuthRequest extends Request {
-  user?: User;
+  user?: User
 }
 
-export const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
+export const authMiddleware = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  const token = req.headers.authorization?.split(' ')[1]
 
   if (!token) {
-    return res.status(401).json({ error: 'No token provided' });
+    return res.status(401).json({ error: 'No token provided' })
   }
 
   try {
@@ -27,19 +31,22 @@ export const authMiddleware = async (req: AuthRequest, res: Response, next: Next
         },
         auth: {
           persistSession: false,
-        }
-      }
-    );
+        },
+      },
+    )
 
-    const { data: { user }, error } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser()
 
     if (error || !user) {
-      return res.status(401).json({ error: 'Invalid token' });
+      return res.status(401).json({ error: 'Invalid token' })
     }
 
-    req.user = user;
-    return next();
+    req.user = user
+    return next()
   } catch {
-    return res.status(401).json({ error: 'Authentication failed' });
+    return res.status(401).json({ error: 'Authentication failed' })
   }
-};
+}

@@ -1,23 +1,21 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button'
 
 interface WelcomeStepProps {
   copy: {
-    headline: string;
-    body: string;
-    primaryButton: string;
-  };
-  onNext: () => void;
+    headline: string
+    body: string
+    primaryButton: string
+  }
+  onNext: () => void
 }
 
 export function WelcomeStep({ copy, onNext }: WelcomeStepProps) {
   // Note: headline interpolation is handled by parent component passing pre-formatted copy
   return (
     <div className="flex flex-col gap-6 py-4">
-      <div className="text-center space-y-3">
-        <h1 className="text-2xl sm:text-3xl font-semibold">
-          {copy.headline}
-        </h1>
-        <p className="text-base text-muted-foreground max-w-md mx-auto">
+      <div className="space-y-3 text-center">
+        <h1 className="text-2xl font-semibold sm:text-3xl">{copy.headline}</h1>
+        <p className="mx-auto max-w-md text-base text-muted-foreground">
           {copy.body}
         </p>
       </div>
@@ -27,5 +25,5 @@ export function WelcomeStep({ copy, onNext }: WelcomeStepProps) {
         </Button>
       </div>
     </div>
-  );
+  )
 }

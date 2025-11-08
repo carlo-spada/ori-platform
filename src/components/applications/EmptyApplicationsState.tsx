@@ -1,12 +1,16 @@
-import { Button } from '@/components/ui/button';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { useTranslation } from 'react-i18next';
-import { FileText } from 'lucide-react';
+import { Button } from '@/components/ui/button'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+import { useTranslation } from 'react-i18next'
+import { FileText } from 'lucide-react'
 
 interface EmptyApplicationsStateProps {
-  headline: string;
-  message: string;
-  ctaLabel: string;
+  headline: string
+  message: string
+  ctaLabel: string
 }
 
 export function EmptyApplicationsState({
@@ -14,15 +18,18 @@ export function EmptyApplicationsState({
   message,
   ctaLabel,
 }: EmptyApplicationsStateProps) {
-  const { t } = useTranslation();
-  
+  const { t } = useTranslation()
+
   return (
-    <div className="flex flex-col items-center justify-center text-center py-12 gap-4">
-      <div className="rounded-full bg-muted/20 p-4 mb-2">
-        <FileText className="w-8 h-8 text-muted-foreground" aria-hidden="true" />
+    <div className="flex flex-col items-center justify-center gap-4 py-12 text-center">
+      <div className="mb-2 rounded-full bg-muted/20 p-4">
+        <FileText
+          className="h-8 w-8 text-muted-foreground"
+          aria-hidden="true"
+        />
       </div>
       <h2 className="text-lg font-semibold text-foreground">{headline}</h2>
-      <p className="text-sm text-muted-foreground max-w-md">{message}</p>
+      <p className="max-w-md text-sm text-muted-foreground">{message}</p>
       <Tooltip>
         <TooltipTrigger asChild>
           <span tabIndex={0}>
@@ -31,10 +38,8 @@ export function EmptyApplicationsState({
             </Button>
           </span>
         </TooltipTrigger>
-        <TooltipContent>
-          {t('tooltips.comingSoon')}
-        </TooltipContent>
+        <TooltipContent>{t('tooltips.comingSoon')}</TooltipContent>
       </Tooltip>
     </div>
-  );
+  )
 }

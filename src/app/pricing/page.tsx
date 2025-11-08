@@ -1,48 +1,56 @@
-'use client';
+'use client'
 
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { PublicLayout } from '@/components/layout/PublicLayout';
-import { Section } from '@/components/ui/Section';
-import { PricingCard } from '@/components/pricing/PricingCard';
-import { FeatureComparisonTable } from '@/components/pricing/FeatureComparisonTable';
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { PublicLayout } from '@/components/layout/PublicLayout'
+import { Section } from '@/components/ui/Section'
+import { PricingCard } from '@/components/pricing/PricingCard'
+import { FeatureComparisonTable } from '@/components/pricing/FeatureComparisonTable'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
-import { setDocumentMeta, setJSONLD } from '@/lib/seo';
+} from '@/components/ui/accordion'
+import { setDocumentMeta, setJSONLD } from '@/lib/seo'
 
-type BillingPeriod = 'monthly' | 'annual';
+type BillingPeriod = 'monthly' | 'annual'
 
 export default function PricingPage() {
-  const { t } = useTranslation();
-  const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>('monthly');
+  const { t } = useTranslation()
+  const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>('monthly')
 
   // Helper to safely get arrays from translations
   const safeArray = <T,>(value: unknown): T[] => {
-    return Array.isArray(value) ? value : [];
-  };
+    return Array.isArray(value) ? value : []
+  }
 
   useEffect(() => {
     setDocumentMeta({
       title: t('pricingPage.header.title'),
       description: t('pricingPage.header.subheadline'),
       twitterCard: 'summary_large_image',
-    });
+    })
 
     const paidPlans = [
-      { name: t('pricingPage.plans.1.name'), price: 5, description: t('pricingPage.plans.1.description') },
-      { name: t('pricingPage.plans.2.name'), price: 10, description: t('pricingPage.plans.2.description') },
-    ];
+      {
+        name: t('pricingPage.plans.1.name'),
+        price: 5,
+        description: t('pricingPage.plans.1.description'),
+      },
+      {
+        name: t('pricingPage.plans.2.name'),
+        price: 10,
+        description: t('pricingPage.plans.2.description'),
+      },
+    ]
     const jsonLdOffers = paidPlans.map((plan) => ({
       '@type': 'Offer',
       name: plan.name,
       price: plan.price,
       priceCurrency: 'USD',
       description: plan.description,
-    }));
+    }))
 
     setJSONLD({
       '@context': 'https://schema.org',
@@ -50,33 +58,33 @@ export default function PricingPage() {
       name: 'Ori',
       description: t('pricingPage.header.subheadline'),
       offers: jsonLdOffers,
-    });
-  }, [t]);
+    })
+  }, [t])
 
   const plans = safeArray<{
-    id: string;
-    name: string;
-    description: string;
-    priceMonthly?: number;
-    priceAnnual?: number;
-    limitsSummary: string;
-    cta: string;
-    ctaHref: string;
-    features: string[];
-    popular: boolean;
-  }>(t('pricingPage.plans', { returnObjects: true }));
+    id: string
+    name: string
+    description: string
+    priceMonthly?: number
+    priceAnnual?: number
+    limitsSummary: string
+    cta: string
+    ctaHref: string
+    features: string[]
+    popular: boolean
+  }>(t('pricingPage.plans', { returnObjects: true }))
 
   const comparisonFeatures = safeArray<{
-    feature: string;
-    free: string | boolean;
-    plus: string | boolean;
-    premium: string | boolean;
-  }>(t('pricingPage.comparisonFeatures', { returnObjects: true }));
+    feature: string
+    free: string | boolean
+    plus: string | boolean
+    premium: string | boolean
+  }>(t('pricingPage.comparisonFeatures', { returnObjects: true }))
 
   const faqs = safeArray<{
-    q: string;
-    a: string;
-  }>(t('pricingPage.faqs', { returnObjects: true }));
+    q: string
+    a: string
+  }>(t('pricingPage.faqs', { returnObjects: true }))
 
   return (
     <PublicLayout
@@ -85,10 +93,10 @@ export default function PricingPage() {
     >
       {/* Page Header */}
       <Section data-testid="pricing-header" className="text-center">
-        <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
+        <h1 className="mb-4 text-4xl font-bold text-foreground sm:text-5xl">
           {t('pricingPage.header.title')}
         </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+        <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">
           {t('pricingPage.header.subheadline')}
         </p>
 
@@ -126,14 +134,18 @@ export default function PricingPage() {
 
       {/* Pricing Cards */}
       <Section data-testid="pricing-cards">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3">
           {plans.map((plan) => (
             <PricingCard
               key={plan.id}
               id={plan.id}
               name={plan.name}
               description={plan.description}
-              price={billingPeriod === 'monthly' ? (plan.priceMonthly ?? 0) : (plan.priceAnnual ?? 0)}
+              price={
+                billingPeriod === 'monthly'
+                  ? (plan.priceMonthly ?? 0)
+                  : (plan.priceAnnual ?? 0)
+              }
               billingPeriod={billingPeriod}
               limitsSummary={plan.limitsSummary}
               features={plan.features}
@@ -147,38 +159,38 @@ export default function PricingPage() {
 
       {/* Feature Comparison Table */}
       <Section data-testid="feature-comparison">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-semibold text-foreground mb-4">
+        <div className="mb-12 text-center">
+          <h2 className="mb-4 text-3xl font-semibold text-foreground sm:text-4xl">
             Compare Plans
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
             A detailed breakdown of what&apos;s included in each plan.
           </p>
         </div>
-        <div className="max-w-5xl mx-auto">
+        <div className="mx-auto max-w-5xl">
           <FeatureComparisonTable features={comparisonFeatures} />
         </div>
       </Section>
 
       {/* FAQ Section */}
       <Section data-testid="pricing-faq">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-semibold text-foreground mb-4">
+        <div className="mb-12 text-center">
+          <h2 className="mb-4 text-3xl font-semibold text-foreground sm:text-4xl">
             Frequently Asked Questions
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
             Everything you need to know about Ori pricing.
           </p>
         </div>
 
-        <div className="max-w-3xl mx-auto">
+        <div className="mx-auto max-w-3xl">
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, index) => (
               <AccordionItem key={index} value={`faq-${index}`}>
                 <AccordionTrigger className="text-left text-base font-medium text-foreground hover:text-accent">
                   {faq.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
+                <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
                   {faq.a}
                 </AccordionContent>
               </AccordionItem>
@@ -187,5 +199,5 @@ export default function PricingPage() {
         </div>
       </Section>
     </PublicLayout>
-  );
+  )
 }

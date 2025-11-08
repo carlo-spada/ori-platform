@@ -1,0 +1,22 @@
+# Default owner for everything
+* @carlo-spada
+
+# AI engine components
+/services/ai-engine/ @carlo-spada
+
+# Frontend components
+/src/components/ @carlo-spada
+
+# API routes
+/services/core-api/ @carlo-spada
+
+# Database migrations
+/supabase/migrations/ @carlo-spada
+
+# Documentation
+/docs/ @carlo-spada
+
+# Configuration files
+/.github/ @carlo-spada
+/.*rc @carlo-spada
+/.*config.* @carlo-spada

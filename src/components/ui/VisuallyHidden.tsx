@@ -1,4 +1,4 @@
-import { forwardRef, type ComponentPropsWithoutRef } from 'react';
+import { forwardRef, type ComponentPropsWithoutRef } from 'react'
 
 /**
  * VisuallyHidden component
@@ -13,7 +13,7 @@ export const VisuallyHidden = forwardRef<
     <span ref={ref} className="sr-only" {...props}>
       {children}
     </span>
-  );
-});
+  )
+})
 
-VisuallyHidden.displayName = 'VisuallyHidden';
+VisuallyHidden.displayName = 'VisuallyHidden'

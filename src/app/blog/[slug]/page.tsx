@@ -1,12 +1,12 @@
-'use client';
+'use client'
 
-import { useEffect } from 'react';
-import { useParams } from 'next/navigation';
-import { redirect } from 'next/navigation';
-import { PublicLayout } from '@/components/layout/PublicLayout';
-import { PostLayout } from '@/components/blog/PostLayout';
-import { setDocumentMeta, setJSONLD } from '@/lib/seo';
-import { type BlogPost } from '@/lib/types';
+import { useEffect } from 'react'
+import { useParams } from 'next/navigation'
+import { redirect } from 'next/navigation'
+import { PublicLayout } from '@/components/layout/PublicLayout'
+import { PostLayout } from '@/components/blog/PostLayout'
+import { setDocumentMeta, setJSONLD } from '@/lib/seo'
+import { type BlogPost } from '@/lib/types'
 
 // Mock data - in a real app, this would come from a CMS or API
 const mockPosts: Record<string, BlogPost> = {
@@ -56,7 +56,8 @@ const mockPosts: Record<string, BlogPost> = {
     readingTimeMinutes: 8,
     category: 'Future of Work',
     tags: ['AI', 'Technology', 'Career', 'Innovation'],
-    featureImageUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=675&fit=crop',
+    featureImageUrl:
+      'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=675&fit=crop',
   },
   'building-adaptive-career-pathways': {
     slug: 'building-adaptive-career-pathways',
@@ -102,7 +103,8 @@ const mockPosts: Record<string, BlogPost> = {
     readingTimeMinutes: 6,
     category: 'Career Development',
     tags: ['Career', 'Growth', 'Skills', 'Resilience'],
-    featureImageUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=675&fit=crop',
+    featureImageUrl:
+      'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=675&fit=crop',
   },
   'empathy-in-technology-design': {
     slug: 'empathy-in-technology-design',
@@ -159,14 +161,15 @@ const mockPosts: Record<string, BlogPost> = {
     readingTimeMinutes: 7,
     category: 'Technology',
     tags: ['Design', 'Empathy', 'UX', 'Ethics'],
-    featureImageUrl: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&h=675&fit=crop',
+    featureImageUrl:
+      'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&h=675&fit=crop',
   },
-};
+}
 
 export default function BlogPostPage() {
-  const params = useParams();
-  const slug = params?.slug as string;
-  const post = slug ? mockPosts[slug] : null;
+  const params = useParams()
+  const slug = params?.slug as string
+  const post = slug ? mockPosts[slug] : null
 
   useEffect(() => {
     if (post && typeof window !== 'undefined') {
@@ -175,7 +178,7 @@ export default function BlogPostPage() {
         title: `${post.title} | Ori Insights`,
         description: post.excerpt,
         canonical: `${window.location.origin}/blog/${post.slug}`,
-      });
+      })
 
       // Set JSON-LD structured data
       setJSONLD({
@@ -192,18 +195,18 @@ export default function BlogPostPage() {
         ...(post.featureImageUrl && {
           image: post.featureImageUrl,
         }),
-      });
+      })
     }
-  }, [post]);
+  }, [post])
 
   // If post not found, redirect to blog index
   if (!post) {
-    redirect('/blog');
+    redirect('/blog')
   }
 
   return (
     <PublicLayout>
       <PostLayout post={post} />
     </PublicLayout>
-  );
+  )
 }

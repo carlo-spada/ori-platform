@@ -11,18 +11,22 @@ Always keep this guide synchronized with `AGENTS.md`. After landing a major feat
 **As Claude (Implementer & Builder), I must:**
 
 ### Version Control Discipline
+
 - **Commit and push immediately** after completing each task
 - **After moving task files** in `.tasks/`: commit and push
 - **After implementing features**: commit and push
 - **Minimum**: Push at least once per task/file edit in `.tasks/` folder
 
 ### Documentation Updates
+
 After every major change, update:
+
 - `README.md` (if affects setup, structure, or features)
 - `AGENTS.md` (if affects workflows or processes)
 - `CLAUDE.md` (if implementation patterns change)
 
 ### Commit Message Format
+
 ```bash
 # When claiming a task
 git add .tasks/
@@ -49,11 +53,12 @@ git push origin development
 
 **Workflow:**
 Always work on `development` branch: `git checkout development && git pull`
+
 1. Make changes and commit regularly: `git commit -m "feat: description"`
 2. Push to development: `git push origin development`
 3. Create PR from `development` → `main` when ready to deploy
 4. PR requires: 1 approval, passing checks, conversation resolution, successful deployment
-6. After merge, Vercel automatically deploys to production
+5. After merge, Vercel automatically deploys to production
 
 **Never attempt to push directly to `main`** - it will be rejected by branch protection rules.
 
@@ -91,6 +96,7 @@ This is a pnpm workspace with three main areas:
 ## Development Commands
 
 ### Frontend Development
+
 ```bash
 pnpm dev                    # Start Next.js at http://localhost:3000
 pnpm build                  # Production build
@@ -99,6 +105,7 @@ pnpm lint                   # Run ESLint (next/core-web-vitals config)
 ```
 
 ### Backend Development
+
 ```bash
 pnpm dev:api                           # Start core-api at http://localhost:3001
 pnpm --filter @ori/core-api dev        # Equivalent command
@@ -112,6 +119,7 @@ pytest tests/ -v                       # Run AI engine tests
 ```
 
 ### Package Management
+
 ```bash
 pnpm install                # Install all workspace dependencies
 pnpm --filter <package> add <dep>  # Add dependency to specific package
@@ -120,25 +128,31 @@ pnpm --filter <package> add <dep>  # Add dependency to specific package
 ## Architecture & Data Flow
 
 ### Authentication Flow
+
 Frontend uses `AuthProvider` context (src/contexts/AuthProvider.tsx) wrapping the app
+
 1. Supabase client is a singleton via `getSupabaseClient()` (src/integrations/supabase/client.ts)
 2. Auth state managed through Supabase auth listener + React context
 3. Protected routes in `/app/*` should check auth state before rendering
 4. Sign up redirects to `/app/dashboard` after email confirmation
 
 ### API Integration Pattern
+
 - Frontend queries core-api via React Query (TanStack Query)
 - React Query client configured in `src/lib/react-query.ts`
 - API base URL should be configurable for local vs. production environments
 - Core-api expects CORS from frontend origin
 
 ### Payment Flow
+
 Stripe integration via `@stripe/react-stripe-js` on frontend (src/lib/stripe.ts)
+
 1. Payment routes in core-api: `/api/v1/payments/*`
 2. Webhook endpoint MUST be before `express.json()` middleware (uses raw body)
 3. Three subscription tiers: free, plus, premium (see shared/types for limits)
 
 ### Component Organization
+
 - UI primitives in `src/components/ui/` (shadcn/ui components with Radix UI)
 - Feature components grouped by domain: landing/, dashboard/, applications/, etc.
 - Use Tailwind CSS for styling with dark mode support (defaults to dark theme)
@@ -147,6 +161,7 @@ Stripe integration via `@stripe/react-stripe-js` on frontend (src/lib/stripe.ts)
 ## Environment Configuration
 
 ### Frontend (`.env.local`)
+
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
@@ -154,6 +169,7 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
 ```
 
 ### Core API (`services/core-api/.env`)
+
 ```env
 PORT=3001
 SUPABASE_URL=
@@ -165,6 +181,7 @@ AI_ENGINE_URL=http://localhost:3002
 ```
 
 ### AI Engine (`services/ai-engine/.env`)
+
 ```env
 PORT=3002
 ENVIRONMENT=development
@@ -177,12 +194,14 @@ FRONTEND_URL=http://localhost:3000
 ## Key Technical Details
 
 ### TypeScript Configuration
+
 - Strict mode enabled across all packages
 - Target: ES2017 for Next.js compatibility
 - Module resolution: bundler (Next.js 13+ requirement)
 - Each service has its own tsconfig.json extending root config
 
 ### Styling & UI
+
 - Tailwind CSS v3.4 (configured with typography, scrollbar-hide, animate plugins)
 - Dark mode default via next-themes
 - Component library: shadcn/ui with Radix UI primitives
@@ -190,16 +209,19 @@ FRONTEND_URL=http://localhost:3000
 - Toast notifications: sonner + Radix UI toast
 
 ### State Management
+
 - React Query for server state and API caching
 - React Context for auth and global UI state
 - No Redux or Zustand currently
 
 ### Internationalization
+
 - i18next with browser language detection
 - Translation files in `public/locales/{en,de,es,fr,it}/`
 - Configured in `src/i18n.ts`, initialized in providers
 
 ### Database
+
 - Supabase PostgreSQL for data persistence
 - Type definitions in `shared/types/src/index.ts`
 - Core tables: users, user_profiles, jobs, applications
@@ -208,6 +230,7 @@ FRONTEND_URL=http://localhost:3000
 ## Testing Approach
 
 While test infrastructure isn't fully established, follow these patterns:
+
 - Colocate tests with source files (`*.test.tsx`, `*.spec.ts`)
 - Mock Supabase and Stripe in tests to avoid external dependencies
 - Core-api should use supertest for integration tests
@@ -216,19 +239,25 @@ While test infrastructure isn't fully established, follow these patterns:
 ## Common Development Patterns
 
 ### Adding a New API Route
+
 Create route handler in `services/core-api/src/routes/`
+
 1. Import and mount in `services/core-api/src/index.ts`
 2. Add types to `shared/types/src/index.ts` if needed
 3. Build core-api: `pnpm --filter @ori/core-api build`
 
 ### Creating a New Protected Page
+
 Add route under `src/app/app/` (nested under authenticated section)
+
 1. Check auth state in page component using `useAuth()` hook
 2. Redirect to `/login` if not authenticated
 3. Add navigation item to `src/lib/navConfig.ts` if needed
 
 ### Adding Shared Types
+
 Define in `shared/types/src/index.ts`
+
 1. Export from package
 2. Import in consuming packages as `@ori/types` (may need workspace setup)
 
@@ -253,17 +282,19 @@ Define in `shared/types/src/index.ts`
 
 **Primary Responsibilities:**
 **Claim Tasks**: Move task files from `.tasks/todo/` to `.tasks/in-progress/`
+
 1. **Implement**: Execute plans defined by Gemini with precision and creativity
 2. **Complete**: Move finished tasks to `.tasks/done/` after implementation
 3. **Test**: Ensure code works as expected before marking complete
 
 **Task Workflow:**
 Review task file in `.tasks/todo/`
+
 1. Move to `.tasks/in-progress/` and commit
 2. Implement feature following task instructions
 3. Run tests (`pnpm lint`, `pnpm build`)
 4. Move to `.tasks/done/` and commit
-6. Update documentation if major change
+5. Update documentation if major change
 
 ## Important Notes
 
@@ -271,10 +302,10 @@ Review task file in `.tasks/todo/`
 2. Core-api uses `.js` extensions despite TypeScript (ES module compatibility)
 3. Stripe webhook route MUST be before `express.json()` (raw body requirement)
 4. Supabase client is singleton - always use `getSupabaseClient()`
-6. `@/` path alias only works in frontend, not in services/
-7. **AI Engine**: Core-api gracefully falls back if AI engine unavailable
-8. **AI Engine First Run**: Downloads ~80MB sentence-transformer model (one-time)
-9. **Service Communication**: AI engine (3002) ← core-api (3001) ← frontend (3000)
+5. `@/` path alias only works in frontend, not in services/
+6. **AI Engine**: Core-api gracefully falls back if AI engine unavailable
+7. **AI Engine First Run**: Downloads ~80MB sentence-transformer model (one-time)
+8. **Service Communication**: AI engine (3002) ← core-api (3001) ← frontend (3000)
 
 ## Development Patterns
 

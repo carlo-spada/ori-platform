@@ -1,39 +1,44 @@
-import { useState, FormEvent } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
+import { useState, FormEvent } from 'react'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Checkbox } from '@/components/ui/checkbox'
 
 export interface ExperienceFormData {
-  company: string;
-  role: string;
-  startDate: string;
-  endDate?: string;
-  description?: string;
-  isCurrent?: boolean;
+  company: string
+  role: string
+  startDate: string
+  endDate?: string
+  description?: string
+  isCurrent?: boolean
 }
 
 export interface ExperienceFormProps {
-  initialValues?: ExperienceFormData;
-  onSave: (values: ExperienceFormData) => void;
-  onCancel: () => void;
+  initialValues?: ExperienceFormData
+  onSave: (values: ExperienceFormData) => void
+  onCancel: () => void
   labels: {
-    companyLabel: string;
-    companyPlaceholder: string;
-    roleLabel: string;
-    rolePlaceholder: string;
-    startDateLabel: string;
-    endDateLabel: string;
-    isCurrentLabel: string;
-    descriptionLabel: string;
-    descriptionPlaceholder: string;
-    saveButton: string;
-    cancelButton: string;
-  };
+    companyLabel: string
+    companyPlaceholder: string
+    roleLabel: string
+    rolePlaceholder: string
+    startDateLabel: string
+    endDateLabel: string
+    isCurrentLabel: string
+    descriptionLabel: string
+    descriptionPlaceholder: string
+    saveButton: string
+    cancelButton: string
+  }
 }
 
-export function ExperienceForm({ initialValues, onSave, onCancel, labels }: ExperienceFormProps) {
+export function ExperienceForm({
+  initialValues,
+  onSave,
+  onCancel,
+  labels,
+}: ExperienceFormProps) {
   const [formData, setFormData] = useState<ExperienceFormData>({
     company: initialValues?.company || '',
     role: initialValues?.role || '',
@@ -41,40 +46,44 @@ export function ExperienceForm({ initialValues, onSave, onCancel, labels }: Expe
     endDate: initialValues?.endDate || '',
     description: initialValues?.description || '',
     isCurrent: initialValues?.isCurrent || false,
-  });
+  })
 
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    
+    e.preventDefault()
+
     // Basic validation
-    const newErrors: Record<string, string> = {};
-    if (!formData.company.trim()) newErrors.company = 'Company is required';
-    if (!formData.role.trim()) newErrors.role = 'Role is required';
-    if (!formData.startDate.trim()) newErrors.startDate = 'Start date is required';
+    const newErrors: Record<string, string> = {}
+    if (!formData.company.trim()) newErrors.company = 'Company is required'
+    if (!formData.role.trim()) newErrors.role = 'Role is required'
+    if (!formData.startDate.trim())
+      newErrors.startDate = 'Start date is required'
 
     if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
+      setErrors(newErrors)
+      return
     }
 
     // Clear end date if current position
-    const submitData = { ...formData };
+    const submitData = { ...formData }
     if (formData.isCurrent) {
-      submitData.endDate = undefined;
+      submitData.endDate = undefined
     }
 
-    onSave(submitData);
-  };
+    onSave(submitData)
+  }
 
-  const handleChange = (field: keyof ExperienceFormData, value: string | boolean) => {
-    setFormData({ ...formData, [field]: value });
+  const handleChange = (
+    field: keyof ExperienceFormData,
+    value: string | boolean,
+  ) => {
+    setFormData({ ...formData, [field]: value })
     // Clear error for this field
     if (errors[field]) {
-      setErrors({ ...errors, [field]: '' });
+      setErrors({ ...errors, [field]: '' })
     }
-  };
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -139,11 +148,13 @@ export function ExperienceForm({ initialValues, onSave, onCancel, labels }: Expe
         <Checkbox
           id="isCurrent"
           checked={formData.isCurrent}
-          onCheckedChange={(checked) => handleChange('isCurrent', checked as boolean)}
+          onCheckedChange={(checked) =>
+            handleChange('isCurrent', checked as boolean)
+          }
         />
         <Label
           htmlFor="isCurrent"
-          className="text-sm font-normal cursor-pointer"
+          className="cursor-pointer text-sm font-normal"
         >
           {labels.isCurrentLabel}
         </Label>
@@ -179,10 +190,15 @@ export function ExperienceForm({ initialValues, onSave, onCancel, labels }: Expe
         <Button type="submit" className="flex-1">
           {labels.saveButton}
         </Button>
-        <Button type="button" variant="outline" onClick={onCancel} className="flex-1">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onCancel}
+          className="flex-1"
+        >
           {labels.cancelButton}
         </Button>
       </div>
     </form>
-  );
+  )
 }

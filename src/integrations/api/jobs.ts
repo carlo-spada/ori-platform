@@ -1,119 +1,122 @@
-import { getSupabaseClient } from '@/integrations/supabase/client';
+import { getSupabaseClient } from '@/integrations/supabase/client'
 
 export interface JobMatchFilters {
-  location?: string;
-  workType?: 'remote' | 'hybrid' | 'onsite';
-  salaryMin?: number;
+  location?: string
+  workType?: 'remote' | 'hybrid' | 'onsite'
+  salaryMin?: number
 }
 
 export interface JobMatchRequest {
-  userId: string;
-  limit?: number;
-  filters?: JobMatchFilters;
+  userId: string
+  limit?: number
+  filters?: JobMatchFilters
 }
 
 export interface JobMatchResponse {
   matches: Array<{
-    id: string;
-    title: string;
-    company: string;
-    location: string;
-    description?: string;
-    requirements?: string[];
-    salary_min?: number;
-    salary_max?: number;
-    work_type?: 'remote' | 'hybrid' | 'onsite';
-    highlights?: string[];
-    tags?: string[];
-    posted_date?: string;
-    expires_date?: string;
-    created_at: string;
-    updated_at: string;
-    matchScore: number;
-    keyMatches: string[];
-    reasoning?: string;
+    id: string
+    title: string
+    company: string
+    location: string
+    description?: string
+    requirements?: string[]
+    salary_min?: number
+    salary_max?: number
+    work_type?: 'remote' | 'hybrid' | 'onsite'
+    highlights?: string[]
+    tags?: string[]
+    posted_date?: string
+    expires_date?: string
+    created_at: string
+    updated_at: string
+    matchScore: number
+    keyMatches: string[]
+    reasoning?: string
     skills_analysis?: Array<{
-      name: string;
-      status: 'matched' | 'missing';
-    }>;
+      name: string
+      status: 'matched' | 'missing'
+    }>
     skillsGap?: {
-      userSkills: string[];
-      requiredSkills: string[];
-      missingSkills: string[];
-    };
-  }>;
+      userSkills: string[]
+      requiredSkills: string[]
+      missingSkills: string[]
+    }
+  }>
   usage: {
-    used: number;
-    limit: number;
-  };
+    used: number
+    limit: number
+  }
 }
 
 /**
  * API error response structure
  */
 export interface ApiErrorResponse {
-  error?: string;
-  message?: string;
-  details?: string;
+  error?: string
+  message?: string
+  details?: string
 }
 
 /**
  * Fetch job recommendations for a user from the core-api
  */
 export async function fetchJobRecommendations(
-  request: JobMatchRequest
+  request: JobMatchRequest,
 ): Promise<JobMatchResponse> {
-  const supabase = getSupabaseClient();
+  const supabase = getSupabaseClient()
   if (!supabase) {
-    throw new Error('Supabase client is not configured. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.');
+    throw new Error(
+      'Supabase client is not configured. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.',
+    )
   }
 
   // Get the current session to access the auth token
-  const { data: { session } } = await supabase.auth.getSession();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
 
   if (!session) {
-    throw new Error('No active session');
+    throw new Error('No active session')
   }
 
-
   // Get the API URL from environment
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL
   if (!apiUrl) {
-    throw new Error('NEXT_PUBLIC_API_URL is not defined');
+    throw new Error('NEXT_PUBLIC_API_URL is not defined')
   }
 
   const response = await fetch(`${apiUrl}/api/v1/jobs/find-matches`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${session.access_token}`,
+      Authorization: `Bearer ${session.access_token}`,
     },
     body: JSON.stringify({
       userId: request.userId,
       limit: request.limit || 6,
       filters: request.filters,
     }),
-  });
+  })
 
   if (!response.ok) {
-    let errorMessage: string;
-    
+    let errorMessage: string
+
     try {
-      const errorData: ApiErrorResponse = await response.json();
+      const errorData: ApiErrorResponse = await response.json()
       // Try to extract error message from various possible fields
-      const apiError = errorData.error || errorData.message || errorData.details;
+      const apiError = errorData.error || errorData.message || errorData.details
       if (apiError) {
-        errorMessage = `${apiError} (HTTP ${response.status})`;
+        errorMessage = `${apiError} (HTTP ${response.status})`
       } else {
-        errorMessage = `${response.statusText} (HTTP ${response.status})`;
+        errorMessage = `${response.statusText} (HTTP ${response.status})`
       }
     } catch {
       // If JSON parsing fails, use status text with status code
-      errorMessage = `${response.statusText} (HTTP ${response.status})`;
+      errorMessage = `${response.statusText} (HTTP ${response.status})`
     }
-    
-    throw new Error(errorMessage);
+
+    throw new Error(errorMessage)
   }
 
-  return await response.json() as JobMatchResponse;
+  return (await response.json()) as JobMatchResponse
 }

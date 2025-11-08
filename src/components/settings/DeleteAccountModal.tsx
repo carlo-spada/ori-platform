@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -6,43 +6,43 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
 interface DeleteAccountModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
+  isOpen: boolean
+  onClose: () => void
+  onConfirm: () => void
   labels: {
-    title: string;
-    body: string;
-    placeholder: string;
-    confirmButton: string;
-    cancelButton: string;
-  };
+    title: string
+    body: string
+    placeholder: string
+    confirmButton: string
+    cancelButton: string
+  }
 }
 
 export function DeleteAccountModal({
   isOpen,
   onClose,
   onConfirm,
-  labels
+  labels,
 }: DeleteAccountModalProps) {
-  const [confirmText, setConfirmText] = useState('');
-  const isConfirmed = confirmText === 'DELETE';
+  const [confirmText, setConfirmText] = useState('')
+  const isConfirmed = confirmText === 'DELETE'
 
   const handleClose = () => {
-    setConfirmText('');
-    onClose();
-  };
+    setConfirmText('')
+    onClose()
+  }
 
   const handleConfirm = () => {
     if (isConfirmed) {
-      onConfirm();
-      setConfirmText('');
+      onConfirm()
+      setConfirmText('')
     }
-  };
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
@@ -65,7 +65,7 @@ export function DeleteAccountModal({
           />
         </div>
 
-        <DialogFooter className="flex-col sm:flex-row gap-2">
+        <DialogFooter className="flex-col gap-2 sm:flex-row">
           <Button
             variant="outline"
             onClick={handleClose}
@@ -84,5 +84,5 @@ export function DeleteAccountModal({
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

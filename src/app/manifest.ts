@@ -1,10 +1,11 @@
-import { MetadataRoute } from 'next';
+import { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'Ori Platform',
     short_name: 'Ori',
-    description: 'Your AI-powered career companion. Discover fulfilling work, bridge skill gaps, and accelerate your professional growth.',
+    description:
+      'Your AI-powered career companion. Discover fulfilling work, bridge skill gaps, and accelerate your professional growth.',
     start_url: '/',
     display: 'standalone',
     background_color: '#000000',
@@ -39,5 +40,5 @@ export default function manifest(): MetadataRoute.Manifest {
         form_factor: 'narrow',
       },
     ],
-  };
+  }
 }

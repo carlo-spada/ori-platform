@@ -63,6 +63,7 @@ The Skills Gap Analysis feature provides users with instant, visual feedback on 
 **Endpoint:** `POST /api/v1/skill-gap`
 
 **Request Schema:**
+
 ```python
 class SkillGapRequest(BaseModel):
     user_skills: List[str]
@@ -70,6 +71,7 @@ class SkillGapRequest(BaseModel):
 ```
 
 **Response Schema:**
+
 ```python
 class SkillGapResponse(BaseModel):
     user_skills: List[str]
@@ -78,6 +80,7 @@ class SkillGapResponse(BaseModel):
 ```
 
 **Algorithm:**
+
 ```python
 # Case-insensitive set difference
 user_skills_norm = {skill.lower().strip() for skill in user_skills}
@@ -86,6 +89,7 @@ missing_skills_norm = required_skills_norm - user_skills_norm
 ```
 
 **Performance:**
+
 - O(n + m) time complexity (n = user skills, m = required skills)
 - Fast enough for real-time API calls
 - 10-second timeout configured
@@ -98,6 +102,7 @@ missing_skills_norm = required_skills_norm - user_skills_norm
 **Method:** `AIClient.getSkillGap()`
 
 **Key Features:**
+
 - Graceful error handling (returns `null` on failure)
 - 10-second timeout
 - Snake_case → camelCase transformation
@@ -110,21 +115,24 @@ const matchesWithSkillGaps = await Promise.all(
   matches.map(async (match) => {
     const skillsGap = await aiClient.getSkillGap(
       userProfile.skills || [],
-      job?.requirements || []
-    );
+      job?.requirements || [],
+    )
     return {
       ...job,
-      skillsGap: skillsGap ? {
-        userSkills: skillsGap.user_skills,
-        requiredSkills: skillsGap.required_skills,
-        missingSkills: skillsGap.missing_skills,
-      } : undefined,
-    };
-  })
-);
+      skillsGap: skillsGap
+        ? {
+            userSkills: skillsGap.user_skills,
+            requiredSkills: skillsGap.required_skills,
+            missingSkills: skillsGap.missing_skills,
+          }
+        : undefined,
+    }
+  }),
+)
 ```
 
 **Fallback Behavior:**
+
 - If AI Engine unavailable: `skillsGap` = `undefined`
 - Job recommendations still returned
 - Legacy `skills_analysis` used if available
@@ -137,15 +145,15 @@ const matchesWithSkillGaps = await Promise.all(
 
 ```typescript
 export interface SkillsGap {
-  userSkills: string[];
-  requiredSkills: string[];
-  missingSkills: string[];
+  userSkills: string[]
+  requiredSkills: string[]
+  missingSkills: string[]
 }
 
 export interface JobRecommendation {
   // ... other fields
-  skills_analysis?: Skill[];  // Legacy format
-  skillsGap?: SkillsGap;      // New AI Engine format
+  skills_analysis?: Skill[] // Legacy format
+  skillsGap?: SkillsGap // New AI Engine format
 }
 ```
 
@@ -156,25 +164,29 @@ export interface JobRecommendation {
 **File:** `src/components/recommendations/SkillsGapDisplay.tsx`
 
 **Props:**
+
 ```typescript
 interface SkillsGapDisplayProps {
-  skills?: Skill[];        // Legacy format
-  skillsGap?: SkillsGap;   // New format (prioritized)
+  skills?: Skill[] // Legacy format
+  skillsGap?: SkillsGap // New format (prioritized)
 }
 ```
 
 **Rendering Logic:**
+
 1. Check if `skillsGap` exists → use new format
 2. Otherwise, check if `skills` exists → use legacy format
 3. If neither exists → return `null` (no render)
 
 **Visual Design:**
+
 - **Matched Skills:** Green badges with CheckCircle icon
 - **Missing Skills:** Red badges with XCircle icon
 - **Headers:** "Your Matching Skills" and "Skills to Develop"
 - **Summary:** "X of Y matched" counter at top
 
 **Styling:**
+
 - Uses Tailwind CSS utilities
 - Dark mode compatible
 - Responsive flex-wrap layout
@@ -188,24 +200,25 @@ interface SkillsGapDisplayProps {
 **Endpoint:** `POST /api/v1/jobs/find-matches`
 
 **Response Structure:**
+
 ```typescript
 {
   matches: Array<{
-    id: string;
-    title: string;
-    company: string;
+    id: string
+    title: string
+    company: string
     // ... other job fields
-    matchScore: number;
+    matchScore: number
     skillsGap?: {
-      userSkills: string[];
-      requiredSkills: string[];
-      missingSkills: string[];
-    };
-  }>;
+      userSkills: string[]
+      requiredSkills: string[]
+      missingSkills: string[]
+    }
+  }>
   usage: {
-    used: number;
-    limit: number;
-  };
+    used: number
+    limit: number
+  }
 }
 ```
 
@@ -217,19 +230,22 @@ interface SkillsGapDisplayProps {
 
 **Scenario:** AI Engine down or timeout
 **Behavior:**
+
 - `aiClient.getSkillGap()` returns `null`
 - Job recommendations continue without skillsGap data
 - No user-facing error (graceful degradation)
 
 **Logging:**
+
 ```javascript
-console.error('Skill gap request failed:', error);
+console.error('Skill gap request failed:', error)
 ```
 
 ### Invalid Data
 
 **Scenario:** Empty or malformed skill arrays
 **Behavior:**
+
 - Component returns `null` (no render)
 - No crash or error state
 - User sees job card without skills section
@@ -242,16 +258,19 @@ console.error('Skill gap request failed:', error);
 
 **AI Engine:**
 `services/ai-engine/tests/test_skill_gap.py`
+
 - 11 test cases covering edge cases
 - Tests: empty lists, case-insensitivity, duplicates, whitespace
 
 **Frontend:**
+
 - No unit tests yet (test infrastructure pending)
 - Manual testing performed
 
 ### Integration Testing
 
 **Scenarios Tested:**
+
 1. ✅ User with 0 skills vs. job with 5 requirements
 2. ✅ User with all required skills (perfect match)
 3. ✅ User with partial skills (mixed)
@@ -265,16 +284,19 @@ console.error('Skill gap request failed:', error);
 ### Current Implementation
 
 **Bottleneck:** Sequential API calls for skill gap analysis
+
 - 6 jobs × 10-second timeout = up to 60 seconds worst-case
 - Actual: ~500ms per call = ~3 seconds total for 6 jobs
 
 **Optimization:** Parallel `Promise.all()` execution
+
 - All skill gap requests fire simultaneously
 - Total time = slowest single request (~1 second)
 
 ### Future Optimizations
 
 1. **Batch API Endpoint:**
+
    ```typescript
    POST /api/v1/skill-gap/batch
    {
@@ -304,11 +326,13 @@ console.error('Skill gap request failed:', error);
 **Compliance Level:** Partial WCAG 2.1 AA
 
 **Implemented:**
+
 - ✅ Semantic HTML structure
 - ✅ Sufficient color contrast (green/red on light/dark backgrounds)
 - ✅ Icon + text combination (not icon-only)
 
 **Pending (See POLISH_ROADMAP.md):**
+
 - ⏳ ARIA labels and roles
 - ⏳ Screen reader announcements
 - ⏳ Keyboard navigation testing
@@ -320,15 +344,18 @@ console.error('Skill gap request failed:', error);
 ### Recommended Metrics
 
 **Engagement:**
+
 - % of users who view skills gap section
 - Average skills gap per user (across all viewed jobs)
 - Most common missing skills (aggregate data)
 
 **Conversion:**
+
 - Application rate: perfect match vs. partial match vs. low match
 - Time to apply: with skills gap visible vs. without
 
 **Performance:**
+
 - API response time: `/api/v1/skill-gap` endpoint
 - Error rate: AI Engine availability
 - Frontend render time: SkillsGapDisplay component
@@ -360,11 +387,13 @@ onClick={() => {
 ### Input Validation
 
 **AI Engine:**
+
 - Pydantic schema validation on request
 - Max array lengths enforced (prevent DoS)
 - SQL injection: N/A (no database queries with user input)
 
 **Core API:**
+
 - User authentication required (JWT token)
 - Rate limiting on `/find-matches` endpoint
 - User can only request their own skill gaps
@@ -402,16 +431,19 @@ onClick={() => {
 See detailed roadmap in `.tasks/todo/skills-gap-analysis/POLISH_ROADMAP.md`
 
 **High Priority:**
+
 - Accessibility improvements (WCAG AA compliance)
 - Progress bar indicator (visual match percentage)
 - Perfect match celebration state
 
 **Medium Priority:**
+
 - Truncate long skill lists
 - Loading skeleton states
 - Collapsible sections for long lists
 
 **Low Priority:**
+
 - Learning resource links for missing skills
 - Skill synonym matching
 - AI-powered skill recommendations
@@ -435,6 +467,7 @@ See detailed roadmap in `.tasks/todo/skills-gap-analysis/POLISH_ROADMAP.md`
 ## Changelog
 
 ### v1.0.0 (2025-11-07) - Initial Release
+
 - ✅ AI Engine skill gap endpoint (`/api/v1/skill-gap`)
 - ✅ Core API integration (enriches job matches)
 - ✅ Frontend SkillsGapDisplay component
@@ -443,6 +476,7 @@ See detailed roadmap in `.tasks/todo/skills-gap-analysis/POLISH_ROADMAP.md`
 - ✅ TypeScript type safety across stack
 
 ### v1.0.1 (2025-11-07) - Quick Polish
+
 - ✅ Add skill match summary header ("X of Y matched")
 - ⏳ Pending: Accessibility improvements
 - ⏳ Pending: Visual hierarchy container

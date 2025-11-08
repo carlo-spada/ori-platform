@@ -152,12 +152,15 @@ If you need to bypass the auto-review for a specific PR:
 ### Common Issues
 
 **Issue**: PR not auto-merging despite passing checks
+
 - **Solution**: Check if critical files are modified (requires manual review)
 
 **Issue**: Auto-review failing on valid changes
+
 - **Solution**: Ensure `pnpm lint` and `pnpm build` pass locally first
 
 **Issue**: Want to disable auto-merge temporarily
+
 - **Solution**: Set `enabled: false` in `.github/auto-review.config.json`
 
 ## Integration with Agent Workflow
@@ -186,7 +189,9 @@ The auto-review system is designed with security in mind:
 To disable the auto-review system:
 
 ### Option 1: Via Configuration
+
 Edit `.github/auto-review.config.json`:
+
 ```json
 {
   "enabled": false
@@ -194,9 +199,11 @@ Edit `.github/auto-review.config.json`:
 ```
 
 ### Option 2: Delete Workflow
+
 Remove or rename `.github/workflows/auto-pr-review.yml`
 
 ### Option 3: Branch Protection
+
 Update branch protection rules in GitHub settings to require manual reviews
 
 ## Best Practices
@@ -212,6 +219,7 @@ Update branch protection rules in GitHub settings to require manual reviews
 ### Workflow not triggering
 
 Check:
+
 - PR targets `main` branch
 - Workflow file is in `.github/workflows/`
 - GitHub Actions is enabled for the repository
@@ -219,6 +227,7 @@ Check:
 ### Permissions errors
 
 Ensure GitHub Actions has:
+
 - `contents: write` (for merging)
 - `pull-requests: write` (for comments/reviews)
 - `checks: read` (for verification status)

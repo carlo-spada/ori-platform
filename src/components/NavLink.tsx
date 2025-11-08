@@ -1,21 +1,22 @@
-'use client';
+'use client'
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { forwardRef } from "react";
-import { cn } from "@/lib/utils";
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { forwardRef } from 'react'
+import { cn } from '@/lib/utils'
 
-interface NavLinkCompatProps extends Omit<React.ComponentProps<typeof Link>, 'href' | 'className'> {
-  href: string;
-  className?: string;
-  activeClassName?: string;
-  children?: React.ReactNode;
+interface NavLinkCompatProps
+  extends Omit<React.ComponentProps<typeof Link>, 'href' | 'className'> {
+  href: string
+  className?: string
+  activeClassName?: string
+  children?: React.ReactNode
 }
 
 const NavLink = forwardRef<HTMLAnchorElement, NavLinkCompatProps>(
   ({ className, activeClassName, href, children, ...props }, ref) => {
-    const pathname = usePathname();
-    const isActive = pathname === href;
+    const pathname = usePathname()
+    const isActive = pathname === href
 
     return (
       <Link
@@ -26,10 +27,10 @@ const NavLink = forwardRef<HTMLAnchorElement, NavLinkCompatProps>(
       >
         {children}
       </Link>
-    );
+    )
   },
-);
+)
 
-NavLink.displayName = "NavLink";
+NavLink.displayName = 'NavLink'
 
-export { NavLink };
+export { NavLink }

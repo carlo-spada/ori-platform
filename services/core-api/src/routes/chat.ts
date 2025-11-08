@@ -1,9 +1,9 @@
-import { Router, type Router as RouterType } from 'express';
-import { authMiddleware, AuthRequest } from '../middleware/auth.js';
-import { supabase } from '../lib/supabase.js';
-import { aiClient } from '../lib/ai-client.js';
+import { Router, type Router as RouterType } from 'express'
+import { authMiddleware, AuthRequest } from '../middleware/auth.js'
+import { supabase } from '../lib/supabase.js'
+import { aiClient } from '../lib/ai-client.js'
 
-const router: RouterType = Router();
+const router: RouterType = Router()
 
 /**
  * GET /api/v1/chat/history
@@ -12,7 +12,7 @@ const router: RouterType = Router();
  */
 router.get('/history', authMiddleware, async (req: AuthRequest, res) => {
   if (!req.user) {
-    return res.status(401).json({ error: 'User not authenticated' });
+    return res.status(401).json({ error: 'User not authenticated' })
   }
 
   try {
@@ -23,19 +23,19 @@ router.get('/history', authMiddleware, async (req: AuthRequest, res) => {
       .eq('user_id', req.user.id)
       .order('updated_at', { ascending: false })
       .limit(1)
-      .single();
+      .single()
 
     // If no conversation exists yet, return empty state
     if (convError && convError.code === 'PGRST116') {
       return res.status(200).json({
         conversation: null,
         messages: [],
-      });
+      })
     }
 
     if (convError) {
-      console.error('Error fetching conversation:', convError);
-      return res.status(500).json({ error: 'Failed to fetch conversation' });
+      console.error('Error fetching conversation:', convError)
+      return res.status(500).json({ error: 'Failed to fetch conversation' })
     }
 
     // Fetch all messages for this conversation
@@ -43,22 +43,22 @@ router.get('/history', authMiddleware, async (req: AuthRequest, res) => {
       .from('messages')
       .select('*')
       .eq('conversation_id', conversation.id)
-      .order('created_at', { ascending: true });
+      .order('created_at', { ascending: true })
 
     if (messagesError) {
-      console.error('Error fetching messages:', messagesError);
-      return res.status(500).json({ error: 'Failed to fetch messages' });
+      console.error('Error fetching messages:', messagesError)
+      return res.status(500).json({ error: 'Failed to fetch messages' })
     }
 
     return res.status(200).json({
       conversation,
       messages: messages || [],
-    });
+    })
   } catch (error) {
-    console.error('Unexpected error fetching chat history:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    console.error('Unexpected error fetching chat history:', error)
+    return res.status(500).json({ error: 'Internal server error' })
   }
-});
+})
 
 /**
  * POST /api/v1/chat/message
@@ -70,17 +70,17 @@ router.get('/history', authMiddleware, async (req: AuthRequest, res) => {
  */
 router.post('/message', authMiddleware, async (req: AuthRequest, res) => {
   if (!req.user) {
-    return res.status(401).json({ error: 'User not authenticated' });
+    return res.status(401).json({ error: 'User not authenticated' })
   }
 
-  const { content, conversation_id } = req.body;
+  const { content, conversation_id } = req.body
 
   if (!content || typeof content !== 'string' || content.trim().length === 0) {
-    return res.status(400).json({ error: 'Message content is required' });
+    return res.status(400).json({ error: 'Message content is required' })
   }
 
   try {
-    let conversationId = conversation_id;
+    let conversationId = conversation_id
 
     // If no conversation_id provided, create a new conversation
     if (!conversationId) {
@@ -92,14 +92,14 @@ router.post('/message', authMiddleware, async (req: AuthRequest, res) => {
           },
         ])
         .select()
-        .single();
+        .single()
 
       if (convError || !newConversation) {
-        console.error('Error creating conversation:', convError);
-        return res.status(500).json({ error: 'Failed to create conversation' });
+        console.error('Error creating conversation:', convError)
+        return res.status(500).json({ error: 'Failed to create conversation' })
       }
 
-      conversationId = newConversation.id;
+      conversationId = newConversation.id
     } else {
       // Verify the conversation belongs to this user
       const { data: existingConv, error: checkError } = await supabase
@@ -107,10 +107,12 @@ router.post('/message', authMiddleware, async (req: AuthRequest, res) => {
         .select('id')
         .eq('id', conversationId)
         .eq('user_id', req.user.id)
-        .single();
+        .single()
 
       if (checkError || !existingConv) {
-        return res.status(403).json({ error: 'Conversation not found or access denied' });
+        return res
+          .status(403)
+          .json({ error: 'Conversation not found or access denied' })
       }
     }
 
@@ -125,11 +127,11 @@ router.post('/message', authMiddleware, async (req: AuthRequest, res) => {
         },
       ])
       .select()
-      .single();
+      .single()
 
     if (userMsgError || !userMessage) {
-      console.error('Error saving user message:', userMsgError);
-      return res.status(500).json({ error: 'Failed to save message' });
+      console.error('Error saving user message:', userMsgError)
+      return res.status(500).json({ error: 'Failed to save message' })
     }
 
     // Fetch user profile to provide context to AI
@@ -137,11 +139,11 @@ router.post('/message', authMiddleware, async (req: AuthRequest, res) => {
       .from('user_profiles')
       .select('skills, target_roles')
       .eq('user_id', req.user.id)
-      .single();
+      .single()
 
     // Default to empty arrays if profile doesn't exist or has errors
-    const skills = (userProfile?.skills as string[]) || [];
-    const targetRoles = (userProfile?.target_roles as string[]) || [];
+    const skills = (userProfile?.skills as string[]) || []
+    const targetRoles = (userProfile?.target_roles as string[]) || []
 
     // Fetch last 10 messages from this conversation for context
     const { data: recentMessages } = await supabase
@@ -149,7 +151,7 @@ router.post('/message', authMiddleware, async (req: AuthRequest, res) => {
       .select('role, content')
       .eq('conversation_id', conversationId)
       .order('created_at', { ascending: false })
-      .limit(10);
+      .limit(10)
 
     // Reverse to get chronological order (oldest first)
     const messageHistory = (recentMessages || [])
@@ -157,21 +159,24 @@ router.post('/message', authMiddleware, async (req: AuthRequest, res) => {
       .map((msg: { role: 'user' | 'assistant'; content: string }) => ({
         role: msg.role,
         content: msg.content,
-      }));
+      }))
 
     // Generate AI response with context
-    let assistantContent: string;
+    let assistantContent: string
     try {
       const aiResponse = await aiClient.generateResponse(
         { skills, target_roles: targetRoles },
         messageHistory,
-        content.trim()
-      );
-      assistantContent = aiResponse.content;
+        content.trim(),
+      )
+      assistantContent = aiResponse.content
     } catch (aiError) {
-      console.error('AI generation failed, falling back to placeholder:', aiError);
+      console.error(
+        'AI generation failed, falling back to placeholder:',
+        aiError,
+      )
       // Fallback to placeholder if AI engine is unavailable
-      assistantContent = generatePlaceholderResponse(content.trim());
+      assistantContent = generatePlaceholderResponse(content.trim())
     }
 
     // Save the assistant's response
@@ -185,49 +190,51 @@ router.post('/message', authMiddleware, async (req: AuthRequest, res) => {
         },
       ])
       .select()
-      .single();
+      .single()
 
     if (assistantMsgError || !assistantMessage) {
-      console.error('Error saving assistant message:', assistantMsgError);
-      return res.status(500).json({ error: 'Failed to save assistant response' });
+      console.error('Error saving assistant message:', assistantMsgError)
+      return res
+        .status(500)
+        .json({ error: 'Failed to save assistant response' })
     }
 
     return res.status(200).json({
       message: assistantMessage,
       conversation_id: conversationId,
-    });
+    })
   } catch (error) {
-    console.error('Unexpected error sending message:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    console.error('Unexpected error sending message:', error)
+    return res.status(500).json({ error: 'Internal server error' })
   }
-});
+})
 
 /**
  * Placeholder AI response generator.
  * This will be replaced with actual AI model integration in future tasks.
  */
 function generatePlaceholderResponse(userMessage: string): string {
-  const lowerMessage = userMessage.toLowerCase();
+  const lowerMessage = userMessage.toLowerCase()
 
   // Simple rule-based responses
   if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
-    return "Hello! I'm Ori, your AI career companion. How can I help you with your career journey today?";
+    return "Hello! I'm Ori, your AI career companion. How can I help you with your career journey today?"
   }
 
   if (lowerMessage.includes('job') || lowerMessage.includes('career')) {
-    return "I can help you explore job opportunities, analyze skill gaps, and provide personalized career guidance. What specifically would you like to know?";
+    return 'I can help you explore job opportunities, analyze skill gaps, and provide personalized career guidance. What specifically would you like to know?'
   }
 
   if (lowerMessage.includes('skill')) {
-    return "Skills are crucial for your career growth! I can help you identify skill gaps and recommend learning paths. Would you like me to analyze your skills for a specific role?";
+    return 'Skills are crucial for your career growth! I can help you identify skill gaps and recommend learning paths. Would you like me to analyze your skills for a specific role?'
   }
 
   if (lowerMessage.includes('help')) {
-    return "I'm here to help with your career journey! You can ask me about job recommendations, skill development, application strategies, or career planning. What would you like to explore?";
+    return "I'm here to help with your career journey! You can ask me about job recommendations, skill development, application strategies, or career planning. What would you like to explore?"
   }
 
   // Default echo-style response
-  return `I understand you're interested in: "${userMessage}". While I'm currently in development mode, I'll be able to provide more intelligent responses soon! In the meantime, feel free to explore your dashboard for job recommendations and skill analysis.`;
+  return `I understand you're interested in: "${userMessage}". While I'm currently in development mode, I'll be able to provide more intelligent responses soon! In the meantime, feel free to explore your dashboard for job recommendations and skill analysis.`
 }
 
-export default router;
+export default router

@@ -7,6 +7,7 @@ Automatically reviews, approves, and merges PRs to `main` that pass quality chec
 ## ✅ Auto-Merge Conditions
 
 Your PR will be automatically merged if:
+
 - ✅ Lint passes (`pnpm lint`)
 - ✅ Build succeeds (`pnpm build`)
 - ✅ Less than 500 lines changed
@@ -25,6 +26,7 @@ Your PR will be automatically merged if:
 ## 📋 Workflow Status
 
 After opening/updating a PR, check the "Auto PR Review & Merge" action:
+
 - ✅ **Verify PR** - Runs lint, build, tests
 - 🔍 **Automated Review** - Analyzes changes
 - 🎯 **Auto-merge** or ⚠️ **Manual review required**
@@ -32,6 +34,7 @@ After opening/updating a PR, check the "Auto PR Review & Merge" action:
 ## 🔧 Configuration
 
 Edit `.github/auto-review.config.json` to customize:
+
 - Change size threshold
 - Add/remove critical file patterns
 - Disable auto-merge

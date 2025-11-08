@@ -112,6 +112,7 @@ The core-api will now use AI-powered matching instead of random scores!
 **Cause:** Not enough RAM or network issue downloading model.
 
 **Fix:**
+
 ```bash
 # Manually download model first
 python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
@@ -120,6 +121,7 @@ python -c "from sentence_transformers import SentenceTransformer; SentenceTransf
 ### "Port 3002 already in use"
 
 **Fix:** Change PORT in `.env`:
+
 ```bash
 PORT=3003
 ```
@@ -131,6 +133,7 @@ Also update core-api's `AI_ENGINE_URL` to match.
 **Cause:** AI engine not running or not reachable.
 
 **Fix:**
+
 1. Verify AI engine is running: `curl http://localhost:3002/health`
 2. Check core-api environment has correct `AI_ENGINE_URL`
 3. Check firewall isn't blocking localhost connections
@@ -189,6 +192,7 @@ PORT=3002
 ```
 
 Consider:
+
 - Running behind a reverse proxy (nginx)
 - Setting up health check monitoring
 - Configuring auto-scaling (service is stateless)

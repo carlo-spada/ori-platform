@@ -1,112 +1,120 @@
-'use client';
+'use client'
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { z } from 'zod';
-import { Button } from '@/components/ui/button';
-import { setDocumentMeta } from '@/lib/seo';
-import { useAuth } from '@/contexts/AuthProvider';
-import { useToast } from '@/components/ui/use-toast';
-import { CheckCircle2 } from 'lucide-react';
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { z } from 'zod'
+import { Button } from '@/components/ui/button'
+import { setDocumentMeta } from '@/lib/seo'
+import { useAuth } from '@/contexts/AuthProvider'
+import { useToast } from '@/components/ui/use-toast'
+import { CheckCircle2 } from 'lucide-react'
 
 const signupSchema = z.object({
-  email: z.string().trim().email({ message: 'Please enter a valid email address' }),
-  password: z.string().min(6, { message: 'Password must be at least 6 characters' })
-});
+  email: z
+    .string()
+    .trim()
+    .email({ message: 'Please enter a valid email address' }),
+  password: z
+    .string()
+    .min(6, { message: 'Password must be at least 6 characters' }),
+})
 
 export default function Signup() {
-  const router = useRouter();
-  const { signUp, user } = useAuth();
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showConfirmation, setShowConfirmation] = useState(false);
+  const router = useRouter()
+  const { signUp, user } = useAuth()
+  const { toast } = useToast()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showConfirmation, setShowConfirmation] = useState(false)
 
   useEffect(() => {
     setDocumentMeta({
       title: 'Sign Up - Ori',
-      description: 'Create your Ori account and start your personalized career journey.',
-    });
-  }, []);
+      description:
+        'Create your Ori account and start your personalized career journey.',
+    })
+  }, [])
 
   // Redirect authenticated users
   useEffect(() => {
     if (user) {
-      router.push('/app/dashboard');
+      router.push('/app/dashboard')
     }
-  }, [user, router]);
+  }, [user, router])
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (isSubmitting) return;
+    e.preventDefault()
+    if (isSubmitting) return
 
-    setIsSubmitting(true);
+    setIsSubmitting(true)
 
     try {
-      const formData = new FormData(e.currentTarget);
-      const email = String(formData.get('email') || '').trim();
-      const password = String(formData.get('password') || '');
+      const formData = new FormData(e.currentTarget)
+      const email = String(formData.get('email') || '').trim()
+      const password = String(formData.get('password') || '')
 
       // Validate input
-      const validation = signupSchema.safeParse({ email, password });
+      const validation = signupSchema.safeParse({ email, password })
       if (!validation.success) {
-        const firstError = validation.error.errors[0];
+        const firstError = validation.error.errors[0]
         toast({
           variant: 'destructive',
           title: 'Invalid input',
           description: firstError.message,
-        });
-        return;
+        })
+        return
       }
 
-      const { error } = await signUp({ email, password });
+      const { error } = await signUp({ email, password })
 
       if (error) {
         toast({
           variant: 'destructive',
           title: 'Signup failed',
           description: error.message,
-        });
-        return;
+        })
+        return
       }
 
       // Show confirmation screen
-      setShowConfirmation(true);
+      setShowConfirmation(true)
     } catch {
       toast({
         variant: 'destructive',
         title: 'Unexpected error',
-        description: 'Something went wrong while creating your account. Please try again.',
-      });
+        description:
+          'Something went wrong while creating your account. Please try again.',
+      })
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false)
     }
-  };
+  }
 
   if (showConfirmation) {
     return (
-      <div className="min-h-screen w-full bg-background flex items-center justify-center px-4">
+      <div className="flex min-h-screen w-full items-center justify-center bg-background px-4">
         <div className="w-full max-w-md">
-          <div className="text-center mb-8">
+          <div className="mb-8 text-center">
             <Link
               href="/"
-              className="inline-block text-2xl font-semibold text-foreground hover:text-accent transition-colors mb-4"
+              className="mb-4 inline-block text-2xl font-semibold text-foreground transition-colors hover:text-accent"
             >
               Ori
             </Link>
           </div>
 
-          <div className="p-8 rounded-xl border border-border bg-card space-y-6">
+          <div className="space-y-6 rounded-xl border border-border bg-card p-8">
             <div className="flex justify-center">
-              <CheckCircle2 className="w-16 h-16 text-accent" />
+              <CheckCircle2 className="h-16 w-16 text-accent" />
             </div>
 
-            <div className="text-center space-y-2">
+            <div className="space-y-2 text-center">
               <h1 className="text-2xl font-bold text-foreground">
                 Check your email
               </h1>
               <p className="text-muted-foreground">
-                We&apos;ve sent you a confirmation link. Please check your email and click the link to verify your account.
+                We&apos;ve sent you a confirmation link. Please check your email
+                and click the link to verify your account.
               </p>
             </div>
 
@@ -119,41 +127,43 @@ export default function Signup() {
             </div>
           </div>
 
-          <p className="text-center mt-6">
+          <p className="mt-6 text-center">
             <Link
               href="/"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               ← Back to home
             </Link>
           </p>
         </div>
       </div>
-    );
+    )
   }
 
   return (
-    <div className="min-h-screen w-full bg-background flex items-center justify-center px-4">
+    <div className="flex min-h-screen w-full items-center justify-center bg-background px-4">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
+        <div className="mb-8 text-center">
           <Link
             href="/"
-            className="inline-block text-2xl font-semibold text-foreground hover:text-accent transition-colors mb-4"
+            className="mb-4 inline-block text-2xl font-semibold text-foreground transition-colors hover:text-accent"
           >
             Ori
           </Link>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Get started</h1>
+          <h1 className="mb-2 text-3xl font-bold text-foreground">
+            Get started
+          </h1>
           <p className="text-muted-foreground">
             Create your account to begin your career journey
           </p>
         </div>
 
         <form onSubmit={handleSignup} className="space-y-6">
-          <div className="p-8 rounded-xl border border-border bg-card space-y-4">
+          <div className="space-y-4 rounded-xl border border-border bg-card p-8">
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-foreground mb-2"
+                className="mb-2 block text-sm font-medium text-foreground"
               >
                 Email
               </label>
@@ -161,7 +171,7 @@ export default function Signup() {
                 type="email"
                 id="email"
                 name="email"
-                className="w-full px-4 py-2 rounded-lg bg-background border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
+                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
                 placeholder="you@example.com"
                 required
                 disabled={isSubmitting}
@@ -171,7 +181,7 @@ export default function Signup() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-foreground mb-2"
+                className="mb-2 block text-sm font-medium text-foreground"
               >
                 Password
               </label>
@@ -179,7 +189,7 @@ export default function Signup() {
                 type="password"
                 id="password"
                 name="password"
-                className="w-full px-4 py-2 rounded-lg bg-background border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
+                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
                 placeholder="••••••••"
                 required
                 minLength={6}
@@ -199,7 +209,7 @@ export default function Signup() {
             Already have an account?{' '}
             <Link
               href="/login"
-              className="text-accent hover:text-accent/80 underline underline-offset-2"
+              className="text-accent underline underline-offset-2 hover:text-accent/80"
             >
               Log in
             </Link>
@@ -208,7 +218,7 @@ export default function Signup() {
           <p className="text-center">
             <Link
               href="/"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               ← Back to home
             </Link>
@@ -216,5 +226,5 @@ export default function Signup() {
         </form>
       </div>
     </div>
-  );
+  )
 }

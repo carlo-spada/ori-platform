@@ -5,6 +5,7 @@ This document provides step-by-step instructions for setting up branch protectio
 ## New Simplified Branch Structure
 
 The repository now uses a **two-branch workflow**:
+
 - **`main`**: Production branch (deployed to Vercel, fully protected)
 - **`development`**: Working branch (all development happens here)
 
@@ -22,22 +23,27 @@ Navigate to: `https://github.com/carlo-spada/ori-platform/settings/rules`
 ### Configure Rules
 
 #### 1. Restrict Deletions
+
 - ✅ Enable: **Restrict deletions**
 - Only allow users with bypass permissions to delete matching refs
 
 #### 2. Require Linear History
+
 - ✅ Enable: **Require linear history**
 - Prevent merge commits from being pushed to matching refs
 
 #### 3. Require Deployments to Succeed
+
 - ✅ Enable: **Require deployments to succeed before merging**
 - Select environment: `Production` (Vercel)
 
 #### 4. Require Signed Commits
+
 - ✅ Enable: **Require signed commits**
 - Commits pushed to matching refs must have verified signatures
 
 #### 5. Require Pull Request Before Merging
+
 - ✅ Enable: **Require a pull request before merging**
 - Configure the following sub-rules:
 
@@ -61,26 +67,32 @@ Navigate to: `https://github.com/carlo-spada/ori-platform/settings/rules`
   - All conversations on code must be resolved before a pull request can be merged
 
 #### 6. Automatically Request Copilot Code Review
+
 - ✅ Enable: **Automatically request Copilot code review**
 - ✅ Enable: **Review new pushes**
 - ✅ Enable: **Review draft pull requests**
 
 #### 7. Allowed Merge Methods
+
 Configure in: `Settings → General → Pull Requests`
+
 - ✅ Allow merge commits (optional)
 - ✅ Allow squash merging (recommended)
 - ✅ Allow rebase merging (optional)
 
 #### 8. Block Force Pushes
+
 - ✅ Enable: **Block force pushes**
 - Prevent users with push access from force pushing to refs
 
 #### 9. Require Code Scanning Results
+
 - ✅ Enable: **Require code scanning results**
 - Tool: **CodeQL**
 - Configure CodeQL: Go to `Security → Code scanning → CodeQL analysis`
 
 #### 10. Require Code Quality Results
+
 - ✅ Enable: **Require code quality results**
 - Severity: Select minimum severity level for blocking merges
 
@@ -89,18 +101,21 @@ Configure in: `Settings → General → Pull Requests`
 ### Development Process
 
 1. **Start Work**: Always work on the `development` branch
+
    ```bash
    git checkout development
    git pull origin development
    ```
 
 2. **Make Changes**: Commit regularly with clear messages
+
    ```bash
    git add .
    git commit -m "feat: add new feature"
    ```
 
 3. **Push to Development**: Push your changes to the development branch
+
    ```bash
    git push origin development
    ```
@@ -146,6 +161,7 @@ Create a file at `.github/CODEOWNERS`:
 ## Verifying Protection is Active
 
 After setup, verify by attempting:
+
 ```bash
 git checkout main
 git push origin main

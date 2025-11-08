@@ -1,31 +1,31 @@
-import { JobApplication, ApplicationStatus } from '@/lib/types';
-import { ApplicationStatusBadge } from './ApplicationStatusBadge';
-import { Button } from '@/components/ui/button';
+import { JobApplication, ApplicationStatus } from '@/lib/types'
+import { ApplicationStatusBadge } from './ApplicationStatusBadge'
+import { Button } from '@/components/ui/button'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { formatDistanceToNow } from 'date-fns';
-import { MapPin, Calendar, Clock } from 'lucide-react';
+} from '@/components/ui/select'
+import { formatDistanceToNow } from 'date-fns'
+import { MapPin, Calendar, Clock } from 'lucide-react'
 
 interface ApplicationTableProps {
-  applications: JobApplication[];
+  applications: JobApplication[]
   labels: {
-    jobTitle: string;
-    company: string;
-    applicationDate: string;
-    status: string;
-    lastUpdated: string;
-    actions: string;
-    updateStatus: string;
-    viewDetails: string;
-  };
-  statusLabels: Record<ApplicationStatus, string>;
-  onUpdateStatus?: (id: string, status: ApplicationStatus) => void;
-  onViewDetails?: (id: string) => void;
+    jobTitle: string
+    company: string
+    applicationDate: string
+    status: string
+    lastUpdated: string
+    actions: string
+    updateStatus: string
+    viewDetails: string
+  }
+  statusLabels: Record<ApplicationStatus, string>
+  onUpdateStatus?: (id: string, status: ApplicationStatus) => void
+  onViewDetails?: (id: string) => void
 }
 
 function MobileApplicationCard({
@@ -35,47 +35,55 @@ function MobileApplicationCard({
   onUpdateStatus,
   onViewDetails,
 }: {
-  application: JobApplication;
-  labels: ApplicationTableProps['labels'];
-  statusLabels: Record<ApplicationStatus, string>;
-  onUpdateStatus?: (id: string, status: ApplicationStatus) => void;
-  onViewDetails?: (id: string) => void;
+  application: JobApplication
+  labels: ApplicationTableProps['labels']
+  statusLabels: Record<ApplicationStatus, string>
+  onUpdateStatus?: (id: string, status: ApplicationStatus) => void
+  onViewDetails?: (id: string) => void
 }) {
   const dateText = formatDistanceToNow(new Date(application.applicationDate), {
     addSuffix: true,
-  });
-  const lastUpdatedText = formatDistanceToNow(new Date(application.lastUpdated), {
-    addSuffix: true,
-  });
+  })
+  const lastUpdatedText = formatDistanceToNow(
+    new Date(application.lastUpdated),
+    {
+      addSuffix: true,
+    },
+  )
 
   return (
-    <article className="rounded-2xl border border-border bg-card p-4 space-y-3">
+    <article className="space-y-3 rounded-2xl border border-border bg-card p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1">
-          <h3 className="font-semibold text-foreground">{application.jobTitle}</h3>
-          <div className="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
+          <h3 className="font-semibold text-foreground">
+            {application.jobTitle}
+          </h3>
+          <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
             <span className="font-medium">{application.company}</span>
             {application.location && (
               <>
                 <span aria-hidden="true">·</span>
                 <span className="flex items-center gap-1">
-                  <MapPin className="w-3 h-3" aria-hidden="true" />
+                  <MapPin className="h-3 w-3" aria-hidden="true" />
                   {application.location}
                 </span>
               </>
             )}
           </div>
         </div>
-        <ApplicationStatusBadge status={application.status} labelMap={statusLabels} />
+        <ApplicationStatusBadge
+          status={application.status}
+          labelMap={statusLabels}
+        />
       </div>
 
       <div className="flex flex-col gap-1 text-xs text-muted-foreground">
         <div className="flex items-center gap-1">
-          <Calendar className="w-3 h-3" aria-hidden="true" />
+          <Calendar className="h-3 w-3" aria-hidden="true" />
           <span>Applied {dateText}</span>
         </div>
         <div className="flex items-center gap-1">
-          <Clock className="w-3 h-3" aria-hidden="true" />
+          <Clock className="h-3 w-3" aria-hidden="true" />
           <span>Updated {lastUpdatedText}</span>
         </div>
       </div>
@@ -84,7 +92,9 @@ function MobileApplicationCard({
         {onUpdateStatus && (
           <Select
             value={application.status}
-            onValueChange={(value) => onUpdateStatus(application.id, value as ApplicationStatus)}
+            onValueChange={(value) =>
+              onUpdateStatus(application.id, value as ApplicationStatus)
+            }
           >
             <SelectTrigger
               className="flex-1"
@@ -92,7 +102,7 @@ function MobileApplicationCard({
             >
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="bg-popover border-border z-50">
+            <SelectContent className="z-50 border-border bg-popover">
               {Object.entries(statusLabels).map(([value, label]) => (
                 <SelectItem key={value} value={value}>
                   {label}
@@ -118,7 +128,7 @@ function MobileApplicationCard({
         )}
       </div>
     </article>
-  );
+  )
 }
 
 export function ApplicationTable({
@@ -131,58 +141,94 @@ export function ApplicationTable({
   return (
     <>
       {/* Desktop/Tablet Table View */}
-      <div className="hidden md:block overflow-x-auto">
+      <div className="hidden overflow-x-auto md:block">
         <table className="min-w-full text-sm">
           <thead>
             <tr className="border-b border-border">
-              <th scope="col" className="text-left py-3 px-4 font-semibold text-foreground">
+              <th
+                scope="col"
+                className="px-4 py-3 text-left font-semibold text-foreground"
+              >
                 {labels.jobTitle}
               </th>
-              <th scope="col" className="text-left py-3 px-4 font-semibold text-foreground">
+              <th
+                scope="col"
+                className="px-4 py-3 text-left font-semibold text-foreground"
+              >
                 {labels.company}
               </th>
-              <th scope="col" className="text-left py-3 px-4 font-semibold text-foreground">
+              <th
+                scope="col"
+                className="px-4 py-3 text-left font-semibold text-foreground"
+              >
                 {labels.applicationDate}
               </th>
-              <th scope="col" className="text-left py-3 px-4 font-semibold text-foreground">
+              <th
+                scope="col"
+                className="px-4 py-3 text-left font-semibold text-foreground"
+              >
                 {labels.status}
               </th>
-              <th scope="col" className="text-left py-3 px-4 font-semibold text-foreground">
+              <th
+                scope="col"
+                className="px-4 py-3 text-left font-semibold text-foreground"
+              >
                 {labels.lastUpdated}
               </th>
-              <th scope="col" className="text-right py-3 px-4 font-semibold text-foreground">
+              <th
+                scope="col"
+                className="px-4 py-3 text-right font-semibold text-foreground"
+              >
                 {labels.actions}
               </th>
             </tr>
           </thead>
           <tbody>
             {applications.map((app) => {
-              const dateText = formatDistanceToNow(new Date(app.applicationDate), {
-                addSuffix: true,
-              });
-              const lastUpdatedText = formatDistanceToNow(new Date(app.lastUpdated), {
-                addSuffix: true,
-              });
+              const dateText = formatDistanceToNow(
+                new Date(app.applicationDate),
+                {
+                  addSuffix: true,
+                },
+              )
+              const lastUpdatedText = formatDistanceToNow(
+                new Date(app.lastUpdated),
+                {
+                  addSuffix: true,
+                },
+              )
 
               return (
-                <tr key={app.id} className="border-b border-border hover:bg-muted/5">
-                  <td className="py-3 px-4">
-                    <div className="font-medium text-foreground">{app.jobTitle}</div>
+                <tr
+                  key={app.id}
+                  className="border-b border-border hover:bg-muted/5"
+                >
+                  <td className="px-4 py-3">
+                    <div className="font-medium text-foreground">
+                      {app.jobTitle}
+                    </div>
                     {app.location && (
-                      <div className="text-xs text-muted-foreground mt-0.5">{app.location}</div>
+                      <div className="mt-0.5 text-xs text-muted-foreground">
+                        {app.location}
+                      </div>
                     )}
                   </td>
-                  <td className="py-3 px-4 text-muted-foreground">{app.company}</td>
-                  <td className="py-3 px-4 text-muted-foreground">
+                  <td className="px-4 py-3 text-muted-foreground">
+                    {app.company}
+                  </td>
+                  <td className="px-4 py-3 text-muted-foreground">
                     <time dateTime={app.applicationDate}>{dateText}</time>
                   </td>
-                  <td className="py-3 px-4">
-                    <ApplicationStatusBadge status={app.status} labelMap={statusLabels} />
+                  <td className="px-4 py-3">
+                    <ApplicationStatusBadge
+                      status={app.status}
+                      labelMap={statusLabels}
+                    />
                   </td>
-                  <td className="py-3 px-4 text-muted-foreground">
+                  <td className="px-4 py-3 text-muted-foreground">
                     <time dateTime={app.lastUpdated}>{lastUpdatedText}</time>
                   </td>
-                  <td className="py-3 px-4">
+                  <td className="px-4 py-3">
                     <div className="flex items-center justify-end gap-2">
                       {onUpdateStatus && (
                         <Select
@@ -197,12 +243,14 @@ export function ApplicationTable({
                           >
                             <SelectValue />
                           </SelectTrigger>
-                          <SelectContent className="bg-popover border-border z-50">
-                            {Object.entries(statusLabels).map(([value, label]) => (
-                              <SelectItem key={value} value={value}>
-                                {label}
-                              </SelectItem>
-                            ))}
+                          <SelectContent className="z-50 border-border bg-popover">
+                            {Object.entries(statusLabels).map(
+                              ([value, label]) => (
+                                <SelectItem key={value} value={value}>
+                                  {label}
+                                </SelectItem>
+                              ),
+                            )}
                           </SelectContent>
                         </Select>
                       )}
@@ -223,7 +271,7 @@ export function ApplicationTable({
                     </div>
                   </td>
                 </tr>
-              );
+              )
             })}
           </tbody>
         </table>
@@ -243,5 +291,5 @@ export function ApplicationTable({
         ))}
       </div>
     </>
-  );
+  )
 }

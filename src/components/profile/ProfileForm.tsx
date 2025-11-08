@@ -1,32 +1,32 @@
-import { useState, FormEvent } from 'react';
-import { Button } from '@/components/ui/button';
-import { Loader2 } from 'lucide-react';
+import { useState, FormEvent } from 'react'
+import { Button } from '@/components/ui/button'
+import { Loader2 } from 'lucide-react'
 
 export interface ProfileFormValue {
-  fullName: string;
-  email: string;
-  headline?: string;
-  location?: string;
-  about?: string;
+  fullName: string
+  email: string
+  headline?: string
+  location?: string
+  about?: string
 }
 
 export interface ProfileFormProps {
-  value: ProfileFormValue;
+  value: ProfileFormValue
   labels: {
-    fullName: string;
-    fullNamePlaceholder: string;
-    email: string;
-    headline: string;
-    headlinePlaceholder: string;
-    location: string;
-    locationPlaceholder: string;
-    about: string;
-    aboutPlaceholder: string;
-    saveButton: string;
-  };
-  onChange?: (value: ProfileFormValue) => void;
-  onSubmit?: () => void;
-  isSubmitting?: boolean;
+    fullName: string
+    fullNamePlaceholder: string
+    email: string
+    headline: string
+    headlinePlaceholder: string
+    location: string
+    locationPlaceholder: string
+    about: string
+    aboutPlaceholder: string
+    saveButton: string
+  }
+  onChange?: (value: ProfileFormValue) => void
+  onSubmit?: () => void
+  isSubmitting?: boolean
 }
 
 /**
@@ -40,18 +40,18 @@ export function ProfileForm({
   onSubmit,
   isSubmitting = false,
 }: ProfileFormProps) {
-  const [formData, setFormData] = useState<ProfileFormValue>(value);
+  const [formData, setFormData] = useState<ProfileFormValue>(value)
 
   const handleChange = (field: keyof ProfileFormValue, newValue: string) => {
-    const updated = { ...formData, [field]: newValue };
-    setFormData(updated);
-    onChange?.(updated);
-  };
+    const updated = { ...formData, [field]: newValue }
+    setFormData(updated)
+    onChange?.(updated)
+  }
 
   const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    onSubmit?.();
-  };
+    e.preventDefault()
+    onSubmit?.()
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -59,7 +59,7 @@ export function ProfileForm({
       <div>
         <label
           htmlFor="fullName"
-          className="block text-sm font-medium text-foreground mb-2"
+          className="mb-2 block text-sm font-medium text-foreground"
         >
           {labels.fullName}
         </label>
@@ -69,7 +69,7 @@ export function ProfileForm({
           value={formData.fullName}
           onChange={(e) => handleChange('fullName', e.target.value)}
           placeholder={labels.fullNamePlaceholder}
-          className="w-full px-4 py-2.5 rounded-xl bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+          className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent"
           required
         />
       </div>
@@ -78,7 +78,7 @@ export function ProfileForm({
       <div>
         <label
           htmlFor="email"
-          className="block text-sm font-medium text-foreground mb-2"
+          className="mb-2 block text-sm font-medium text-foreground"
         >
           {labels.email}
         </label>
@@ -87,7 +87,7 @@ export function ProfileForm({
           id="email"
           value={formData.email}
           readOnly
-          className="w-full px-4 py-2.5 rounded-xl bg-muted/30 border border-border text-muted-foreground cursor-not-allowed"
+          className="w-full cursor-not-allowed rounded-xl border border-border bg-muted/30 px-4 py-2.5 text-muted-foreground"
         />
       </div>
 
@@ -95,7 +95,7 @@ export function ProfileForm({
       <div>
         <label
           htmlFor="headline"
-          className="block text-sm font-medium text-foreground mb-2"
+          className="mb-2 block text-sm font-medium text-foreground"
         >
           {labels.headline}
         </label>
@@ -105,7 +105,7 @@ export function ProfileForm({
           value={formData.headline || ''}
           onChange={(e) => handleChange('headline', e.target.value)}
           placeholder={labels.headlinePlaceholder}
-          className="w-full px-4 py-2.5 rounded-xl bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+          className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent"
         />
       </div>
 
@@ -113,7 +113,7 @@ export function ProfileForm({
       <div>
         <label
           htmlFor="location"
-          className="block text-sm font-medium text-foreground mb-2"
+          className="mb-2 block text-sm font-medium text-foreground"
         >
           {labels.location}
         </label>
@@ -123,7 +123,7 @@ export function ProfileForm({
           value={formData.location || ''}
           onChange={(e) => handleChange('location', e.target.value)}
           placeholder={labels.locationPlaceholder}
-          className="w-full px-4 py-2.5 rounded-xl bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all"
+          className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent"
         />
       </div>
 
@@ -131,7 +131,7 @@ export function ProfileForm({
       <div>
         <label
           htmlFor="about"
-          className="block text-sm font-medium text-foreground mb-2"
+          className="mb-2 block text-sm font-medium text-foreground"
         >
           {labels.about}
         </label>
@@ -141,16 +141,19 @@ export function ProfileForm({
           onChange={(e) => handleChange('about', e.target.value)}
           placeholder={labels.aboutPlaceholder}
           rows={5}
-          className="w-full px-4 py-2.5 rounded-xl bg-background border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all resize-none"
+          className="w-full resize-none rounded-xl border border-border bg-background px-4 py-2.5 text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent"
         />
       </div>
 
       {/* Submit Button */}
-      <div className="flex justify-end pt-4 border-t border-border">
+      <div className="flex justify-end border-t border-border pt-4">
         <Button type="submit" disabled={isSubmitting} className="min-w-[140px]">
           {isSubmitting ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
+              <Loader2
+                className="mr-2 h-4 w-4 animate-spin"
+                aria-hidden="true"
+              />
               Saving...
             </>
           ) : (
@@ -159,5 +162,5 @@ export function ProfileForm({
         </Button>
       </div>
     </form>
-  );
+  )
 }

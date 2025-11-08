@@ -1,17 +1,17 @@
-'use client';
+'use client'
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic'
 
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { PublicLayout } from '@/components/layout/PublicLayout';
-import { Section } from '@/components/ui/Section';
-import { Button } from '@/components/ui/button';
-import { ValueCard } from '@/components/about/ValueCard';
-import { setDocumentMeta } from '@/lib/seo';
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { PublicLayout } from '@/components/layout/PublicLayout'
+import { Section } from '@/components/ui/Section'
+import { Button } from '@/components/ui/button'
+import { ValueCard } from '@/components/about/ValueCard'
+import { setDocumentMeta } from '@/lib/seo'
 
 export default function AboutPage() {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   // Set SEO metadata
   useEffect(() => {
@@ -20,42 +20,44 @@ export default function AboutPage() {
         title: t('aboutPage.title'),
         description: t('aboutPage.description'),
         canonical: `${window.location.origin}/about`,
-      });
+      })
     }
-  }, [t]);
+  }, [t])
 
   // Helper to safely get arrays from translations
   const safeArray = <T,>(value: unknown): T[] => {
-    return Array.isArray(value) ? value : [];
-  };
+    return Array.isArray(value) ? value : []
+  }
 
   return (
     <PublicLayout>
       {/* Page Header */}
       <Section data-testid="about-header" className="text-center">
         {t('aboutPage.header.eyebrow') && (
-          <p className="text-sm font-medium text-primary mb-3 uppercase tracking-wide">
+          <p className="mb-3 text-sm font-medium uppercase tracking-wide text-primary">
             {t('aboutPage.header.eyebrow')}
           </p>
         )}
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 max-w-4xl mx-auto">
+        <h1 className="mx-auto mb-6 max-w-4xl text-4xl font-bold text-foreground sm:text-5xl lg:text-6xl">
           {t('aboutPage.header.title')}
         </h1>
-        <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+        <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
           {t('aboutPage.header.subheadline')}
         </p>
       </Section>
 
       {/* The Problem Section */}
       <Section data-testid="about-problem" className="max-w-4xl">
-        <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-8">
+        <h2 className="mb-8 text-3xl font-bold text-foreground sm:text-4xl">
           {t('aboutPage.problem.title')}
         </h2>
         <div className="space-y-6">
-          {safeArray<string>(t('aboutPage.problem.paragraphs', { returnObjects: true })).map((paragraph: string, index: number) => (
+          {safeArray<string>(
+            t('aboutPage.problem.paragraphs', { returnObjects: true }),
+          ).map((paragraph: string, index: number) => (
             <p
               key={index}
-              className="text-lg text-muted-foreground leading-relaxed"
+              className="text-lg leading-relaxed text-muted-foreground"
             >
               {paragraph}
             </p>
@@ -65,14 +67,16 @@ export default function AboutPage() {
 
       {/* The Vision Section */}
       <Section data-testid="about-vision" className="max-w-4xl">
-        <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-8">
+        <h2 className="mb-8 text-3xl font-bold text-foreground sm:text-4xl">
           {t('aboutPage.vision.title')}
         </h2>
         <div className="space-y-6">
-          {safeArray<string>(t('aboutPage.vision.paragraphs', { returnObjects: true })).map((paragraph: string, index: number) => (
+          {safeArray<string>(
+            t('aboutPage.vision.paragraphs', { returnObjects: true }),
+          ).map((paragraph: string, index: number) => (
             <p
               key={index}
-              className="text-lg text-muted-foreground leading-relaxed"
+              className="text-lg leading-relaxed text-muted-foreground"
             >
               {paragraph}
             </p>
@@ -82,11 +86,13 @@ export default function AboutPage() {
 
       {/* Our Values Section */}
       <Section data-testid="about-values" className="max-w-6xl">
-        <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-12 text-center">
+        <h2 className="mb-12 text-center text-3xl font-bold text-foreground sm:text-4xl">
           {t('aboutPage.values.title')}
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {safeArray<{ name: string; description: string }>(t('aboutPage.values.items', { returnObjects: true })).map((value, index) => (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          {safeArray<{ name: string; description: string }>(
+            t('aboutPage.values.items', { returnObjects: true }),
+          ).map((value, index) => (
             <ValueCard
               key={index}
               name={value.name}
@@ -97,14 +103,14 @@ export default function AboutPage() {
       </Section>
 
       {/* Final CTA Section */}
-      <Section data-testid="about-cta" className="text-center max-w-3xl">
-        <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6">
+      <Section data-testid="about-cta" className="max-w-3xl text-center">
+        <h2 className="mb-6 text-3xl font-bold text-foreground sm:text-4xl">
           {t('aboutPage.cta.title')}
         </h2>
-        <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+        <p className="mb-8 text-lg leading-relaxed text-muted-foreground">
           {t('aboutPage.cta.body')}
         </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Button asChild size="lg" className="min-w-[200px]">
             <a href="/pricing">{t('aboutPage.cta.primaryLabel')}</a>
           </Button>
@@ -116,5 +122,5 @@ export default function AboutPage() {
         </div>
       </Section>
     </PublicLayout>
-  );
+  )
 }

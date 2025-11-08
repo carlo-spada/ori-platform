@@ -4,12 +4,12 @@
  */
 
 export interface SEOConfig {
-  title: string;
-  description: string;
-  ogType?: 'website' | 'article';
-  ogImage?: string;
-  twitterCard?: 'summary' | 'summary_large_image';
-  canonical?: string;
+  title: string
+  description: string
+  ogType?: 'website' | 'article'
+  ogImage?: string
+  twitterCard?: 'summary' | 'summary_large_image'
+  canonical?: string
 }
 
 /**
@@ -18,34 +18,38 @@ export interface SEOConfig {
 export function setDocumentMeta(config: SEOConfig): void {
   // Guard against SSR - only run in browser
   if (typeof document === 'undefined') {
-    return;
+    return
   }
 
   // Title
-  document.title = config.title;
+  document.title = config.title
 
   // Description
-  setMetaTag('name', 'description', config.description);
+  setMetaTag('name', 'description', config.description)
 
   // OpenGraph
-  setMetaTag('property', 'og:title', config.title);
-  setMetaTag('property', 'og:description', config.description);
-  setMetaTag('property', 'og:type', config.ogType || 'website');
+  setMetaTag('property', 'og:title', config.title)
+  setMetaTag('property', 'og:description', config.description)
+  setMetaTag('property', 'og:type', config.ogType || 'website')
   if (config.ogImage) {
-    setMetaTag('property', 'og:image', config.ogImage);
+    setMetaTag('property', 'og:image', config.ogImage)
   }
 
   // Twitter
-  setMetaTag('name', 'twitter:card', config.twitterCard || 'summary_large_image');
-  setMetaTag('name', 'twitter:title', config.title);
-  setMetaTag('name', 'twitter:description', config.description);
+  setMetaTag(
+    'name',
+    'twitter:card',
+    config.twitterCard || 'summary_large_image',
+  )
+  setMetaTag('name', 'twitter:title', config.title)
+  setMetaTag('name', 'twitter:description', config.description)
   if (config.ogImage) {
-    setMetaTag('name', 'twitter:image', config.ogImage);
+    setMetaTag('name', 'twitter:image', config.ogImage)
   }
 
   // Canonical
   if (config.canonical) {
-    setLinkTag('canonical', config.canonical);
+    setLinkTag('canonical', config.canonical)
   }
 }
 
@@ -55,28 +59,30 @@ export function setDocumentMeta(config: SEOConfig): void {
 function setMetaTag(
   attributeName: 'name' | 'property',
   attributeValue: string,
-  content: string
+  content: string,
 ): void {
-  let metaTag = document.querySelector(`meta[${attributeName}="${attributeValue}"]`);
+  let metaTag = document.querySelector(
+    `meta[${attributeName}="${attributeValue}"]`,
+  )
   if (!metaTag) {
-    metaTag = document.createElement('meta');
-    metaTag.setAttribute(attributeName, attributeValue);
-    document.head.appendChild(metaTag);
+    metaTag = document.createElement('meta')
+    metaTag.setAttribute(attributeName, attributeValue)
+    document.head.appendChild(metaTag)
   }
-  metaTag.setAttribute('content', content);
+  metaTag.setAttribute('content', content)
 }
 
 /**
  * Set or update a link tag
  */
 function setLinkTag(rel: string, href: string): void {
-  let linkTag = document.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement;
+  let linkTag = document.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement
   if (!linkTag) {
-    linkTag = document.createElement('link');
-    linkTag.setAttribute('rel', rel);
-    document.head.appendChild(linkTag);
+    linkTag = document.createElement('link')
+    linkTag.setAttribute('rel', rel)
+    document.head.appendChild(linkTag)
   }
-  linkTag.href = href;
+  linkTag.href = href
 }
 
 /**
@@ -85,17 +91,19 @@ function setLinkTag(rel: string, href: string): void {
 export function setJSONLD(data: Record<string, unknown>): void {
   // Guard against SSR - only run in browser
   if (typeof document === 'undefined') {
-    return;
+    return
   }
 
   // Remove existing script if present
-  const existingScript = document.querySelector('script[type="application/ld+json"]');
+  const existingScript = document.querySelector(
+    'script[type="application/ld+json"]',
+  )
   if (existingScript) {
-    existingScript.remove();
+    existingScript.remove()
   }
 
-  const script = document.createElement('script');
-  script.type = 'application/ld+json';
-  script.textContent = JSON.stringify(data);
-  document.head.appendChild(script);
+  const script = document.createElement('script')
+  script.type = 'application/ld+json'
+  script.textContent = JSON.stringify(data)
+  document.head.appendChild(script)
 }

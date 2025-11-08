@@ -1,4 +1,4 @@
-import { LegalPageLayout } from '@/components/legal/LegalPageLayout';
+import { LegalPageLayout } from '@/components/legal/LegalPageLayout'
 
 const content = `
 <h2 id="intro">1. Introduction</h2>
@@ -82,7 +82,7 @@ const content = `
 <footer>
   &copy; 2025 Ori Technologies S.A. de C.V. – All rights reserved.
 </footer>
-`;
+`
 
 export default function CookiePolicyPage() {
   return (
@@ -94,13 +94,19 @@ export default function CookiePolicyPage() {
         { id: 'intro', label: '1. Introduction' },
         { id: 'what-are-cookies', label: '2. What Are Cookies?' },
         { id: 'types-of-cookies', label: '3. Types of Cookies We Use' },
-        { id: 'specific-cookies', label: '4. Specific Cookies and Similar Technologies' },
+        {
+          id: 'specific-cookies',
+          label: '4. Specific Cookies and Similar Technologies',
+        },
         { id: 'managing-cookies', label: '5. How You Can Control Cookies' },
-        { id: 'legal-basis-cookies', label: '6. Legal Basis for Using Cookies' },
+        {
+          id: 'legal-basis-cookies',
+          label: '6. Legal Basis for Using Cookies',
+        },
         { id: 'changes', label: '7. Changes to This Cookie Policy' },
         { id: 'contact', label: '8. Contact' },
       ]}
       content={content}
     />
-  );
+  )
 }

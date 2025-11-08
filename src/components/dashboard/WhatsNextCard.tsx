@@ -1,14 +1,14 @@
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { ArrowRight, Sparkles } from 'lucide-react'
 
 export interface WhatsNextCardProps {
-  title: string;
-  message: string;
-  primaryCtaLabel: string;
-  primaryCtaHref: string;
-  secondaryCtaLabel?: string;
-  secondaryCtaHref?: string;
+  title: string
+  message: string
+  primaryCtaLabel: string
+  primaryCtaHref: string
+  secondaryCtaLabel?: string
+  secondaryCtaHref?: string
 }
 
 /**
@@ -25,31 +25,31 @@ export function WhatsNextCard({
 }: WhatsNextCardProps) {
   return (
     <div
-      className="rounded-2xl border border-border bg-gradient-to-br from-card via-card to-card/50 backdrop-blur-sm p-6 flex flex-col gap-4 h-full overflow-hidden relative"
+      className="relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-card via-card to-card/50 p-6 backdrop-blur-sm"
       data-testid="whats-next-card"
     >
       {/* Subtle decorative element */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -z-10" />
+      <div className="absolute right-0 top-0 -z-10 h-32 w-32 rounded-full bg-primary/5 blur-3xl" />
 
-      <div className="flex-1 overflow-y-auto space-y-4">
+      <div className="flex-1 space-y-4 overflow-y-auto">
         <div>
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Sparkles className="w-4 h-4 text-primary" />
+          <div className="mb-3 flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
+              <Sparkles className="h-4 w-4 text-primary" />
             </div>
-            <h2 className="text-xl sm:text-2xl font-semibold text-foreground">
+            <h2 className="text-xl font-semibold text-foreground sm:text-2xl">
               {title}
             </h2>
           </div>
-          <p className="text-muted-foreground leading-relaxed">{message}</p>
+          <p className="leading-relaxed text-muted-foreground">{message}</p>
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-4 border-t border-border">
+      <div className="flex flex-col items-stretch gap-3 border-t border-border pt-4 sm:flex-row sm:items-center">
         <Button
           asChild
           size="lg"
-          className="gradient-primary shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+          className="gradient-primary shadow-lg transition-all hover:scale-105 hover:shadow-xl"
         >
           <Link href={primaryCtaHref}>
             {primaryCtaLabel}
@@ -58,11 +58,16 @@ export function WhatsNextCard({
         </Button>
 
         {secondaryCtaLabel && secondaryCtaHref && (
-          <Button asChild variant="outline" size="lg" className="hover:bg-muted">
+          <Button
+            asChild
+            variant="outline"
+            size="lg"
+            className="hover:bg-muted"
+          >
             <Link href={secondaryCtaHref}>{secondaryCtaLabel}</Link>
           </Button>
         )}
       </div>
     </div>
-  );
+  )
 }

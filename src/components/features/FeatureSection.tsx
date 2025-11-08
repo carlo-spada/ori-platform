@@ -1,15 +1,15 @@
-import { Section } from '@/components/ui/Section';
-import { cn } from '@/lib/utils';
-import { CheckCircle2 } from 'lucide-react';
+import { Section } from '@/components/ui/Section'
+import { cn } from '@/lib/utils'
+import { CheckCircle2 } from 'lucide-react'
 
 export interface FeatureSectionProps {
-  id: string;
-  eyebrow?: string;
-  name: string;
-  description: string;
-  points?: string[];
-  visual?: React.ReactNode;
-  align?: 'left' | 'right';
+  id: string
+  eyebrow?: string
+  name: string
+  description: string
+  points?: string[]
+  visual?: React.ReactNode
+  align?: 'left' | 'right'
 }
 
 export function FeatureSection({
@@ -21,7 +21,7 @@ export function FeatureSection({
   visual,
   align = 'left',
 }: FeatureSectionProps) {
-  const titleId = `${id}-title`;
+  const titleId = `${id}-title`
 
   return (
     <Section
@@ -31,17 +31,12 @@ export function FeatureSection({
     >
       <div
         className={cn(
-          'grid gap-12 lg:gap-16 items-center',
-          'grid-cols-1 xl:grid-cols-2'
+          'grid items-center gap-12 lg:gap-16',
+          'grid-cols-1 xl:grid-cols-2',
         )}
       >
         {/* Content */}
-        <div
-          className={cn(
-            'space-y-6',
-            align === 'right' && 'xl:order-2'
-          )}
-        >
+        <div className={cn('space-y-6', align === 'right' && 'xl:order-2')}>
           {eyebrow && (
             <p className="text-sm font-medium uppercase tracking-wider text-accent">
               {eyebrow}
@@ -49,11 +44,11 @@ export function FeatureSection({
           )}
           <h2
             id={titleId}
-            className="text-3xl sm:text-4xl font-semibold text-foreground leading-tight"
+            className="text-3xl font-semibold leading-tight text-foreground sm:text-4xl"
           >
             {name}
           </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
+          <p className="text-lg leading-relaxed text-muted-foreground">
             {description}
           </p>
           {points && points.length > 0 && (
@@ -64,7 +59,7 @@ export function FeatureSection({
                   className="flex items-start gap-3 text-muted-foreground"
                 >
                   <CheckCircle2
-                    className="w-5 h-5 text-accent shrink-0 mt-0.5"
+                    className="mt-0.5 h-5 w-5 shrink-0 text-accent"
                     aria-hidden="true"
                   />
                   <span className="leading-relaxed">{point}</span>
@@ -77,16 +72,16 @@ export function FeatureSection({
         {/* Visual */}
         <div
           className={cn(
-            'relative aspect-[16/10] rounded-2xl border border-border bg-muted/5 shadow-md overflow-hidden',
-            align === 'right' && 'xl:order-1'
+            'relative aspect-[16/10] overflow-hidden rounded-2xl border border-border bg-muted/5 shadow-md',
+            align === 'right' && 'xl:order-1',
           )}
           aria-hidden="true"
         >
           {visual || (
             <div className="absolute inset-0 flex items-center justify-center text-muted-foreground/30">
-              <div className="text-center space-y-2">
-                <div className="w-16 h-16 mx-auto rounded-full bg-accent/10 flex items-center justify-center">
-                  <CheckCircle2 className="w-8 h-8 text-accent" />
+              <div className="space-y-2 text-center">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-accent/10">
+                  <CheckCircle2 className="h-8 w-8 text-accent" />
                 </div>
                 <p className="text-sm font-medium">{name}</p>
               </div>
@@ -95,5 +90,5 @@ export function FeatureSection({
         </div>
       </div>
     </Section>
-  );
+  )
 }

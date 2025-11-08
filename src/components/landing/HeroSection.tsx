@@ -1,44 +1,44 @@
-import Link from 'next/link';
-import { useTranslation } from 'react-i18next';
-import { Button } from '@/components/ui/button';
-import { Section } from '@/components/ui/Section';
-import { Illustration } from './Illustration';
+import Link from 'next/link'
+import { useTranslation } from 'react-i18next'
+import { Button } from '@/components/ui/button'
+import { Section } from '@/components/ui/Section'
+import { Illustration } from './Illustration'
 
 export function HeroSection() {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <Section
       data-testid="hero"
-      className="relative min-h-[600px] flex items-center justify-center overflow-hidden"
+      className="relative flex min-h-[600px] items-center justify-center overflow-hidden"
     >
       {/* Background illustration */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none">
+      <div className="pointer-events-none absolute inset-0 opacity-30">
         <Illustration />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center max-w-4xl mx-auto">
-        <p className="text-sm sm:text-base font-medium text-accent mb-4 uppercase tracking-wide">
+      <div className="relative z-10 mx-auto max-w-4xl text-center">
+        <p className="mb-4 text-sm font-medium uppercase tracking-wide text-accent sm:text-base">
           {t('landing.hero.eyebrow')}
         </p>
 
         <h1
           data-testid="hero-title"
-          className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-foreground leading-tight mb-6"
+          className="mb-6 text-4xl font-semibold leading-tight text-foreground sm:text-5xl lg:text-6xl"
         >
           {t('landing.hero.headline')}
         </h1>
 
         <p
           data-testid="hero-subtitle"
-          className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-8 max-w-3xl mx-auto"
+          className="mx-auto mb-8 max-w-3xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
         >
           {t('landing.hero.subheadline')}
         </p>
 
         {/* CTAs */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+        <div className="mb-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Button
             asChild
             size="lg"
@@ -60,8 +60,10 @@ export function HeroSection() {
         </div>
 
         {/* Reassurance */}
-        <p className="text-sm text-muted-foreground">{t('landing.hero.reassurance')}</p>
+        <p className="text-sm text-muted-foreground">
+          {t('landing.hero.reassurance')}
+        </p>
       </div>
     </Section>
-  );
+  )
 }
