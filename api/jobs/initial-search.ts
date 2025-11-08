@@ -13,14 +13,12 @@ const searchSchema = z.object({
   location: z.string().trim().max(100, 'Location too long').optional(),
 })
 
-// @ts-ignore
 const handler = async (req: VercelRequest, res: VercelResponse) => {
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST'])
     return res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 
-  // @ts-ignore
   await authMiddleware(req, res, async () => {
     try {
       const validated = searchSchema.parse(req.body)
@@ -43,7 +41,6 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
           .status(400)
           .json({ error: 'Invalid input', details: error.errors })
       }
-      // @ts-ignore
       return res.status(500).json({ error: error.message })
     }
   })

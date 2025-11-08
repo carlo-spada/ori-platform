@@ -18,21 +18,17 @@ const createCheckoutSchema = z.object({
   }),
 })
 
-// @ts-ignore
 const handler = async (req: VercelRequest, res: VercelResponse) => {
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST'])
     return res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 
-  // @ts-ignore
   await authMiddleware(req, res, async () => {
-    // @ts-ignore
     validateRequest(createCheckoutSchema)(req, res, async () => {
       try {
         const { userId, priceId, successUrl, cancelUrl } = req.body
 
-        // @ts-ignore
         if (req.user?.id !== userId) {
           return res.status(403).json({
             error: 'Forbidden - Can only create checkout for yourself',
@@ -72,7 +68,6 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
 
         return res.json({ url: session.url })
       } catch (error) {
-        // @ts-ignore
         return res.status(500).json({ error: error.message })
       }
     })

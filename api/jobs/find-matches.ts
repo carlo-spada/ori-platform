@@ -4,10 +4,7 @@ import { supabase } from '../../../services/core-api/src/lib/supabase.js'
 import { authMiddleware } from '../../../services/core-api/src/middleware/auth.js'
 import { validateRequest } from '../../../services/core-api/src/middleware/validation.js'
 import { aiClient } from '../../../services/core-api/src/lib/ai-client.js'
-import {
-  fetchSkillsGapForJob,
-  FormattedSkillGap,
-} from '../../../services/core-api/src/routes/jobs.js'
+import { fetchSkillsGapForJob } from '../../../services/core-api/src/routes/jobs.js'
 
 const findMatchesSchema = z.object({
   body: z.object({
@@ -25,11 +22,11 @@ const findMatchesSchema = z.object({
 
 const MAX_JOBS_TO_EVALUATE = 50
 
-// Helper functions from original file
-function generateSkillsAnalysis(
+// Helper functions from original file (unused but kept for reference)
+function _generateSkillsAnalysis(
   userSkills: string[],
   jobRequirements: string[],
-): any[] {
+): Array<{ name: string; status: string }> {
   const normalizedUserSkills = userSkills.map((s) => s.toLowerCase().trim())
   return jobRequirements.map((requirement) => {
     const normalizedReq = requirement.toLowerCase().trim()
@@ -57,23 +54,19 @@ function calculateMatchScore(
   return Math.round((matchedCount / jobRequirements.length) * 100)
 }
 
-const sanitizeFilterValue = (value: string) => value.replace(/[%_]/g, '').trim()
+const _sanitizeFilterValue = (value: string) => value.replace(/[%_]/g, '').trim()
 
-// @ts-ignore
 const handler = async (req: VercelRequest, res: VercelResponse) => {
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST'])
     return res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 
-  // @ts-ignore
   await authMiddleware(req, res, async () => {
-    // @ts-ignore
     validateRequest(findMatchesSchema)(req, res, async () => {
       try {
         const { userId, limit, filters } = req.body
 
-        // @ts-ignore
         if (req.user?.id !== userId) {
           return res
             .status(403)
@@ -157,7 +150,6 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
           },
         })
       } catch (error) {
-        // @ts-ignore
         return res.status(500).json({ error: error.message })
       }
     })

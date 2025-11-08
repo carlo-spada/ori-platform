@@ -7,19 +7,16 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2024-06-20',
 })
 
-// @ts-ignore
 const handler = async (req: VercelRequest, res: VercelResponse) => {
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST'])
     return res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 
-  // @ts-ignore
   await authMiddleware(req, res, async () => {
     try {
       const { userId } = req.body
 
-      // @ts-ignore
       if (req.user?.id !== userId) {
         return res
           .status(403)
@@ -44,7 +41,6 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
 
       return res.json({ url: session.url })
     } catch (error) {
-      // @ts-ignore
       return res.status(500).json({ error: error.message })
     }
   })

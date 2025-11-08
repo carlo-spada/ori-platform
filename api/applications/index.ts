@@ -14,15 +14,12 @@ const createApplicationSchema = z.object({
   }),
 })
 
-// @ts-ignore
 const handler = async (req: VercelRequest, res: VercelResponse) => {
-  // @ts-ignore
   await authMiddleware(req, res, async () => {
     if (req.method === 'GET') {
       return handleGet(req, res)
     }
     if (req.method === 'POST') {
-      // @ts-ignore
       return validateRequest(createApplicationSchema)(req, res, () =>
         handlePost(req, res),
       )
@@ -32,7 +29,6 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
   })
 }
 
-// @ts-ignore
 const handleGet = async (req: VercelRequest, res: VercelResponse) => {
   const { userId } = req.query
   if (typeof userId !== 'string') {
@@ -40,7 +36,6 @@ const handleGet = async (req: VercelRequest, res: VercelResponse) => {
   }
 
   try {
-    // @ts-ignore
     if (req.user?.id !== userId) {
       return res
         .status(403)
@@ -56,17 +51,14 @@ const handleGet = async (req: VercelRequest, res: VercelResponse) => {
     if (error) throw error
     return res.json({ applications })
   } catch (error) {
-    // @ts-ignore
     return res.status(500).json({ error: error.message })
   }
 }
 
-// @ts-ignore
 const handlePost = async (req: VercelRequest, res: VercelResponse) => {
   try {
     const { userId, jobId, status } = req.body
 
-    // @ts-ignore
     if (req.user?.id !== userId) {
       return res
         .status(403)
@@ -87,7 +79,6 @@ const handlePost = async (req: VercelRequest, res: VercelResponse) => {
     if (error) throw error
     return res.json({ application })
   } catch (error) {
-    // @ts-ignore
     return res.status(500).json({ error: error.message })
   }
 }

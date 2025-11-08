@@ -15,16 +15,13 @@ function generatePlaceholderResponse(userMessage: string): string {
   return `I understand you're interested in: "${userMessage}". While I'm currently in development mode, I'll be able to provide more intelligent responses soon!`
 }
 
-// @ts-ignore
 const handler = async (req: VercelRequest, res: VercelResponse) => {
   if (req.method !== 'POST') {
     res.setHeader('Allow', ['POST'])
     return res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 
-  // @ts-ignore
   await authMiddleware(req, res, async () => {
-    // @ts-ignore
     if (!req.user) {
       return res.status(401).json({ error: 'User not authenticated' })
     }
@@ -39,7 +36,6 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
       let conversationId = conversation_id
 
       if (!conversationId) {
-        // @ts-ignore
         const { data: newConversation, error: convError } = await supabase
           .from('conversations')
           .insert([{ user_id: req.user.id }])
@@ -58,7 +54,6 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
           .from('conversations')
           .select('id')
           .eq('id', conversationId)
-          // @ts-ignore
           .eq('user_id', req.user.id)
           .single()
 
@@ -86,11 +81,9 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
         return res.status(500).json({ error: 'Failed to save message' })
       }
 
-      // @ts-ignore
       const { data: userProfile } = await supabase
         .from('user_profiles')
         .select('skills, target_roles')
-        // @ts-ignore
         .eq('user_id', req.user.id)
         .single()
 

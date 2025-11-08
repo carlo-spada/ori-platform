@@ -2,14 +2,12 @@ import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { supabase } from '../../services/core-api/src/lib/supabase.js'
 import { authMiddleware } from '../../services/core-api/src/middleware/auth.js'
 
-// @ts-ignore
 const handler = async (req: VercelRequest, res: VercelResponse) => {
   if (req.method !== 'PATCH') {
     res.setHeader('Allow', ['PATCH'])
     return res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 
-  // @ts-ignore
   await authMiddleware(req, res, async () => {
     try {
       const { id } = req.query
@@ -26,7 +24,6 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
         .eq('id', id)
         .single()
 
-      // @ts-ignore
       if (!existingApp || existingApp.user_id !== req.user?.id) {
         return res
           .status(403)
@@ -47,7 +44,6 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
 
       return res.json({ application })
     } catch (error) {
-      // @ts-ignore
       return res.status(500).json({ error: error.message })
     }
   })

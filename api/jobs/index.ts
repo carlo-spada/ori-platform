@@ -18,7 +18,6 @@ const handler = async (req: VercelRequest, res: VercelResponse) => {
 
     return res.json({ jobs })
   } catch (error) {
-    // @ts-ignore
     return res.status(500).json({ error: error.message })
   }
 }
