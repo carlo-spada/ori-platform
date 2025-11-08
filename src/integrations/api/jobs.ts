@@ -55,26 +55,18 @@ export async function fetchJobRecommendations(
   const { data: { session } } = await supabase.auth.getSession();
 
   if (!session) {
-    throw new Error('Authentication required: No active session found. Please sign in to view job recommendations.');
+    throw new Error('No active session');
   }
 
   // Get the API URL from environment or default to localhost
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-  const { data, error } = await supabase.auth.getSession();
 
-  if (error || !data.session) {
-    throw new Error('No active session or authentication error.');
-  }
-  const { session } = data;
   const response = await fetch(`${apiUrl}/api/v1/jobs/find-matches`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${session.access_token}`,
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  if (!apiUrl) {
-    throw new Error('NEXT_PUBLIC_API_URL is not defined');
-  }
+    },
     body: JSON.stringify({
       userId: request.userId,
       limit: request.limit || 6,
