@@ -41,7 +41,8 @@
       "Bash(git -C /Users/carlo/Desktop/Projects/ori-platform branch:*)",
       "Bash(pnpm test:*)",
       "Bash(pnpm --filter @ori/core-api add:*)",
-      "Bash(python -m pytest:*)"
+      "Bash(python -m pytest:*)",
+      "Bash(git ls-tree:*)"
     ],
     "deny": [],
     "ask": []

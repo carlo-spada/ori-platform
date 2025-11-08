@@ -54,3 +54,7 @@ services/**/.next
 
 .gemini/
 gha-creds-*.json
+
+# Python
+**/__pycache__
+*.pyc
