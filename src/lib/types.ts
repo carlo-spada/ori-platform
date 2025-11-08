@@ -20,6 +20,14 @@ export interface BlogPost {
  */
 export type RecommendationType = 'jobs' | 'advice';
 
+/**
+ * Skills Gap Analysis types
+ */
+export interface Skill {
+  name: string;
+  status: 'matched' | 'missing'; // Indicates if the user has this skill for the job
+}
+
 export interface JobRecommendation {
   id: string;
   title: string;
@@ -40,6 +48,7 @@ export interface JobRecommendation {
     goalAlignment?: string;
     companyInsight?: string;
   };
+  skills_analysis?: Skill[]; // Skills gap analysis for the job
 }
 
 export interface CareerAdvice {

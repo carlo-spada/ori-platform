@@ -92,7 +92,6 @@ export default function Onboarding({
       case 'welcome':
         return (
           <WelcomeStep
-            userName={userName}
             copy={{
               headline: t('onboardingPage.welcome.headline', { name: userName }),
               body: t('onboardingPage.welcome.body'),

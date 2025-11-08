@@ -39,6 +39,12 @@ export interface AIAnalysis {
   cons: string[];
 }
 
+// Skills Gap Analysis types
+export interface Skill {
+  name: string;
+  status: 'matched' | 'missing'; // Indicates if the user has this skill for the job
+}
+
 // Job related types
 export interface Job {
   id: string;
@@ -64,6 +70,7 @@ export interface JobMatch extends Job {
   matchScore: number;
   keyMatches: string[];
   reasoning?: string;
+  skills_analysis?: Skill[]; // Array of skills with their match status
 }
 
 // Application related types
