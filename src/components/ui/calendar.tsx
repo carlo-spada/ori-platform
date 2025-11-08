@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronRight } from 'lucide-react'
 import { DayPicker } from 'react-day-picker'
 
 import { cn } from '@/lib/utils'
@@ -52,8 +52,8 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        Chevron: ({ ..._props }) => <ChevronRight className="h-4 w-4" />,
-      } as any}
+        Chevron: () => <ChevronRight className="h-4 w-4" />,
+      } as React.ComponentProps<typeof DayPicker>['components']}
       {...props}
     />
   )

@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { setDocumentMeta } from '@/lib/seo'
 import { ProfileTabs, ProfileTabKey } from '@/components/profile/ProfileTabs'
@@ -37,8 +37,8 @@ export default function Profile() {
 
   // Fetch data with React Query
   const { data: profile, isLoading: profileLoading } = useProfile()
-  const { data: experiencesData = [], isLoading: experiencesLoading } = useExperiences()
-  const { data: educationData = [], isLoading: educationLoading } = useEducation()
+  const { data: experiencesData = [] } = useExperiences()
+  const { data: educationData = [] } = useEducation()
 
   // Mutations
   const updateProfileMutation = useUpdateProfile()
@@ -65,9 +65,15 @@ export default function Profile() {
     milestones: [],
   })
 
+  // Track if we've initialized form data to prevent cascading renders
+  const isInitialized = useRef(false)
+
   // Initialize form data when profile loads
   useEffect(() => {
-    if (profile) {
+    if (profile && !isInitialized.current) {
+      isInitialized.current = true
+
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setProfileData({
         fullName: profile.full_name || '',
         email: '', // Email comes from auth, not profile
