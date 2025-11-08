@@ -70,9 +70,11 @@ export async function fetchJobRecommendations(
   // Get the API URL from environment or default to localhost
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
-  const response = await fetch(`${apiUrl}/api/v1/jobs/find-matches`, {
-    method: 'POST',
-    headers: {
+  // Get the API URL from environment
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  if (!apiUrl) {
+    throw new Error('NEXT_PUBLIC_API_URL is not defined');
+  }
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${session.access_token}`,
     },
