@@ -25,27 +25,27 @@ export function WhatsNextCard({
 }: WhatsNextCardProps) {
   return (
     <div
-      className="relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-card via-card to-card/50 p-6 backdrop-blur-sm"
+      className="border-border from-card via-card to-card/50 relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl border bg-gradient-to-br p-6 backdrop-blur-sm"
       data-testid="whats-next-card"
     >
       {/* Subtle decorative element */}
-      <div className="absolute right-0 top-0 -z-10 h-32 w-32 rounded-full bg-primary/5 blur-3xl" />
+      <div className="bg-primary/5 absolute top-0 right-0 -z-10 h-32 w-32 rounded-full blur-3xl" />
 
       <div className="flex-1 space-y-4 overflow-y-auto">
         <div>
           <div className="mb-3 flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
-              <Sparkles className="h-4 w-4 text-primary" />
+            <div className="bg-primary/10 flex h-8 w-8 items-center justify-center rounded-lg">
+              <Sparkles className="text-primary h-4 w-4" />
             </div>
-            <h2 className="text-xl font-semibold text-foreground sm:text-2xl">
+            <h2 className="text-foreground text-xl font-semibold sm:text-2xl">
               {title}
             </h2>
           </div>
-          <p className="leading-relaxed text-muted-foreground">{message}</p>
+          <p className="text-muted-foreground leading-relaxed">{message}</p>
         </div>
       </div>
 
-      <div className="flex flex-col items-stretch gap-3 border-t border-border pt-4 sm:flex-row sm:items-center">
+      <div className="border-border flex flex-col items-stretch gap-3 border-t pt-4 sm:flex-row sm:items-center">
         <Button
           asChild
           size="lg"

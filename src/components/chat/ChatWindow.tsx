@@ -47,19 +47,19 @@ export function ChatWindow({
 
   return (
     <section
-      className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-border/50 bg-gradient-to-br from-card/80 via-card/60 to-card/80 shadow-xl backdrop-blur-md"
+      className="border-border/50 from-card/80 via-card/60 to-card/80 relative flex h-full flex-col overflow-hidden rounded-2xl border bg-gradient-to-br shadow-xl backdrop-blur-md"
       aria-label="Conversation with Ori"
       data-testid="chat-window"
     >
       {/* Subtle glow effect */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
+      <div className="from-primary/5 to-accent/5 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent" />
 
-      <header className="relative z-10 shrink-0 border-b border-border/50 px-4 py-4 backdrop-blur-sm sm:px-6">
+      <header className="border-border/50 relative z-10 shrink-0 border-b px-4 py-4 backdrop-blur-sm sm:px-6">
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary/20 to-accent/20">
-            <Sparkles className="h-4 w-4 text-primary" aria-hidden="true" />
+          <div className="from-primary/20 to-accent/20 flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br">
+            <Sparkles className="text-primary h-4 w-4" aria-hidden="true" />
           </div>
-          <h2 className="text-lg font-semibold text-foreground">
+          <h2 className="text-foreground text-lg font-semibold">
             {t('dashboardPage.chat.title')}
           </h2>
         </div>
@@ -70,23 +70,23 @@ export function ChatWindow({
           <div className="flex h-full items-center justify-center">
             <div className="flex flex-col items-center gap-3">
               <div className="relative">
-                <div className="absolute inset-0 animate-ping rounded-full bg-primary/20"></div>
-                <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary/30 to-accent/30 backdrop-blur-sm">
-                  <Sparkles className="h-5 w-5 animate-pulse text-primary" />
+                <div className="bg-primary/20 absolute inset-0 animate-ping rounded-full"></div>
+                <div className="from-primary/30 to-accent/30 relative flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br backdrop-blur-sm">
+                  <Sparkles className="text-primary h-5 w-5 animate-pulse" />
                 </div>
               </div>
-              <p className="animate-pulse text-sm text-muted-foreground">
+              <p className="text-muted-foreground animate-pulse text-sm">
                 Loading conversation...
               </p>
             </div>
           </div>
         ) : messages.length === 0 ? (
           <div className="flex h-full items-center justify-center">
-            <div className="max-w-sm space-y-3 text-center duration-500 animate-in fade-in">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary/10 to-accent/10">
-                <Sparkles className="h-8 w-8 text-primary/60" />
+            <div className="animate-in fade-in max-w-sm space-y-3 text-center duration-500">
+              <div className="from-primary/10 to-accent/10 mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br">
+                <Sparkles className="text-primary/60 h-8 w-8" />
               </div>
-              <p className="text-sm leading-relaxed text-muted-foreground">
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 {t('dashboardPage.chat.emptyStateMessage')}
               </p>
             </div>
@@ -97,15 +97,15 @@ export function ChatWindow({
               <div
                 key={message.id}
                 className={cn(
-                  'flex gap-3 duration-300 animate-in fade-in slide-in-from-bottom-2',
+                  'animate-in fade-in slide-in-from-bottom-2 flex gap-3 duration-300',
                   message.role === 'user' ? 'justify-end' : 'justify-start',
                 )}
               >
                 {/* Assistant Avatar */}
                 {message.role === 'assistant' && (
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border/30 bg-gradient-to-br from-primary/20 to-accent/20 backdrop-blur-sm">
+                  <div className="border-border/30 from-primary/20 to-accent/20 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border bg-gradient-to-br backdrop-blur-sm">
                     <Sparkles
-                      className="h-4 w-4 text-primary"
+                      className="text-primary h-4 w-4"
                       aria-hidden="true"
                     />
                   </div>
@@ -116,11 +116,11 @@ export function ChatWindow({
                   className={cn(
                     'max-w-[85%] rounded-2xl px-4 py-3 shadow-sm sm:max-w-[75%]',
                     message.role === 'user'
-                      ? 'bg-gradient-to-br from-accent to-accent/90 text-accent-foreground backdrop-blur-sm'
-                      : 'border border-border/50 bg-gradient-to-br from-muted/60 via-muted/40 to-muted/60 text-foreground backdrop-blur-md',
+                      ? 'from-accent to-accent/90 text-accent-foreground bg-gradient-to-br backdrop-blur-sm'
+                      : 'border-border/50 from-muted/60 via-muted/40 to-muted/60 text-foreground border bg-gradient-to-br backdrop-blur-md',
                   )}
                 >
-                  <p className="whitespace-pre-wrap break-words text-sm leading-relaxed">
+                  <p className="text-sm leading-relaxed break-words whitespace-pre-wrap">
                     {message.content}
                   </p>
                   <time className="mt-1.5 block text-xs opacity-70">
@@ -133,9 +133,9 @@ export function ChatWindow({
 
                 {/* User Avatar */}
                 {message.role === 'user' && (
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-accent/30 bg-gradient-to-br from-accent/30 to-accent/20 backdrop-blur-sm">
+                  <div className="border-accent/30 from-accent/30 to-accent/20 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border bg-gradient-to-br backdrop-blur-sm">
                     <User
-                      className="h-4 w-4 text-accent-foreground"
+                      className="text-accent-foreground h-4 w-4"
                       aria-hidden="true"
                     />
                   </div>
@@ -150,7 +150,7 @@ export function ChatWindow({
       {/* Input Area */}
       <form
         onSubmit={handleSubmit}
-        className="relative z-10 flex shrink-0 items-end gap-2 border-t border-border/50 bg-card/50 px-4 py-3 backdrop-blur-sm sm:px-6"
+        className="border-border/50 bg-card/50 relative z-10 flex shrink-0 items-end gap-2 border-t px-4 py-3 backdrop-blur-sm sm:px-6"
       >
         <label htmlFor="chat-input" className="sr-only">
           Message Ori
@@ -163,14 +163,14 @@ export function ChatWindow({
           onKeyDown={handleKeyDown}
           placeholder={t('dashboardPage.chat.placeholder')}
           rows={1}
-          className="max-h-[120px] min-h-[40px] flex-1 resize-none rounded-xl border border-border/50 bg-background/50 px-4 py-2.5 text-sm text-foreground backdrop-blur-sm transition-all duration-200 placeholder:text-muted-foreground focus:border-primary/50 focus:bg-background/80 focus:outline-none focus:ring-2 focus:ring-primary/50"
+          className="border-border/50 bg-background/50 text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:bg-background/80 focus:ring-primary/50 max-h-[120px] min-h-[40px] flex-1 resize-none rounded-xl border px-4 py-2.5 text-sm backdrop-blur-sm transition-all duration-200 focus:ring-2 focus:outline-none"
           aria-label="Message input"
         />
         <Button
           type="submit"
           size="icon"
           disabled={!input.trim()}
-          className="h-10 w-10 shrink-0 rounded-xl bg-gradient-to-br from-primary to-primary/80 shadow-sm transition-all duration-200 hover:from-primary/90 hover:to-primary/70 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50"
+          className="from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 h-10 w-10 shrink-0 rounded-xl bg-gradient-to-br shadow-sm transition-all duration-200 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50"
           aria-label={t('dashboardPage.chat.sendLabel')}
         >
           <Send className="h-4 w-4" aria-hidden="true" />

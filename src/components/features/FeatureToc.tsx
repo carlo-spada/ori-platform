@@ -60,11 +60,11 @@ export function FeatureToc({ items }: FeatureTocProps) {
   return (
     <nav
       data-testid="feature-toc"
-      className="sticky top-20 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/70"
+      className="border-border bg-background/95 supports-[backdrop-filter]:bg-background/70 sticky top-20 z-40 border-b backdrop-blur"
       aria-label="Feature navigation"
     >
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-2 overflow-x-auto py-4 scrollbar-hide">
+        <div className="scrollbar-hide flex items-center gap-2 overflow-x-auto py-4">
           {items.map(({ id, label }) => (
             <a
               key={id}
@@ -72,10 +72,10 @@ export function FeatureToc({ items }: FeatureTocProps) {
               onClick={(e) => handleClick(e, id)}
               aria-current={activeId === id ? 'true' : undefined}
               className={cn(
-                'inline-flex items-center whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors',
-                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+                'inline-flex items-center rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors',
+                'focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                 activeId === id
-                  ? 'border border-accent/20 bg-accent/10 text-accent'
+                  ? 'border-accent/20 bg-accent/10 text-accent border'
                   : 'text-muted-foreground hover:bg-accent/5 hover:text-foreground',
               )}
             >

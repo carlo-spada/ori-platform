@@ -10,6 +10,7 @@
 Shows users which skills they have vs. need for each job recommendation.
 
 **User Value:**
+
 - Instant qualification check
 - Clear learning path
 - Motivational feedback
@@ -28,6 +29,7 @@ Frontend (Next.js) → Core API (Express) → AI Engine (FastAPI)
 **Endpoint:** `POST /api/v1/skill-gap`
 
 **Response:**
+
 ```json
 {
   "userSkills": ["React", "TypeScript"],
@@ -43,6 +45,7 @@ Frontend (Next.js) → Core API (Express) → AI Engine (FastAPI)
 **File:** `src/components/recommendations/SkillsGapDisplay.tsx`
 
 **Visual Design:**
+
 - ✅ Matched skills: Green badges with CheckCircle
 - ❌ Missing skills: Red badges with XCircle
 - Summary: "X of Y matched"
@@ -52,6 +55,7 @@ Frontend (Next.js) → Core API (Express) → AI Engine (FastAPI)
 ## Pending Work
 
 ### Task C: Accessibility (15 min) ⏳
+
 ```tsx
 // Add ARIA labels
 <div role="region" aria-label="Skills gap analysis">
@@ -62,6 +66,7 @@ Frontend (Next.js) → Core API (Express) → AI Engine (FastAPI)
 ```
 
 ### Task D: Gemini Review
+
 - End-to-end verification
 - Final polish sign-off
 
@@ -70,11 +75,13 @@ Frontend (Next.js) → Core API (Express) → AI Engine (FastAPI)
 ## Future Enhancements
 
 **Quick Wins:**
+
 1. Progress bar (20 min)
 2. Perfect match celebration (15 min)
 3. Truncate long lists (25 min)
 
 **Later:**
+
 - Learning resource links
 - Collapsible sections
 - Loading skeletons

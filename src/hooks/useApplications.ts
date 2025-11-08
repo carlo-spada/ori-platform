@@ -39,7 +39,10 @@ export function useCreateApplication() {
 
   return useMutation({
     mutationFn: (
-      data: Pick<Application, 'job_title' | 'company' | 'location' | 'job_url' | 'status' | 'notes'>
+      data: Pick<
+        Application,
+        'job_title' | 'company' | 'location' | 'job_url' | 'status' | 'notes'
+      >,
     ) => createApplication(data),
     onSuccess: () => {
       // Invalidate all application queries
@@ -71,8 +74,13 @@ export function useUpdateApplicationStatus() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ id, status }: { id: string; status: Application['status'] }) =>
-      updateApplicationStatus(id, status),
+    mutationFn: ({
+      id,
+      status,
+    }: {
+      id: string
+      status: Application['status']
+    }) => updateApplicationStatus(id, status),
     onSuccess: () => {
       // Invalidate all application queries
       queryClient.invalidateQueries({ queryKey: ['applications'] })

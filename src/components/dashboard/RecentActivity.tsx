@@ -60,16 +60,16 @@ export function RecentActivity({
   if (activities.length === 0) {
     return (
       <section
-        className="rounded-2xl border border-border bg-card p-6"
+        className="border-border bg-card rounded-2xl border p-6"
         aria-labelledby="recent-activity-heading"
       >
         <h2
           id="recent-activity-heading"
-          className="mb-4 text-lg font-semibold text-foreground"
+          className="text-foreground mb-4 text-lg font-semibold"
         >
           {t('dashboardPage.recentActivity.title')}
         </h2>
-        <p className="py-8 text-center text-sm text-muted-foreground">
+        <p className="text-muted-foreground py-8 text-center text-sm">
           {displayEmptyMessage}
         </p>
       </section>
@@ -78,12 +78,12 @@ export function RecentActivity({
 
   return (
     <section
-      className="rounded-2xl border border-border bg-card p-6"
+      className="border-border bg-card rounded-2xl border p-6"
       aria-labelledby="recent-activity-heading"
     >
       <h2
         id="recent-activity-heading"
-        className="mb-4 text-lg font-semibold text-foreground"
+        className="text-foreground mb-4 text-lg font-semibold"
       >
         {t('dashboardPage.recentActivity.title')}
       </h2>
@@ -91,7 +91,7 @@ export function RecentActivity({
         {activities.map((activity) => (
           <li
             key={activity.id}
-            className="group -mx-2 flex items-start gap-3 rounded-lg px-2 py-2 transition-colors hover:bg-muted/50"
+            className="group hover:bg-muted/50 -mx-2 flex items-start gap-3 rounded-lg px-2 py-2 transition-colors"
           >
             <div
               className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${getActivityColor(activity.type)}`}
@@ -100,16 +100,16 @@ export function RecentActivity({
               {getActivityIcon(activity.type)}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium text-foreground">
+              <p className="text-foreground text-sm font-medium">
                 {activity.title}
               </p>
               {activity.subtitle && (
-                <p className="mt-0.5 text-xs text-muted-foreground">
+                <p className="text-muted-foreground mt-0.5 text-xs">
                   {activity.subtitle}
                 </p>
               )}
               <time
-                className="mt-1 block text-xs text-muted-foreground"
+                className="text-muted-foreground mt-1 block text-xs"
                 dateTime={activity.timestamp}
               >
                 {formatDistanceToNow(new Date(activity.timestamp), {

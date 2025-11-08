@@ -13,13 +13,13 @@ export function DashboardHeader({ userName }: DashboardHeaderProps) {
 
   return (
     <header className="mb-6" data-testid="dashboard-header">
-      <p className="mb-2 text-sm uppercase tracking-wide text-muted-foreground">
+      <p className="text-muted-foreground mb-2 text-sm tracking-wide uppercase">
         {t('dashboardPage.header.eyebrow')}
       </p>
-      <h1 className="mb-2 text-2xl font-bold text-foreground sm:text-3xl">
+      <h1 className="text-foreground mb-2 text-2xl font-bold sm:text-3xl">
         {t('dashboardPage.header.title', { name: userName })}
       </h1>
-      <p className="text-sm text-muted-foreground sm:text-base">
+      <p className="text-muted-foreground text-sm sm:text-base">
         {t('dashboardPage.header.subtitle')}
       </p>
     </header>

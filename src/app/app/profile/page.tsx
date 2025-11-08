@@ -88,7 +88,7 @@ export default function Profile() {
           profile.skills.map((skill, index) => ({
             id: `${index}`,
             name: skill,
-          }))
+          })),
         )
       }
 
@@ -109,15 +109,17 @@ export default function Profile() {
   }, [])
 
   // Convert backend Experience/Education to component format
-  const experiences: LocalExperience[] = experiencesData.map((exp: Experience) => ({
-    id: exp.id,
-    company: exp.company,
-    role: exp.role,
-    startDate: exp.start_date,
-    endDate: exp.end_date || undefined,
-    isCurrent: exp.is_current,
-    description: exp.description || undefined,
-  }))
+  const experiences: LocalExperience[] = experiencesData.map(
+    (exp: Experience) => ({
+      id: exp.id,
+      company: exp.company,
+      role: exp.role,
+      startDate: exp.start_date,
+      endDate: exp.end_date || undefined,
+      isCurrent: exp.is_current,
+      description: exp.description || undefined,
+    }),
+  )
 
   const education: LocalEducation[] = educationData.map((edu: Education) => ({
     id: edu.id,
@@ -158,7 +160,10 @@ export default function Profile() {
     setSkills(skills.filter((s) => s.id !== id))
   }
 
-  const handleSaveExperience = async (id: string | null, data: ExperienceFormData) => {
+  const handleSaveExperience = async (
+    id: string | null,
+    data: ExperienceFormData,
+  ) => {
     try {
       if (id) {
         // Update existing
@@ -202,7 +207,10 @@ export default function Profile() {
     }
   }
 
-  const handleSaveEducation = async (id: string | null, data: EducationFormData) => {
+  const handleSaveEducation = async (
+    id: string | null,
+    data: EducationFormData,
+  ) => {
     try {
       if (id) {
         // Update existing
@@ -273,10 +281,10 @@ export default function Profile() {
   return (
     <div className="flex h-full flex-col gap-4" data-testid="profile-page">
       <header className="space-y-1">
-        <h1 className="text-2xl font-bold text-foreground sm:text-3xl">
+        <h1 className="text-foreground text-2xl font-bold sm:text-3xl">
           {t('profilePage.header.title')}
         </h1>
-        <p className="text-sm text-muted-foreground sm:text-base">
+        <p className="text-muted-foreground text-sm sm:text-base">
           {t('profilePage.header.subtitle')}
         </p>
       </header>
@@ -295,19 +303,25 @@ export default function Profile() {
         role="tabpanel"
         id={`${activeTab}-panel`}
         aria-labelledby={`${activeTab}-tab`}
-        className="flex-1 overflow-y-auto rounded-2xl border border-border bg-card/50 p-4 backdrop-blur-sm sm:p-6"
+        className="border-border bg-card/50 flex-1 overflow-y-auto rounded-2xl border p-4 backdrop-blur-sm sm:p-6"
       >
         {activeTab === 'profile' && (
           <ProfileForm
             value={profileData}
             labels={{
               fullName: t('profilePage.profileForm.fullNameLabel'),
-              fullNamePlaceholder: t('profilePage.profileForm.fullNamePlaceholder'),
+              fullNamePlaceholder: t(
+                'profilePage.profileForm.fullNamePlaceholder',
+              ),
               email: t('profilePage.profileForm.emailLabel'),
               headline: t('profilePage.profileForm.headlineLabel'),
-              headlinePlaceholder: t('profilePage.profileForm.headlinePlaceholder'),
+              headlinePlaceholder: t(
+                'profilePage.profileForm.headlinePlaceholder',
+              ),
               location: t('profilePage.profileForm.locationLabel'),
-              locationPlaceholder: t('profilePage.profileForm.locationPlaceholder'),
+              locationPlaceholder: t(
+                'profilePage.profileForm.locationPlaceholder',
+              ),
               about: t('profilePage.profileForm.aboutLabel'),
               aboutPlaceholder: t('profilePage.profileForm.aboutPlaceholder'),
               saveButton: t('profilePage.profileForm.saveButton'),
@@ -326,14 +340,26 @@ export default function Profile() {
               heading: t('profilePage.qualifications.heading'),
               skillsHeading: t('profilePage.qualifications.skillsHeading'),
               skillsHelper: t('profilePage.qualifications.skillsHelper'),
-              addSkillPlaceholder: t('profilePage.qualifications.addSkillPlaceholder'),
+              addSkillPlaceholder: t(
+                'profilePage.qualifications.addSkillPlaceholder',
+              ),
               addSkillButton: t('profilePage.qualifications.addSkillButton'),
-              experienceHeading: t('profilePage.qualifications.experienceHeading'),
-              experienceHelper: t('profilePage.qualifications.experienceHelper'),
-              addExperienceButton: t('profilePage.qualifications.addExperienceButton'),
-              educationHeading: t('profilePage.qualifications.educationHeading'),
+              experienceHeading: t(
+                'profilePage.qualifications.experienceHeading',
+              ),
+              experienceHelper: t(
+                'profilePage.qualifications.experienceHelper',
+              ),
+              addExperienceButton: t(
+                'profilePage.qualifications.addExperienceButton',
+              ),
+              educationHeading: t(
+                'profilePage.qualifications.educationHeading',
+              ),
               educationHelper: t('profilePage.qualifications.educationHelper'),
-              addEducationButton: t('profilePage.qualifications.addEducationButton'),
+              addEducationButton: t(
+                'profilePage.qualifications.addEducationButton',
+              ),
               editLabel: t('profilePage.qualifications.editLabel'),
               removeLabel: t('profilePage.qualifications.removeLabel'),
               emptySkills: t('profilePage.qualifications.emptySkills'),
@@ -341,42 +367,84 @@ export default function Profile() {
               emptyEducation: t('profilePage.qualifications.emptyEducation'),
             }}
             experienceModalLabels={{
-              addTitle: t('profilePage.qualifications.experienceModal.addTitle'),
-              editTitle: t('profilePage.qualifications.experienceModal.editTitle'),
-              companyLabel: t('profilePage.qualifications.experienceModal.companyLabel'),
+              addTitle: t(
+                'profilePage.qualifications.experienceModal.addTitle',
+              ),
+              editTitle: t(
+                'profilePage.qualifications.experienceModal.editTitle',
+              ),
+              companyLabel: t(
+                'profilePage.qualifications.experienceModal.companyLabel',
+              ),
               companyPlaceholder: t(
-                'profilePage.qualifications.experienceModal.companyPlaceholder'
+                'profilePage.qualifications.experienceModal.companyPlaceholder',
               ),
-              roleLabel: t('profilePage.qualifications.experienceModal.roleLabel'),
-              rolePlaceholder: t('profilePage.qualifications.experienceModal.rolePlaceholder'),
-              startDateLabel: t('profilePage.qualifications.experienceModal.startDateLabel'),
-              endDateLabel: t('profilePage.qualifications.experienceModal.endDateLabel'),
-              isCurrentLabel: t('profilePage.qualifications.experienceModal.isCurrentLabel'),
-              descriptionLabel: t('profilePage.qualifications.experienceModal.descriptionLabel'),
+              roleLabel: t(
+                'profilePage.qualifications.experienceModal.roleLabel',
+              ),
+              rolePlaceholder: t(
+                'profilePage.qualifications.experienceModal.rolePlaceholder',
+              ),
+              startDateLabel: t(
+                'profilePage.qualifications.experienceModal.startDateLabel',
+              ),
+              endDateLabel: t(
+                'profilePage.qualifications.experienceModal.endDateLabel',
+              ),
+              isCurrentLabel: t(
+                'profilePage.qualifications.experienceModal.isCurrentLabel',
+              ),
+              descriptionLabel: t(
+                'profilePage.qualifications.experienceModal.descriptionLabel',
+              ),
               descriptionPlaceholder: t(
-                'profilePage.qualifications.experienceModal.descriptionPlaceholder'
+                'profilePage.qualifications.experienceModal.descriptionPlaceholder',
               ),
-              saveButton: t('profilePage.qualifications.experienceModal.saveButton'),
-              cancelButton: t('profilePage.qualifications.experienceModal.cancelButton'),
+              saveButton: t(
+                'profilePage.qualifications.experienceModal.saveButton',
+              ),
+              cancelButton: t(
+                'profilePage.qualifications.experienceModal.cancelButton',
+              ),
             }}
             educationModalLabels={{
               addTitle: t('profilePage.qualifications.educationModal.addTitle'),
-              editTitle: t('profilePage.qualifications.educationModal.editTitle'),
-              institutionLabel: t('profilePage.qualifications.educationModal.institutionLabel'),
+              editTitle: t(
+                'profilePage.qualifications.educationModal.editTitle',
+              ),
+              institutionLabel: t(
+                'profilePage.qualifications.educationModal.institutionLabel',
+              ),
               institutionPlaceholder: t(
-                'profilePage.qualifications.educationModal.institutionPlaceholder'
+                'profilePage.qualifications.educationModal.institutionPlaceholder',
               ),
-              degreeLabel: t('profilePage.qualifications.educationModal.degreeLabel'),
-              degreePlaceholder: t('profilePage.qualifications.educationModal.degreePlaceholder'),
-              startDateLabel: t('profilePage.qualifications.educationModal.startDateLabel'),
-              endDateLabel: t('profilePage.qualifications.educationModal.endDateLabel'),
-              isCurrentLabel: t('profilePage.qualifications.educationModal.isCurrentLabel'),
-              descriptionLabel: t('profilePage.qualifications.educationModal.descriptionLabel'),
+              degreeLabel: t(
+                'profilePage.qualifications.educationModal.degreeLabel',
+              ),
+              degreePlaceholder: t(
+                'profilePage.qualifications.educationModal.degreePlaceholder',
+              ),
+              startDateLabel: t(
+                'profilePage.qualifications.educationModal.startDateLabel',
+              ),
+              endDateLabel: t(
+                'profilePage.qualifications.educationModal.endDateLabel',
+              ),
+              isCurrentLabel: t(
+                'profilePage.qualifications.educationModal.isCurrentLabel',
+              ),
+              descriptionLabel: t(
+                'profilePage.qualifications.educationModal.descriptionLabel',
+              ),
               descriptionPlaceholder: t(
-                'profilePage.qualifications.educationModal.descriptionPlaceholder'
+                'profilePage.qualifications.educationModal.descriptionPlaceholder',
               ),
-              saveButton: t('profilePage.qualifications.educationModal.saveButton'),
-              cancelButton: t('profilePage.qualifications.educationModal.cancelButton'),
+              saveButton: t(
+                'profilePage.qualifications.educationModal.saveButton',
+              ),
+              cancelButton: t(
+                'profilePage.qualifications.educationModal.cancelButton',
+              ),
             }}
             onAddSkill={handleAddSkill}
             onRemoveSkill={handleRemoveSkill}
@@ -393,15 +461,23 @@ export default function Profile() {
             labels={{
               heading: t('profilePage.goals.heading'),
               longTermVisionLabel: t('profilePage.goals.longTermVisionLabel'),
-              longTermVisionPlaceholder: t('profilePage.goals.longTermVisionPlaceholder'),
+              longTermVisionPlaceholder: t(
+                'profilePage.goals.longTermVisionPlaceholder',
+              ),
               longTermVisionHelper: t('profilePage.goals.longTermVisionHelper'),
               targetRolesLabel: t('profilePage.goals.targetRolesLabel'),
               targetRolesHelper: t('profilePage.goals.targetRolesHelper'),
-              addTargetRolePlaceholder: t('profilePage.goals.addTargetRolePlaceholder'),
+              addTargetRolePlaceholder: t(
+                'profilePage.goals.addTargetRolePlaceholder',
+              ),
               addTargetRoleButton: t('profilePage.goals.addTargetRoleButton'),
-              removeTargetRoleLabel: t('profilePage.goals.removeTargetRoleLabel'),
+              removeTargetRoleLabel: t(
+                'profilePage.goals.removeTargetRoleLabel',
+              ),
               milestonesLabel: t('profilePage.goals.milestonesLabel'),
-              addMilestonePlaceholder: t('profilePage.goals.addMilestonePlaceholder'),
+              addMilestonePlaceholder: t(
+                'profilePage.goals.addMilestonePlaceholder',
+              ),
               addMilestoneButton: t('profilePage.goals.addMilestoneButton'),
               milestonesHelper: t('profilePage.goals.milestonesHelper'),
               saveButton: t('profilePage.goals.saveButton'),

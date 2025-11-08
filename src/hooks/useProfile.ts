@@ -65,8 +65,9 @@ export function useCreateExperience() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (data: Omit<Experience, 'id' | 'user_id' | 'created_at' | 'updated_at'>) =>
-      createExperience(data),
+    mutationFn: (
+      data: Omit<Experience, 'id' | 'user_id' | 'created_at' | 'updated_at'>,
+    ) => createExperience(data),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ['experiences'] })
@@ -127,8 +128,9 @@ export function useCreateEducation() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (data: Omit<Education, 'id' | 'user_id' | 'created_at' | 'updated_at'>) =>
-      createEducation(data),
+    mutationFn: (
+      data: Omit<Education, 'id' | 'user_id' | 'created_at' | 'updated_at'>,
+    ) => createEducation(data),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: ['education'] })

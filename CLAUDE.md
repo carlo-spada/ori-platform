@@ -129,12 +129,14 @@ Frontend uses `AuthProvider` context (src/contexts/AuthProvider.tsx) wrapping th
 ### API Integration Pattern
 
 **Architecture:**
+
 - Frontend → API Client Layer → Backend API
 - API clients in `src/integrations/api/` (profile.ts, applications.ts)
 - React Query hooks in `src/hooks/` (useProfile.ts, useApplications.ts)
 - React Query client configured in `src/lib/react-query.ts`
 
 **API Client Pattern:**
+
 ```typescript
 // Example: src/integrations/api/profile.ts
 export async function fetchProfile(): Promise<UserProfile> {
@@ -149,6 +151,7 @@ export async function fetchProfile(): Promise<UserProfile> {
 ```
 
 **React Query Hook Pattern:**
+
 ```typescript
 // Example: src/hooks/useProfile.ts
 export function useProfile() {
@@ -161,6 +164,7 @@ export function useProfile() {
 ```
 
 **Usage in Components:**
+
 - NO mock data - all data comes from API
 - Use React Query hooks for data fetching
 - Handle loading states with `isLoading`
@@ -261,6 +265,7 @@ FRONTEND_URL=http://localhost:3000
 ## Testing Approach
 
 **Core API Tests:**
+
 - Tests in `services/core-api/src/routes/__tests__/`
 - Jest configuration: `services/core-api/jest.config.js`
 - **IMPORTANT:** Use `setupFiles` (not `setupFilesAfterEnv`) to load env vars before module imports
@@ -269,11 +274,13 @@ FRONTEND_URL=http://localhost:3000
 - Run tests: `pnpm --filter @ori/core-api test`
 
 **Frontend Tests:**
+
 - Colocate tests with source files (`*.test.tsx`, `*.spec.ts`)
 - Use React Testing Library for component tests
 - Mock API clients in tests
 
 **General Patterns:**
+
 - Mock Supabase and Stripe in tests to avoid external dependencies
 - Use supertest for integration tests in core-api
 - Ensure all tests can run without real external services
@@ -283,6 +290,7 @@ FRONTEND_URL=http://localhost:3000
 ### Adding a New API Endpoint
 
 **Backend (core-api):**
+
 1. Create route handler in `services/core-api/src/routes/`
 2. Define Zod schemas for request/response validation
 3. Import and mount in `services/core-api/src/index.ts`
@@ -291,11 +299,13 @@ FRONTEND_URL=http://localhost:3000
 6. Build: `pnpm --filter @ori/core-api build`
 
 **Frontend Integration:**
+
 1. Create API client function in `src/integrations/api/[domain].ts`
 2. Create React Query hook in `src/hooks/use[Domain].ts`
 3. Use hook in component (no mock data!)
 
 **Example:**
+
 ```typescript
 // Backend: services/core-api/src/routes/profile.ts
 router.get('/', authMiddleware, async (req: AuthRequest, res) => {

@@ -7,14 +7,14 @@
 
 ## Tables Overview
 
-| Table | Purpose | RLS Enabled |
-|-------|---------|-------------|
-| `user_profiles` | User profile data and preferences | ✅ |
-| `experiences` | Work experience history | ✅ |
-| `education` | Education and qualifications | ✅ |
-| `applications` | Job application tracking | ✅ |
-| `conversations` | Chat conversation threads | ✅ |
-| `messages` | Chat messages | ✅ |
+| Table           | Purpose                           | RLS Enabled |
+| --------------- | --------------------------------- | ----------- |
+| `user_profiles` | User profile data and preferences | ✅          |
+| `experiences`   | Work experience history           | ✅          |
+| `education`     | Education and qualifications      | ✅          |
+| `applications`  | Job application tracking          | ✅          |
+| `conversations` | Chat conversation threads         | ✅          |
+| `messages`      | Chat messages                     | ✅          |
 
 ---
 
@@ -23,6 +23,7 @@
 **Purpose:** Complete user profile including onboarding data and preferences
 
 **Key Columns:**
+
 - `id` (UUID, PK)
 - `user_id` (UUID, FK → auth.users, UNIQUE)
 - `full_name` (TEXT) - User's full name
@@ -40,6 +41,7 @@
 - `onboarding_completed` (BOOLEAN)
 
 **Indexes:**
+
 - `idx_user_profiles_target_roles` (GIN) on target_roles
 
 **RLS:** Users can view/update only their own profile
@@ -51,6 +53,7 @@
 **Purpose:** User work experience and employment history
 
 **Schema:**
+
 ```sql
 id              UUID (PK, default: gen_random_uuid())
 user_id         UUID (FK → auth.users, ON DELETE CASCADE)
@@ -65,6 +68,7 @@ updated_at      TIMESTAMPTZ (default: NOW())
 ```
 
 **Indexes:**
+
 - `idx_experiences_user_id` on user_id
 
 **RLS:** Users can CRUD only their own experiences
@@ -76,6 +80,7 @@ updated_at      TIMESTAMPTZ (default: NOW())
 **Purpose:** User education history and qualifications
 
 **Schema:**
+
 ```sql
 id              UUID (PK, default: gen_random_uuid())
 user_id         UUID (FK → auth.users, ON DELETE CASCADE)
@@ -91,6 +96,7 @@ updated_at      TIMESTAMPTZ (default: NOW())
 ```
 
 **Indexes:**
+
 - `idx_education_user_id` on user_id
 
 **RLS:** Users can CRUD only their own education records
@@ -102,6 +108,7 @@ updated_at      TIMESTAMPTZ (default: NOW())
 **Purpose:** Job applications tracked by users
 
 **Schema:**
+
 ```sql
 id                UUID (PK, default: gen_random_uuid())
 user_id           UUID (FK → auth.users, ON DELETE CASCADE)
@@ -117,6 +124,7 @@ created_at        TIMESTAMPTZ (default: NOW())
 ```
 
 **Enum: application_status**
+
 - `applied`
 - `interviewing`
 - `offer`
@@ -124,6 +132,7 @@ created_at        TIMESTAMPTZ (default: NOW())
 - `paused`
 
 **Indexes:**
+
 - `idx_applications_user_id` on user_id
 - `idx_applications_status` on status
 - `idx_applications_user_status` on (user_id, status)
@@ -138,6 +147,7 @@ created_at        TIMESTAMPTZ (default: NOW())
 **Purpose:** Chat conversation threads
 
 **Schema:**
+
 ```sql
 id          UUID (PK)
 user_id     UUID (FK → auth.users)
@@ -155,6 +165,7 @@ updated_at  TIMESTAMPTZ (default: NOW())
 **Purpose:** Individual chat messages
 
 **Schema:**
+
 ```sql
 id               UUID (PK)
 conversation_id  UUID (FK → conversations)
@@ -170,12 +181,14 @@ created_at       TIMESTAMPTZ (default: NOW())
 ## Migrations
 
 **Migration Files:**
+
 1. `20251104192526_*.sql` - Initial user_profiles table
 2. `20251108003034_*.sql` - Conversations and messages tables
 3. `20251108020018_*.sql` - Onboarding fields (headline, location, target_roles)
 4. `20251108224444_*.sql` - Core schema (experiences, education, applications) ⭐ NEW
 
 **Applying Migrations:**
+
 ```bash
 # Via Supabase CLI (when connected to project)
 supabase db push
@@ -190,6 +203,7 @@ supabase db push
 **Location:** `shared/types/src/index.ts`
 
 **Exports:**
+
 - `UserProfile`
 - `Experience`
 - `Education`
@@ -199,6 +213,7 @@ supabase db push
 - `ChatMessage`
 
 **Usage:**
+
 ```typescript
 import type { UserProfile, Experience, Application } from '@ori/types'
 ```
@@ -210,6 +225,7 @@ import type { UserProfile, Experience, Application } from '@ori/types'
 **Row Level Security (RLS):** Enabled on ALL tables
 
 **Policy Pattern:** All tables follow the same RLS pattern:
+
 ```sql
 -- Users can only access their own data
 USING (auth.uid() = user_id)

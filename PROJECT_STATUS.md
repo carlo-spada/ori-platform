@@ -9,6 +9,7 @@
 ## Current State
 
 ### ✅ Production Ready
+
 - Conversational AI (chat with persistence)
 - Core UX/PWA features
 - AI Engine (semantic matching, skills analysis)
@@ -19,7 +20,9 @@
 - **Experience & Education** (full CRUD with real APIs)
 
 ### 🚧 Critical Path (Blocks Launch)
+
 **Core Feature APIs** - 1 task remaining
+
 1. ✅ Database schema (profiles, experiences, education, applications) - COMPLETE
 2. ✅ Backend CRUD APIs (21 endpoints documented) - COMPLETE
 3. ✅ Frontend integration (Profile/Applications pages) - COMPLETE
@@ -28,6 +31,7 @@
 **Status:** Profile and Applications pages fully integrated with backend. Dashboard is the last page needing real data integration.
 
 ### 🎨 Quick Polish (15-30 min each)
+
 - Skills Gap: Accessibility fixes (Task C)
 - Skills Gap: Gemini review (Task D)
 - Onboarding: Frontend connection (Task B)
@@ -38,7 +42,9 @@
 ## Recent Accomplishments (Nov 8, 2025)
 
 ### ✅ Tasks A, B, C - Complete
+
 **Database Schema (Task A):**
+
 - Created migration: `supabase/migrations/20251108224444_create_core_application_schema.sql`
 - Added user_profiles fields: full_name, headline, location, about, skills, goals
 - Created experiences, education, applications tables
@@ -46,6 +52,7 @@
 - Documentation: `docs/DATABASE_SCHEMA.md`
 
 **Backend APIs (Task B):**
+
 - 21 RESTful endpoints across 4 domains
 - Routes: profile.ts, experiences.ts, education.ts, applications.ts (rewritten)
 - Zod validation schemas
@@ -53,6 +60,7 @@
 - Documentation: `docs/API_ENDPOINTS.md`
 
 **Frontend Integration (Task C):**
+
 - API clients: `src/integrations/api/profile.ts`, `src/integrations/api/applications.ts`
 - React Query hooks: `src/hooks/useProfile.ts`, `src/hooks/useApplications.ts`
 - Updated `src/app/app/profile/page.tsx` - removed all mock data
@@ -65,7 +73,9 @@
 ## Immediate Priorities
 
 ### Now (Next 4-6 hours)
+
 **Task D - Dashboard Real Data:**
+
 - Integrate dashboard with applications stats API
 - Remove mock dashboard data
 - Display real application counts by status
@@ -73,6 +83,7 @@
 - Polish loading and error states
 
 ### After Dashboard (1-2 hours)
+
 - Onboarding flow connection (Task B)
 - Skills Gap polish (Tasks C & D)
 - Address Dependabot vulnerabilities
@@ -84,6 +95,7 @@
 **Updated Estimate:** 1-2 weeks
 
 **Remaining Work:**
+
 - Dashboard integration: 4-6 hours
 - Onboarding polish: 1-2 hours
 - Skills gap polish: 1 hour
@@ -99,6 +111,7 @@
 ---
 
 ## Archived (Not Now)
+
 - Production migration to serverless
 - AI-powered marketing system
 - Comprehensive test coverage
@@ -113,6 +126,7 @@ These can be revisited post-launch.
 **File:** `.tasks/todo/core-feature-apis/D.md`
 
 **Quick Start:**
+
 ```bash
 # 1. Ensure backend is running
 pnpm dev:api
@@ -130,6 +144,7 @@ pnpm dev
 ```
 
 **Reference Files:**
+
 - API hook: `src/hooks/useApplications.ts` (useApplicationStats already exists!)
 - Example integration: `src/app/app/applications/page.tsx`
 - Backend endpoint: `GET /api/v1/applications/stats`

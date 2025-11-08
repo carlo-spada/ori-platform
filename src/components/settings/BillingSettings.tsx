@@ -98,13 +98,13 @@ export function BillingSettings({
 
   return (
     <section className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-6">
-      <h2 className="text-xl font-semibold text-foreground">
+      <h2 className="text-foreground text-xl font-semibold">
         {labels.heading}
       </h2>
 
       {!subscription ? (
         <div className="space-y-4">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             {labels.noSubscriptionMessage}
           </p>
           <Link href="/pricing">
@@ -115,26 +115,26 @@ export function BillingSettings({
         <div className="space-y-6">
           <dl className="grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
             <div>
-              <dt className="mb-1 text-muted-foreground">
+              <dt className="text-muted-foreground mb-1">
                 {labels.currentPlanLabel}
               </dt>
-              <dd className="font-medium text-foreground">
+              <dd className="text-foreground font-medium">
                 {subscription.planName}
               </dd>
             </div>
             <div>
-              <dt className="mb-1 text-muted-foreground">
+              <dt className="text-muted-foreground mb-1">
                 {labels.billingCycleLabel}
               </dt>
-              <dd className="font-medium text-foreground">
+              <dd className="text-foreground font-medium">
                 {formatBillingInterval(subscription.billingInterval)}
               </dd>
             </div>
             <div>
-              <dt className="mb-1 text-muted-foreground">
+              <dt className="text-muted-foreground mb-1">
                 {labels.nextBillingLabel}
               </dt>
-              <dd className="font-medium text-foreground">
+              <dd className="text-foreground font-medium">
                 {formatNextBilling(
                   subscription.nextBillingDate,
                   subscription.nextBillingAmount,
@@ -144,10 +144,10 @@ export function BillingSettings({
             </div>
             {subscription.paymentMethodSummary && (
               <div>
-                <dt className="mb-1 text-muted-foreground">
+                <dt className="text-muted-foreground mb-1">
                   {labels.paymentMethodLabel}
                 </dt>
-                <dd className="font-medium text-foreground">
+                <dd className="text-foreground font-medium">
                   {subscription.paymentMethodSummary}
                 </dd>
               </div>

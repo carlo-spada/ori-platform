@@ -20,11 +20,11 @@ export function LanguageSwitcher() {
 
   return (
     <div className="relative inline-flex items-center gap-2">
-      <Globe className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+      <Globe className="text-muted-foreground h-4 w-4" aria-hidden="true" />
       <select
         value={i18n.resolvedLanguage}
         onChange={(e) => changeLanguage(e.target.value)}
-        className="cursor-pointer rounded border-none bg-transparent text-sm text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent"
+        className="text-muted-foreground focus:ring-accent cursor-pointer rounded border-none bg-transparent text-sm focus:ring-2 focus:outline-none"
         aria-label="Select language"
       >
         {languages.map((lang) => (

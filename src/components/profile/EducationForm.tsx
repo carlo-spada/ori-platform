@@ -103,7 +103,7 @@ export function EducationForm({
           }
         />
         {errors.institution && (
-          <p id="institution-error" className="text-sm text-destructive">
+          <p id="institution-error" className="text-destructive text-sm">
             {errors.institution}
           </p>
         )}
@@ -122,7 +122,7 @@ export function EducationForm({
           aria-describedby={errors.degree ? 'degree-error' : undefined}
         />
         {errors.degree && (
-          <p id="degree-error" className="text-sm text-destructive">
+          <p id="degree-error" className="text-destructive text-sm">
             {errors.degree}
           </p>
         )}
@@ -140,7 +140,7 @@ export function EducationForm({
           aria-describedby={errors.startDate ? 'startDate-error' : undefined}
         />
         {errors.startDate && (
-          <p id="startDate-error" className="text-sm text-destructive">
+          <p id="startDate-error" className="text-destructive text-sm">
             {errors.startDate}
           </p>
         )}

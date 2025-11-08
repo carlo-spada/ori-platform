@@ -39,7 +39,7 @@ export function SidebarNav({ className }: SidebarNavProps) {
       <div className="border-b border-white/10 px-6 py-6">
         <Link
           href="/app/dashboard"
-          className="flex items-center gap-2 rounded-md transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="focus-visible:ring-accent flex items-center gap-2 rounded-md transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:outline-none"
         >
           <Image
             src="/ori-logo.svg"
@@ -48,7 +48,7 @@ export function SidebarNav({ className }: SidebarNavProps) {
             height={32}
             className="text-primary"
           />
-          <span className="text-xl font-semibold tracking-tight text-foreground">
+          <span className="text-foreground text-xl font-semibold tracking-tight">
             Ori
           </span>
         </Link>
@@ -71,10 +71,10 @@ export function SidebarNav({ className }: SidebarNavProps) {
                   aria-current={active ? 'page' : undefined}
                   className={cn(
                     'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200',
-                    'focus-visible:ring-offset-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2',
+                    'focus-visible:ring-offset-surface focus-visible:ring-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                     active
-                      ? 'border-l-2 border-accent bg-white/10 text-foreground'
-                      : 'text-muted-foreground hover:bg-white/5 hover:text-foreground',
+                      ? 'border-accent text-foreground border-l-2 bg-white/10'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-white/5',
                   )}
                   data-testid={`nav-item-${item.href.slice(1)}`}
                 >
@@ -97,12 +97,12 @@ export function SidebarNav({ className }: SidebarNavProps) {
       <div className="border-t border-white/10 px-3 py-4">
         <div className="mb-2 flex items-center gap-3 px-3 py-2">
           {/* Avatar Placeholder */}
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/20">
-            <span className="text-xs font-semibold text-accent">U</span>
+          <div className="bg-accent/20 flex h-8 w-8 shrink-0 items-center justify-center rounded-full">
+            <span className="text-accent text-xs font-semibold">U</span>
           </div>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium text-foreground">User</p>
-            <p className="truncate text-xs text-muted-foreground">
+            <p className="text-foreground truncate text-sm font-medium">User</p>
+            <p className="text-muted-foreground truncate text-xs">
               user@example.com
             </p>
           </div>
@@ -111,7 +111,7 @@ export function SidebarNav({ className }: SidebarNavProps) {
         <Button
           variant="ghost"
           size="sm"
-          className="w-full justify-start gap-2 text-muted-foreground hover:bg-white/5 hover:text-foreground"
+          className="text-muted-foreground hover:text-foreground w-full justify-start gap-2 hover:bg-white/5"
           onClick={() => {
             // TODO: Implement logout logic
             console.log('Logout clicked')

@@ -49,7 +49,7 @@ export function Modal({
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Overlay */}
       <div
-        className="fixed inset-0 bg-background/80 backdrop-blur-sm"
+        className="bg-background/80 fixed inset-0 backdrop-blur-sm"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -62,23 +62,23 @@ export function Modal({
           aria-labelledby={modalId}
           className={cn(
             'relative z-50 max-h-[90vh] w-full max-w-lg overflow-y-auto',
-            'rounded-2xl border border-border bg-card shadow-lg',
+            'border-border bg-card rounded-2xl border shadow-lg',
             'mx-4',
             className,
           )}
         >
           {/* Header */}
-          <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-card p-6">
-            <h2 id={modalId} className="text-xl font-semibold text-foreground">
+          <div className="border-border bg-card sticky top-0 z-10 flex items-center justify-between border-b p-6">
+            <h2 id={modalId} className="text-foreground text-xl font-semibold">
               {title}
             </h2>
             <button
               type="button"
               onClick={onClose}
               aria-label="Close dialog"
-              className="rounded-lg p-2 transition-colors hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="hover:bg-accent/10 focus-visible:ring-accent rounded-lg p-2 transition-colors focus-visible:ring-2 focus-visible:outline-none"
             >
-              <X className="h-5 w-5 text-muted-foreground" aria-hidden="true" />
+              <X className="text-muted-foreground h-5 w-5" aria-hidden="true" />
             </button>
           </div>
 

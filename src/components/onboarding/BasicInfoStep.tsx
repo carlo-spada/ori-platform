@@ -20,7 +20,7 @@ export function BasicInfoStep({ value, copy, onChange }: BasicInfoStepProps) {
     <div className="flex flex-col gap-6 py-4">
       <div className="space-y-2">
         <h2 className="text-xl font-semibold sm:text-2xl">{copy.headline}</h2>
-        <p className="text-sm text-muted-foreground">{copy.description}</p>
+        <p className="text-muted-foreground text-sm">{copy.description}</p>
       </div>
 
       <div className="space-y-4">

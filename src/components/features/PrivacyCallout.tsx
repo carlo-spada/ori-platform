@@ -21,17 +21,17 @@ export function PrivacyCallout({
   return (
     <Section data-testid="privacy-callout">
       <div className="mx-auto max-w-4xl">
-        <div className="rounded-2xl border border-border bg-muted/5 p-8 sm:p-12">
+        <div className="border-border bg-muted/5 rounded-2xl border p-8 sm:p-12">
           <div className="mb-6 flex items-start gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/10">
-              <Shield className="h-6 w-6 text-accent" aria-hidden="true" />
+            <div className="bg-accent/10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full">
+              <Shield className="text-accent h-6 w-6" aria-hidden="true" />
             </div>
             <div>
-              <h2 className="mb-2 text-2xl font-semibold text-foreground sm:text-3xl">
+              <h2 className="text-foreground mb-2 text-2xl font-semibold sm:text-3xl">
                 {title}
               </h2>
               {description && (
-                <p className="leading-relaxed text-muted-foreground">
+                <p className="text-muted-foreground leading-relaxed">
                   {description}
                 </p>
               )}
@@ -42,10 +42,10 @@ export function PrivacyCallout({
             {bullets.map((bullet, index) => (
               <li
                 key={index}
-                className="flex items-start gap-3 text-muted-foreground"
+                className="text-muted-foreground flex items-start gap-3"
               >
                 <CheckCircle2
-                  className="mt-0.5 h-5 w-5 shrink-0 text-accent"
+                  className="text-accent mt-0.5 h-5 w-5 shrink-0"
                   aria-hidden="true"
                 />
                 <span className="leading-relaxed">{bullet}</span>

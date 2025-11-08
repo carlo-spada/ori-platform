@@ -29,7 +29,9 @@ async function getAuthHeaders(): Promise<HeadersInit> {
 /**
  * Fetch all applications for the user
  */
-export async function fetchApplications(status?: string): Promise<Application[]> {
+export async function fetchApplications(
+  status?: string,
+): Promise<Application[]> {
   const headers = await getAuthHeaders()
 
   const url = new URL(`${API_URL}/api/v1/applications`)
@@ -43,7 +45,9 @@ export async function fetchApplications(status?: string): Promise<Application[]>
   })
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Failed to fetch applications' }))
+    const error = await response
+      .json()
+      .catch(() => ({ error: 'Failed to fetch applications' }))
     throw new Error(error.error || 'Failed to fetch applications')
   }
 
@@ -70,7 +74,9 @@ export async function fetchApplicationStats(): Promise<{
   })
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Failed to fetch stats' }))
+    const error = await response
+      .json()
+      .catch(() => ({ error: 'Failed to fetch stats' }))
     throw new Error(error.error || 'Failed to fetch stats')
   }
 
@@ -81,7 +87,10 @@ export async function fetchApplicationStats(): Promise<{
  * Create a new application
  */
 export async function createApplication(
-  data: Pick<Application, 'job_title' | 'company' | 'location' | 'job_url' | 'status' | 'notes'>
+  data: Pick<
+    Application,
+    'job_title' | 'company' | 'location' | 'job_url' | 'status' | 'notes'
+  >,
 ): Promise<Application> {
   const headers = await getAuthHeaders()
 
@@ -92,7 +101,9 @@ export async function createApplication(
   })
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Failed to create application' }))
+    const error = await response
+      .json()
+      .catch(() => ({ error: 'Failed to create application' }))
     throw new Error(error.error || 'Failed to create application')
   }
 
@@ -102,7 +113,10 @@ export async function createApplication(
 /**
  * Update an existing application
  */
-export async function updateApplication(id: string, data: Partial<Application>): Promise<Application> {
+export async function updateApplication(
+  id: string,
+  data: Partial<Application>,
+): Promise<Application> {
   const headers = await getAuthHeaders()
 
   const response = await fetch(`${API_URL}/api/v1/applications/${id}`, {
@@ -112,7 +126,9 @@ export async function updateApplication(id: string, data: Partial<Application>):
   })
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Failed to update application' }))
+    const error = await response
+      .json()
+      .catch(() => ({ error: 'Failed to update application' }))
     throw new Error(error.error || 'Failed to update application')
   }
 
@@ -124,7 +140,7 @@ export async function updateApplication(id: string, data: Partial<Application>):
  */
 export async function updateApplicationStatus(
   id: string,
-  status: Application['status']
+  status: Application['status'],
 ): Promise<Application> {
   const headers = await getAuthHeaders()
 
@@ -135,7 +151,9 @@ export async function updateApplicationStatus(
   })
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Failed to update status' }))
+    const error = await response
+      .json()
+      .catch(() => ({ error: 'Failed to update status' }))
     throw new Error(error.error || 'Failed to update status')
   }
 
@@ -154,7 +172,9 @@ export async function deleteApplication(id: string): Promise<void> {
   })
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Failed to delete application' }))
+    const error = await response
+      .json()
+      .catch(() => ({ error: 'Failed to delete application' }))
     throw new Error(error.error || 'Failed to delete application')
   }
 }

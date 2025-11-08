@@ -184,12 +184,12 @@ export default function OnboardingPage() {
     currentStep !== 'welcome' && currentStep !== 'finalizing'
 
   return (
-    <div className="flex min-h-screen w-screen items-center justify-center bg-background px-4 py-8 text-foreground">
+    <div className="bg-background text-foreground flex min-h-screen w-screen items-center justify-center px-4 py-8">
       <div className="flex w-full max-w-2xl flex-col gap-6 rounded-3xl border border-white/10 bg-white/[0.02] p-6 shadow-lg shadow-black/40 sm:p-8">
         {/* Progress Indicator */}
         {currentStep !== 'welcome' && currentStep !== 'finalizing' && (
           <div className="space-y-2">
-            <p className="text-center text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-center text-xs">
               {t('onboardingPage.progressLabel', {
                 current: currentStepIndex,
                 total: totalSteps,
@@ -197,7 +197,7 @@ export default function OnboardingPage() {
             </p>
             <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
               <div
-                className="h-full bg-primary transition-all duration-300"
+                className="bg-primary h-full transition-all duration-300"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>

@@ -51,9 +51,11 @@ function Calendar({
         day_hidden: 'invisible',
         ...classNames,
       }}
-      components={{
-        Chevron: () => <ChevronRight className="h-4 w-4" />,
-      } as React.ComponentProps<typeof DayPicker>['components']}
+      components={
+        {
+          Chevron: () => <ChevronRight className="h-4 w-4" />,
+        } as React.ComponentProps<typeof DayPicker>['components']
+      }
       {...props}
     />
   )

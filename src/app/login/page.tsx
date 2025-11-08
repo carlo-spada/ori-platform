@@ -92,16 +92,16 @@ export default function Login() {
   }
 
   return (
-    <div className="flex min-h-screen w-full items-center justify-center bg-background px-4">
+    <div className="bg-background flex min-h-screen w-full items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
           <Link
             href="/"
-            className="mb-4 inline-block text-2xl font-semibold text-foreground transition-colors hover:text-accent"
+            className="text-foreground hover:text-accent mb-4 inline-block text-2xl font-semibold transition-colors"
           >
             Ori
           </Link>
-          <h1 className="mb-2 text-3xl font-bold text-foreground">
+          <h1 className="text-foreground mb-2 text-3xl font-bold">
             Welcome back
           </h1>
           <p className="text-muted-foreground">
@@ -110,11 +110,11 @@ export default function Login() {
         </div>
 
         <form onSubmit={handleLogin} className="space-y-6">
-          <div className="space-y-4 rounded-xl border border-border bg-card p-8">
+          <div className="border-border bg-card space-y-4 rounded-xl border p-8">
             <div>
               <label
                 htmlFor="email"
-                className="mb-2 block text-sm font-medium text-foreground"
+                className="text-foreground mb-2 block text-sm font-medium"
               >
                 Email
               </label>
@@ -122,7 +122,7 @@ export default function Login() {
                 type="email"
                 id="email"
                 name="email"
-                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
+                className="border-border bg-background text-foreground focus:ring-accent w-full rounded-lg border px-4 py-2 focus:ring-2 focus:outline-none"
                 placeholder="you@example.com"
                 required
                 disabled={isSubmitting}
@@ -132,7 +132,7 @@ export default function Login() {
             <div>
               <label
                 htmlFor="password"
-                className="mb-2 block text-sm font-medium text-foreground"
+                className="text-foreground mb-2 block text-sm font-medium"
               >
                 Password
               </label>
@@ -140,7 +140,7 @@ export default function Login() {
                 type="password"
                 id="password"
                 name="password"
-                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
+                className="border-border bg-background text-foreground focus:ring-accent w-full rounded-lg border px-4 py-2 focus:ring-2 focus:outline-none"
                 placeholder="••••••••"
                 required
                 disabled={isSubmitting}
@@ -152,11 +152,11 @@ export default function Login() {
             </Button>
           </div>
 
-          <p className="text-center text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-center text-sm">
             Don&apos;t have an account?{' '}
             <Link
               href="/signup"
-              className="text-accent underline underline-offset-2 hover:text-accent/80"
+              className="text-accent hover:text-accent/80 underline underline-offset-2"
             >
               Sign up
             </Link>
@@ -165,7 +165,7 @@ export default function Login() {
           <p className="text-center">
             <Link
               href="/"
-              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
             >
               ← Back to home
             </Link>

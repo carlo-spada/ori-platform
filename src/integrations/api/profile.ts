@@ -38,7 +38,9 @@ export async function fetchProfile(): Promise<UserProfile> {
   })
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Failed to fetch profile' }))
+    const error = await response
+      .json()
+      .catch(() => ({ error: 'Failed to fetch profile' }))
     throw new Error(error.error || 'Failed to fetch profile')
   }
 
@@ -48,7 +50,9 @@ export async function fetchProfile(): Promise<UserProfile> {
 /**
  * Update user profile
  */
-export async function updateProfile(data: Partial<UserProfile>): Promise<UserProfile> {
+export async function updateProfile(
+  data: Partial<UserProfile>,
+): Promise<UserProfile> {
   const headers = await getAuthHeaders()
 
   const response = await fetch(`${API_URL}/api/v1/profile`, {
@@ -58,7 +62,9 @@ export async function updateProfile(data: Partial<UserProfile>): Promise<UserPro
   })
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Failed to update profile' }))
+    const error = await response
+      .json()
+      .catch(() => ({ error: 'Failed to update profile' }))
     throw new Error(error.error || 'Failed to update profile')
   }
 
@@ -68,7 +74,9 @@ export async function updateProfile(data: Partial<UserProfile>): Promise<UserPro
 /**
  * Complete onboarding and update profile
  */
-export async function completeOnboarding(data: Partial<UserProfile>): Promise<UserProfile> {
+export async function completeOnboarding(
+  data: Partial<UserProfile>,
+): Promise<UserProfile> {
   const headers = await getAuthHeaders()
 
   const response = await fetch(`${API_URL}/api/v1/profile/onboarding`, {
@@ -78,7 +86,9 @@ export async function completeOnboarding(data: Partial<UserProfile>): Promise<Us
   })
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Failed to complete onboarding' }))
+    const error = await response
+      .json()
+      .catch(() => ({ error: 'Failed to complete onboarding' }))
     throw new Error(error.error || 'Failed to complete onboarding')
   }
 
@@ -97,7 +107,9 @@ export async function fetchExperiences(): Promise<Experience[]> {
   })
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Failed to fetch experiences' }))
+    const error = await response
+      .json()
+      .catch(() => ({ error: 'Failed to fetch experiences' }))
     throw new Error(error.error || 'Failed to fetch experiences')
   }
 
@@ -108,7 +120,9 @@ export async function fetchExperiences(): Promise<Experience[]> {
 /**
  * Create a new experience
  */
-export async function createExperience(data: Omit<Experience, 'id' | 'user_id' | 'created_at' | 'updated_at'>): Promise<Experience> {
+export async function createExperience(
+  data: Omit<Experience, 'id' | 'user_id' | 'created_at' | 'updated_at'>,
+): Promise<Experience> {
   const headers = await getAuthHeaders()
 
   const response = await fetch(`${API_URL}/api/v1/experiences`, {
@@ -118,7 +132,9 @@ export async function createExperience(data: Omit<Experience, 'id' | 'user_id' |
   })
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Failed to create experience' }))
+    const error = await response
+      .json()
+      .catch(() => ({ error: 'Failed to create experience' }))
     throw new Error(error.error || 'Failed to create experience')
   }
 
@@ -128,7 +144,10 @@ export async function createExperience(data: Omit<Experience, 'id' | 'user_id' |
 /**
  * Update an existing experience
  */
-export async function updateExperience(id: string, data: Partial<Experience>): Promise<Experience> {
+export async function updateExperience(
+  id: string,
+  data: Partial<Experience>,
+): Promise<Experience> {
   const headers = await getAuthHeaders()
 
   const response = await fetch(`${API_URL}/api/v1/experiences/${id}`, {
@@ -138,7 +157,9 @@ export async function updateExperience(id: string, data: Partial<Experience>): P
   })
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Failed to update experience' }))
+    const error = await response
+      .json()
+      .catch(() => ({ error: 'Failed to update experience' }))
     throw new Error(error.error || 'Failed to update experience')
   }
 
@@ -157,7 +178,9 @@ export async function deleteExperience(id: string): Promise<void> {
   })
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Failed to delete experience' }))
+    const error = await response
+      .json()
+      .catch(() => ({ error: 'Failed to delete experience' }))
     throw new Error(error.error || 'Failed to delete experience')
   }
 }
@@ -174,7 +197,9 @@ export async function fetchEducation(): Promise<Education[]> {
   })
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Failed to fetch education' }))
+    const error = await response
+      .json()
+      .catch(() => ({ error: 'Failed to fetch education' }))
     throw new Error(error.error || 'Failed to fetch education')
   }
 
@@ -185,7 +210,9 @@ export async function fetchEducation(): Promise<Education[]> {
 /**
  * Create a new education record
  */
-export async function createEducation(data: Omit<Education, 'id' | 'user_id' | 'created_at' | 'updated_at'>): Promise<Education> {
+export async function createEducation(
+  data: Omit<Education, 'id' | 'user_id' | 'created_at' | 'updated_at'>,
+): Promise<Education> {
   const headers = await getAuthHeaders()
 
   const response = await fetch(`${API_URL}/api/v1/education`, {
@@ -195,7 +222,9 @@ export async function createEducation(data: Omit<Education, 'id' | 'user_id' | '
   })
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Failed to create education' }))
+    const error = await response
+      .json()
+      .catch(() => ({ error: 'Failed to create education' }))
     throw new Error(error.error || 'Failed to create education')
   }
 
@@ -205,7 +234,10 @@ export async function createEducation(data: Omit<Education, 'id' | 'user_id' | '
 /**
  * Update an existing education record
  */
-export async function updateEducation(id: string, data: Partial<Education>): Promise<Education> {
+export async function updateEducation(
+  id: string,
+  data: Partial<Education>,
+): Promise<Education> {
   const headers = await getAuthHeaders()
 
   const response = await fetch(`${API_URL}/api/v1/education/${id}`, {
@@ -215,7 +247,9 @@ export async function updateEducation(id: string, data: Partial<Education>): Pro
   })
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Failed to update education' }))
+    const error = await response
+      .json()
+      .catch(() => ({ error: 'Failed to update education' }))
     throw new Error(error.error || 'Failed to update education')
   }
 
@@ -234,7 +268,9 @@ export async function deleteEducation(id: string): Promise<void> {
   })
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Failed to delete education' }))
+    const error = await response
+      .json()
+      .catch(() => ({ error: 'Failed to delete education' }))
     throw new Error(error.error || 'Failed to delete education')
   }
 }

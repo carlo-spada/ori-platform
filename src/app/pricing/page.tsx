@@ -93,18 +93,18 @@ export default function PricingPage() {
     >
       {/* Page Header */}
       <Section data-testid="pricing-header" className="text-center">
-        <h1 className="mb-4 text-4xl font-bold text-foreground sm:text-5xl">
+        <h1 className="text-foreground mb-4 text-4xl font-bold sm:text-5xl">
           {t('pricingPage.header.title')}
         </h1>
-        <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">
+        <p className="text-muted-foreground mx-auto mb-8 max-w-2xl text-lg">
           {t('pricingPage.header.subheadline')}
         </p>
 
         {/* Billing Toggle */}
-        <div className="inline-flex items-center gap-3 rounded-full border border-border bg-card px-2 py-2 shadow-sm">
+        <div className="border-border bg-card inline-flex items-center gap-3 rounded-full border px-2 py-2 shadow-sm">
           <button
             onClick={() => setBillingPeriod('monthly')}
-            className={`rounded-full px-6 py-2 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+            className={`focus-visible:ring-ring rounded-full px-6 py-2 text-sm font-medium transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${
               billingPeriod === 'monthly'
                 ? 'bg-primary text-primary-foreground shadow-sm'
                 : 'text-muted-foreground hover:text-foreground'
@@ -115,7 +115,7 @@ export default function PricingPage() {
           </button>
           <button
             onClick={() => setBillingPeriod('annual')}
-            className={`rounded-full px-6 py-2 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
+            className={`focus-visible:ring-ring rounded-full px-6 py-2 text-sm font-medium transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${
               billingPeriod === 'annual'
                 ? 'bg-primary text-primary-foreground shadow-sm'
                 : 'text-muted-foreground hover:text-foreground'
@@ -125,7 +125,7 @@ export default function PricingPage() {
             {t('pricingPage.billingToggle.annual')}
           </button>
           {billingPeriod === 'annual' && (
-            <span className="ml-2 inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+            <span className="bg-primary/10 text-primary ml-2 inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold">
               {t('pricingPage.billingToggle.saveBadge')}
             </span>
           )}
@@ -160,10 +160,10 @@ export default function PricingPage() {
       {/* Feature Comparison Table */}
       <Section data-testid="feature-comparison">
         <div className="mb-12 text-center">
-          <h2 className="mb-4 text-3xl font-semibold text-foreground sm:text-4xl">
+          <h2 className="text-foreground mb-4 text-3xl font-semibold sm:text-4xl">
             Compare Plans
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+          <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
             A detailed breakdown of what&apos;s included in each plan.
           </p>
         </div>
@@ -175,10 +175,10 @@ export default function PricingPage() {
       {/* FAQ Section */}
       <Section data-testid="pricing-faq">
         <div className="mb-12 text-center">
-          <h2 className="mb-4 text-3xl font-semibold text-foreground sm:text-4xl">
+          <h2 className="text-foreground mb-4 text-3xl font-semibold sm:text-4xl">
             Frequently Asked Questions
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+          <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
             Everything you need to know about Ori pricing.
           </p>
         </div>
@@ -187,10 +187,10 @@ export default function PricingPage() {
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, index) => (
               <AccordionItem key={index} value={`faq-${index}`}>
-                <AccordionTrigger className="text-left text-base font-medium text-foreground hover:text-accent">
+                <AccordionTrigger className="text-foreground hover:text-accent text-left text-base font-medium">
                   {faq.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
+                <AccordionContent className="text-muted-foreground text-sm leading-relaxed">
                   {faq.a}
                 </AccordionContent>
               </AccordionItem>

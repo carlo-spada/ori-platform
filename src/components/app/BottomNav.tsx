@@ -28,7 +28,7 @@ export function BottomNav({ className }: BottomNavProps) {
     <nav
       aria-label="Mobile navigation"
       className={cn(
-        'fixed bottom-0 left-0 right-0 z-40',
+        'fixed right-0 bottom-0 left-0 z-40',
         'bg-surface/95 border-t border-white/10 backdrop-blur-sm',
         'pb-[env(safe-area-inset-bottom)]',
         className,
@@ -48,10 +48,10 @@ export function BottomNav({ className }: BottomNavProps) {
                 aria-current={active ? 'page' : undefined}
                 className={cn(
                   'flex flex-col items-center justify-center gap-1 rounded-xl px-4 py-2 transition-all duration-200',
-                  'focus-visible:ring-offset-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2',
+                  'focus-visible:ring-offset-surface focus-visible:ring-accent focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
                   active
                     ? 'text-accent'
-                    : 'text-muted-foreground hover:bg-white/5 hover:text-foreground',
+                    : 'text-muted-foreground hover:text-foreground hover:bg-white/5',
                 )}
                 data-testid={`mobile-nav-${item.href.slice(1)}`}
               >

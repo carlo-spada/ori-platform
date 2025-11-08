@@ -2,13 +2,13 @@
 
 ## Stack
 
-| Layer | Technology |
-|-------|------------|
-| Frontend | Next.js 16 + React 19 + TypeScript |
-| Backend | Node.js 20 + Express.js |
-| AI | Python 3.11 + FastAPI + Sentence-Transformers |
-| Database | Supabase PostgreSQL |
-| Deploy | Vercel (Frontend + API) + Cloud Run (AI) |
+| Layer    | Technology                                    |
+| -------- | --------------------------------------------- |
+| Frontend | Next.js 16 + React 19 + TypeScript            |
+| Backend  | Node.js 20 + Express.js                       |
+| AI       | Python 3.11 + FastAPI + Sentence-Transformers |
+| Database | Supabase PostgreSQL                           |
+| Deploy   | Vercel (Frontend + API) + Cloud Run (AI)      |
 
 ## Structure
 

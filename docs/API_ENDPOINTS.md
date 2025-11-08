@@ -8,16 +8,19 @@
 ## Profile
 
 ### GET /profile
+
 Get the authenticated user's complete profile
 
 **Auth:** Required
 **Response:** `UserProfile` object
 
 ### PUT /profile
+
 Update user profile
 
 **Auth:** Required
 **Body:**
+
 ```json
 {
   "full_name": "string",
@@ -33,9 +36,11 @@ Update user profile
   "cv_url": "string"
 }
 ```
+
 **Response:** Updated `UserProfile`
 
 ### PUT /profile/onboarding
+
 Complete onboarding and update profile
 
 **Auth:** Required
@@ -47,10 +52,12 @@ Complete onboarding and update profile
 ## Experiences
 
 ### GET /experiences
+
 Get all work experiences for the user
 
 **Auth:** Required
 **Response:**
+
 ```json
 {
   "experiences": [Experience]
@@ -58,10 +65,12 @@ Get all work experiences for the user
 ```
 
 ### POST /experiences
+
 Create a new work experience
 
 **Auth:** Required
 **Body:**
+
 ```json
 {
   "company": "string",
@@ -72,9 +81,11 @@ Create a new work experience
   "description": "string | null"
 }
 ```
+
 **Response:** Created `Experience`
 
 ### PUT /experiences/:id
+
 Update an existing work experience
 
 **Auth:** Required
@@ -83,6 +94,7 @@ Update an existing work experience
 **Response:** Updated `Experience`
 
 ### DELETE /experiences/:id
+
 Delete a work experience
 
 **Auth:** Required
@@ -94,10 +106,12 @@ Delete a work experience
 ## Education
 
 ### GET /education
+
 Get all education records for the user
 
 **Auth:** Required
 **Response:**
+
 ```json
 {
   "education": [Education]
@@ -105,10 +119,12 @@ Get all education records for the user
 ```
 
 ### POST /education
+
 Create a new education record
 
 **Auth:** Required
 **Body:**
+
 ```json
 {
   "institution": "string",
@@ -120,9 +136,11 @@ Create a new education record
   "description": "string | null"
 }
 ```
+
 **Response:** Created `Education`
 
 ### PUT /education/:id
+
 Update an existing education record
 
 **Auth:** Required
@@ -131,6 +149,7 @@ Update an existing education record
 **Response:** Updated `Education`
 
 ### DELETE /education/:id
+
 Delete an education record
 
 **Auth:** Required
@@ -142,13 +161,16 @@ Delete an education record
 ## Applications
 
 ### GET /applications
+
 Get all job applications for the user
 
 **Auth:** Required
 **Query Params:**
+
 - `status` (optional): Filter by status (applied, interviewing, offer, rejected, paused)
 
 **Response:**
+
 ```json
 {
   "applications": [Application]
@@ -156,10 +178,12 @@ Get all job applications for the user
 ```
 
 ### GET /applications/stats
+
 Get application statistics for dashboard
 
 **Auth:** Required
 **Response:**
+
 ```json
 {
   "total": number,
@@ -172,10 +196,12 @@ Get application statistics for dashboard
 ```
 
 ### POST /applications
+
 Create a new job application
 
 **Auth:** Required
 **Body:**
+
 ```json
 {
   "job_title": "string",
@@ -186,9 +212,11 @@ Create a new job application
   "notes": "string | null"
 }
 ```
+
 **Response:** Created `Application`
 
 ### PUT /applications/:id
+
 Update an existing application
 
 **Auth:** Required
@@ -197,19 +225,23 @@ Update an existing application
 **Response:** Updated `Application`
 
 ### PATCH /applications/:id/status
+
 Update only the status of an application
 
 **Auth:** Required
 **Params:** `id` (UUID)
 **Body:**
+
 ```json
 {
   "status": "applied | interviewing | offer | rejected | paused"
 }
 ```
+
 **Response:** Updated `Application`
 
 ### DELETE /applications/:id
+
 Delete an application
 
 **Auth:** Required
@@ -221,10 +253,12 @@ Delete an application
 ## Jobs
 
 ### POST /jobs/find-matches
+
 Find job matches for the user
 
 **Auth:** Required
 **Body:**
+
 ```json
 {
   "query": "string",
@@ -232,6 +266,7 @@ Find job matches for the user
   "limit": number
 }
 ```
+
 **Response:** Array of `JobMatch` objects with `skillsGap`
 
 ---
@@ -239,22 +274,26 @@ Find job matches for the user
 ## Chat
 
 ### GET /chat/history
+
 Get chat conversation history
 
 **Auth:** Required
 **Response:** `ChatHistoryResponse`
 
 ### POST /chat/message
+
 Send a chat message
 
 **Auth:** Required
 **Body:**
+
 ```json
 {
   "content": "string",
   "conversation_id": "string | undefined"
 }
 ```
+
 **Response:** `SendMessageResponse`
 
 ---
@@ -264,6 +303,7 @@ Send a chat message
 All endpoints may return these error codes:
 
 **401 Unauthorized:**
+
 ```json
 {
   "error": "User not authenticated"
@@ -271,6 +311,7 @@ All endpoints may return these error codes:
 ```
 
 **403 Forbidden:**
+
 ```json
 {
   "error": "Forbidden - Can only access your own data"
@@ -278,6 +319,7 @@ All endpoints may return these error codes:
 ```
 
 **404 Not Found:**
+
 ```json
 {
   "error": "Resource not found"
@@ -285,6 +327,7 @@ All endpoints may return these error codes:
 ```
 
 **500 Internal Server Error:**
+
 ```json
 {
   "error": "Internal server error"
