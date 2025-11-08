@@ -44,7 +44,7 @@ This project is built with:
 1. Clone the repository:
 ```bash
 git clone <YOUR_GIT_URL>
-cd aura-platform
+cd ori-platform
 ```
 
 2. Install dependencies:
@@ -73,7 +73,7 @@ Open [http://localhost:3000](http://localhost:3000) to see the application.
 ## 🏗️ Project Structure
 
 ```
-aura-platform/
+ori-platform/
 ├── src/
 │   ├── app/              # Next.js App Router pages
 │   ├── components/       # React components
@@ -128,7 +128,21 @@ docker run -p 3000:3000 ori-platform
 
 ## 🤝 Contributing
 
-We welcome contributions! Before you open a PR, read the living contributor handbook in [`AGENTS.md`](./AGENTS.md) and follow it closely. Major feature, infra, or workflow changes should always be reflected back into `AGENTS.md` so the rest of the agent team stays aligned.
+We welcome contributions! **Required reading before contributing:**
+
+1. **[`AGENTS.md`](./AGENTS.md)** - Complete contributor handbook with branching strategy, workflows, and best practices
+2. **Agent-specific guides:**
+   - [`CLAUDE.md`](./CLAUDE.md) - Implementation & building guidance
+   - [`GEMINI.md`](./GEMINI.md) - Planning & research guidance
+   - [`AI_ENGINE_QUICKSTART.md`](./AI_ENGINE_QUICKSTART.md) - AI Engine setup
+
+**Workflow Overview:**
+- Work on `development` branch (direct pushes to `main` are blocked)
+- Follow conventional commits (`feat:`, `fix:`, `chore:`)
+- Update documentation after major changes
+- Create PR from `development` → `main` when ready to deploy
+
+Major feature, infrastructure, or workflow changes must be reflected in `AGENTS.md` to keep all collaborators aligned.
 
 ## 📄 License
 

@@ -2,135 +2,118 @@
 
 ## Guide Maintenance
 
-Always make sure this guide is kept updated with whatever new information might be in the AGENTS.md file and whenever you land a major feature, infrastructure change, or new workflow, not just update this .md file but also update the relevant sections in the AGENTS.md file and reference the PR so every agent stays in sync at all times. This is crucial for good collaboration.
+Always keep this guide synchronized with `AGENTS.md`. After landing a major feature, infrastructure change, or new workflow: update this file AND the relevant sections in `AGENTS.md`, referencing the PR. This is crucial for multi-agent collaboration.
 
-### Documentation Maintenance Schedule
+## Branching & GitHub Workflow
 
-As Gemini, I am responsible for refactoring and updating `AGENTS.md` and my `GEMINI.md` on **Mondays** (or the next working day if Monday is not a working day). This ensures continuous alignment and quality across all documentation.
+**IMPORTANT:** This repository uses a strict two-branch workflow:
 
-## GitHub Considerations
+- **`main`**: Production branch (deployed to Vercel). **Direct pushes are BLOCKED.**
+- **`development`**: Working branch where all development happens
 
-Always keep the repository synchronized across all platforms and servers. After completing a set of changes, follow GitHub’s standard workflow: add, commit, and push your updates using clear messages and consistent practices. This ensures version integrity and collaboration reliability across environments.
+**Workflow:**
+1. Always work on `development` branch: `git checkout development && git pull origin development`
+2. Make changes and commit regularly: `git commit -m "feat: description"`
+3. Push to development: `git push origin development`
+4. Create PR from `development` → `main` when ready to deploy
+5. PR requires: 1 approval, passing checks, conversation resolution, successful deployment
+
+**Never push directly to `main`** - it will be rejected by branch protection rules.
+
+## Agent Responsibilities
+
+**As Gemini (Planner & Researcher), I must:**
+
+### Version Control Discipline
+- **Commit and push immediately** after completing each task
+- **After moving task files** in `.tasks/`: commit and push
+- **After creating task files**: commit and push
+- **Minimum**: Push at least once per task/file edit in `.tasks/` folder
+
+### Documentation Updates
+After every major change, update:
+- `README.md` (if affects setup, structure, or features)
+- `AGENTS.md` (if affects workflows or processes)
+- `GEMINI.md` (if planning strategies evolve)
+
+### Commit Message Format
+```bash
+# When creating tasks
+git add .tasks/
+git commit -m "chore(tasks): create skills-gap-analysis feature tasks"
+git push origin development
+
+# When updating documentation
+git add AGENTS.md GEMINI.md
+git commit -m "docs: update planning workflow for new feature"
+git push origin development
+```
 
 ## Project Overview
 
-This repository contains the source code for the Ori Platform, an AI-powered career companion designed to help users find fulfilling work. The platform provides personalized career guidance, continuous learning paths, and real-time market intelligence.
+Ori Platform is an AI-powered career companion built as a pnpm workspace monorepo. Combines Next.js 16 frontend with backend microservices to help users discover fulfilling professional roles through personalized career guidance, up-skilling paths, and real-time market intelligence.
 
-The project is a monorepo managed with pnpm workspaces, and it consists of the following main components:
+**Structure:**
+- **Root (`src/`)**: Next.js 16 App Router frontend with TypeScript
+- **Services (`services/`)**: Backend microservices
+  - `core-api`: Express + TypeScript REST API (port 3001)
+  - `ai-engine`: Python FastAPI service (port 3002) - semantic matching, skill gap analysis
+- **Shared (`shared/`)**: Cross-service packages (types, utils)
 
-*   **Frontend**: A Next.js application that serves as the main user interface.
-*   **Backend**: A set of microservices built with Node.js and Express.js that provide the core functionality of the platform.
-*   **Shared**: A collection of shared packages used across the monorepo.
+**Technology Stack:**
+- Next.js 16, TypeScript, shadcn/ui, Tailwind CSS
+- Supabase (DB + Auth), Stripe (payments), i18next (i18n)
+- React Query (state), sentence-transformers (AI embeddings)
 
-The technology stack includes:
+## Development Commands
 
-*   **Framework**: Next.js 13+ with App Router
-*   **Language**: TypeScript
-*   **UI Components**: shadcn-ui
-*   **Styling**: Tailwind CSS
-*   **Database**: Supabase
-*   **Authentication**: Supabase Auth
-*   **Payments**: Stripe
-*   **Internationalization**: i18next
-*   **State Management**: React Query (TanStack Query)
+```bash
+# Frontend
+pnpm dev                    # Next.js at http://localhost:3000
+pnpm build                  # Production build
+pnpm lint                   # ESLint
 
-## Building and Running
+# Backend
+pnpm dev:api                # core-api at http://localhost:3001
+cd services/ai-engine && python main.py  # AI engine at :3002
 
-### Prerequisites
+# Package Management
+pnpm install                # Install all workspace dependencies
+```
 
-*   Node.js 18+ and pnpm
-*   A Supabase account and project
-*   A Stripe account (for payment features)
+## Environment Setup
 
-### Setup
+**Frontend (`.env.local`):**
+```env
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+```
 
-1.  Install dependencies:
-    ```bash
-    pnpm install
-    ```
+See `CLAUDE.md` for complete environment configuration details.
 
-2.  Set up environment variables:
-    Create a `.env.local` file in the root directory with the necessary Supabase and Stripe keys.
+## My Role: Planner & Researcher
 
-### Development
+**Primary Responsibilities:**
+1. **Research & Design**: Condense information, research solutions, design actionable implementation plans
+2. **Task Creation**: Create feature folders (`.tasks/todo/feature-name/`) and task files (`A.md`, `B.md`)
+3. **Task Definition**: Define objectives, key files, acceptance criteria for each task
+4. **UI/UX Guardian**: Claim Task 'D' (Final UI/UX Polish) only after all other tasks are in `.tasks/done/`
 
-*   Run the frontend development server:
-    ```bash
-    pnpm dev
-    ```
+**Workflow:**
+1. **Define & Assign**: Create feature folders and task files in `.tasks/todo/`
+2. **Commit & Push**: Immediately commit and push after creating tasks
+3. **Monitor**: Regularly check task status across `.tasks/` subdirectories
+4. **Integrate & Polish**: Perform final UI/UX integration, move task to `.tasks/done/`
+5. **Update Docs**: Update `AGENTS.md` and `GEMINI.md` after major changes
 
-*   Run the backend API development server:
-    ```bash
-    pnpm dev:api
-    ```
+## Multi-Agent Collaboration
 
-### Production
+**Agent Roles:**
+- **Gemini (Planner & Researcher)**: Outlines *what* to do and *why*. Creates task files and feature folders.
+- **Claude (Implementer & Builder)**: Focuses on *how* to build. Executes plans with precision.
+- **Codex (Reviewer & Debugger)**: Audits code, identifies bugs, refactors. Reports complex issues.
+- **Carlo (Integrator & Releaser)**: Final review, merges features into `main`.
 
-*   Build the application for production:
-    ```bash
-    pnpm build
-    ```
-
-*   Start the production server:
-    ```bash
-    pnpm start
-    ```
-
-## Development Conventions
-
-*   **Linting**: The project uses ESLint for code linting. Run the linter with:
-    ```bash
-    pnpm lint
-    ```
-
-*   **Internationalization**: Translations are managed in the `public/locales` directory. The application supports multiple languages, and new languages can be added by creating a new directory with the corresponding language code.
-
-*   **Monorepo Management**: The project uses Turborepo to manage the monorepo build process. The build pipeline is defined in the `turbo.json` file.
-
-## Project Management Workflow
-
-As the coordinator, I will adhere to and manage the "Task-as-File" system.
-
-*   **System**: A file-based task board in the `.tasks/` directory, with subdirectories for `todo`, `in-progress`, and `done`. Large features will have their own subfolders within these stage directories.
-
-*   **My Role (Planner & Researcher)**: I will create feature folders (e.g., `.tasks/todo/feature-name/`) and individual task files (e.g., `A.md`, `B.md`) within them, defining the objective, key files, and acceptance criteria for each task. I will also research novel ideas and solutions to design actionable implementation plans.
-
-*   **My Role (UI/UX Guardian)**: I will claim Task 'D' (Final UI/UX Polish) by moving its file to `.tasks/in-progress/` only after all other related tasks are in the `.tasks/done/` directory.
-
-*   **Process**:
-    1.  **Define & Assign**: Create feature folders and task files in `.tasks/todo/`.
-    2.  **Monitor**: Regularly check the status of tasks by listing the contents of the `.tasks/` subdirectories.
-    3.  **Integrate & Polish**: Once implementation tasks are complete, I will perform the final UI/UX integration and move my own task file to `.tasks/done/`.
-
-### Agent Roles
-
-To leverage distinct strengths and optimize collaboration, we are experimenting with specialized roles for each AI agent:
-
-*   **Gemini (Planner & Researcher)**:
-    *   **Focus**: Condensing large amounts of information, researching novel ideas or solutions, and designing actionable implementation plans.
-    *   **Role**: Outlines *what* to do and *why*. Creates the initial task files and feature folders.
-
-*   **Claude (Implementer & Builder)**:
-    *   **Focus**: Executing the plans generated by Gemini with precision and creativity.
-    *   **Role**: Focuses on *how* to build or implement the feature in code or documentation, while maintaining coherence and consistency.
-
-*   **Codex (Reviewer & Debugger)**:
-    *   **Focus**: Auditing the code or artifacts produced by Claude.
-    *   **Role**: Identifies bugs, potential conflicts with the existing `main` branch, or opportunities for improvement. Codex should attempt to fix simple issues autonomously; for more complex cases, it should report them back to Gemini (for strategy) or Claude (for implementation).
-
-### Git Workflow Best Practices
-
-To maintain a clean history and prevent merge conflicts, always adhere to these Git practices:
-
-1.  **Pull Before Starting New Work**: Before beginning any new task or working in a new feature folder, always pull the latest changes from the `main` branch to your current branch:
-    ```bash
-    git pull origin main
-    ```
-    This ensures you are working on the most up-to-date codebase.
-
-2.  **Sync After Major Changes / Before PR**: After completing a significant chunk of work or before creating a Pull Request, rebase your branch onto the latest `main` to resolve any potential conflicts locally:
-    ```bash
-    git fetch origin main
-    git rebase origin/main
-    ```
-    This keeps your branch's history linear and makes merging into `main` smoother.
+**Task Flow:**
+`.tasks/todo/` → `.tasks/in-progress/` (Claude) → `.tasks/done/` → `.tasks/in-review/` (Codex) → `.tasks/reviewed/` → PR to `main` (Carlo)

@@ -77,39 +77,135 @@ This workflow is strictly enforced by GitHub branch protection rules:
 
 All code changes must be integrated into `main` via Pull Requests from `development`. Direct pushes to `main` are strictly prohibited and enforced by branch protection rules. Before creating a PR, ensure all local checks pass (`pnpm lint`, `pnpm build`). This workflow preserves version integrity, prevents integration errors, and ensures `main` is always production-ready.
 
-## Human–AI Collaboration
+## Project Management Workflow
 
-This is a shared and continuously evolving collaboration between humans and intelligent agents. Act deliberately: validate assumptions, question defaults, and safeguard shared resources. Prioritize clarity, safety, and precision in every operation.
-
-When advising or interacting with human collaborators, always propose the **safest**, **most efficient**, and **most elegant** course of action. Stay vigilant for opportunities to improve coordination—refine workflows, automation, or development strategies to strengthen reliability and collective performance.
-
-The objective is ongoing alignment, refinement, and progress toward a more resilient and harmonious system of collaboration.
-
-## Project Management: The Task-as-File System
-
-To ensure clarity and prevent redundant work, we use a file-based task management system. This is the single source of truth for what needs to be done, what is in progress, and what is complete.
+To ensure clarity, prevent redundant work, and leverage distinct agent strengths, we use a file-based task management system coupled with specialized AI roles. This is the single source of truth for what needs to be done, what is in progress, and what is complete.
 
 ### Directory Structure
-All tasks are managed within the `.tasks/` directory, which is organized into three stage-based subdirectories:
--   **`.tasks/todo/`**: Contains features or tasks that are planned but not yet started. Large features ('epics') should correspond to a subfolder within this directory (e.g., `.tasks/todo/feature-name/`). Each smaller, independent work unit related to that feature will be an individual Markdown file within that folder (e.g., `A.md`, `B.md`). Standalone tasks can be individual Markdown files directly in `todo/`.
--   **`.tasks/in-progress/`**: Contains files or entire feature subfolders that are actively being worked on.
--   **`.tasks/done/`**: A record of all completed tasks and features.
+All tasks are managed within the `.tasks/` directory, which is organized into stage-based subdirectories:
+-   **`.tasks/todo/`**: Planned tasks and features. Large features ('epics') are represented as subfolders (e.g., `.tasks/todo/feature-name/`), with individual work units as Markdown files inside (e.g., `A.md`).
+-   **`.tasks/in-progress/`**: Tasks actively being worked on by an agent.
+-   **`.tasks/done/`**: Tasks that have been implemented by Claude.
+-   **`.tasks/in-review/`**: Tasks currently under review, debugging, and refactoring by Codex.
+-   **`.tasks/reviewed/`**: Tasks that have been successfully reviewed by Codex and are ready for final integration.
 
-### Workflow
+### Agent Roles & Workflow
 
-1.  **Review the Board**: Before starting new work, review the `.tasks/` subdirectories to understand the current project state
-2.  **Claim a Task**: Move the task file or feature folder from `.tasks/todo/` to `.tasks/in-progress/` to claim ownership:
-    ```bash
-    # Example: Claiming task 'A.md'
-    mv .tasks/todo/A.md .tasks/in-progress/A.md
-    # Example: Claiming feature 'feature-name/'
-    mv .tasks/todo/feature-name/ .tasks/in-progress/feature-name/
-    ```
-3.  **Update Task File**: Edit the task file to add assignee information
-4.  **Perform the Work**: Complete the task following the instructions within the task file
-5.  **Complete a Task**: Upon completion and successful PR merge, move the task file from `.tasks/in-progress/` to `.tasks/done/`
+1.  **Gemini (Planner & Researcher)**:
+    *   **Role**: Conducts big-picture research, defines the project vision, and breaks it down into a cohesive, step-by-step plan.
+    *   **Workflow**: Creates feature folders and task files (`.md`) in the `.tasks/todo/` directory, outlining the objective, key files, and acceptance criteria for each.
 
-This system minimizes merge conflicts and provides a clear, real-time view of the project's status.
+2.  **Claude (Implementer & Builder)**:
+    *   **Role**: Materializes the plans defined by Gemini, focusing on implementation.
+    *   **Workflow**:
+        1.  Claims a task by moving its corresponding file or folder from `.tasks/todo/` to `.tasks/in-progress/`.
+        2.  Implements the feature or fix as described in the task file.
+        3.  Upon completion, moves the task file/folder to `.tasks/done/`.
+
+3.  **Codex (Reviewer & Debugger)**:
+    *   **Role**: Audits the code produced by Claude, identifying bugs, refactoring opportunities, and ensuring quality.
+    *   **Workflow**:
+        1.  Claims a task by moving it from `.tasks/done/` to `.tasks/in-review/`.
+        2.  Performs debugging and refactoring.
+        3.  Once the review is complete, moves the task file/folder to `.tasks/reviewed/`.
+
+4.  **Carlo (Integrator & Releaser)**:
+    *   **Role**: Performs the final review and merges the completed feature into the `main` branch.
+    *   **Workflow**: Once an entire feature's tasks are in the `.tasks/reviewed/` directory, Carlo will merge the feature branch into `main` for release.
+
+This structured process ensures a clear separation of duties, maintains code quality, and provides a transparent, real-time view of the project's status.
+
+## Agent Responsibilities & Best Practices
+
+### Version Control Discipline
+
+**CRITICAL:** All agents must maintain strict version control discipline to ensure the repository remains synchronized and changes are never lost.
+
+#### 1. Commit & Push Frequently
+
+**Required behavior for all agents:**
+
+- **Commit and push changes immediately after completing each task**
+- **When working with `.tasks/` files**: Commit and push **after moving each task file** between directories (todo → in-progress → done/in-review → reviewed)
+- **When editing code**: Commit and push **after completing each logical unit of work** (e.g., implementing a single function, fixing a single bug, adding a single feature)
+- **Minimum requirement**: Push **at least once per task/file edit** in the `.tasks/` folder
+
+#### 2. Commit Message Format
+
+Follow these patterns for task management:
+
+```bash
+# When claiming a task
+git add .tasks/
+git commit -m "chore(tasks): claim task A.md for implementation"
+git push origin development
+
+# When implementing changes
+git add .
+git commit -m "feat: implement feature X as per task A.md"
+git push origin development
+
+# When completing a task
+git add .tasks/
+git commit -m "chore(tasks): move A.md to done"
+git push origin development
+```
+
+#### 3. Documentation Updates
+
+**After every major change**, agents MUST update:
+
+- **`README.md`**: If the change affects installation, setup, project structure, or user-facing features
+- **`AGENTS.md`**: If the change affects workflows, development processes, or introduces new patterns
+- **Agent-specific `.md` files**:
+  - **Claude**: Update `CLAUDE.md` if implementation patterns or tool usage changes
+  - **Gemini**: Update `GEMINI.md` if planning strategies or research methods evolve
+  - **Codex**: Update relevant documentation if review processes change
+
+#### 4. What Constitutes a "Major Change"
+
+A change is considered "major" if it involves:
+
+- Adding or removing a service/package
+- Changing the build or deployment process
+- Modifying the branching strategy or git workflow
+- Adding new development commands or scripts
+- Updating dependencies that affect setup or configuration
+- Implementing a new feature that affects how developers work with the codebase
+- Changing authentication, payment, or core integrations
+- Modifying the project structure or file organization
+
+#### 5. Documentation Update Workflow
+
+After implementing a major change, follow this sequence:
+
+```bash
+# Step 1: Commit code changes
+git add .
+git commit -m "feat: implement new feature"
+git push origin development
+
+# Step 2: Update relevant documentation
+git add README.md AGENTS.md CLAUDE.md  # or whichever files need updates
+git commit -m "docs: update guides to reflect new feature implementation"
+git push origin development
+
+# Step 3: Move task to completion
+git add .tasks/
+git commit -m "chore(tasks): complete task A.md"
+git push origin development
+```
+
+#### 6. Why This Matters
+
+- **Prevents Work Loss**: Frequent commits ensure no work is lost due to crashes, network issues, or conflicts
+- **Maintains Synchronization**: Regular pushes keep all agents (human and AI) working from the same source of truth
+- **Enables Collaboration**: Up-to-date documentation allows agents to understand changes made by others
+- **Provides Audit Trail**: Clear commit history makes it easy to track progress and debug issues
+- **Supports Rollbacks**: Small, focused commits make it easier to revert specific changes if needed
+- **Preserves Context**: Future agents can understand the reasoning behind changes through documentation
+
+**Remember**: The repository is a living system. Your commits and documentation updates are how you communicate with future agents (including yourself). Be thorough, be frequent, and be clear.
 
 ## Project Structure & Module Organization
 

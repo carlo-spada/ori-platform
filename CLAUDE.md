@@ -4,7 +4,41 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Guide Maintenance
 
-Always make sure this guide is kept updated with whatever new information might be in the AGENTS.md file and whenever you land a major feature, infrastructure change, or new workflow, not just update this .md file but also update the relevant sections in the AGENTS.md file and reference the PR so every agent stays in sync at all times. This is crucial for good collaboration.
+Always keep this guide synchronized with `AGENTS.md`. After landing a major feature, infrastructure change, or new workflow: update this file AND the relevant sections in `AGENTS.md`, referencing the PR. This is crucial for multi-agent collaboration.
+
+## Agent Responsibilities
+
+**As Claude (Implementer & Builder), I must:**
+
+### Version Control Discipline
+- **Commit and push immediately** after completing each task
+- **After moving task files** in `.tasks/`: commit and push
+- **After implementing features**: commit and push
+- **Minimum**: Push at least once per task/file edit in `.tasks/` folder
+
+### Documentation Updates
+After every major change, update:
+- `README.md` (if affects setup, structure, or features)
+- `AGENTS.md` (if affects workflows or processes)
+- `CLAUDE.md` (if implementation patterns change)
+
+### Commit Message Format
+```bash
+# When claiming a task
+git add .tasks/
+git commit -m "chore(tasks): claim task A.md for implementation"
+git push origin development
+
+# When implementing changes
+git add .
+git commit -m "feat: implement feature X as per task A.md"
+git push origin development
+
+# When completing a task
+git add .tasks/
+git commit -m "chore(tasks): move A.md to done"
+git push origin development
+```
 
 ## Branching & GitHub Workflow
 
@@ -215,23 +249,38 @@ While test infrastructure isn't fully established, follow these patterns:
 - Stripe webhook endpoint must be registered in Stripe dashboard
 - Supabase project: zkdgtofxtzqnzgncqlyc.supabase.co
 
+## My Role: Implementer & Builder
+
+**Primary Responsibilities:**
+1. **Claim Tasks**: Move task files from `.tasks/todo/` to `.tasks/in-progress/`
+2. **Implement**: Execute plans defined by Gemini with precision and creativity
+3. **Complete**: Move finished tasks to `.tasks/done/` after implementation
+4. **Test**: Ensure code works as expected before marking complete
+
+**Task Workflow:**
+1. Review task file in `.tasks/todo/`
+2. Move to `.tasks/in-progress/` and commit
+3. Implement feature following task instructions
+4. Run tests (`pnpm lint`, `pnpm build`)
+5. Move to `.tasks/done/` and commit
+6. Update documentation if major change
+
 ## Important Notes
 
-1. The project was previously called "Aura" and is being rebranded to "Ori" - you may see references to both names
-2. Always use pnpm, never npm or yarn (workspace configuration depends on it)
-3. The core-api imports use `.js` extensions despite being TypeScript (ES module compatibility)
-4. Stripe webhook route MUST be registered before `express.json()` to receive raw body
-5. Supabase client is a singleton - always use `getSupabaseClient()`, never create new instances
-6. All Radix UI components are pre-installed via shadcn/ui
-7. The `@/` path alias only works in the frontend package, not in services/
-8. **AI Engine Integration**: Core-api gracefully falls back to basic scoring if AI engine is unavailable
-9. **AI Engine First Run**: Initial startup downloads ~80MB sentence-transformer model (one-time)
-10. **Service Communication**: AI engine (3002) ← core-api (3001) ← frontend (3000)
+1. Project rebranded from "Aura" to "Ori" - may see references to both names
+2. Always use pnpm, never npm or yarn (workspace dependency)
+3. Core-api uses `.js` extensions despite TypeScript (ES module compatibility)
+4. Stripe webhook route MUST be before `express.json()` (raw body requirement)
+5. Supabase client is singleton - always use `getSupabaseClient()`
+6. `@/` path alias only works in frontend, not in services/
+7. **AI Engine**: Core-api gracefully falls back if AI engine unavailable
+8. **AI Engine First Run**: Downloads ~80MB sentence-transformer model (one-time)
+9. **Service Communication**: AI engine (3002) ← core-api (3001) ← frontend (3000)
 
-## Known Patterns to Follow
+## Development Patterns
 
-- Error handling: Use React Query's error states on frontend, return `{ error: string }` from API
-- Loading states: React Query provides `isLoading` and `isFetching` states
-- Form validation: React Hook Form + Zod resolvers (@hookform/resolvers)
-- Date handling: date-fns library
-- Toast notifications: Use sonner via `toast()` function
+- **Error handling**: React Query error states on frontend, `{ error: string }` from API
+- **Loading states**: React Query `isLoading` and `isFetching`
+- **Form validation**: React Hook Form + Zod resolvers
+- **Date handling**: date-fns library
+- **Toast notifications**: sonner via `toast()` function
