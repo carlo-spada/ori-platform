@@ -10,10 +10,48 @@ from models.schemas import (
     Job,
     SkillGap,
     SkillAnalysisResult,
-    LearningPath
+    LearningPath,
+    SkillGapRequest,
+    SkillGapResponse
 )
 
 logger = logging.getLogger(__name__)
+
+
+def calculate_skill_gap(request: SkillGapRequest) -> SkillGapResponse:
+    """
+    Calculate the skill gap between user skills and required skills.
+
+    This is a simple set difference operation that identifies which required
+    skills the user does not currently possess.
+
+    Args:
+        request: SkillGapRequest containing user_skills and required_skills
+
+    Returns:
+        SkillGapResponse with user_skills, required_skills, and missing_skills
+    """
+    # Normalize skills to lowercase for case-insensitive comparison
+    user_skills_norm = {skill.lower().strip() for skill in request.user_skills}
+    required_skills_norm = {skill.lower().strip() for skill in request.required_skills}
+
+    # Find missing skills (required but not in user's skill set)
+    missing_skills_norm = required_skills_norm - user_skills_norm
+
+    # Map back to original casing from required_skills
+    skill_map = {skill.lower().strip(): skill for skill in request.required_skills}
+    missing_skills = [skill_map[skill] for skill in missing_skills_norm]
+
+    logger.info(
+        f"Skill gap calculated: {len(request.user_skills)} user skills, "
+        f"{len(request.required_skills)} required, {len(missing_skills)} missing"
+    )
+
+    return SkillGapResponse(
+        user_skills=request.user_skills,
+        required_skills=request.required_skills,
+        missing_skills=sorted(missing_skills)  # Sort for consistent output
+    )
 
 
 class SkillAnalyzer:

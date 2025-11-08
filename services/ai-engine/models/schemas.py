@@ -126,3 +126,16 @@ class HealthResponse(BaseModel):
     version: str
     model_loaded: bool
     checks: Dict[str, bool] = Field(default_factory=dict)
+
+
+class SkillGapRequest(BaseModel):
+    """Simple skill gap analysis request."""
+    user_skills: List[str] = Field(..., description="Skills the user currently has")
+    required_skills: List[str] = Field(..., description="Skills required for the target role/job")
+
+
+class SkillGapResponse(BaseModel):
+    """Simple skill gap analysis response."""
+    user_skills: List[str] = Field(..., description="Skills the user has")
+    required_skills: List[str] = Field(..., description="Skills required")
+    missing_skills: List[str] = Field(..., description="Skills the user needs to acquire")

@@ -22,6 +22,8 @@ from models import (
     MatchRequest,
     MatchResult,
     SkillAnalysisResult,
+    SkillGapRequest,
+    SkillGapResponse,
     LearningPath,
     HealthResponse,
     EmbeddingService,
@@ -31,6 +33,7 @@ from services import (
     SkillAnalyzer,
     RecommendationEngine,
 )
+from services.skill_analysis import calculate_skill_gap
 
 # Initialize logging
 setup_logging()
@@ -189,6 +192,41 @@ async def generate_matches(request: MatchRequest):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to generate matches: {str(e)}"
+        )
+
+
+@app.post("/api/v1/skill-gap", response_model=SkillGapResponse)
+async def get_skill_gap(request: SkillGapRequest):
+    """
+    Calculate the skill gap between user skills and required skills.
+
+    This is a simple endpoint that performs a set difference operation
+    to identify which required skills the user does not currently possess.
+
+    **Use this endpoint for:**
+    - Quick skill gap checks
+    - Simple missing skill identification
+    - Backend API integration
+
+    **Use /api/v1/analyze-skills for:**
+    - Comprehensive skill analysis
+    - Learning recommendations
+    - Strategic career guidance
+    """
+    try:
+        logger.info(f"Simple skill gap check: {len(request.user_skills)} vs {len(request.required_skills)} skills")
+
+        result = calculate_skill_gap(request)
+
+        logger.info(f"Skill gap result: {len(result.missing_skills)} missing skills")
+
+        return result
+
+    except Exception as e:
+        logger.error(f"Skill gap calculation failed: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to calculate skill gap: {str(e)}"
         )
 
 

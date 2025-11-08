@@ -8,6 +8,8 @@ from .schemas import (
     MatchResult,
     SkillGap,
     SkillAnalysisResult,
+    SkillGapRequest,
+    SkillGapResponse,
     LearningPath,
     HealthResponse,
 )
@@ -20,6 +22,8 @@ __all__ = [
     "MatchResult",
     "SkillGap",
     "SkillAnalysisResult",
+    "SkillGapRequest",
+    "SkillGapResponse",
     "LearningPath",
     "HealthResponse",
     "EmbeddingService",
