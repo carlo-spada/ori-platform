@@ -11,27 +11,20 @@ import { GoalsStep } from "@/components/onboarding/GoalsStep";
 import { FinalizingStep } from "@/components/onboarding/FinalizingStep";
 import type { OnboardingData, OnboardingStepKey } from "@/lib/types";
 
-interface OnboardingProps {
-  userName?: string;
-  initialData?: Partial<OnboardingData>;
-  onSubmit?: (data: OnboardingData) => Promise<void> | void;
-}
-
 const STEPS: OnboardingStepKey[] = ['welcome', 'basicInfo', 'skills', 'goals', 'finalizing'];
+const DEFAULT_BASIC_INFO = { headline: "", location: "" } as const;
+const DEFAULT_GOALS = { longTermVision: "", targetRoles: [] as string[] };
 
-export default function Onboarding({
-  userName = "there",
-  initialData,
-  onSubmit
-}: OnboardingProps) {
+export default function OnboardingPage() {
+  const userName = "there"; // Placeholder until onboarding is wired to real user data
   const { t } = useTranslation();
   const router = useRouter();
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [data, setData] = useState<OnboardingData>({
-    basicInfo: initialData?.basicInfo || { headline: "", location: "" },
-    skills: initialData?.skills || [],
-    goals: initialData?.goals || { longTermVision: "", targetRoles: [] }
+    basicInfo: { ...DEFAULT_BASIC_INFO },
+    skills: [],
+    goals: { ...DEFAULT_GOALS },
   });
 
   const currentStep = STEPS[currentStepIndex];
@@ -57,6 +50,11 @@ export default function Onboarding({
     }
   };
 
+  const handleSubmit = async (_payload: OnboardingData) => {
+    // Placeholder for API integration (Supabase, etc.)
+    return Promise.resolve();
+  };
+
   const handleNext = async () => {
     if (currentStep === 'goals') {
       // This is the last data-entry step
@@ -64,9 +62,7 @@ export default function Onboarding({
       setCurrentStepIndex(currentStepIndex + 1); // Move to finalizing
 
       try {
-        if (onSubmit) {
-          await onSubmit(data);
-        }
+        await handleSubmit(data);
         // Simulate brief processing for UX
         setTimeout(() => {
           router.push('/app/dashboard');

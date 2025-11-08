@@ -59,8 +59,14 @@ Create a `.env.local` file in the root directory with:
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 
+# Backend API (core-api) URL
+NEXT_PUBLIC_API_URL=http://localhost:3001
+
 # Stripe Configuration
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
+
+# Optional: enable the PWA service worker build (defaults to off)
+NEXT_ENABLE_PWA=true
 ```
 
 4. Run the development server:

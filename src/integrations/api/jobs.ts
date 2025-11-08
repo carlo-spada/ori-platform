@@ -64,6 +64,9 @@ export async function fetchJobRecommendations(
   request: JobMatchRequest
 ): Promise<JobMatchResponse> {
   const supabase = getSupabaseClient();
+  if (!supabase) {
+    throw new Error('Supabase client is not configured. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.');
+  }
 
   // Get the current session to access the auth token
   const { data: { session } } = await supabase.auth.getSession();

@@ -37,6 +37,14 @@ export function BillingSettings({
 
   const handleManageSubscription = async () => {
     if (isPortalLoading) return;
+    if (!supabase) {
+      toast({
+        variant: 'destructive',
+        title: 'Configuration error',
+        description: 'Supabase is not configured. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.',
+      });
+      return;
+    }
     setIsPortalLoading(true);
     
     try {
@@ -133,7 +141,7 @@ export function BillingSettings({
               <Button
                 variant="outline"
                 onClick={handleManageSubscription}
-                disabled={isPortalLoading}
+                disabled={isPortalLoading || !supabase}
                 className="flex-1"
               >
                 {isPortalLoading ? 'Redirecting...' : labels.changePlanLabel}
@@ -141,7 +149,7 @@ export function BillingSettings({
               <Button
                 variant="outline"
                 onClick={handleManageSubscription}
-                disabled={isPortalLoading}
+                disabled={isPortalLoading || !supabase}
                 className="flex-1"
               >
                 {isPortalLoading ? 'Redirecting...' : labels.updatePaymentMethodLabel}
@@ -150,7 +158,7 @@ export function BillingSettings({
             <Button
               variant="outline"
               onClick={handleManageSubscription}
-              disabled={isPortalLoading}
+              disabled={isPortalLoading || !supabase}
               className="w-full"
             >
               {isPortalLoading ? 'Redirecting...' : labels.viewBillingHistoryLabel}
@@ -158,7 +166,7 @@ export function BillingSettings({
             <Button
               variant="ghost"
               onClick={handleManageSubscription}
-              disabled={isPortalLoading}
+              disabled={isPortalLoading || !supabase}
               className="text-red-400 hover:text-red-300 hover:bg-red-500/10 w-full"
             >
               {isPortalLoading ? 'Redirecting...' : labels.cancelSubscriptionLabel}
