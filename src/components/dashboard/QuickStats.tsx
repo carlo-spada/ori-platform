@@ -20,13 +20,22 @@ interface StatCardProps {
 
 function StatCard({ icon, label, value, trend }: StatCardProps) {
   return (
-    <div className="rounded-xl border border-border bg-card p-4 flex flex-col gap-3 hover:bg-card/80 transition-colors">
+    <article
+      className="rounded-xl border border-border bg-card p-4 flex flex-col gap-3 hover:bg-card/80 transition-colors"
+      aria-label={`${label}: ${value}`}
+    >
       <div className="flex items-center justify-between">
-        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+        <div
+          className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary"
+          aria-hidden="true"
+        >
           {icon}
         </div>
         {trend && (
-          <div className={`text-xs font-medium ${trend.isPositive ? 'text-green-500' : 'text-red-500'}`}>
+          <div
+            className={`text-xs font-medium ${trend.isPositive ? 'text-green-500' : 'text-red-500'}`}
+            aria-label={`${trend.isPositive ? 'Increased' : 'Decreased'} by ${trend.value} percent`}
+          >
             {trend.isPositive ? '+' : ''}{trend.value}%
           </div>
         )}
@@ -39,7 +48,7 @@ function StatCard({ icon, label, value, trend }: StatCardProps) {
           {label}
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 
@@ -56,30 +65,30 @@ export function QuickStats({
   const { t } = useTranslation();
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <section aria-label="Quick statistics" className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       <StatCard
-        icon={<Briefcase className="w-5 h-5" />}
+        icon={<Briefcase className="w-5 h-5" aria-hidden="true" />}
         label={t('dashboardPage.quickStats.activeApplications')}
         value={activeApplications}
         trend={{ value: 12, isPositive: true }}
       />
       <StatCard
-        icon={<Target className="w-5 h-5" />}
+        icon={<Target className="w-5 h-5" aria-hidden="true" />}
         label={t('dashboardPage.quickStats.jobMatches')}
         value={jobRecommendations}
         trend={{ value: 8, isPositive: true }}
       />
       <StatCard
-        icon={<TrendingUp className="w-5 h-5" />}
+        icon={<TrendingUp className="w-5 h-5" aria-hidden="true" />}
         label={t('dashboardPage.quickStats.skillsAdded')}
         value={skillsAdded}
         trend={{ value: 15, isPositive: true }}
       />
       <StatCard
-        icon={<CheckCircle2 className="w-5 h-5" />}
+        icon={<CheckCircle2 className="w-5 h-5" aria-hidden="true" />}
         label={t('dashboardPage.quickStats.profileCompletion')}
         value={`${profileCompletion}%`}
       />
-    </div>
+    </section>
   );
 }
