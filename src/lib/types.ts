@@ -28,6 +28,12 @@ export interface Skill {
   status: 'matched' | 'missing'; // Indicates if the user has this skill for the job
 }
 
+export interface SkillsGap {
+  userSkills: string[];
+  requiredSkills: string[];
+  missingSkills: string[];
+}
+
 export interface JobRecommendation {
   id: string;
   title: string;
@@ -48,7 +54,8 @@ export interface JobRecommendation {
     goalAlignment?: string;
     companyInsight?: string;
   };
-  skills_analysis?: Skill[]; // Skills gap analysis for the job
+  skills_analysis?: Skill[]; // Legacy skills gap analysis (matched/missing status per skill)
+  skillsGap?: SkillsGap; // New skills gap analysis from AI Engine
 }
 
 export interface CareerAdvice {

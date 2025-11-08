@@ -1,11 +1,67 @@
 import { CheckCircle, XCircle } from 'lucide-react';
-import { Skill } from '@/lib/types';
+import { Skill, SkillsGap } from '@/lib/types';
 
 interface SkillsGapDisplayProps {
-  skills: Skill[];
+  skills?: Skill[]; // Legacy format from skills_analysis
+  skillsGap?: SkillsGap; // New format from AI Engine
 }
 
-export function SkillsGapDisplay({ skills }: SkillsGapDisplayProps) {
+export function SkillsGapDisplay({ skills, skillsGap }: SkillsGapDisplayProps) {
+  // Handle new skillsGap format (prioritize this if available)
+  if (skillsGap && skillsGap.requiredSkills.length > 0) {
+    const matchedSkillsList = skillsGap.userSkills.filter(skill =>
+      skillsGap.requiredSkills.some(req => req.toLowerCase() === skill.toLowerCase())
+    );
+    const missingSkillsList = skillsGap.missingSkills;
+
+    return (
+      <div className="space-y-3">
+        {matchedSkillsList.length > 0 && (
+          <div>
+            <h4 className="text-xs font-medium text-muted-foreground mb-2">
+              Your Matching Skills
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {matchedSkillsList.map((skill, index) => (
+                <div
+                  key={`matched-${skill}-${index}`}
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-green-500/10 border border-green-500/20"
+                >
+                  <CheckCircle className="w-3.5 h-3.5 text-green-500" aria-hidden="true" />
+                  <span className="text-xs font-medium text-green-600 dark:text-green-400">
+                    {skill}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {missingSkillsList.length > 0 && (
+          <div>
+            <h4 className="text-xs font-medium text-muted-foreground mb-2">
+              Skills to Develop
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {missingSkillsList.map((skill, index) => (
+                <div
+                  key={`missing-${skill}-${index}`}
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-red-500/10 border border-red-500/20"
+                >
+                  <XCircle className="w-3.5 h-3.5 text-red-500" aria-hidden="true" />
+                  <span className="text-xs font-medium text-red-600 dark:text-red-400">
+                    {skill}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Fallback to legacy skills format
   if (!skills || skills.length === 0) {
     return null;
   }

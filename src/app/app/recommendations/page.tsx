@@ -74,6 +74,8 @@ export default function Recommendations() {
     summary: match.description || `Join ${match.company} as a ${match.title}`,
     datePosted: match.posted_date || match.created_at,
     detailHref: `/app/jobs/${match.id}`,
+    skills_analysis: match.skills_analysis,
+    skillsGap: match.skillsGap,
     // applyHref: match.apply_url, // Removed: field not present in API response
   })) || [];
 

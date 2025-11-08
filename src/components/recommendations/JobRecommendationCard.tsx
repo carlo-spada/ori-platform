@@ -53,8 +53,11 @@ export function JobRecommendationCard({ job, labels }: JobRecommendationCardProp
       </p>
 
       {/* Skills Gap Analysis - displays real data from API */}
-      {job.skills_analysis && job.skills_analysis.length > 0 && (
-        <SkillsGapDisplay skills={job.skills_analysis} />
+      {(job.skillsGap || (job.skills_analysis && job.skills_analysis.length > 0)) && (
+        <SkillsGapDisplay
+          skillsGap={job.skillsGap}
+          skills={job.skills_analysis}
+        />
       )}
 
       <div className="flex items-center gap-1 text-xs text-muted-foreground">

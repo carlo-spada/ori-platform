@@ -36,6 +36,11 @@ export interface JobMatchResponse {
       name: string;
       status: 'matched' | 'missing';
     }>;
+    skillsGap?: {
+      userSkills: string[];
+      requiredSkills: string[];
+      missingSkills: string[];
+    };
   }>;
   usage: {
     used: number;
