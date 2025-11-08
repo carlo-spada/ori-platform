@@ -55,7 +55,7 @@ export async function fetchJobRecommendations(
   const { data: { session } } = await supabase.auth.getSession();
 
   if (!session) {
-    throw new Error('No active session');
+    throw new Error('Authentication required: No active session found. Please sign in to view job recommendations.');
   }
 
   // Get the API URL from environment or default to localhost
