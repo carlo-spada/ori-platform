@@ -116,7 +116,7 @@ We welcome contributions! Before you begin, please read our contributor handbook
 
 - **[`AGENTS.md`](./AGENTS.md)**: The complete guide to our branching strategy, Git workflow, agent roles, and development best practices.
 
-All development happens on the `development` branch. Pull Requests are made from `development` into `main` for production deployment.
+All development happens on the `dev` branch. Pull Requests are made from `dev` into `main` for production deployment.
 
 ## 📄 License
 

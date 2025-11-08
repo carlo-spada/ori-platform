@@ -31,17 +31,17 @@ After every major change, update:
 # When claiming a task
 git add .tasks/
 git commit -m "chore(tasks): claim task A.md for implementation"
-git push origin development
+git push origin dev
 
 # When implementing changes
 git add .
 git commit -m "feat: implement feature X as per task A.md"
-git push origin development
+git push origin dev
 
 # When completing a task
 git add .tasks/
 git commit -m "chore(tasks): move A.md to done"
-git push origin development
+git push origin dev
 ```
 
 ## Branching & GitHub Workflow
@@ -49,16 +49,15 @@ git push origin development
 **IMPORTANT:** This repository uses a strict two-branch workflow:
 
 - **`main`**: Production branch (deployed to Vercel). **Direct pushes are BLOCKED.**
-- **`development`**: Working branch where all development happens
+- **`dev`**: Working branch where all development happens
 
 **Workflow:**
-Always work on `development` branch: `git checkout development && git pull`
-
-1. Make changes and commit regularly: `git commit -m "feat: description"`
-2. Push to development: `git push origin development`
-3. Create PR from `development` → `main` when ready to deploy
-4. PR requires: 1 approval, passing checks, conversation resolution, successful deployment
-5. After merge, Vercel automatically deploys to production
+1. Always work on `dev` branch: `git checkout dev && git pull`
+2. Make changes and commit regularly: `git commit -m "feat: description"`
+3. Push to dev: `git push origin dev`
+4. Create PR from `dev` → `main` when ready to deploy
+5. PR requires: 1 approval, passing checks, conversation resolution, successful deployment
+6. After merge, Vercel automatically deploys to production
 
 **Never attempt to push directly to `main`** - it will be rejected by branch protection rules.
 

@@ -11,30 +11,30 @@ To ensure the `main` branch remains stable and deployable at all times, we will 
 The repository uses a **simplified two-branch workflow**:
 
 - **`main`**: Production branch that is automatically deployed to Vercel. It must always be stable and ready for deployment. **Direct pushes to `main` are strictly prohibited** and enforced by GitHub branch protection rules.
-- **`development`**: The working branch where all development happens. All features, fixes, and changes are made here before being merged to `main` via Pull Request.
+- **`dev`**: The working branch where all development happens. All features, fixes, and changes are made here before being merged to `main` via Pull Request.
 
 ### Core Development Workflow
 
 All development follows this streamlined sequence:
 
-1.  **Start on Development**: Always work on the `development` branch:
+1.  **Start on Dev**: Always work on the `dev` branch:
 
     ```bash
-    git checkout development
-    git pull origin development
+    git checkout dev
+    git pull origin dev
     ```
 
-2.  **Develop**: Make your changes on the `development` branch. Commit regularly with clear, conventional commit messages following the format:
+2.  **Develop**: Make your changes on the `dev` branch. Commit regularly with clear, conventional commit messages following the format:
 
     ```bash
     git add .
     git commit -m "feat: add new feature"  # or fix:, chore:, docs:, etc.
     ```
 
-3.  **Push to Development**: Push your changes to the remote `development` branch:
+3.  **Push to Dev**: Push your changes to the remote `dev` branch:
 
     ```bash
-    git push origin development
+    git push origin dev
     ```
 
 4.  **Test Locally**: Before creating a PR, run all essential checks:
@@ -46,7 +46,7 @@ All development follows this streamlined sequence:
     # pnpm test (when applicable)
     ```
 
-5.  **Create a Pull Request**: When ready to deploy to production, create a PR from `development` → `main`:
+5.  **Create a Pull Request**: When ready to deploy to production, create a PR from `dev` → `main`:
     - The PR description should clearly explain the changes
     - Link related issues with `Closes #123`
     - All automated checks will run (linting, build, tests, CodeQL)
@@ -63,7 +63,7 @@ All development follows this streamlined sequence:
 
 This workflow is strictly enforced by GitHub branch protection rules:
 
-- **Pull Requests Required**: All code must enter `main` through a PR from `development`
+- **Pull Requests Required**: All code must enter `main` through a PR from `dev`
 - **No Direct Pushes**: Direct pushes to `main` are blocked for everyone
 - **Automated CI Checks**: GitHub Actions automatically runs `lint`, `build`, and `test` on every PR
 - **Required Approvals**: At least 1 approving review is required
@@ -79,7 +79,7 @@ This workflow is strictly enforced by GitHub branch protection rules:
 
 ## GitHub Considerations
 
-All code changes must be integrated into `main` via Pull Requests from `development`. Direct pushes to `main` are strictly prohibited and enforced by branch protection rules. Before creating a PR, ensure all local checks pass (`pnpm lint`, `pnpm build`). This workflow preserves version integrity, prevents integration errors, and ensures `main` is always production-ready.
+All code changes must be integrated into `main` via Pull Requests from `dev`. Direct pushes to `main` are strictly prohibited and enforced by branch protection rules. Before creating a PR, ensure all local checks pass (`pnpm lint`, `pnpm build`). This workflow preserves version integrity, prevents integration errors, and ensures `main` is always production-ready.
 
 ## Project Management Workflow
 
@@ -155,17 +155,17 @@ Follow these patterns for task management:
 # When claiming a task
 git add .tasks/
 git commit -m "chore(tasks): claim task A.md for implementation"
-git push origin development
+git push origin dev
 
 # When implementing changes
 git add .
 git commit -m "feat: implement feature X as per task A.md"
-git push origin development
+git push origin dev
 
 # When completing a task
 git add .tasks/
 git commit -m "chore(tasks): move A.md to done"
-git push origin development
+git push origin dev
 ```
 
 #### 3. Documentation Updates
@@ -200,17 +200,17 @@ After implementing a major change, follow this sequence:
 # Step 1: Commit code changes
 git add .
 git commit -m "feat: implement new feature"
-git push origin development
+git push origin dev
 
 # Step 2: Update relevant documentation
 git add README.md AGENTS.md CLAUDE.md  # or whichever files need updates
 git commit -m "docs: update guides to reflect new feature implementation"
-git push origin development
+git push origin dev
 
 # Step 3: Move task to completion
 git add .tasks/
 git commit -m "chore(tasks): complete task A.md"
-git push origin development
+git push origin dev
 ```
 
 #### 6. Why This Matters
@@ -267,8 +267,11 @@ Treat this document as the shared playbook. Whenever you introduce a major featu
 
 ### Recent Completions
 
+- **Branch Rename (Jan 2025):** Simplified working branch from `development` to `dev` for cleaner workflow commands
+- **Lint & Build Fixes (Jan 2025):** Resolved all TypeScript strict mode violations and React purity issues in dashboard and test files
+- **CI/CD Updates (Jan 2025):** Updated GitHub workflows to use pnpm v10 for lockfile compatibility
 - **AI Engine (Nov 2025):** Fully implemented Python FastAPI service with semantic matching, skill gap analysis, learning paths, and core-api integration
-- **Branch Simplification (Nov 2025):** Migrated from multi-agent branch structure to streamlined `main`/`development` workflow with comprehensive branch protection
+- **Branch Simplification (Nov 2025):** Migrated from multi-agent branch structure to streamlined `main`/`dev` workflow with comprehensive branch protection
 - **Automated Reviews:** Integrated Copilot code review for all PRs with automatic push reviews
 
 ### Immediate Next Steps
