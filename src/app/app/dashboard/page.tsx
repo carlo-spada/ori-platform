@@ -4,6 +4,7 @@ export const dynamic = 'force-dynamic';
 
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { setDocumentMeta } from '@/lib/seo';
 import { useAuth } from '@/contexts/AuthProvider';
 import { DashboardHeader } from '@/components/dashboard/DashboardHeader';
@@ -12,20 +13,83 @@ import { QuickStats } from '@/components/dashboard/QuickStats';
 import { RecentActivity, type ActivityItem } from '@/components/dashboard/RecentActivity';
 import { ChatWindow } from '@/components/chat/ChatWindow';
 import { ChatMessage } from '@/lib/navConfig';
+import { fetchChatHistory, sendChatMessage, mapBackendMessageToFrontend } from '@/integrations/api/chat';
 
 export default function Dashboard() {
   const { t } = useTranslation();
   const { user } = useAuth();
   const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User';
+  const queryClient = useQueryClient();
+  const [conversationId, setConversationId] = useState<string | undefined>(undefined);
 
-  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([
-    {
-      id: '1',
-      role: 'assistant',
-      content: t('dashboardPage.chat.initialMessage'),
-      timestamp: new Date().toISOString(),
+  // Fetch chat history
+  const { data: chatData, isLoading: isChatLoading } = useQuery({
+    queryKey: ['chat-history'],
+    queryFn: fetchChatHistory,
+    enabled: !!user,
+  });
+
+  // Extract messages and conversation ID from chat data
+  const chatMessages: ChatMessage[] = chatData?.messages?.map(mapBackendMessageToFrontend) || [];
+
+  // Update conversation ID when data loads
+  useEffect(() => {
+    if (chatData?.conversation?.id) {
+      setConversationId(chatData.conversation.id);
+    }
+  }, [chatData]);
+
+  // Mutation for sending messages
+  const sendMessageMutation = useMutation({
+    mutationFn: (content: string) => sendChatMessage(content, conversationId),
+    onMutate: async (content) => {
+      // Cancel outgoing refetches
+      await queryClient.cancelQueries({ queryKey: ['chat-history'] });
+
+      // Snapshot previous value
+      const previousChat = queryClient.getQueryData(['chat-history']);
+
+      // Optimistically update with user message
+      queryClient.setQueryData(['chat-history'], (old: any) => ({
+        ...old,
+        messages: [
+          ...(old?.messages || []),
+          {
+            id: `temp-${Date.now()}`,
+            conversation_id: conversationId || 'temp',
+            role: 'user',
+            content,
+            created_at: new Date().toISOString(),
+          },
+        ],
+      }));
+
+      return { previousChat };
     },
-  ]);
+    onSuccess: (data) => {
+      // Update conversation ID if this was the first message
+      if (!conversationId && data.conversation_id) {
+        setConversationId(data.conversation_id);
+      }
+
+      // Update cache with assistant's response
+      queryClient.setQueryData(['chat-history'], (old: any) => ({
+        ...old,
+        conversation: old?.conversation || { id: data.conversation_id },
+        messages: [
+          ...(old?.messages || []).filter((m: any) => !m.id.startsWith('temp-')),
+          data.message,
+        ],
+      }));
+    },
+    onError: (err, newMessage, context: any) => {
+      // Rollback on error
+      if (context?.previousChat) {
+        queryClient.setQueryData(['chat-history'], context.previousChat);
+      }
+      console.error('Failed to send message:', err);
+    },
+  });
 
   // Mock data for QuickStats (will be replaced with real data)
   const stats = {
@@ -83,25 +147,9 @@ export default function Dashboard() {
     });
   }, []);
 
+  // Handler for sending messages
   const handleSendMessage = (message: string) => {
-    const userMessage: ChatMessage = {
-      id: Date.now().toString(),
-      role: 'user',
-      content: message,
-      timestamp: new Date().toISOString(),
-    };
-
-    setChatHistory((prev) => [...prev, userMessage]);
-
-    setTimeout(() => {
-      const aiMessage: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: t('dashboardPage.chat.responseMessage'),
-        timestamp: new Date().toISOString(),
-      };
-      setChatHistory((prev) => [...prev, aiMessage]);
-    }, 1000);
+    sendMessageMutation.mutate(message);
   };
 
   return (
@@ -127,7 +175,11 @@ export default function Dashboard() {
             <RecentActivity activities={recentActivities} />
           </div>
           <div className="h-96 lg:h-auto lg:flex-1 min-h-0">
-            <ChatWindow messages={chatHistory} onSend={handleSendMessage} />
+            <ChatWindow
+              messages={chatMessages}
+              onSend={handleSendMessage}
+              isLoading={isChatLoading}
+            />
           </div>
         </div>
       </div>

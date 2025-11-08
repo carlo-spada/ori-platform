@@ -8,9 +8,10 @@ import { cn } from '@/lib/utils';
 export interface ChatWindowProps {
   messages: ChatMessage[];
   onSend?: (message: string) => void;
+  isLoading?: boolean;
 }
 
-export function ChatWindow({ messages, onSend }: ChatWindowProps) {
+export function ChatWindow({ messages, onSend, isLoading = false }: ChatWindowProps) {
   const { t } = useTranslation();
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -51,7 +52,14 @@ export function ChatWindow({ messages, onSend }: ChatWindowProps) {
       </header>
 
       <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 space-y-4">
-        {messages.length === 0 ? (
+        {isLoading ? (
+          <div className="flex items-center justify-center h-full">
+            <div className="flex flex-col items-center gap-2">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+              <p className="text-sm text-muted-foreground">Loading conversation...</p>
+            </div>
+          </div>
+        ) : messages.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <p className="text-sm text-muted-foreground text-center max-w-sm">
               {t('dashboardPage.chat.emptyStateMessage')}
