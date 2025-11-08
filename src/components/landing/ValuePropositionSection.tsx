@@ -40,10 +40,10 @@ export function ValuePropositionSection() {
     <Section data-testid="values" className="bg-surface/50">
       <div className="text-center mb-12">
         <h2 className="text-3xl sm:text-4xl font-semibold text-foreground mb-4">
-          {t('landing.whyAura.title')}
+          {t('landing.whyOri.title')}
         </h2>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          {t('landing.whyAura.subtitle')}
+          {t('landing.whyOri.subtitle')}
         </p>
       </div>
 

@@ -9,7 +9,10 @@
       "Bash(git push:*)",
       "Bash(python -c:*)",
       "Bash(git restore:*)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(git fetch:*)",
+      "Bash(pnpm --filter @ori/core-api build:*)",
+      "Bash(pkill:*)"
     ],
     "deny": [],
     "ask": []
