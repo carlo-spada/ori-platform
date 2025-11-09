@@ -1,6 +1,6 @@
 # Translation Scripts
 
-This directory contains scripts for translating content using DeepL API.
+This directory contains automated translation scripts powered by DeepL API for maintaining multi-language support across the entire application.
 
 ## Setup
 
@@ -35,15 +35,76 @@ source .env.local
 tsx scripts/translate-content.ts
 ```
 
-## Usage
+## Available Scripts
 
-### Translate All Legal Documents
+### 1. `sync-translations.ts` (Recommended)
+Synchronizes missing translations across all languages. This is the main script you should use for regular translation updates.
 
-This will translate Terms of Service, Privacy Policy, and Cookie Policy to German, Spanish, French, and Italian:
+```bash
+DEEPL_API_KEY=your-key tsx scripts/sync-translations.ts
+```
+
+**Features:**
+- Only translates missing keys (preserves existing translations)
+- Shows progress and API usage
+- Handles all namespaces automatically
+- Efficient API usage with rate limiting protection
+
+### 2. `extract-translatable.ts`
+Scans the codebase to find hardcoded strings that should be translated.
+
+```bash
+# Scan and report
+tsx scripts/extract-translatable.ts
+
+# Generate detailed JSON report
+tsx scripts/extract-translatable.ts --report
+
+# Automatically add found strings to translation files
+tsx scripts/extract-translatable.ts --fix
+```
+
+**Features:**
+- Identifies JSX text, props, toast messages, and errors
+- Suggests translation keys
+- Generates migration guide
+- Can auto-fix by adding to translation files
+
+### 3. `translate-all.ts`
+Comprehensive translation script with advanced options.
+
+```bash
+# Translate everything
+DEEPL_API_KEY=your-key tsx scripts/translate-all.ts
+
+# Translate specific namespace only
+DEEPL_API_KEY=your-key tsx scripts/translate-all.ts --namespace=translation
+
+# Translate to specific language only
+DEEPL_API_KEY=your-key tsx scripts/translate-all.ts --language=es
+
+# Check translation status without translating
+DEEPL_API_KEY=your-key tsx scripts/translate-all.ts --check-only
+
+# Force retranslation (overwrites existing)
+DEEPL_API_KEY=your-key tsx scripts/translate-all.ts --force
+```
+
+### 4. `translate-content.ts`
+Extracts and translates legal documents from React component files.
 
 ```bash
 DEEPL_API_KEY=your-key tsx scripts/translate-content.ts
 ```
+
+### 5. `translate-missing.ts`
+Legacy script for filling in missing translations.
+
+```bash
+DEEPL_API_KEY=your-key tsx scripts/translate-missing.ts
+```
+
+## Usage
 
 ### What Gets Translated
 
