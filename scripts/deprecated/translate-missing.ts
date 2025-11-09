@@ -16,7 +16,11 @@ if (!DEEPL_API_KEY) {
   process.exit(1)
 }
 
-const translator = new deepl.Translator(DEEPL_API_KEY)
+// Detect API key type (free keys end with :fx)
+const isFreeKey = DEEPL_API_KEY.endsWith(':fx')
+const translator = new deepl.Translator(DEEPL_API_KEY, {
+  serverUrl: isFreeKey ? 'https://api-free.deepl.com' : undefined
+})
 
 // Helper to add delay between API calls to avoid rate limiting
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))

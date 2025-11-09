@@ -157,13 +157,34 @@
       "reassurance": "Guidage calme et précis, à vos conditions"
     },
     "toc": [
-      { "id": "intelligent-job-discovery", "label": "Découverte" },
-      { "id": "adaptive-upskilling", "label": "Montée en compétences" },
-      { "id": "ai-application-builder", "label": "Applications" },
-      { "id": "reflective-growth", "label": "Croissance" },
-      { "id": "empathetic-companion", "label": "Compagnon" },
-      { "id": "market-intelligence", "label": "Marché" },
-      { "id": "earned-autonomy", "label": "Autonomie" }
+      {
+        "id": "intelligent-job-discovery",
+        "label": "Découverte"
+      },
+      {
+        "id": "adaptive-upskilling",
+        "label": "Montée en compétences"
+      },
+      {
+        "id": "ai-application-builder",
+        "label": "Applications"
+      },
+      {
+        "id": "reflective-growth",
+        "label": "Croissance"
+      },
+      {
+        "id": "empathetic-companion",
+        "label": "Compagnon"
+      },
+      {
+        "id": "market-intelligence",
+        "label": "Marché"
+      },
+      {
+        "id": "earned-autonomy",
+        "label": "Autonomie"
+      }
     ],
     "features": [
       {
@@ -501,7 +522,19 @@
       "title": "Parlez à Ori",
       "placeholder": "Demandez à Ori vos prochaines étapes, options ou tout rôle que vous envisagez…",
       "sendLabel": "Envoyer",
-      "emptyStateMessage": "Commencez une conversation avec Ori. Posez des questions sur les parcours de carrière, les compétences à développer ou les rôles spécifiques qui vous intéressent."
+      "emptyStateMessage": "Commencez une conversation avec Ori. Posez des questions sur les parcours de carrière, les compétences à développer ou les rôles spécifiques qui vous intéressent.",
+      "initialMessage": "Bonjour, je suis Ori, votre compagnon de carrière en IA. Comment puis-je vous aider aujourd'hui ?",
+      "responseMessage": "Je comprends que vous souhaitiez des conseils. Laissez-moi réfléchir à la meilleure façon de vous aider..."
+    },
+    "quickStats": {
+      "activeApplications": "Active Applications",
+      "jobMatches": "Job Matches",
+      "skillsAdded": "Skills Added",
+      "profileCompletion": "Profile Completion"
+    },
+    "recentActivity": {
+      "title": "Recent Activity",
+      "emptyMessage": "No recent activity"
     }
   },
   "profilePage": {
@@ -667,7 +700,8 @@
       "deleteAccountConfirmButton": "Supprimer définitivement le compte",
       "deleteAccountCancelButton": "Annuler",
       "exportSuccess": "Demande d'exportation des données envoyée avec succès",
-      "deleteSuccess": "Votre compte a été supprimé"
+      "deleteSuccess": "Votre compte a été supprimé",
+      "logoutLabel": "Déconnexion"
     },
     "notifications": {
       "heading": "Notifications",
@@ -760,5 +794,41 @@
   },
   "tooltips": {
     "comingSoon": "Fonctionnalité à venir"
+  },
+  "earlyAccessModal": {
+    "title": "We're Building Something Special",
+    "description": "Ori is crafting the future of AI-powered career development. Be among the first to experience it.",
+    "benefits": {
+      "firstAccess": "Be first to access Ori when we launch",
+      "foundingCommunity": "Join our exclusive founding community",
+      "shapeProduct": "Shape the product with your feedback",
+      "specialPerks": "Special perks for early supporters"
+    },
+    "form": {
+      "firstNameLabel": "First Name (optional)",
+      "firstNamePlaceholder": "Your first name",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "your@email.com",
+      "submitButton": "Join the Early Access List",
+      "submitting": "Joining the waitlist...",
+      "disclaimer": "We'll only send you important updates about Ori's development. No spam, ever. Unsubscribe anytime."
+    },
+    "success": {
+      "title": "You're on the list!",
+      "description": "Thanks{{name}}! We'll keep you posted on our journey to revolutionize career development.",
+      "descriptionNoName": "Thanks! We'll keep you posted on our journey to revolutionize career development.",
+      "nextSteps": {
+        "title": "What's next?",
+        "checkInbox": "Check your inbox for a welcome email",
+        "followBlog": "Follow our blog for weekly insights",
+        "joinCommunity": "Join our community discussions"
+      }
+    },
+    "toast": {
+      "success": "Welcome to the Ori community!",
+      "successDescription": "Check your inbox for a special welcome message.",
+      "error": "Something went wrong. Please try again.",
+      "invalidEmail": "Please enter a valid email address"
+    }
   }
 }

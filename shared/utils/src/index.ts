@@ -89,7 +89,25 @@ export function calculateMatchScore(
 
 // Validate email format
 export function isValidEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  // Prevent ReDoS attacks by limiting input length
+  if (!email || email.length > 320) { // RFC 5321 specifies 320 as max email length
+    return false
+  }
+
+  // Use a more efficient regex pattern that avoids catastrophic backtracking
+  // This pattern is less permissive but safer and follows common email formats
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+
+  // Additional validation to prevent edge cases
+  if (email.indexOf('@') === -1 || email.indexOf('@') !== email.lastIndexOf('@')) {
+    return false // Must have exactly one @ symbol
+  }
+
+  const parts = email.split('@')
+  if (parts[0].length > 64 || parts[1].length > 255) {
+    return false // Local part max 64 chars, domain part max 255 chars
+  }
+
   return emailRegex.test(email)
 }
 
