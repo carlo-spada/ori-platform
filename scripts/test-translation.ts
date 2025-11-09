@@ -15,14 +15,17 @@ if (!DEEPL_API_KEY) {
   process.exit(1)
 }
 
+// TypeScript now knows DEEPL_API_KEY is defined after the check
+const API_KEY: string = DEEPL_API_KEY
+
 async function main() {
   console.log('\n🧪 Testing DeepL Translation\n')
   console.log('=' .repeat(50))
 
   try {
     // Handle both free and Pro keys
-    const isFreeKey = DEEPL_API_KEY.endsWith(':fx')
-    const translator = new deepl.Translator(DEEPL_API_KEY, {
+    const isFreeKey = API_KEY.endsWith(':fx')
+    const translator = new deepl.Translator(API_KEY, {
       serverUrl: isFreeKey ? 'https://api-free.deepl.com' : undefined
     })
     console.log(`API Key Type: ${isFreeKey ? 'FREE' : 'PRO'}`)
@@ -58,12 +61,13 @@ async function main() {
           preserveFormatting: true,
         })
 
-        const langName = {
+        const langNames: Record<string, string> = {
           'de': '🇩🇪 German',
           'es': '🇪🇸 Spanish',
           'fr': '🇫🇷 French',
           'it': '🇮🇹 Italian',
-        }[lang]
+        }
+        const langName = langNames[lang]
 
         console.log(`${langName}: "${result.text}"`)
       }

@@ -25,7 +25,7 @@ const options = {
 }
 
 // Patterns that indicate hardcoded text
-const TEXT_PATTERNS = [
+const _TEXT_PATTERNS = [
   // JSX text content
   />([^<>{}\n]+)</g,
   // String literals in props
@@ -53,7 +53,7 @@ const EXCLUDE_PATTERNS = [
 ]
 
 // File patterns to scan
-const SCAN_PATTERNS = [
+const _SCAN_PATTERNS = [
   'src/**/*.tsx',
   'src/**/*.ts',
   'src/**/*.jsx',
@@ -61,7 +61,7 @@ const SCAN_PATTERNS = [
 ]
 
 // Files/folders to ignore
-const IGNORE_PATTERNS = [
+const _IGNORE_PATTERNS = [
   '**/node_modules/**',
   '**/dist/**',
   '**/*.test.*',
@@ -123,7 +123,7 @@ async function extractFromFile(filePath: string): Promise<ExtractedText[]> {
   const extracted: ExtractedText[] = []
 
   // Skip if file already uses i18n heavily
-  const hasI18n = content.includes('useTranslation') || content.includes('i18next')
+  const _hasI18n = content.includes('useTranslation') || content.includes('i18next')
 
   // Extract JSX text content
   const jsxMatches = content.matchAll(/>([^<>{}\n]+)</g)
@@ -208,7 +208,7 @@ async function extractFromFile(filePath: string): Promise<ExtractedText[]> {
  */
 function generateTranslationKey(text: string, type: string): string {
   // Convert to camelCase
-  let key = text
+  const key = text
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, '') // Remove special chars
     .trim()

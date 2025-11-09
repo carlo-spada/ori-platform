@@ -108,8 +108,8 @@ const translator = new deepl.Translator(DEEPL_API_KEY, {
 /**
  * Enhanced error notification system
  */
-function notifyError(error: any, context: string): void {
-  const errorMessage = error.message || error.toString()
+function notifyError(error: Error | unknown, context: string): void {
+  const errorMessage = error instanceof Error ? error.message : String(error)
 
   console.error(`\n${colors.red}${'🚨'.repeat(20)}${colors.reset}`)
   console.error(`${colors.red}🚨 TRANSLATION ERROR - ACTION REQUIRED!${colors.reset}`)
@@ -164,7 +164,7 @@ async function logFailedTranslation(
 /**
  * Load JSON file safely
  */
-async function loadJson(filePath: string): Promise<any> {
+async function loadJson(filePath: string): Promise<Record<string, unknown> | null> {
   try {
     const content = await fs.readFile(filePath, 'utf-8')
     return JSON.parse(content)
@@ -176,7 +176,7 @@ async function loadJson(filePath: string): Promise<any> {
 /**
  * Save JSON file with proper formatting
  */
-async function saveJson(filePath: string, data: any): Promise<void> {
+async function saveJson(filePath: string, data: Record<string, unknown>): Promise<void> {
   await fs.mkdir(path.dirname(filePath), { recursive: true })
   await fs.writeFile(filePath, JSON.stringify(data, null, 2) + '\n', 'utf-8')
 }
@@ -184,15 +184,15 @@ async function saveJson(filePath: string, data: any): Promise<void> {
 /**
  * Extract all keys from nested object with dot notation
  */
-function extractKeys(obj: any, prefix = ''): Map<string, any> {
-  const keys = new Map<string, any>()
+function extractKeys(obj: Record<string, unknown>, prefix = ''): Map<string, unknown> {
+  const keys = new Map<string, unknown>()
 
   for (const [key, value] of Object.entries(obj)) {
     const fullKey = prefix ? `${prefix}.${key}` : key
 
     if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
       // Recursively extract nested keys
-      const nestedKeys = extractKeys(value, fullKey)
+      const nestedKeys = extractKeys(value as Record<string, unknown>, fullKey)
       for (const [k, v] of nestedKeys) {
         keys.set(k, v)
       }
@@ -207,15 +207,15 @@ function extractKeys(obj: any, prefix = ''): Map<string, any> {
 /**
  * Set nested value using dot notation
  */
-function setNestedValue(obj: any, path: string, value: any): void {
+function setNestedValue(obj: Record<string, unknown>, path: string, value: unknown): void {
   const keys = path.split('.')
-  let current = obj
+  let current: Record<string, unknown> = obj
 
   for (let i = 0; i < keys.length - 1; i++) {
     if (!(keys[i] in current)) {
       current[keys[i]] = {}
     }
-    current = current[keys[i]]
+    current = current[keys[i]] as Record<string, unknown>
   }
 
   current[keys[keys.length - 1]] = value
@@ -244,7 +244,7 @@ async function translateText(
 
       stats.charactersUsed += text.length
       return result.text
-    } catch (error: any) {
+    } catch (error) {
       if (attempt === retries) {
         throw error
       }
@@ -286,7 +286,7 @@ async function processNamespace(
   const sourceKeys = extractKeys(sourceContent)
 
   // Load or initialize target content
-  let targetContent = await loadJson(targetPath) || {}
+  const targetContent = await loadJson(targetPath) || {}
   const targetKeys = extractKeys(targetContent)
 
   // Find missing keys
@@ -343,18 +343,19 @@ async function processNamespace(
         process.stdout.write(`\r   ${colors.dim}Progress: ${i}/${missingKeys.length}${colors.reset}`)
       }
 
-      const translatedValue = await translateText(sourceValue, targetLangCode)
+      const translatedValue = await translateText(sourceValue as string, targetLangCode)
       setNestedValue(targetContent, key, translatedValue)
       translated++
       stats.translated++
-    } catch (error: any) {
+    } catch (error) {
       failed++
       stats.failed++
-      await logFailedTranslation(namespace, targetLang, key, error.message)
+      const errorMessage = error instanceof Error ? error.message : String(error)
+      await logFailedTranslation(namespace, targetLang, key, errorMessage)
 
       // Keep original or source value on failure
       if (!targetKeys.has(key)) {
-        setNestedValue(targetContent, key, `[TRANSLATION_FAILED] ${sourceValue}`)
+        setNestedValue(targetContent, key, `[TRANSLATION_FAILED] ${sourceValue as string}`)
       }
     }
   }
@@ -491,7 +492,7 @@ async function main() {
       // No failed translations
     }
 
-  } catch (error: any) {
+  } catch (error) {
     notifyError(error, 'Translation Process')
     process.exit(1)
   }

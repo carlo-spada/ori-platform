@@ -21,10 +21,16 @@ export function LegalDocument({ namespace, fallbackContent }: LegalDocumentProps
   const content = t('content', { defaultValue: fallbackContent || '' })
 
   // Get table of contents items if they exist
-  const tocItems = t('tocItems', { returnObjects: true, defaultValue: [] }) as Array<{
+  const tocItemsRaw = t('tocItems', { returnObjects: true, defaultValue: [] }) as Array<{
     id: string
     title: string
   }>
+
+  // Map title to label for LegalPageLayout compatibility
+  const tocItems = tocItemsRaw.map(item => ({
+    id: item.id,
+    label: item.title
+  }))
 
   return (
     <LegalPageLayout

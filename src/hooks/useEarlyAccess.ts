@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 interface EarlyAccessData {
   email: string
@@ -9,12 +9,9 @@ interface EarlyAccessData {
 }
 
 export function useEarlyAccess() {
-  const [hasJoinedEarlyAccess, setHasJoinedEarlyAccess] = useState(false)
-  const [showModal, setShowModal] = useState(false)
-
-  useEffect(() => {
-    // Check if user has already joined early access
-    if (typeof window === 'undefined') return
+  const [hasJoinedEarlyAccess, setHasJoinedEarlyAccess] = useState(() => {
+    // Initialize state from localStorage to avoid cascading renders
+    if (typeof window === 'undefined') return false
 
     const stored = localStorage.getItem('ori-early-access')
     if (stored) {
@@ -25,18 +22,19 @@ export function useEarlyAccess() {
         const daysSinceJoined = (Date.now() - joinedDate.getTime()) / (1000 * 60 * 60 * 24)
 
         if (daysSinceJoined < 30) {
-          setHasJoinedEarlyAccess(true)
+          return true
         } else {
           // It's been over 30 days, they can join again if they want
-          setHasJoinedEarlyAccess(false)
+          return false
         }
       } catch {
-        setHasJoinedEarlyAccess(false)
+        return false
       }
     } else {
-      setHasJoinedEarlyAccess(false)
+      return false
     }
-  }, [])
+  })
+  const [showModal, setShowModal] = useState(false)
 
   const openEarlyAccessModal = () => {
     console.log('Opening early access modal...')
