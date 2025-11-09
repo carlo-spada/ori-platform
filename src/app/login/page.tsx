@@ -36,7 +36,7 @@ export default function Login() {
   // Redirect authenticated users
   useEffect(() => {
     if (user) {
-      router.push('/app/dashboard')
+      router.push('/dashboard')
     }
   }, [user, router])
 

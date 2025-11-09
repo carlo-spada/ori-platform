@@ -66,6 +66,48 @@ git push origin dev
 
 Ori Platform is an AI-powered career companion built as a pnpm workspace monorepo. The project combines a Next.js 16 frontend with backend microservices, designed to help users discover and pursue fulfilling professional roles through personalized career guidance, up-skilling paths, and real-time market intelligence.
 
+## Subdomain Architecture
+
+The application uses subdomain-based routing to separate marketing and application experiences:
+
+- **Marketing Site** (`getori.app`): Public pages (landing, pricing, about, blog, features, legal)
+- **Application** (`app.getori.app`): Authenticated app (dashboard, profile, applications, login, signup)
+
+**Routing is handled automatically by middleware** (`src/middleware.ts`):
+- Marketing pages on main domain redirect to app subdomain when accessing `/login`, `/signup`, `/app/*`
+- App subdomain root (`/`) rewrites to dashboard
+- Clean URLs on app subdomain: `/dashboard` instead of `/app/dashboard`
+- PWA configured to open directly to `app.getori.app`
+
+**File Structure** remains unchanged - subdomain routing is handled by middleware:
+```
+src/app/
+├── page.tsx              # Landing page → getori.app
+├── about/                # Marketing → getori.app
+├── pricing/              # Marketing → getori.app
+├── blog/                 # Marketing → getori.app
+├── features/             # Marketing → getori.app
+├── legal/                # Marketing → getori.app
+├── login/                # Auth → app.getori.app (middleware redirects here)
+├── signup/               # Auth → app.getori.app (middleware redirects here)
+├── onboarding/           # Onboarding → app.getori.app
+├── select-plan/          # Plan selection → app.getori.app
+└── app/                  # Authenticated app → app.getori.app
+    ├── dashboard/        # Served as /dashboard on app subdomain
+    ├── profile/          # Served as /profile on app subdomain
+    ├── applications/     # Served as /applications on app subdomain
+    ├── recommendations/  # Served as /recommendations on app subdomain
+    └── settings/         # Served as /settings on app subdomain
+```
+
+**How it works:**
+- Files remain in their original locations
+- Middleware detects subdomain and redirects/rewrites accordingly
+- On `app.getori.app`, `/dashboard` rewrites to `/app/dashboard` internally
+- Users see clean URLs: `app.getori.app/dashboard` not `app.getori.app/app/dashboard`
+
+See `docs/SUBDOMAIN_MIGRATION.md` for complete setup and deployment details.
+
 ## Monorepo Structure
 
 This is a pnpm workspace. The key directories are:

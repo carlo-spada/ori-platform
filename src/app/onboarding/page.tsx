@@ -85,7 +85,7 @@ export default function OnboardingPage() {
           // Brief delay for UX before redirect
           setTimeout(() => {
             toast.success('Welcome to Ori! Your profile has been created.')
-            router.push('/app/dashboard')
+            router.push('/dashboard')
           }, 1500)
         },
         onError: (error) => {
