@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button'
 import { setDocumentMeta } from '@/lib/seo'
 import { useAuth } from '@/contexts/AuthProvider'
 import { toast } from '@/components/ui/sonner'
+import { EarlyAccessModal } from '@/components/EarlyAccessModal'
+import { useEarlyAccess } from '@/hooks/useEarlyAccess'
 
 const loginSchema = z.object({
   email: z
@@ -23,6 +25,7 @@ export default function Login() {
   const router = useRouter()
   const { signInWithPassword, user } = useAuth()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { showModal, closeEarlyAccessModal, openEarlyAccessModal } = useEarlyAccess()
 
   useEffect(() => {
     setDocumentMeta({
@@ -43,6 +46,11 @@ export default function Login() {
     e.preventDefault()
     if (isSubmitting) return
 
+    // Show early access modal instead of attempting login
+    openEarlyAccessModal()
+    return
+
+    /* Original login code - preserved for future use
     setIsSubmitting(true)
 
     try {
@@ -81,6 +89,7 @@ export default function Login() {
     } finally {
       setIsSubmitting(false)
     }
+    */
   }
 
   return (
@@ -164,6 +173,13 @@ export default function Login() {
           </p>
         </form>
       </div>
+
+      {/* Early Access Modal */}
+      <EarlyAccessModal
+        isOpen={showModal}
+        onClose={closeEarlyAccessModal}
+        trigger="login"
+      />
     </div>
   )
 }

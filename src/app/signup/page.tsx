@@ -9,6 +9,8 @@ import { setDocumentMeta } from '@/lib/seo'
 import { useAuth } from '@/contexts/AuthProvider'
 import { toast } from '@/components/ui/sonner'
 import { CheckCircle2 } from 'lucide-react'
+import { EarlyAccessModal } from '@/components/EarlyAccessModal'
+import { useEarlyAccess } from '@/hooks/useEarlyAccess'
 
 const signupSchema = z.object({
   email: z
@@ -25,6 +27,7 @@ export default function Signup() {
   const { signUp, user } = useAuth()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false)
+  const { showModal, closeEarlyAccessModal, openEarlyAccessModal } = useEarlyAccess()
 
   useEffect(() => {
     setDocumentMeta({
@@ -45,6 +48,11 @@ export default function Signup() {
     e.preventDefault()
     if (isSubmitting) return
 
+    // Show early access modal instead of attempting signup
+    openEarlyAccessModal()
+    return
+
+    /* Original signup code - preserved for future use
     setIsSubmitting(true)
 
     try {
@@ -81,6 +89,7 @@ export default function Signup() {
     } finally {
       setIsSubmitting(false)
     }
+    */
   }
 
   if (showConfirmation) {
@@ -218,6 +227,13 @@ export default function Signup() {
           </p>
         </form>
       </div>
+
+      {/* Early Access Modal */}
+      <EarlyAccessModal
+        isOpen={showModal}
+        onClose={closeEarlyAccessModal}
+        trigger="signup"
+      />
     </div>
   )
 }
