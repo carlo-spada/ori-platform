@@ -64,7 +64,13 @@
       "Bash(done)",
       "Bash(paste:*)",
       "Bash(git rm:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(DEEPL_API_KEY=f1cd8f03-4003-4873-9367-917bf22b0ab8:fx tsx:*)",
+      "Bash(DEEPL_API_KEY=f1cd8f03-4003-4873-9367-917bf22b0ab8:fx pnpm exec tsx:*)",
+      "Bash(for lang in es fr it)",
+      "Bash(do ls -1 public/locales/$lang/legal-terms.json)",
+      "Bash(echo:*)",
+      "Bash(node -e:*)"
     ],
     "deny": [],
     "ask": []

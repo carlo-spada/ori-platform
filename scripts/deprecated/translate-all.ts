@@ -198,8 +198,9 @@ async function translateText(
 
     // Restore preserved patterns
     return restorePatterns(result.text, placeholders)
-  } catch (error: any) {
-    if (error.message?.includes('Too many requests') && retries > 0) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    if (errorMessage.includes('Too many requests') && retries > 0) {
       console.log(`${colors.yellow}⚠️  Rate limited, waiting 2 seconds...${colors.reset}`)
       await delay(2000)
       return translateText(text, targetLang, retries - 1)
@@ -212,11 +213,11 @@ async function translateText(
  * Translate an object recursively
  */
 async function translateObject(
-  obj: any,
+  obj: unknown,
   targetLang: deepl.TargetLanguageCode,
   parentKey = '',
   depth = 0
-): Promise<any> {
+): Promise<unknown> {
   if (typeof obj === 'string') {
     // Skip if parent key is in skip list
     if (SKIP_KEYS.some(skip => parentKey.toLowerCase().includes(skip))) {
@@ -241,7 +242,7 @@ async function translateObject(
   }
 
   if (typeof obj === 'object' && obj !== null) {
-    const translated: any = {}
+    const translated: Record<string, unknown> = {}
     for (const [key, value] of Object.entries(obj)) {
       // Build the key path for context
       const keyPath = parentKey ? `${parentKey}.${key}` : key
@@ -321,7 +322,7 @@ async function extractTranslationKeys(): Promise<Set<string>> {
 /**
  * Merge translations, keeping existing ones and adding missing ones
  */
-function mergeTranslations(existing: any, newTranslations: any): any {
+function mergeTranslations(existing: Record<string, unknown>, newTranslations: Record<string, unknown>): Record<string, unknown> {
   if (!existing) return newTranslations
 
   const merged = { ...existing }
@@ -330,7 +331,7 @@ function mergeTranslations(existing: any, newTranslations: any): any {
     if (!(key in merged)) {
       merged[key] = value
     } else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-      merged[key] = mergeTranslations(merged[key], value)
+      merged[key] = mergeTranslations(merged[key] as Record<string, unknown>, value as Record<string, unknown>)
     }
   }
 
@@ -382,8 +383,8 @@ async function translateNamespace(
   let finalContent = translated
   if (!options.force && await fileExists(targetPath)) {
     const existingContent = await fs.readFile(targetPath, 'utf-8')
-    const existingJson = JSON.parse(existingContent)
-    finalContent = mergeTranslations(existingJson, translated)
+    const existingJson = JSON.parse(existingContent) as Record<string, unknown>
+    finalContent = mergeTranslations(existingJson, translated as Record<string, unknown>)
   }
 
   // Save the translated content

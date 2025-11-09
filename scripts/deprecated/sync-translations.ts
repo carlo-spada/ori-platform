@@ -32,7 +32,7 @@ const serverUrl = isFreeKey ? 'https://api-free.deepl.com' : undefined
 const translator = new deepl.Translator(DEEPL_API_KEY, { serverUrl })
 
 // Error notification helper
-function notifyError(error: any, context: string) {
+function notifyError(error: Error | unknown, context: string) {
   console.error('\n' + '🚨'.repeat(20))
   console.error('🚨 TRANSLATION API ERROR - ACTION REQUIRED!')
   console.error('🚨'.repeat(20))
@@ -93,8 +93,9 @@ async function translateText(
       preserveFormatting: true,
     })
     return result.text
-  } catch (error: any) {
-    console.error(`Failed to translate to ${targetLang}:`, error.message)
+  } catch (error: Error | unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    console.error(`Failed to translate to ${targetLang}:`, errorMessage)
     return text // Return original text if translation fails
   }
 }
@@ -102,7 +103,7 @@ async function translateText(
 /**
  * Deep merge objects, only adding missing keys
  */
-function deepMerge(target: any, source: any): any {
+function deepMerge(target: Record<string, unknown>, source: Record<string, unknown>): Record<string, unknown> {
   const result = { ...target }
 
   for (const key in source) {
@@ -122,7 +123,7 @@ function deepMerge(target: any, source: any): any {
 /**
  * Find missing keys in target compared to source
  */
-function findMissingKeys(source: any, target: any, prefix = ''): string[] {
+function findMissingKeys(source: Record<string, unknown>, target: Record<string, unknown>, prefix = ''): string[] {
   const missing: string[] = []
 
   for (const key in source) {
@@ -143,7 +144,7 @@ function findMissingKeys(source: any, target: any, prefix = ''): string[] {
 /**
  * Get value from nested object using dot notation
  */
-function getNestedValue(obj: any, path: string): any {
+function getNestedValue(obj: Record<string, unknown>, path: string): unknown {
   const keys = path.split('.')
   let current = obj
 
@@ -161,7 +162,7 @@ function getNestedValue(obj: any, path: string): any {
 /**
  * Set value in nested object using dot notation
  */
-function setNestedValue(obj: any, path: string, value: any): void {
+function setNestedValue(obj: Record<string, unknown>, path: string, value: unknown): void {
   const keys = path.split('.')
   let current = obj
 
@@ -261,7 +262,7 @@ async function main() {
     let usage
     try {
       usage = await translator.getUsage()
-    } catch (error: any) {
+    } catch (error: Error | unknown) {
       notifyError(error, 'API Connection Check')
       throw error
     }
@@ -307,8 +308,9 @@ async function main() {
       console.log(`📝 Characters used in this session: ${used.toLocaleString()}`)
     }
 
-  } catch (error: any) {
-    if (!error.message?.includes('ACTION REQUIRED')) {
+  } catch (error: Error | unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    if (!errorMessage?.includes('ACTION REQUIRED')) {
       notifyError(error, 'Translation Sync Process')
     }
     console.error('\n❌ Translation sync failed')

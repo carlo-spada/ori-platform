@@ -41,8 +41,9 @@ async function translateText(
     })
 
     return result.text
-  } catch (error: any) {
-    if (error.message?.includes('Too many requests') && retries > 0) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    if (errorMessage.includes('Too many requests') && retries > 0) {
       console.log(`⚠️  Rate limited, waiting 5 seconds... (${retries} retries left)`)
       await delay(5000)
       return translateText(text, targetLang, retries - 1)
@@ -52,10 +53,10 @@ async function translateText(
 }
 
 async function translateObject(
-  obj: any,
+  obj: unknown,
   targetLang: deepl.TargetLanguageCode,
   depth = 0
-): Promise<any> {
+): Promise<unknown> {
   const indent = '  '.repeat(depth)
 
   if (typeof obj === 'string') {
@@ -73,7 +74,7 @@ async function translateObject(
   }
 
   if (typeof obj === 'object' && obj !== null) {
-    const translated: any = {}
+    const translated: Record<string, unknown> = {}
     const keys = Object.keys(obj)
 
     for (let i = 0; i < keys.length; i++) {
@@ -107,7 +108,7 @@ async function main() {
     const enJson = JSON.parse(enContent)
 
     // Missing languages
-    const missingLangs: deepl.TargetLanguageCode[] = ['es', 'fr', 'it']
+    const missingLangs: Array<deepl.TargetLanguageCode> = ['es', 'fr', 'it']
 
     for (const lang of missingLangs) {
       const outputPath = `public/locales/${lang}/legal-terms.json`

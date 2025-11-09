@@ -83,10 +83,10 @@ async function translateText(
  * Translate an object recursively, preserving structure
  */
 async function translateObject(
-  obj: any,
+  obj: unknown,
   targetLang: deepl.TargetLanguageCode,
   depth = 0
-): Promise<any> {
+): Promise<unknown> {
   const indent = '  '.repeat(depth)
 
   if (typeof obj === 'string') {
@@ -107,7 +107,7 @@ async function translateObject(
 
   if (typeof obj === 'object' && obj !== null) {
     // Translate object properties
-    const translated: any = {}
+    const translated: Record<string, unknown> = {}
     const keys = Object.keys(obj)
 
     for (let i = 0; i < keys.length; i++) {
@@ -129,7 +129,7 @@ async function extractLegalContent(filePath: string): Promise<{
   title: string
   lastUpdated: string
   content: string
-  tocItems: any[]
+  tocItems: Array<Record<string, unknown>>
 }> {
   const fileContent = await fs.readFile(filePath, 'utf-8')
 
@@ -149,7 +149,7 @@ async function extractLegalContent(filePath: string): Promise<{
 
   // Extract TOC items
   const tocMatch = fileContent.match(/tocItems=\{(\[[\s\S]*?\])\}/)
-  let tocItems: any[] = []
+  let tocItems: Array<Record<string, unknown>> = []
   if (tocMatch) {
     try {
       // Clean up the array string and evaluate it
@@ -158,7 +158,8 @@ async function extractLegalContent(filePath: string): Promise<{
         .replace(/\s+/g, ' ')
       tocItems = eval(tocString) // Safe here since we control the input
     } catch (e) {
-      console.warn('Could not parse tocItems:', e)
+      const errorMessage = e instanceof Error ? e.message : String(e)
+      console.warn('Could not parse tocItems:', errorMessage)
     }
   }
 

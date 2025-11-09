@@ -247,7 +247,7 @@ async function loadTranslations(filePath: string): Promise<any> {
 /**
  * Save translation file
  */
-async function saveTranslations(filePath: string, translations: any): Promise<void> {
+async function saveTranslations(filePath: string, translations: Record<string, unknown>): Promise<void> {
   await fs.mkdir(path.dirname(filePath), { recursive: true })
   await fs.writeFile(filePath, JSON.stringify(translations, null, 2), 'utf-8')
 }
@@ -255,7 +255,7 @@ async function saveTranslations(filePath: string, translations: any): Promise<vo
 /**
  * Add nested key to object
  */
-function addNestedKey(obj: any, keyPath: string, value: string): void {
+function addNestedKey(obj: Record<string, unknown>, keyPath: string, value: string): void {
   const keys = keyPath.split('.')
   let current = obj
 
