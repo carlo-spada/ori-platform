@@ -665,6 +665,7 @@
       "changePasswordLabel": "Change password",
       "exportDataLabel": "Request data export",
       "exportDataHelper": "We'll prepare a copy of your key account and activity data and send you a secure download link.",
+      "logoutLabel": "Log out",
       "dangerZoneHeading": "Danger zone",
       "deleteAccountLabel": "Delete account",
       "deleteAccountWarning": "This will permanently delete your account and data, where legally permitted. This action cannot be undone.",

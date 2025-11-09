@@ -2,11 +2,13 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { LogOut } from 'lucide-react'
 import { NAV_ITEMS } from '@/lib/navConfig'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { useAuth } from '@/contexts/AuthProvider'
+import { toast } from 'sonner'
 
 export interface SidebarNavProps {
   className?: string
@@ -19,12 +21,25 @@ export interface SidebarNavProps {
  */
 export function SidebarNav({ className }: SidebarNavProps) {
   const pathname = usePathname()
+  const router = useRouter()
+  const { signOut } = useAuth()
 
   const isActive = (href: string) => {
     if (href === '/app/dashboard') {
       return pathname === href
     }
     return pathname.startsWith(href)
+  }
+
+  const handleLogout = async () => {
+    const { error } = await signOut()
+    if (error) {
+      toast.error('Failed to sign out. Please try again.')
+      console.error('Logout error:', error)
+    } else {
+      toast.success('Signed out successfully')
+      router.push('/login')
+    }
   }
 
   return (
@@ -113,10 +128,7 @@ export function SidebarNav({ className }: SidebarNavProps) {
           variant="ghost"
           size="sm"
           className="text-muted-foreground hover:text-foreground w-full justify-start gap-2 hover:bg-white/5"
-          onClick={() => {
-            // TODO: Implement logout logic
-            console.log('Logout clicked')
-          }}
+          onClick={handleLogout}
         >
           <LogOut className="h-4 w-4" aria-hidden="true" />
           <span>Log out</span>
