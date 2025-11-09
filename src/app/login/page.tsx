@@ -3,29 +3,15 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { setDocumentMeta } from '@/lib/seo'
 import { useAuth } from '@/contexts/AuthProvider'
-import { toast } from '@/components/ui/sonner'
 import { EarlyAccessModal } from '@/components/EarlyAccessModal'
-import { useEarlyAccess } from '@/hooks/useEarlyAccess'
-
-const loginSchema = z.object({
-  email: z
-    .string()
-    .trim()
-    .email({ message: 'Please enter a valid email address' }),
-  password: z
-    .string()
-    .min(6, { message: 'Password must be at least 6 characters' }),
-})
 
 export default function Login() {
   const router = useRouter()
-  const { signInWithPassword, user } = useAuth()
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const { showModal, closeEarlyAccessModal, openEarlyAccessModal } = useEarlyAccess()
+  const { user } = useAuth()
+  const [showEarlyAccessModal, setShowEarlyAccessModal] = useState(false)
 
   useEffect(() => {
     setDocumentMeta({
@@ -42,54 +28,10 @@ export default function Login() {
     }
   }, [user, router])
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (isSubmitting) return
-
     // Show early access modal instead of attempting login
-    openEarlyAccessModal()
-    return
-
-    /* Original login code - preserved for future use
-    setIsSubmitting(true)
-
-    try {
-      const formData = new FormData(e.currentTarget)
-      const email = String(formData.get('email') || '').trim()
-      const password = String(formData.get('password') || '')
-
-      // Validate input
-      const validation = loginSchema.safeParse({ email, password })
-      if (!validation.success) {
-        const firstError = validation.error.issues[0]
-        toast.error('Invalid input', {
-          description: firstError.message,
-        })
-        return
-      }
-
-      const { error } = await signInWithPassword({ email, password })
-
-      if (error) {
-        toast.error('Login failed', {
-          description: error.message,
-        })
-        return
-      }
-
-      // Success - redirect handled by useEffect when user state updates
-      toast.success('Welcome back!', {
-        description: 'You have successfully logged in.',
-      })
-    } catch {
-      toast.error('Unexpected error', {
-        description:
-          'Something went wrong while logging you in. Please try again.',
-      })
-    } finally {
-      setIsSubmitting(false)
-    }
-    */
+    setShowEarlyAccessModal(true)
   }
 
   return (
@@ -126,7 +68,6 @@ export default function Login() {
                 className="border-border bg-background text-foreground focus:ring-accent w-full rounded-lg border px-4 py-2 focus:ring-2 focus:outline-none"
                 placeholder="you@example.com"
                 required
-                disabled={isSubmitting}
               />
             </div>
 
@@ -144,12 +85,11 @@ export default function Login() {
                 className="border-border bg-background text-foreground focus:ring-accent w-full rounded-lg border px-4 py-2 focus:ring-2 focus:outline-none"
                 placeholder="••••••••"
                 required
-                disabled={isSubmitting}
               />
             </div>
 
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? 'Logging in...' : 'Log in'}
+            <Button type="submit" className="w-full">
+              Log in
             </Button>
           </div>
 
@@ -176,8 +116,8 @@ export default function Login() {
 
       {/* Early Access Modal */}
       <EarlyAccessModal
-        isOpen={showModal}
-        onClose={closeEarlyAccessModal}
+        isOpen={showEarlyAccessModal}
+        onClose={() => setShowEarlyAccessModal(false)}
         trigger="login"
       />
     </div>

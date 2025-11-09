@@ -9,11 +9,13 @@ interface EarlyAccessData {
 }
 
 export function useEarlyAccess() {
-  const [hasJoinedEarlyAccess, setHasJoinedEarlyAccess] = useState(true) // Default to true to prevent flash
+  const [hasJoinedEarlyAccess, setHasJoinedEarlyAccess] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     // Check if user has already joined early access
+    if (typeof window === 'undefined') return
+
     const stored = localStorage.getItem('ori-early-access')
     if (stored) {
       try {
@@ -37,10 +39,12 @@ export function useEarlyAccess() {
   }, [])
 
   const openEarlyAccessModal = () => {
+    console.log('Opening early access modal...')
     setShowModal(true)
   }
 
   const closeEarlyAccessModal = () => {
+    console.log('Closing early access modal...')
     setShowModal(false)
   }
 
