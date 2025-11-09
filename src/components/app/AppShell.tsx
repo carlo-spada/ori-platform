@@ -11,7 +11,7 @@ export interface AppShellProps {
  * Provides responsive navigation:
  * - Sidebar on md+ screens
  * - Bottom nav on mobile
- * - Main content area that scrolls independently
+ * - Full-screen, no-scroll pages for PWA experience
  */
 export function AppShell({ children }: AppShellProps) {
   return (
@@ -23,7 +23,7 @@ export function AppShell({ children }: AppShellProps) {
       <div className="flex min-h-screen flex-1 flex-col md:min-h-0">
         <main
           id="main"
-          className="flex-1 overflow-y-auto px-4 py-4 pb-20 sm:px-6 sm:py-6 md:pb-6 lg:px-8"
+          className="flex-1 overflow-hidden px-4 py-4 pb-20 sm:px-6 sm:py-6 md:pb-6 lg:px-8"
           data-testid="app-main-content"
         >
           {children}

@@ -83,6 +83,7 @@ export function SidebarNav({ className }: SidebarNavProps) {
                       'h-5 w-5 shrink-0',
                       active ? 'text-accent' : '',
                     )}
+                    strokeWidth={active ? 2.5 : 1.5}
                     aria-hidden="true"
                   />
                   <span>{item.label}</span>

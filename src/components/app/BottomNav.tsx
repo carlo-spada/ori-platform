@@ -56,13 +56,11 @@ export function BottomNav({ className }: BottomNavProps) {
                 data-testid={`mobile-nav-${item.href.slice(1)}`}
               >
                 <Icon
-                  className="h-6 w-6"
+                  className="h-7 w-7"
                   aria-hidden="true"
-                  strokeWidth={active ? 2.5 : 2}
+                  strokeWidth={active ? 2.5 : 1.5}
                 />
-                <span className="text-[10px] font-medium">
-                  {item.label.split(' ')[0]}
-                </span>
+                {/* Icon-only navigation for cleaner PWA experience */}
               </Link>
             </li>
           )
