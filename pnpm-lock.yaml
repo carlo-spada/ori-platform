@@ -272,7 +272,7 @@ importers:
   services/core-api:
     dependencies:
       '@supabase/supabase-js':
-        specifier: ^2.45.0
+        specifier: ^2.80.0
         version: 2.80.0
       cors:
         specifier: ^2.8.5
@@ -287,8 +287,8 @@ importers:
         specifier: ^16.12.0
         version: 16.12.0
       zod:
-        specifier: ^3.23.0
-        version: 3.25.76
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@types/cors':
         specifier: ^2.8.17
@@ -318,13 +318,13 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(@types/node@20.19.24)(typescript@5.9.3)
       typescript:
-        specifier: ^5.4.5
+        specifier: ^5.9.3
         version: 5.9.3
 
   shared/types:
     devDependencies:
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.9.3
         version: 5.9.3
 
   shared/utils:
@@ -6637,9 +6637,6 @@ packages:
     engines: {node: '>=18.0.0'}
     peerDependencies:
       zod: ^3.25.0 || ^4.0.0
-
-  zod@3.25.76:
-    resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
   zod@4.1.12:
     resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
@@ -13688,7 +13685,5 @@ snapshots:
   zod-validation-error@4.0.2(zod@4.1.12):
     dependencies:
       zod: 4.1.12
-
-  zod@3.25.76: {}
 
   zod@4.1.12: {}

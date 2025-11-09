@@ -1,7 +1,12 @@
 import { useState, FormEvent } from 'react'
 import { Button } from '@/components/ui/button'
 import { X, Plus, Briefcase, GraduationCap } from 'lucide-react'
-import { Modal } from '@/components/ui/modal'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { ExperienceForm, ExperienceFormData } from './ExperienceForm'
 import { EducationForm, EducationFormData } from './EducationForm'
 
@@ -402,62 +407,70 @@ export function QualificationsSection({
       </section>
 
       {/* Experience Modal */}
-      <Modal
-        isOpen={isExperienceModalOpen}
-        onClose={handleCloseExperienceModal}
-        title={
-          editingExperience
-            ? experienceModalLabels.editTitle
-            : experienceModalLabels.addTitle
-        }
+      <Dialog
+        open={isExperienceModalOpen}
+        onOpenChange={setIsExperienceModalOpen}
       >
-        <ExperienceForm
-          initialValues={
-            editingExperience
-              ? {
-                  company: editingExperience.company,
-                  role: editingExperience.role,
-                  startDate: editingExperience.startDate,
-                  endDate: editingExperience.endDate,
-                  description: editingExperience.description,
-                  isCurrent: !editingExperience.endDate,
-                }
-              : undefined
-          }
-          onSave={handleSaveExperience}
-          onCancel={handleCloseExperienceModal}
-          labels={experienceModalLabels}
-        />
-      </Modal>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>
+              {editingExperience
+                ? experienceModalLabels.editTitle
+                : experienceModalLabels.addTitle}
+            </DialogTitle>
+          </DialogHeader>
+          <ExperienceForm
+            initialValues={
+              editingExperience
+                ? {
+                    company: editingExperience.company,
+                    role: editingExperience.role,
+                    startDate: editingExperience.startDate,
+                    endDate: editingExperience.endDate,
+                    description: editingExperience.description,
+                    isCurrent: !editingExperience.endDate,
+                  }
+                : undefined
+            }
+            onSave={handleSaveExperience}
+            onCancel={handleCloseExperienceModal}
+            labels={experienceModalLabels}
+          />
+        </DialogContent>
+      </Dialog>
 
       {/* Education Modal */}
-      <Modal
-        isOpen={isEducationModalOpen}
-        onClose={handleCloseEducationModal}
-        title={
-          editingEducation
-            ? educationModalLabels.editTitle
-            : educationModalLabels.addTitle
-        }
+      <Dialog
+        open={isEducationModalOpen}
+        onOpenChange={setIsEducationModalOpen}
       >
-        <EducationForm
-          initialValues={
-            editingEducation
-              ? {
-                  institution: editingEducation.institution,
-                  degree: editingEducation.degree,
-                  startDate: editingEducation.startDate,
-                  endDate: editingEducation.endDate,
-                  description: editingEducation.description,
-                  isCurrent: !editingEducation.endDate,
-                }
-              : undefined
-          }
-          onSave={handleSaveEducation}
-          onCancel={handleCloseEducationModal}
-          labels={educationModalLabels}
-        />
-      </Modal>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>
+              {editingEducation
+                ? educationModalLabels.editTitle
+                : educationModalLabels.addTitle}
+            </DialogTitle>
+          </DialogHeader>
+          <EducationForm
+            initialValues={
+              editingEducation
+                ? {
+                    institution: editingEducation.institution,
+                    degree: editingEducation.degree,
+                    startDate: editingEducation.startDate,
+                    endDate: editingEducation.endDate,
+                    description: editingEducation.description,
+                    isCurrent: !editingEducation.endDate,
+                  }
+                : undefined
+            }
+            onSave={handleSaveEducation}
+            onCancel={handleCloseEducationModal}
+            labels={educationModalLabels}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
