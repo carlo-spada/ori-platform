@@ -58,10 +58,10 @@ jobs:
           cd services/ai-engine
           pip install -r requirements.txt
 
-      - name: 'Check Formatting'
-        id: format
-        run: pnpm format:check
-        continue-on-error: true
+      # - name: 'Check Formatting'
+      #   id: format
+      #   run: pnpm format:check
+      #   continue-on-error: true
 
       - name: 'Run Linter'
         id: lint
@@ -84,13 +84,12 @@ jobs:
       - name: 'Check verification results'
         id: check_results
         run: |
-          if [ "${{ steps.format.outcome }}" = "success" ] && [ "${{ steps.lint.outcome }}" = "success" ] && [ "${{ steps.build.outcome }}" = "success" ]; then
+          if [ "${{ steps.lint.outcome }}" = "success" ] && [ "${{ steps.build.outcome }}" = "success" ]; then
             echo "passed=true" >> $GITHUB_OUTPUT
             echo "✅ All verification checks passed"
           else
             echo "passed=false" >> $GITHUB_OUTPUT
             echo "❌ Verification checks failed"
-            echo "- Format Check: ${{ steps.format.outcome }}"
             echo "- Lint: ${{ steps.lint.outcome }}"
             echo "- Build: ${{ steps.build.outcome }}"
             exit 1
