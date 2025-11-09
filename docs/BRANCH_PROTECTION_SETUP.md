@@ -7,7 +7,7 @@ This document provides step-by-step instructions for setting up branch protectio
 The repository now uses a **two-branch workflow**:
 
 - **`main`**: Production branch (deployed to Vercel, fully protected)
-- **`development`**: Working branch (all development happens here)
+- **`dev`**: Working branch (all development happens here)
 
 ## Setting Up Branch Protection for Main
 
@@ -100,11 +100,11 @@ Configure in: `Settings → General → Pull Requests`
 
 ### Development Process
 
-1. **Start Work**: Always work on the `development` branch
+1. **Start Work**: Always work on the `dev` branch
 
    ```bash
-   git checkout development
-   git pull origin development
+   git checkout dev
+   git pull origin dev
    ```
 
 2. **Make Changes**: Commit regularly with clear messages
@@ -114,13 +114,13 @@ Configure in: `Settings → General → Pull Requests`
    git commit -m "feat: add new feature"
    ```
 
-3. **Push to Development**: Push your changes to the development branch
+3. **Push to Dev**: Push your changes to the dev branch
 
    ```bash
-   git push origin development
+   git push origin dev
    ```
 
-4. **Create Pull Request**: When ready to deploy, create a PR from `development` → `main`
+4. **Create Pull Request**: When ready to deploy, create a PR from `dev` → `main`
    - All automated checks will run
    - Request reviews as needed
    - Copilot will automatically review the code
@@ -129,7 +129,7 @@ Configure in: `Settings → General → Pull Requests`
 5. **Merge to Main**: Once approved and all checks pass
    - The PR can be merged (squash recommended)
    - Vercel will automatically deploy to production
-   - Development branch will be automatically synced (optional workflow)
+   - Dev branch will be automatically synced (optional workflow)
 
 ## Setting Up CodeQL
 
@@ -175,5 +175,5 @@ Only repository administrators can bypass these rules when absolutely necessary.
 
 ---
 
-**Last Updated**: 2025-11-07
+**Last Updated**: 2025-11-08
 **Repository**: https://github.com/carlo-spada/ori-platform

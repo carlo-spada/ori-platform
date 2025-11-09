@@ -9,6 +9,8 @@ import { BasicInfoStep } from '@/components/onboarding/BasicInfoStep'
 import { SkillsStep } from '@/components/onboarding/SkillsStep'
 import { GoalsStep } from '@/components/onboarding/GoalsStep'
 import { FinalizingStep } from '@/components/onboarding/FinalizingStep'
+import { useCompleteOnboarding } from '@/hooks/useProfile'
+import { toast } from 'sonner'
 import type { OnboardingData, OnboardingStepKey } from '@/lib/types'
 
 const STEPS: OnboardingStepKey[] = [
@@ -26,12 +28,16 @@ export default function OnboardingPage() {
   const { t } = useTranslation()
   const router = useRouter()
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [data, setData] = useState<OnboardingData>({
     basicInfo: { ...DEFAULT_BASIC_INFO },
     skills: [],
     goals: { ...DEFAULT_GOALS },
   })
+
+  const {
+    mutate: submitOnboarding,
+    isPending: isSubmitting,
+  } = useCompleteOnboarding()
 
   const currentStep = STEPS[currentStepIndex]
   const totalSteps = STEPS.length - 1 // Don't count finalizing in progress
@@ -60,28 +66,35 @@ export default function OnboardingPage() {
     }
   }
 
-  const handleSubmit = async (_payload: OnboardingData) => {
-    // Placeholder for API integration (Supabase, etc.)
-    return Promise.resolve()
-  }
-
   const handleNext = async () => {
     if (currentStep === 'goals') {
-      // This is the last data-entry step
-      setIsSubmitting(true)
+      // This is the last data-entry step - move to finalizing and submit
       setCurrentStepIndex(currentStepIndex + 1) // Move to finalizing
 
-      try {
-        await handleSubmit(data)
-        // Simulate brief processing for UX
-        setTimeout(() => {
-          router.push('/app/dashboard')
-        }, 1500)
-      } catch (error) {
-        console.error('Onboarding submission failed:', error)
-        setIsSubmitting(false)
-        // In a real app, show error toast
+      // Transform OnboardingData to match backend API expectations
+      const profileData = {
+        headline: data.basicInfo.headline,
+        location: data.basicInfo.location,
+        skills: data.skills,
+        long_term_vision: data.goals.longTermVision,
+        target_roles: data.goals.targetRoles,
       }
+
+      submitOnboarding(profileData, {
+        onSuccess: () => {
+          // Brief delay for UX before redirect
+          setTimeout(() => {
+            toast.success('Welcome to Ori! Your profile has been created.')
+            router.push('/app/dashboard')
+          }, 1500)
+        },
+        onError: (error) => {
+          console.error('Onboarding submission failed:', error)
+          toast.error('Failed to save your profile. Please try again.')
+          // Return user to previous step (goals) and preserve data
+          setCurrentStepIndex(currentStepIndex)
+        },
+      })
     } else {
       setCurrentStepIndex(currentStepIndex + 1)
     }

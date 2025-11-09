@@ -3,6 +3,7 @@
 export const dynamic = 'force-dynamic'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { setDocumentMeta } from '@/lib/seo'
 import {
@@ -13,10 +14,13 @@ import {
 import { AccountSettings } from '@/components/settings/AccountSettings'
 import { NotificationSettings } from '@/components/settings/NotificationSettings'
 import { BillingSettings } from '@/components/settings/BillingSettings'
+import { useAuth } from '@/contexts/AuthProvider'
 import { toast } from 'sonner'
 
 export default function Settings() {
   const { t } = useTranslation()
+  const router = useRouter()
+  const { signOut } = useAuth()
 
   useEffect(() => {
     setDocumentMeta({
@@ -49,6 +53,17 @@ export default function Settings() {
     toast.success(t('settingsPage.account.exportSuccess'))
   }
 
+  const handleLogout = async () => {
+    const { error } = await signOut()
+    if (error) {
+      toast.error('Failed to sign out. Please try again.')
+      console.error('Logout error:', error)
+    } else {
+      toast.success('Signed out successfully')
+      router.push('/login')
+    }
+  }
+
   const handleDeleteAccount = () => {
     toast.error(t('settingsPage.account.deleteSuccess'))
   }
@@ -77,6 +92,7 @@ export default function Settings() {
             changePasswordLabel: t('settingsPage.account.changePasswordLabel'),
             exportDataLabel: t('settingsPage.account.exportDataLabel'),
             exportDataHelper: t('settingsPage.account.exportDataHelper'),
+            logoutLabel: t('settingsPage.account.logoutLabel'),
             dangerZoneHeading: t('settingsPage.account.dangerZoneHeading'),
             deleteAccountLabel: t('settingsPage.account.deleteAccountLabel'),
             deleteAccountWarning: t(
@@ -99,6 +115,7 @@ export default function Settings() {
             ),
           }}
           onExportData={handleExportData}
+          onLogout={handleLogout}
           onDeleteAccount={handleDeleteAccount}
         />
 

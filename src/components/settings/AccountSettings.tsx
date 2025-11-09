@@ -17,6 +17,7 @@ interface AccountSettingsProps {
     changePasswordLabel: string
     exportDataLabel: string
     exportDataHelper: string
+    logoutLabel?: string
     dangerZoneHeading: string
     deleteAccountLabel: string
     deleteAccountWarning: string
@@ -27,6 +28,7 @@ interface AccountSettingsProps {
     deleteAccountCancelButton: string
   }
   onExportData?: () => void
+  onLogout?: () => void
   onDeleteAccount?: () => void
 }
 
@@ -34,6 +36,7 @@ export function AccountSettings({
   user,
   labels,
   onExportData,
+  onLogout,
   onDeleteAccount,
 }: AccountSettingsProps) {
   const { t } = useTranslation()
@@ -81,6 +84,18 @@ export function AccountSettings({
           <p className="text-muted-foreground text-xs">
             {labels.exportDataHelper}
           </p>
+
+          {onLogout && (
+            <div className="mt-4 pt-4 border-t border-white/10">
+              <Button
+                variant="outline"
+                onClick={onLogout}
+                className="w-full"
+              >
+                {labels.logoutLabel || 'Log out'}
+              </Button>
+            </div>
+          )}
         </div>
 
         {/* Danger Zone */}

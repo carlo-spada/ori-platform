@@ -52,7 +52,12 @@
       "Bash(tree:*)",
       "Bash(xargs:*)",
       "Bash(psql:*)",
-      "Bash(supabase db lint:*)"
+      "Bash(supabase db lint:*)",
+      "Bash(chmod:*)",
+      "Bash(git -C /Users/carlo/Desktop/Projects/ori-platform log --oneline -30)",
+      "Bash(git -C /Users/carlo/Desktop/Projects/ori-platform log --oneline -20)",
+      "Bash(git -C /Users/carlo/Desktop/Projects/ori-platform log --oneline --all)",
+      "Bash(npx tsc:*)"
     ],
     "deny": [],
     "ask": []

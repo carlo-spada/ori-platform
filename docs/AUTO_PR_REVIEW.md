@@ -163,17 +163,20 @@ If you need to bypass the auto-review for a specific PR:
 
 - **Solution**: Set `enabled: false` in `.github/auto-review.config.json`
 
-## Integration with Agent Workflow
+## Integration with Two-Branch Workflow
 
-The auto-review system integrates with the existing agent workflow:
+The auto-review system integrates with the current two-branch workflow:
 
-1. **Agent branches** (gemini-branch, claude-branch, codex-branch) create PRs to main
-2. **Auto-review** runs verification and analysis
-3. **Safe changes** are auto-merged
-4. **Risky changes** wait for human/agent approval
-5. **Branch sync** keeps agent branches updated with main
+1. **Dev branch** (`dev`) is where all development happens
+2. **Pull requests** from `dev` → `main` trigger auto-review
+3. **Auto-review** runs verification and analysis
+4. **Safe changes** can be auto-merged (if enabled)
+5. **Risky changes** always wait for human approval
+6. **Branch sync** (optional) keeps dev updated with main after merges
 
 This maintains the safety of the main branch while reducing manual overhead for routine changes.
+
+**Note**: The repository previously used agent-specific branches (gemini-branch, claude-branch, codex-branch) but has since simplified to a two-branch workflow (main/dev) as of November 2025.
 
 ## Security Considerations
 
