@@ -19,18 +19,18 @@ export function SkillsGapDisplay({ skills, skillsGap }: SkillsGapDisplayProps) {
     return (
       <div className="space-y-3">
         {/* Skill Match Summary Header */}
-        <div className="flex items-center justify-between border-b border-border/50 pb-1">
-          <span className="text-sm font-medium text-foreground">
+        <div className="border-border/50 flex items-center justify-between border-b pb-1">
+          <span className="text-foreground text-sm font-medium">
             Skills Analysis
           </span>
-          <span className="text-xs font-medium text-muted-foreground">
+          <span className="text-muted-foreground text-xs font-medium">
             {matchedSkillsList.length} of {skillsGap.requiredSkills.length}{' '}
             matched
           </span>
         </div>
         {matchedSkillsList.length > 0 && (
           <div>
-            <h4 className="mb-2 text-xs font-medium text-muted-foreground">
+            <h4 className="text-muted-foreground mb-2 text-xs font-medium">
               Your Matching Skills
             </h4>
             <div className="flex flex-wrap gap-2">
@@ -54,7 +54,7 @@ export function SkillsGapDisplay({ skills, skillsGap }: SkillsGapDisplayProps) {
 
         {missingSkillsList.length > 0 && (
           <div>
-            <h4 className="mb-2 text-xs font-medium text-muted-foreground">
+            <h4 className="text-muted-foreground mb-2 text-xs font-medium">
               Skills to Develop
             </h4>
             <div className="flex flex-wrap gap-2">
@@ -91,7 +91,7 @@ export function SkillsGapDisplay({ skills, skillsGap }: SkillsGapDisplayProps) {
     <div className="space-y-3">
       {matchedSkills.length > 0 && (
         <div>
-          <h4 className="mb-2 text-xs font-medium text-muted-foreground">
+          <h4 className="text-muted-foreground mb-2 text-xs font-medium">
             Matched Skills
           </h4>
           <div className="flex flex-wrap gap-2">
@@ -115,7 +115,7 @@ export function SkillsGapDisplay({ skills, skillsGap }: SkillsGapDisplayProps) {
 
       {missingSkills.length > 0 && (
         <div>
-          <h4 className="mb-2 text-xs font-medium text-muted-foreground">
+          <h4 className="text-muted-foreground mb-2 text-xs font-medium">
             Skills to Develop
           </h4>
           <div className="flex flex-wrap gap-2">

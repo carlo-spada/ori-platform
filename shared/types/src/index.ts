@@ -19,17 +19,25 @@ export interface User {
 export interface UserProfile {
   id: string
   user_id: string
+  full_name?: string
   name?: string
   cv_url?: string
+  headline?: string
+  location?: string
+  about?: string
   roles?: string[]
+  target_roles?: string[]
   work_style?: 'remote' | 'hybrid' | 'onsite'
   industries?: string[]
   goal?: string
+  long_term_vision?: string
   skills?: string[]
   experience_level?: 'entry' | 'mid' | 'senior' | 'executive'
   years_of_experience?: number
-  location?: string
   willing_to_relocate?: boolean
+  onboarding_completed?: boolean
+  created_at?: string
+  updated_at?: string
 }
 
 // AI Analysis types
@@ -80,25 +88,60 @@ export interface JobMatch extends Job {
   skillsGap?: SkillsGap // Skills gap analysis from AI Engine
 }
 
+// Work Experience types
+export interface Experience {
+  id: string
+  user_id: string
+  company: string
+  role: string
+  start_date: string // ISO date string
+  end_date?: string | null // ISO date string
+  is_current: boolean
+  description?: string | null
+  created_at: string
+  updated_at: string
+}
+
+// Education types
+export interface Education {
+  id: string
+  user_id: string
+  institution: string
+  degree: string
+  field_of_study?: string | null
+  start_date: string // ISO date string
+  end_date?: string | null // ISO date string
+  is_current: boolean
+  description?: string | null
+  created_at: string
+  updated_at: string
+}
+
 // Application related types
 export type ApplicationStatus =
-  | 'saved'
   | 'applied'
   | 'interviewing'
   | 'offer'
   | 'rejected'
-  | 'withdrawn'
+  | 'paused'
 
 export interface Application {
   id: string
-  job_id: string
   user_id: string
+  job_title: string
+  company: string
+  location?: string | null
+  job_url?: string | null
+  application_date: string
   status: ApplicationStatus
-  rating?: number
-  applied: boolean
-  notes?: string
+  notes?: string | null
+  last_updated: string
   created_at: string
-  updated_at: string
+  // Legacy fields for backward compatibility
+  job_id?: string
+  rating?: number
+  applied?: boolean
+  updated_at?: string
   job?: Job
 }
 

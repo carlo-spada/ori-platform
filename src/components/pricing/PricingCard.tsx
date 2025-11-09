@@ -34,16 +34,16 @@ export function PricingCard({
   return (
     <div
       className={cn(
-        'relative flex h-full flex-col justify-between rounded-2xl border bg-card p-8 shadow-md transition-all duration-200',
+        'bg-card relative flex h-full flex-col justify-between rounded-2xl border p-8 shadow-md transition-all duration-200',
         popular
-          ? 'scale-[1.02] border-primary shadow-primary/20'
+          ? 'border-primary shadow-primary/20 scale-[1.02]'
           : 'border-border hover:border-accent/50',
       )}
       data-testid={`pricing-card-${id}`}
     >
       {popular && (
         <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-          <span className="inline-flex items-center rounded-full bg-primary px-4 py-1 text-xs font-semibold text-primary-foreground">
+          <span className="bg-primary text-primary-foreground inline-flex items-center rounded-full px-4 py-1 text-xs font-semibold">
             Most Popular
           </span>
         </div>
@@ -51,34 +51,34 @@ export function PricingCard({
 
       <div className="flex-1">
         <div className="mb-6">
-          <h2 className="mb-2 text-2xl font-semibold text-foreground">
+          <h2 className="text-foreground mb-2 text-2xl font-semibold">
             {name}
           </h2>
-          <p className="text-sm text-muted-foreground">{description}</p>
+          <p className="text-muted-foreground text-sm">{description}</p>
         </div>
 
         <div className="mb-6">
           <div className="mb-1 flex items-baseline gap-1">
-            <span className="text-4xl font-bold text-foreground">
+            <span className="text-foreground text-4xl font-bold">
               {priceDisplay}
             </span>
             {price > 0 && (
-              <span className="text-sm text-muted-foreground">
+              <span className="text-muted-foreground text-sm">
                 / {periodText}
               </span>
             )}
           </div>
-          <p className="mt-2 text-xs text-muted-foreground">{limitsSummary}</p>
+          <p className="text-muted-foreground mt-2 text-xs">{limitsSummary}</p>
         </div>
 
         <ul className="mb-6 space-y-3" role="list">
           {features.map((feature, index) => (
             <li key={index} className="flex items-start gap-3">
               <Check
-                className="mt-0.5 h-5 w-5 shrink-0 text-primary"
+                className="text-primary mt-0.5 h-5 w-5 shrink-0"
                 aria-hidden="true"
               />
-              <span className="text-sm text-foreground">{feature}</span>
+              <span className="text-foreground text-sm">{feature}</span>
             </li>
           ))}
         </ul>

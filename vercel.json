@@ -1,0 +1,7 @@
+{
+  "ignoreCommand": "bash scripts/vercel-ignore-build.sh",
+  "github": {
+    "silent": true,
+    "autoJobCancelation": true
+  }
+}

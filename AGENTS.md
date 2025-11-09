@@ -91,34 +91,37 @@ To ensure clarity, prevent redundant work, and leverage distinct agent strengths
 
 ### Directory Structure
 
-All tasks are managed within the `.tasks/` directory, which is organized into stage-based subdirectories:
+All tasks are managed within the `.tasks/` directory, which is organized into stage-based subdirectories. **Big tasks/features deserve their own folder and should always be broken down into smaller, more manageable tasks. Features (task folders) should always be moved and treated as one unit when moving them between directories.**
 
-- **`.tasks/todo/`**: Planned tasks and features. Large features ('epics') are represented as subfolders (e.g., `.tasks/todo/feature-name/`), with individual work units as Markdown files inside (e.g., `A.md`).
+- **`.tasks/todo/`**: New tasks and features are always created here. Large features ('epics') are represented as subfolders (e.g., `.tasks/todo/feature-name/`), with individual work units as Markdown files inside (e.g., `A.md`).
 - **`.tasks/in-progress/`**: Tasks actively being worked on by an agent.
-- **`.tasks/done/`**: Tasks that have been implemented by Claude.
+- **`.tasks/done/`**: Tasks that have been implemented by Claude and are awaiting review.
 - **`.tasks/in-review/`**: Tasks currently under review, debugging, and refactoring by Codex.
 - **`.tasks/reviewed/`**: Tasks that have been successfully reviewed by Codex and are ready for final integration.
 
 ### Agent Roles & Workflow
 
-1.  **Gemini (Planner & Researcher)**:
-    - **Role**: Conducts big-picture research, defines the project vision, and breaks it down into a cohesive, step-by-step plan.
-    - **Workflow**: Creates feature folders and task files (`.md`) in the `.tasks/todo/` directory. While most implementation tasks are assigned to Claude, Gemini can assign tasks directly to Codex if the work is primarily refactoring, debugging, or cleanup, playing to each agent's strengths from the start.
+1.  **Gemini (Planner & Researcher / UI/UX Guardian)**:
+    - **Role**: Conducts big-picture research, defines the project vision, and breaks it down into a cohesive, step-by-step plan. Audits project status and formulates strategic plans for UX improvements.
+    - **Workflow**:
+        1.  **Strategic Planning**: Every 2 hours, Gemini audits the state of affairs, considers the best plan forward, and formulates strategically sound plans to improve the app's UX.
+        2.  **Task Definition**: Creates feature folders and task files (`.md`) in the `.tasks/todo/` directory for new plans. While most implementation tasks are assigned to Claude, Gemini can assign tasks directly to Codex if the work is primarily refactoring, debugging, or cleanup, playing to each agent's strengths from the start.
+        3.  **Commit Plan**: Immediately after creating new tasks/features, Gemini commits all changes to the `dev` branch.
 
 2.  **Claude (Implementer & Builder)**:
     - **Role**: Materializes the plans defined by Gemini, focusing on implementation.
     - **Workflow**:
-      1.  Claims a task by moving its corresponding file or folder from `.tasks/todo/` to `.tasks/in-progress/`.
-      2.  Implements the feature or fix as described in the task file.
-      3.  Upon completion, moves the task file/folder to `.tasks/done/` and **updates the assignee in the file to Codex** to signal it's ready for review.
+        1.  **Claim Task**: Claims a task by immediately moving its corresponding file or folder from `.tasks/todo/` to `.tasks/in-progress/`.
+        2.  **Implement**: Implements the feature or fix as described in the task file.
+        3.  **Complete Task**: Upon completion, moves the task file/folder to `.tasks/done/` and commits all changes made.
 
 3.  **Codex (Reviewer & Debugger)**:
     - **Role**: Audits the code produced by Claude, identifying bugs, refactoring opportunities, and ensuring quality.
     - **Workflow**:
-      1.  Proactively monitors both the `.tasks/done/` directory (for standard reviews) and the `.tasks/todo/` directory (for directly assigned refactor/debug tasks).
-      2.  Claims a task by moving it to `.tasks/in-review/`.
-      3.  Performs debugging and refactoring.
-      4.  Once the review is complete, moves the task file/folder to `.tasks/reviewed/`.
+        1.  **Claim Review**: Proactively monitors the `.tasks/done/` directory. Claims a task by moving its corresponding file or folder to `.tasks/in-review/`.
+        2.  **Review & Debug**: Performs debugging and refactoring.
+        3.  **Finalize Review**: Once the review is complete, moves the task file/folder to `.tasks/reviewed/`.
+        4.  **Documentation & PR**: Updates all necessary documentation, commits, pushes to the `dev` branch, and triggers a Pull Request from `dev` to `main`.
 
 4.  **Carlo (Integrator & Releaser)**:
     - **Role**: Performs the final review and merges the completed feature into the `main` branch.
@@ -144,7 +147,7 @@ To accelerate development and maintain a high standard of user experience, this 
 **Required behavior for all agents:**
 
 - **Commit and push changes immediately after completing each task**
-- **When working with `.tasks/` files**: Commit and push **after moving each task file** between directories (todo → in-progress → done/in-review → reviewed)
+- **When working with `.tasks/` files**: Commit and push **after moving each task file/folder** between directories (todo → in-progress → done → in-review → reviewed)
 - **When editing code**: Commit and push **after completing each logical unit of work** (e.g., implementing a single function, fixing a single bug, adding a single feature)
 - **Minimum requirement**: Push **at least once per task/file edit** in the `.tasks/` folder
 
@@ -153,9 +156,14 @@ To accelerate development and maintain a high standard of user experience, this 
 Follow these patterns for task management:
 
 ```bash
-# When claiming a task
+# When Gemini creates new tasks/features
 git add .tasks/
-git commit -m "chore(tasks): claim task A.md for implementation"
+git commit -m "feat(tasks): create new feature X plan"
+git push origin dev
+
+# When an agent claims a task/feature
+git mv .tasks/todo/feature-name .tasks/in-progress/feature-name
+git commit -m "chore(tasks): claim feature-name for implementation"
 git push origin dev
 
 # When implementing changes
@@ -163,9 +171,19 @@ git add .
 git commit -m "feat: implement feature X as per task A.md"
 git push origin dev
 
-# When completing a task
-git add .tasks/
-git commit -m "chore(tasks): move A.md to done"
+# When Claude completes a task/feature
+git mv .tasks/in-progress/feature-name .tasks/done/feature-name
+git commit -m "chore(tasks): complete feature-name implementation"
+git push origin dev
+
+# When Codex claims a task/feature for review
+git mv .tasks/done/feature-name .tasks/in-review/feature-name
+git commit -m "chore(tasks): claim feature-name for review"
+git push origin dev
+
+# When Codex completes a review
+git mv .tasks/in-review/feature-name .tasks/reviewed/feature-name
+git commit -m "chore(tasks): complete feature-name review"
 git push origin dev
 ```
 
@@ -207,11 +225,6 @@ git push origin dev
 git add README.md AGENTS.md CLAUDE.md  # or whichever files need updates
 git commit -m "docs: update guides to reflect new feature implementation"
 git push origin dev
-
-# Step 3: Move task to completion
-git add .tasks/
-git commit -m "chore(tasks): complete task A.md"
-git push origin dev
 ```
 
 #### 6. Why This Matters
@@ -227,13 +240,12 @@ git push origin dev
 
 ## Project Structure & Module Organization
 
-Ori Platform is a pnpm workspace monorepo. Web code resides in `src/`, backend API code in `api/`, and shared packages in `shared/`.
+Ori Platform is a pnpm workspace monorepo. Web code resides in `src/`, backend services in `services/`, and shared packages in `shared/`.
 
-- **`api/`**: Production **Vercel Serverless Functions** that serve as the project's backend.
-- **`src/`**: The **Next.js** application that serves as the main user interface.
-- **`services/`**: Supporting backend services.
-  - `core-api`: A local-only Express server that mirrors the serverless functions for development.
-  - `ai-engine`: The Python/FastAPI service for all AI-powered features.
+- **`src/`**: The **Next.js 16** application that serves as the main user interface.
+- **`services/`**: Backend services.
+  - `core-api`: Node.js/Express backend API for user profiles, authentication, and business logic.
+  - `ai-engine`: Python/FastAPI service for all AI-powered features.
 - **`shared/`**: Shared packages (e.g., types, utils) used across the monorepo.
 
 **AI Engine (Nov 2025):** Fully implemented Python FastAPI service providing semantic job matching, skill gap analysis, and learning path generation. Uses sentence-transformers for local embedding generation (no API keys required). Multi-factor scoring algorithm weights semantic similarity (40%), skill match (30%), experience (15%), location (10%), and salary (5%). Core-api integrates via HTTP client with graceful fallback.
@@ -241,15 +253,15 @@ Ori Platform is a pnpm workspace monorepo. Web code resides in `src/`, backend A
 ## Build, Test, and Development Commands
 
 - `pnpm install` — install workspace dependencies (avoid mixing npm/yarn).
-- `pnpm dev` — launch the Next.js app at `http://localhost:3000`. This also serves the API routes from the `api/` directory.
-- `pnpm dev:api` or `pnpm --filter @ori/core-api dev` — run the local-only Express.js server for API development at `http://localhost:3001`.
+- `pnpm dev` — launch the Next.js app at `http://localhost:3000`.
+- `pnpm dev:api` or `pnpm --filter @ori/core-api dev` — run the Express.js backend API at `http://localhost:3001`.
 - `pnpm build && pnpm start` — compile and serve the production build.
 - `pnpm lint` — enforce the Next.js core-web-vitals ESLint configuration.
-- `pnpm turbo test --filter=<package>` — run package-specific tests; coverage output is written to `coverage/`.
+- `pnpm test` — run tests using Vitest; coverage output is written to `coverage/`.
 
 **AI Engine Commands:**
 
-- `cd services/ai-engine && pip install -r requirements.txt` — first-time setup (creates venv recommended).
+- `cd services/ai-engine && pip install -r requirements.txt` — first-time setup (venv recommended).
 - `python main.py` — start AI engine at `http://localhost:3002` (downloads model on first run).
 - `pytest tests/ -v` — run AI engine tests with verbose output.
 

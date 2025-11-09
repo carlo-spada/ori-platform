@@ -97,10 +97,10 @@ export default function BlogIndexPage() {
     <PublicLayout>
       {/* Page Header */}
       <Section data-testid="blog-header" className="text-center">
-        <h1 className="mb-6 text-4xl font-bold text-foreground sm:text-5xl lg:text-6xl">
+        <h1 className="text-foreground mb-6 text-4xl font-bold sm:text-5xl lg:text-6xl">
           {t('blogPage.index.header.title')}
         </h1>
-        <p className="mx-auto max-w-3xl text-lg text-muted-foreground sm:text-xl">
+        <p className="text-muted-foreground mx-auto max-w-3xl text-lg sm:text-xl">
           {t('blogPage.index.header.subheadline')}
         </p>
       </Section>
@@ -139,7 +139,7 @@ export default function BlogIndexPage() {
               {t('blogPage.index.pagination.previous')}
             </Button>
 
-            <span className="text-sm text-muted-foreground">
+            <span className="text-muted-foreground text-sm">
               Page {currentPage} of {totalPages}
             </span>
 

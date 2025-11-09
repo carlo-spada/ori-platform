@@ -1,13 +1,2 @@
-# Mark font files as binary to prevent diff rendering
-*.woff2 binary
-*.woff binary
-*.ttf binary
-*.otf binary
-
-# Mark images as binary
-*.png binary
-*.jpg binary
-*.jpeg binary
-*.gif binary
-*.ico binary
-*.webp binary
+# Ensure shell scripts have LF line endings
+*.sh text eol=lf

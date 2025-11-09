@@ -70,12 +70,18 @@ Ori Platform is an AI-powered career companion built as a pnpm workspace monorep
 
 This is a pnpm workspace. The key directories are:
 
-- **`api/`**: **Vercel Serverless Functions**. This is the production backend API.
-- **`src/`**: The **Next.js** frontend application.
-- **`services/`**: Supporting backend services.
-  - `core-api`: A local-only Express server that mirrors the serverless API for development.
-  - `ai-engine`: The Python/FastAPI service for all AI features.
+- **`src/`**: The **Next.js 16** frontend application.
+  - `src/app/`: Next.js App Router pages
+  - `src/components/`: React components (ui/, profile/, applications/, etc.)
+  - `src/integrations/api/`: API client functions for backend communication
+  - `src/hooks/`: React Query hooks for data fetching and mutations
+- **`services/`**: Backend services.
+  - `core-api`: Node.js/Express backend API for user profiles, authentication, and business logic.
+  - `ai-engine`: Python/FastAPI service for all AI-powered features.
 - **`shared/`**: Cross-service packages for types and utilities.
+  - `shared/types/`: TypeScript type definitions shared across frontend and backend
+- **`supabase/`**: Database migrations and Supabase configuration.
+- **`docs/`**: Technical documentation (API_ENDPOINTS.md, DATABASE_SCHEMA.md)
 
 ## Development Commands
 
@@ -90,10 +96,8 @@ pnpm lint                   # Run ESLint (next/core-web-vitals config)
 
 ### Backend Development
 
-The production API runs as serverless functions in the `api/` directory and is served by `pnpm dev`. The following command is for running the local-only Express server for development and debugging.
-
 ```bash
-pnpm dev:api                           # Start local-only core-api at http://localhost:3001
+pnpm dev:api                           # Start core-api at http://localhost:3001
 pnpm --filter @ori/core-api dev        # Equivalent command
 pnpm --filter @ori/core-api build      # Build core-api TypeScript
 
@@ -124,10 +128,48 @@ Frontend uses `AuthProvider` context (src/contexts/AuthProvider.tsx) wrapping th
 
 ### API Integration Pattern
 
-- Frontend queries core-api via React Query (TanStack Query)
+**Architecture:**
+
+- Frontend → API Client Layer → Backend API
+- API clients in `src/integrations/api/` (profile.ts, applications.ts)
+- React Query hooks in `src/hooks/` (useProfile.ts, useApplications.ts)
 - React Query client configured in `src/lib/react-query.ts`
-- API base URL should be configurable for local vs. production environments
-- Core-api expects CORS from frontend origin
+
+**API Client Pattern:**
+
+```typescript
+// Example: src/integrations/api/profile.ts
+export async function fetchProfile(): Promise<UserProfile> {
+  const headers = await getAuthHeaders()
+  const response = await fetch(`${API_URL}/api/v1/profile`, {
+    method: 'GET',
+    headers,
+  })
+  if (!response.ok) throw new Error(...)
+  return response.json()
+}
+```
+
+**React Query Hook Pattern:**
+
+```typescript
+// Example: src/hooks/useProfile.ts
+export function useProfile() {
+  return useQuery({
+    queryKey: ['profile'],
+    queryFn: fetchProfile,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  })
+}
+```
+
+**Usage in Components:**
+
+- NO mock data - all data comes from API
+- Use React Query hooks for data fetching
+- Handle loading states with `isLoading`
+- Handle errors with `error` object
+- Use mutations for create/update/delete operations
 
 ### Payment Flow
 
@@ -182,7 +224,7 @@ FRONTEND_URL=http://localhost:3000
 ### TypeScript Configuration
 
 - Strict mode enabled across all packages
-- Target: ES2017 for Next.js compatibility
+- Target: ES2022
 - Module resolution: bundler (Next.js 13+ requirement)
 - Each service has its own tsconfig.json extending root config
 
@@ -209,28 +251,95 @@ FRONTEND_URL=http://localhost:3000
 ### Database
 
 - Supabase PostgreSQL for data persistence
+- Migrations in `supabase/migrations/`
 - Type definitions in `shared/types/src/index.ts`
-- Core tables: users, user_profiles, jobs, applications
+- Core tables:
+  - `user_profiles`: User profile data (full_name, headline, location, about, skills, goals)
+  - `experiences`: Work experience records (company, role, dates, description)
+  - `education`: Education records (institution, degree, dates, description)
+  - `applications`: Job applications tracking (job_title, company, status, dates)
+- Row Level Security (RLS) enabled on all tables
 - Auth handled by Supabase Auth
+- Complete schema documentation: `docs/DATABASE_SCHEMA.md`
 
 ## Testing Approach
 
-While test infrastructure isn't fully established, follow these patterns:
+**Core API Tests:**
+
+- Tests in `services/core-api/src/routes/__tests__/`
+- Jest configuration: `services/core-api/jest.config.js`
+- **IMPORTANT:** Use `setupFiles` (not `setupFilesAfterEnv`) to load env vars before module imports
+- Test setup: `services/core-api/src/__tests__/setup.ts`
+- Mock environment variables are pre-configured in setup file
+- Run tests: `pnpm --filter @ori/core-api test`
+
+**Frontend Tests:**
 
 - Colocate tests with source files (`*.test.tsx`, `*.spec.ts`)
+- Use React Testing Library for component tests
+- Mock API clients in tests
+
+**General Patterns:**
+
 - Mock Supabase and Stripe in tests to avoid external dependencies
-- Core-api should use supertest for integration tests
-- Frontend should use React Testing Library
+- Use supertest for integration tests in core-api
+- Ensure all tests can run without real external services
 
 ## Common Development Patterns
 
-### Adding a New API Route
+### Adding a New API Endpoint
 
-Create route handler in `services/core-api/src/routes/`
+**Backend (core-api):**
 
-1. Import and mount in `services/core-api/src/index.ts`
-2. Add types to `shared/types/src/index.ts` if needed
-3. Build core-api: `pnpm --filter @ori/core-api build`
+1. Create route handler in `services/core-api/src/routes/`
+2. Define Zod schemas for request/response validation
+3. Import and mount in `services/core-api/src/index.ts`
+4. Add types to `shared/types/src/index.ts`
+5. Document in `docs/API_ENDPOINTS.md`
+6. Build: `pnpm --filter @ori/core-api build`
+
+**Frontend Integration:**
+
+1. Create API client function in `src/integrations/api/[domain].ts`
+2. Create React Query hook in `src/hooks/use[Domain].ts`
+3. Use hook in component (no mock data!)
+
+**Example:**
+
+```typescript
+// Backend: services/core-api/src/routes/profile.ts
+router.get('/', authMiddleware, async (req: AuthRequest, res) => {
+  const profile = await supabase
+    .from('user_profiles')
+    .select('*')
+    .eq('user_id', req.user.id)
+    .single()
+  res.json(profile.data)
+})
+
+// API Client: src/integrations/api/profile.ts
+export async function fetchProfile(): Promise<UserProfile> {
+  const headers = await getAuthHeaders()
+  const response = await fetch(`${API_URL}/api/v1/profile`, {
+    method: 'GET',
+    headers,
+  })
+  if (!response.ok) throw new Error('Failed to fetch profile')
+  return response.json()
+}
+
+// Hook: src/hooks/useProfile.ts
+export function useProfile() {
+  return useQuery({
+    queryKey: ['profile'],
+    queryFn: fetchProfile,
+    staleTime: 1000 * 60 * 5,
+  })
+}
+
+// Component: src/app/app/profile/page.tsx
+const { data: profile, isLoading } = useProfile()
+```
 
 ### Creating a New Protected Page
 
@@ -238,14 +347,17 @@ Add route under `src/app/app/` (nested under authenticated section)
 
 1. Check auth state in page component using `useAuth()` hook
 2. Redirect to `/login` if not authenticated
-3. Add navigation item to `src/lib/navConfig.ts` if needed
+3. Use React Query hooks for data fetching (NO mock data)
+4. Handle loading and error states
+5. Add navigation item to `src/lib/navConfig.ts` if needed
 
 ### Adding Shared Types
 
 Define in `shared/types/src/index.ts`
 
 1. Export from package
-2. Import in consuming packages as `@ori/types` (may need workspace setup)
+2. Import in consuming packages as `@ori/types`
+3. Keep frontend and backend types in sync
 
 ## Code Style Conventions
 
@@ -260,6 +372,8 @@ Define in `shared/types/src/index.ts`
 ## Deployment Considerations
 
 - Frontend deploys to Vercel with Analytics and Speed Insights enabled
+- Core-api (Express.js) deploys alongside frontend on Vercel
+- AI Engine deploys to Google Cloud Run as a containerized service
 - Core-api needs PORT, Supabase, and Stripe env vars
 - Stripe webhook endpoint must be registered in Stripe dashboard
 - Supabase project: zkdgtofxtzqnzgncqlyc.supabase.co
@@ -305,6 +419,10 @@ Review task file in `.tasks/todo/`
 6. **AI Engine**: Core-api gracefully falls back if AI engine unavailable
 7. **AI Engine First Run**: Downloads ~80MB sentence-transformer model (one-time)
 8. **Service Communication**: AI engine (3002) ← core-api (3001) ← frontend (3000)
+9. **No Mock Data**: All frontend pages must use React Query hooks - never use mock data
+10. **TypeScript Strict**: Avoid `any` types - define proper interfaces instead
+11. **React useEffect**: Use `useRef` to prevent cascading renders when initializing state from props
+12. **Jest Tests**: Environment variables must be loaded in `setupFiles` (not `setupFilesAfterEnv`)
 
 ## Development Patterns
 

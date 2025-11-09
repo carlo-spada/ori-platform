@@ -48,7 +48,11 @@
       "Bash(pnpm:*)",
       "Bash(gh pr edit:*)",
       "Bash(gh pr create:*)",
-      "Bash(git branch:*)"
+      "Bash(git branch:*)",
+      "Bash(tree:*)",
+      "Bash(xargs:*)",
+      "Bash(psql:*)",
+      "Bash(supabase db lint:*)"
     ],
     "deny": [],
     "ask": []

@@ -22,14 +22,14 @@ export function EmptyApplicationsState({
 
   return (
     <div className="flex flex-col items-center justify-center gap-4 py-12 text-center">
-      <div className="mb-2 rounded-full bg-muted/20 p-4">
+      <div className="bg-muted/20 mb-2 rounded-full p-4">
         <FileText
-          className="h-8 w-8 text-muted-foreground"
+          className="text-muted-foreground h-8 w-8"
           aria-hidden="true"
         />
       </div>
-      <h2 className="text-lg font-semibold text-foreground">{headline}</h2>
-      <p className="max-w-md text-sm text-muted-foreground">{message}</p>
+      <h2 className="text-foreground text-lg font-semibold">{headline}</h2>
+      <p className="text-muted-foreground max-w-md text-sm">{message}</p>
       <Tooltip>
         <TooltipTrigger asChild>
           <span tabIndex={0}>

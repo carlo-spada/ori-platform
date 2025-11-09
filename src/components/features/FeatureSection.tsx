@@ -38,17 +38,17 @@ export function FeatureSection({
         {/* Content */}
         <div className={cn('space-y-6', align === 'right' && 'xl:order-2')}>
           {eyebrow && (
-            <p className="text-sm font-medium uppercase tracking-wider text-accent">
+            <p className="text-accent text-sm font-medium tracking-wider uppercase">
               {eyebrow}
             </p>
           )}
           <h2
             id={titleId}
-            className="text-3xl font-semibold leading-tight text-foreground sm:text-4xl"
+            className="text-foreground text-3xl leading-tight font-semibold sm:text-4xl"
           >
             {name}
           </h2>
-          <p className="text-lg leading-relaxed text-muted-foreground">
+          <p className="text-muted-foreground text-lg leading-relaxed">
             {description}
           </p>
           {points && points.length > 0 && (
@@ -56,10 +56,10 @@ export function FeatureSection({
               {points.map((point, index) => (
                 <li
                   key={index}
-                  className="flex items-start gap-3 text-muted-foreground"
+                  className="text-muted-foreground flex items-start gap-3"
                 >
                   <CheckCircle2
-                    className="mt-0.5 h-5 w-5 shrink-0 text-accent"
+                    className="text-accent mt-0.5 h-5 w-5 shrink-0"
                     aria-hidden="true"
                   />
                   <span className="leading-relaxed">{point}</span>
@@ -72,16 +72,16 @@ export function FeatureSection({
         {/* Visual */}
         <div
           className={cn(
-            'relative aspect-[16/10] overflow-hidden rounded-2xl border border-border bg-muted/5 shadow-md',
+            'border-border bg-muted/5 relative aspect-[16/10] overflow-hidden rounded-2xl border shadow-md',
             align === 'right' && 'xl:order-1',
           )}
           aria-hidden="true"
         >
           {visual || (
-            <div className="absolute inset-0 flex items-center justify-center text-muted-foreground/30">
+            <div className="text-muted-foreground/30 absolute inset-0 flex items-center justify-center">
               <div className="space-y-2 text-center">
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-accent/10">
-                  <CheckCircle2 className="h-8 w-8 text-accent" />
+                <div className="bg-accent/10 mx-auto flex h-16 w-16 items-center justify-center rounded-full">
+                  <CheckCircle2 className="text-accent h-8 w-8" />
                 </div>
                 <p className="text-sm font-medium">{name}</p>
               </div>

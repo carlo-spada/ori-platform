@@ -29,7 +29,7 @@ export function JobDetailsCard({ job }: JobDetailsCardProps) {
             <span className="text-sm font-medium">
               {t('jobDetailPage.details.datePosted')}
             </span>
-            <span className="text-sm text-muted-foreground">
+            <span className="text-muted-foreground text-sm">
               {format(new Date(job.datePosted), 'PPP')}
             </span>
           </div>
@@ -39,7 +39,7 @@ export function JobDetailsCard({ job }: JobDetailsCardProps) {
             <span className="text-sm font-medium">
               {t('jobDetailPage.details.employmentType')}
             </span>
-            <span className="text-sm text-muted-foreground">
+            <span className="text-muted-foreground text-sm">
               {job.employmentType}
             </span>
           </div>
@@ -49,7 +49,7 @@ export function JobDetailsCard({ job }: JobDetailsCardProps) {
             <span className="text-sm font-medium">
               {t('jobDetailPage.details.salaryRange')}
             </span>
-            <span className="text-sm text-muted-foreground">
+            <span className="text-muted-foreground text-sm">
               {job.salaryRange}
             </span>
           </div>

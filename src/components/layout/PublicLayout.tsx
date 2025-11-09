@@ -42,7 +42,7 @@ export function PublicLayout({
       {/* Skip to content link for accessibility */}
       <a
         href="#main"
-        className="sr-only z-[100] inline-flex items-center rounded-xl bg-accent px-4 py-2 font-medium text-accent-foreground shadow-lg focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+        className="bg-accent text-accent-foreground focus-visible:ring-accent sr-only z-[100] inline-flex items-center rounded-xl px-4 py-2 font-medium shadow-lg focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
       >
         {t('cta.skipToContent')}
       </a>

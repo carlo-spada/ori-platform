@@ -22,35 +22,35 @@ export interface FeatureComparisonTableProps {
 function renderCell(value: string | boolean) {
   if (typeof value === 'boolean') {
     return value ? (
-      <Check className="mx-auto h-5 w-5 text-primary" aria-label="Included" />
+      <Check className="text-primary mx-auto h-5 w-5" aria-label="Included" />
     ) : (
       <X
-        className="mx-auto h-5 w-5 text-muted-foreground/40"
+        className="text-muted-foreground/40 mx-auto h-5 w-5"
         aria-label="Not included"
       />
     )
   }
-  return <span className="text-sm text-foreground">{value}</span>
+  return <span className="text-foreground text-sm">{value}</span>
 }
 
 export function FeatureComparisonTable({
   features,
 }: FeatureComparisonTableProps) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-border bg-card shadow-md">
+    <div className="border-border bg-card overflow-x-auto rounded-xl border shadow-md">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[40%] font-semibold text-foreground">
+            <TableHead className="text-foreground w-[40%] font-semibold">
               Feature
             </TableHead>
-            <TableHead className="text-center font-semibold text-foreground">
+            <TableHead className="text-foreground text-center font-semibold">
               Free
             </TableHead>
-            <TableHead className="text-center font-semibold text-foreground">
+            <TableHead className="text-foreground text-center font-semibold">
               Plus
             </TableHead>
-            <TableHead className="text-center font-semibold text-foreground">
+            <TableHead className="text-foreground text-center font-semibold">
               Premium
             </TableHead>
           </TableRow>
@@ -58,7 +58,7 @@ export function FeatureComparisonTable({
         <TableBody>
           {features.map((row, index) => (
             <TableRow key={index}>
-              <TableCell className="font-medium text-foreground">
+              <TableCell className="text-foreground font-medium">
                 {row.feature}
               </TableCell>
               <TableCell className="text-center">

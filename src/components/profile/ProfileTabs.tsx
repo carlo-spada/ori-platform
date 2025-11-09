@@ -39,7 +39,7 @@ export function ProfileTabs({
     <div
       role="tablist"
       aria-label="Profile sections"
-      className="inline-flex gap-1 rounded-xl border border-border bg-muted/30 p-1"
+      className="border-border bg-muted/30 inline-flex gap-1 rounded-xl border p-1"
     >
       {tabs.map((tab, index) => {
         const isActive = activeTab === tab
@@ -55,10 +55,10 @@ export function ProfileTabs({
             onKeyDown={(e) => handleKeyDown(e, index)}
             className={cn(
               'rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+              'focus-visible:ring-accent focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
               isActive
                 ? 'bg-accent text-accent-foreground shadow-sm'
-                : 'text-muted-foreground hover:bg-white/5 hover:text-foreground',
+                : 'text-muted-foreground hover:text-foreground hover:bg-white/5',
             )}
           >
             {labels[tab]}

@@ -21,9 +21,9 @@
 **Implementation:**
 
 ```tsx
-<div className="flex items-center justify-between border-b border-border/50 pb-1">
-  <span className="text-sm font-medium text-foreground">Skills Analysis</span>
-  <span className="text-xs font-medium text-muted-foreground">
+<div className="border-border/50 flex items-center justify-between border-b pb-1">
+  <span className="text-foreground text-sm font-medium">Skills Analysis</span>
+  <span className="text-muted-foreground text-xs font-medium">
     {matchedSkillsList.length} of {skillsGap.requiredSkills.length} matched
   </span>
 </div>
@@ -95,7 +95,7 @@
 
 ```tsx
 // Wrap entire component return in:
-<div className="mt-3 rounded-lg border border-border/50 bg-muted/30 p-3">
+<div className="border-border/50 bg-muted/30 mt-3 rounded-lg border p-3">
   {/* Existing content */}
 </div>
 ```
@@ -128,7 +128,7 @@ const matchPercentage = Math.round(
     <span className="font-medium">Skill Match</span>
     <span className="text-muted-foreground">{matchPercentage}%</span>
   </div>
-  <div className="h-2 overflow-hidden rounded-full bg-muted">
+  <div className="bg-muted h-2 overflow-hidden rounded-full">
     <div
       className="h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all"
       style={{ width: `${matchPercentage}%` }}
@@ -204,7 +204,7 @@ if (missingSkillsList.length === 0 && matchedSkillsList.length > 0) {
           <h4 className="mb-1 text-sm font-semibold text-green-600 dark:text-green-400">
             Perfect Match! 🎉
           </h4>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-muted-foreground text-xs">
             You have all {skillsGap.requiredSkills.length} required skills for
             this role. You're well-qualified to apply!
           </p>
@@ -217,7 +217,7 @@ if (missingSkillsList.length === 0 && matchedSkillsList.length > 0) {
 // No required skills scenario
 if (skillsGap.requiredSkills.length === 0) {
   return (
-    <div className="text-xs italic text-muted-foreground">
+    <div className="text-muted-foreground text-xs italic">
       No specific skills listed for this position.
     </div>
   )
@@ -246,15 +246,15 @@ if (skillsGap.requiredSkills.length === 0) {
 export function SkillsGapSkeleton() {
   return (
     <div className="animate-pulse space-y-3">
-      <div className="h-6 w-1/3 rounded bg-muted" />
+      <div className="bg-muted h-6 w-1/3 rounded" />
       <div className="flex gap-2">
-        <div className="h-7 w-20 rounded-md bg-muted" />
-        <div className="h-7 w-24 rounded-md bg-muted" />
-        <div className="h-7 w-16 rounded-md bg-muted" />
+        <div className="bg-muted h-7 w-20 rounded-md" />
+        <div className="bg-muted h-7 w-24 rounded-md" />
+        <div className="bg-muted h-7 w-16 rounded-md" />
       </div>
       <div className="flex gap-2">
-        <div className="h-7 w-24 rounded-md bg-muted" />
-        <div className="h-7 w-20 rounded-md bg-muted" />
+        <div className="bg-muted h-7 w-24 rounded-md" />
+        <div className="bg-muted h-7 w-20 rounded-md" />
       </div>
     </div>
   )
@@ -290,7 +290,7 @@ const [isExpanded, setIsExpanded] = useState(false)
 
 ;<button
   onClick={() => setIsExpanded(!isExpanded)}
-  className="flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground"
+  className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-xs font-medium"
 >
   Skills Analysis
   {isExpanded ? (
@@ -333,7 +333,7 @@ const [isExpanded, setIsExpanded] = useState(false)
     rel="noopener noreferrer"
     className="ml-auto opacity-0 transition-opacity group-hover:opacity-100"
   >
-    <ExternalLink className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+    <ExternalLink className="text-muted-foreground hover:text-foreground h-3 w-3" />
   </a>
 </div>
 ```

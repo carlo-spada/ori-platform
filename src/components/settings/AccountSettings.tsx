@@ -42,7 +42,7 @@ export function AccountSettings({
   return (
     <>
       <section className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-6">
-        <h2 className="text-xl font-semibold text-foreground">
+        <h2 className="text-foreground text-xl font-semibold">
           {labels.heading}
         </h2>
 
@@ -50,7 +50,7 @@ export function AccountSettings({
           <div className="space-y-2">
             <label
               htmlFor="email"
-              className="text-sm font-medium text-foreground"
+              className="text-foreground text-sm font-medium"
             >
               {labels.emailLabel}
             </label>
@@ -59,7 +59,7 @@ export function AccountSettings({
               type="email"
               value={user.email}
               readOnly
-              className="w-full cursor-not-allowed rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2 text-sm text-foreground opacity-70"
+              className="text-foreground w-full cursor-not-allowed rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2 text-sm opacity-70"
             />
           </div>
 
@@ -78,7 +78,7 @@ export function AccountSettings({
               {labels.exportDataLabel}
             </Button>
           </div>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-muted-foreground text-xs">
             {labels.exportDataHelper}
           </p>
         </div>
