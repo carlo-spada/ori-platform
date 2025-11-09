@@ -418,7 +418,11 @@
         "q": "Qu'est-ce qu'un \"lot\" d'offres d'emploi ?",
         "a": "Un lot est un ensemble d'offres d'emploi personnalisées organisées par Ori en fonction de votre profil, de vos préférences et de vos objectifs actuels. Chaque lot peut contenir plusieurs rôles adaptés à votre profil."
       }
-    ]
+    ],
+    "faqSection": {
+      "title": "Questions fréquemment posées",
+      "subtitle": "Tout ce que vous devez savoir sur la tarification de l'Ori."
+    }
   },
   "aboutPage": {
     "title": "A propos d'Ori | Notre mission",
@@ -483,7 +487,30 @@
       "pagination": {
         "previous": "Précédent",
         "next": "Suivant"
-      }
+      },
+      "posts": [
+        {
+          "slug": "future-of-work-ai-human-collaboration",
+          "title": "L'Avenir du Travail : Collaboration entre l'IA et l'Homme",
+          "excerpt": "Explorer comment l'intelligence artificielle remodèle le lieu de travail et crée de nouvelles opportunités pour des contributions humaines significatives.",
+          "category": "Avenir du Travail",
+          "tags": ["IA", "Technologie", "Carrière"]
+        },
+        {
+          "slug": "building-adaptive-career-pathways",
+          "title": "Construire des Parcours de Carrière Adaptatifs dans un Monde en Évolution",
+          "excerpt": "Comment naviguer les transitions de carrière et construire la résilience dans un marché du travail en constante évolution.",
+          "category": "Développement de Carrière",
+          "tags": ["Carrière", "Croissance", "Compétences"]
+        },
+        {
+          "slug": "empathy-in-technology-design",
+          "title": "L'Empathie dans la Conception Technologique",
+          "excerpt": "Pourquoi les principes de conception centrés sur l'empathie sont essentiels pour construire une technologie qui sert véritablement les gens.",
+          "category": "Technologie",
+          "tags": ["Conception", "Empathie", "UX"]
+        }
+      ]
     },
     "post": {
       "defaultAuthor": "Ori AI",

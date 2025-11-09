@@ -372,6 +372,10 @@
         "premium": true
       }
     ],
+    "faqSection": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know about Ori pricing."
+    },
     "faqs": [
       {
         "q": "Can I change my plan later?",
@@ -462,7 +466,30 @@
       "pagination": {
         "previous": "Previous",
         "next": "Next"
-      }
+      },
+      "posts": [
+        {
+          "slug": "future-of-work-ai-human-collaboration",
+          "title": "The Future of Work: AI and Human Collaboration",
+          "excerpt": "Exploring how artificial intelligence is reshaping the workplace and creating new opportunities for meaningful human contribution.",
+          "category": "Future of Work",
+          "tags": ["AI", "Technology", "Career"]
+        },
+        {
+          "slug": "building-adaptive-career-pathways",
+          "title": "Building Adaptive Career Pathways in a Changing World",
+          "excerpt": "How to navigate career transitions and build resilience in an ever-evolving job market.",
+          "category": "Career Development",
+          "tags": ["Career", "Growth", "Skills"]
+        },
+        {
+          "slug": "empathy-in-technology-design",
+          "title": "Empathy in Technology Design",
+          "excerpt": "Why empathy-first design principles are essential for building technology that truly serves people.",
+          "category": "Technology",
+          "tags": ["Design", "Empathy", "UX"]
+        }
+      ]
     },
     "post": {
       "defaultAuthor": "Ori AI",

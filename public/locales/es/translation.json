@@ -49,7 +49,7 @@
   "landing": {
     "hero": {
       "eyebrow": "Su carrera, continuamente alineada",
-      "headline": "Libera tu potencial. Alinea el trabajo con lo que eres.",
+      "headline": "Libera tu potencial. Alinea tu trabajo con lo que eres.",
       "subheadline": "Ori es tu compañero de IA de por vida para descubrir, buscar y evolucionar dentro de los roles que se ajustan a tus habilidades, valores y ambiciones.",
       "primaryCta": "Regístrate gratis",
       "secondaryCta": "Más información",
@@ -393,6 +393,10 @@
         "premium": true
       }
     ],
+    "faqSection": {
+      "title": "Preguntas frecuentes",
+      "subtitle": "Todo lo que necesita saber sobre los precios Ori."
+    },
     "faqs": [
       {
         "q": "¿Puedo cambiar mi plan más tarde?",
@@ -483,7 +487,30 @@
       "pagination": {
         "previous": "Anterior",
         "next": "Siguiente"
-      }
+      },
+      "posts": [
+        {
+          "slug": "future-of-work-ai-human-collaboration",
+          "title": "El Futuro del Trabajo: Colaboración entre IA y Humanos",
+          "excerpt": "Explorando cómo la inteligencia artificial está remodelando el lugar de trabajo y creando nuevas oportunidades para contribuciones humanas significativas.",
+          "category": "Futuro del Trabajo",
+          "tags": ["IA", "Tecnología", "Carrera"]
+        },
+        {
+          "slug": "building-adaptive-career-pathways",
+          "title": "Construyendo Caminos de Carrera Adaptables en un Mundo Cambiante",
+          "excerpt": "Cómo navegar transiciones de carrera y construir resiliencia en un mercado laboral en constante evolución.",
+          "category": "Desarrollo de Carrera",
+          "tags": ["Carrera", "Crecimiento", "Habilidades"]
+        },
+        {
+          "slug": "empathy-in-technology-design",
+          "title": "Empatía en el Diseño de Tecnología",
+          "excerpt": "Por qué los principios de diseño centrados en la empatía son esenciales para construir tecnología que realmente sirve a las personas.",
+          "category": "Tecnología",
+          "tags": ["Diseño", "Empatía", "UX"]
+        }
+      ]
     },
     "post": {
       "defaultAuthor": "Ori AI",
@@ -648,7 +675,7 @@
       "exploreMoreCopy": "¿Quiere profundizar?",
       "exploreMoreLabel": "Más consejos",
       "emptyTitle": "Aún no hay recomendaciones",
-      "emptyBody": "Una vez que Ori comprenda mejor sus objetivos y su actividad, le propondremos ideas a medida para ayudarle a avanzar."
+      "emptyBody": "Una vez que Ori conozca mejor sus objetivos y su actividad, le propondremos ideas a medida para ayudarle a avanzar."
     }
   },
   "applicationsPage": {
@@ -676,7 +703,7 @@
     "addButtonLabel": "Añadir nueva aplicación",
     "emptyState": {
       "headline": "Aún no hay solicitudes activas",
-      "message": "Empiece a seguir su búsqueda de empleo añadiendo su primera candidatura.",
+      "message": "Comience a seguir su búsqueda de empleo añadiendo su primera solicitud.",
       "ctaLabel": "Añada su primera solicitud"
     }
   },

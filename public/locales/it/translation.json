@@ -418,7 +418,11 @@
         "q": "Cosa conta come un \"lotto\" di offerte di lavoro?",
         "a": "Un lotto è un insieme di offerte di lavoro personalizzate curate da Ori in base al tuo profilo, preferenze e obiettivi attuali. Ogni lotto può contenere più ruoli su misura per te."
       }
-    ]
+    ],
+    "faqSection": {
+      "title": "Domande frequenti",
+      "subtitle": "Tutto quello che c'è da sapere sui prezzi Ori."
+    }
   },
   "aboutPage": {
     "title": "Informazioni su Ori | La nostra missione",
@@ -483,7 +487,30 @@
       "pagination": {
         "previous": "Precedente",
         "next": "Avanti"
-      }
+      },
+      "posts": [
+        {
+          "slug": "future-of-work-ai-human-collaboration",
+          "title": "Il Futuro del Lavoro: Collaborazione tra IA e Umani",
+          "excerpt": "Esplorare come l'intelligenza artificiale sta rimodellando il luogo di lavoro e creando nuove opportunità per contributi umani significativi.",
+          "category": "Futuro del Lavoro",
+          "tags": ["IA", "Tecnologia", "Carriera"]
+        },
+        {
+          "slug": "building-adaptive-career-pathways",
+          "title": "Costruire Percorsi di Carriera Adattivi in un Mondo Mutevole",
+          "excerpt": "Come navigare le transizioni di carriera e costruire resilienza in un mercato del lavoro in continua evoluzione.",
+          "category": "Sviluppo della Carriera",
+          "tags": ["Carriera", "Crescita", "Competenze"]
+        },
+        {
+          "slug": "empathy-in-technology-design",
+          "title": "L'Empatia nel Design Tecnologico",
+          "excerpt": "Perché i principi di design incentrati sull'empatia sono essenziali per costruire tecnologia che serve veramente le persone.",
+          "category": "Tecnologia",
+          "tags": ["Design", "Empatia", "UX"]
+        }
+      ]
     },
     "post": {
       "defaultAuthor": "Ori AI",

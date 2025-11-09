@@ -393,6 +393,10 @@
         "premium": true
       }
     ],
+    "faqSection": {
+      "title": "Häufig gestellte Fragen",
+      "subtitle": "Alles, was Sie über Ori-Preise wissen müssen."
+    },
     "faqs": [
       {
         "q": "Kann ich meinen Plan später ändern?",
@@ -483,7 +487,30 @@
       "pagination": {
         "previous": "Vorherige",
         "next": "Weiter"
-      }
+      },
+      "posts": [
+        {
+          "slug": "future-of-work-ai-human-collaboration",
+          "title": "Die Zukunft der Arbeit: KI und menschliche Zusammenarbeit",
+          "excerpt": "Erkundung, wie künstliche Intelligenz den Arbeitsplatz umgestaltet und neue Möglichkeiten für sinnvolle menschliche Beiträge schafft.",
+          "category": "Zukunft der Arbeit",
+          "tags": ["KI", "Technologie", "Karriere"]
+        },
+        {
+          "slug": "building-adaptive-career-pathways",
+          "title": "Aufbau adaptiver Karrierepfade in einer sich verändernden Welt",
+          "excerpt": "Wie man Karrierewechsel navigiert und Widerstandsfähigkeit auf einem sich ständig weiterentwickelnden Arbeitsmarkt aufbaut.",
+          "category": "Karriereentwicklung",
+          "tags": ["Karriere", "Wachstum", "Fähigkeiten"]
+        },
+        {
+          "slug": "empathy-in-technology-design",
+          "title": "Empathie im Technologie-Design",
+          "excerpt": "Warum empathiezentrierte Designprinzipien für den Aufbau von Technologie, die Menschen wirklich dient, unerlässlich sind.",
+          "category": "Technologie",
+          "tags": ["Design", "Empathie", "UX"]
+        }
+      ]
     },
     "post": {
       "defaultAuthor": "Ori AI",
@@ -695,7 +722,7 @@
       "deleteAccountLabel": "Konto löschen",
       "deleteAccountWarning": "Dadurch werden Ihr Konto und Ihre Daten, soweit gesetzlich zulässig, endgültig gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
       "deleteAccountConfirmTitle": "Ihr Konto löschen?",
-      "deleteAccountConfirmBody": "Zur Bestätigung geben Sie bitte unten DELETE ein. Dadurch werden Ihr Konto und, soweit zulässig, Ihre Daten von Ori dauerhaft gelöscht.",
+      "deleteAccountConfirmBody": "Zur Bestätigung geben Sie bitte unten DELETE ein. Dadurch werden Ihr Konto und, sofern zulässig, Ihre Daten von Ori dauerhaft gelöscht.",
       "deleteAccountConfirmPlaceholder": "Geben Sie zur Bestätigung DELETE ein",
       "deleteAccountConfirmButton": "Dauerhaftes Löschen des Kontos",
       "deleteAccountCancelButton": "Abbrechen",
@@ -755,7 +782,7 @@
     "progressLabel": "Schritt {{Aktuell}} von {{Gesamt}}",
     "welcome": {
       "headline": "Willkommen bei Ori, {{Name}}.",
-      "body": "Zu Beginn stellen wir Ihnen ein paar gezielte Fragen zu Ihren Fähigkeiten und Zielen. Das dauert nur ein paar Minuten und hilft Ori, Sie besser zu beraten.",
+      "body": "Zu Beginn stellen wir Ihnen ein paar gezielte Fragen zu Ihren Fähigkeiten und Zielen. Dies dauert nur ein paar Minuten und hilft Ori, Sie besser zu beraten.",
       "primaryButton": "Fangen wir an"
     },
     "basicInfo": {
