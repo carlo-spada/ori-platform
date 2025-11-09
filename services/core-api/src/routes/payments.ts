@@ -144,15 +144,16 @@ paymentWebhookRoutes.post('/', async (req, res, next) => {
     }
 
     // Verify webhook signature
-    let event: any
+    let event
     try {
       event = stripe.webhooks.constructEvent(
         req.body,
         sig,
         process.env.STRIPE_WEBHOOK_SECRET!,
       )
-    } catch (err: any) {
-      console.error('Webhook signature verification failed:', err.message)
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Unknown error'
+      console.error('Webhook signature verification failed:', message)
       return res.status(400).json({ error: 'Invalid signature' })
     }
 
@@ -162,7 +163,7 @@ paymentWebhookRoutes.post('/', async (req, res, next) => {
     switch (event.type) {
       // Checkout session completed (initial subscription creation)
       case 'checkout.session.completed': {
-        const session = event.data.object as any
+        const session = event.data.object
         const customerId = session.customer as string
         const subscriptionId = session.subscription as string
 
@@ -187,7 +188,7 @@ paymentWebhookRoutes.post('/', async (req, res, next) => {
 
       // Subscription created
       case 'customer.subscription.created': {
-        const subscription = event.data.object as any
+        const subscription = event.data.object
         const customerId = subscription.customer as string
         const subscriptionId = subscription.id
         const priceId = subscription.items.data[0]?.price.id
@@ -207,7 +208,7 @@ paymentWebhookRoutes.post('/', async (req, res, next) => {
 
       // Subscription updated (plan change, trial ending, etc.)
       case 'customer.subscription.updated': {
-        const subscription = event.data.object as any
+        const subscription = event.data.object
         const customerId = subscription.customer as string
         const priceId = subscription.items.data[0]?.price.id
         let subscriptionStatus = getStatusFromPriceId(priceId)
@@ -232,7 +233,7 @@ paymentWebhookRoutes.post('/', async (req, res, next) => {
 
       // Subscription deleted/cancelled
       case 'customer.subscription.deleted': {
-        const subscription = event.data.object as any
+        const subscription = event.data.object
         const customerId = subscription.customer as string
 
         await supabase
@@ -249,7 +250,7 @@ paymentWebhookRoutes.post('/', async (req, res, next) => {
 
       // Successful recurring payment
       case 'invoice.payment_succeeded': {
-        const invoice = event.data.object as any
+        const invoice = event.data.object
         const customerId = invoice.customer as string
 
         console.log(`✅ Payment succeeded for customer ${customerId}`)
@@ -260,7 +261,7 @@ paymentWebhookRoutes.post('/', async (req, res, next) => {
 
       // Failed recurring payment
       case 'invoice.payment_failed': {
-        const invoice = event.data.object as any
+        const invoice = event.data.object
         const customerId = invoice.customer as string
 
         await supabase
@@ -277,7 +278,7 @@ paymentWebhookRoutes.post('/', async (req, res, next) => {
 
       // Payment method expiring soon
       case 'customer.source.expiring': {
-        const source = event.data.object as any
+        const source = event.data.object
         const customerId = source.customer as string
 
         console.log(`⚠️  Payment method expiring soon for customer ${customerId}`)

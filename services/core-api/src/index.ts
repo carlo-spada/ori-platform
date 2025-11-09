@@ -10,6 +10,7 @@ import { educationRoutes } from './routes/education.js'
 import { jobRoutes } from './routes/jobs.js'
 import { paymentRoutes, paymentWebhookRoutes } from './routes/payments.js'
 import setupIntentRouter from './routes/setupIntent.js'
+import subscriptionsRouter from './routes/subscriptions.js'
 import usersRouter from './routes/users.js'
 import chatRouter from './routes/chat.js'
 import profileRouter from './routes/profile.js'
@@ -44,6 +45,7 @@ app.use('/api/v1/chat', chatRouter)
 app.use('/api/v1/jobs', jobRoutes)
 app.use('/api/v1/payments', paymentRoutes)
 app.use('/api/v1/setup-intent', setupIntentRouter)
+app.use('/api/v1/subscriptions', subscriptionsRouter)
 app.use('/api/v1/profile', profileRouter)
 app.use('/api/v1/users', usersRouter)
 

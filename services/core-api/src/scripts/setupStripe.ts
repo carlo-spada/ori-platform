@@ -44,7 +44,7 @@ async function setupStripeProductsAndPrices(): Promise<CreatedIds> {
       limit: 1,
     })
 
-    let plusProduct: any
+    let plusProduct
     if (existingPlusProducts.data.length > 0) {
       plusProduct = existingPlusProducts.data[0]
       console.log(`✅ Product "Ori Plus" already exists (${plusProduct.id})`)
@@ -70,7 +70,7 @@ async function setupStripeProductsAndPrices(): Promise<CreatedIds> {
       limit: 1,
     })
 
-    let premiumProduct: any
+    let premiumProduct
     if (existingPremiumProducts.data.length > 0) {
       premiumProduct = existingPremiumProducts.data[0]
       console.log(
