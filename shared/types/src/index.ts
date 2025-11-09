@@ -36,6 +36,10 @@ export interface UserProfile {
   years_of_experience?: number
   willing_to_relocate?: boolean
   onboarding_completed?: boolean
+  // Stripe billing fields
+  stripe_customer_id?: string
+  stripe_subscription_id?: string
+  subscription_status?: 'free' | 'plus_monthly' | 'plus_yearly' | 'premium_monthly' | 'premium_yearly' | 'past_due' | 'cancelled'
   created_at?: string
   updated_at?: string
 }
