@@ -3,6 +3,7 @@ import type { UserProfile, Experience, Education } from '@ori/types'
 import {
   fetchProfile,
   updateProfile,
+  completeOnboarding,
   fetchExperiences,
   createExperience,
   updateExperience,
@@ -36,6 +37,21 @@ export function useUpdateProfile() {
 
   return useMutation({
     mutationFn: (data: Partial<UserProfile>) => updateProfile(data),
+    onSuccess: (updatedProfile) => {
+      // Update the cache with the new data
+      queryClient.setQueryData(['profile'], updatedProfile)
+    },
+  })
+}
+
+/**
+ * Hook to complete onboarding and update user profile
+ */
+export function useCompleteOnboarding() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data: Partial<UserProfile>) => completeOnboarding(data),
     onSuccess: (updatedProfile) => {
       // Update the cache with the new data
       queryClient.setQueryData(['profile'], updatedProfile)
