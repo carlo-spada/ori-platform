@@ -2,7 +2,20 @@
 
 ## Overview
 
-The Ori Platform uses an automated translation system powered by DeepL API to maintain translations across multiple languages. This document explains how to use and maintain the translation system.
+The Ori Platform uses a unified, automated translation system powered by DeepL API. This document explains the simplified workflow for maintaining translations across all supported languages.
+
+## 🎯 Quick Start
+
+```bash
+# Sync all missing translations (default behavior)
+DEEPL_API_KEY=your_key tsx scripts/translate.ts
+
+# Check what needs translation
+DEEPL_API_KEY=your_key tsx scripts/translate.ts --check
+
+# Force retranslate everything
+DEEPL_API_KEY=your_key tsx scripts/translate.ts --force
+```
 
 ## Supported Languages
 
@@ -36,114 +49,136 @@ public/locales/
 - `legal-privacy` - Privacy Policy content
 - `legal-cookies` - Cookie Policy content
 
-## Available Scripts
+## The Unified Translation Script
 
-### 1. Sync Translations (Recommended)
+### `scripts/translate.ts` - One Script to Rule Them All
 
-**Purpose:** Synchronizes missing translations across all languages
+This consolidated script replaces all previous translation scripts and provides a single, consistent interface for all translation needs.
+
+#### Basic Usage
 
 ```bash
-# Sync all missing translations
-DEEPL_API_KEY=your_key tsx scripts/sync-translations.ts
+# Default: Sync missing translations
+DEEPL_API_KEY=your_key tsx scripts/translate.ts
 ```
 
-This script:
-- Identifies missing translation keys
-- Translates only what's missing
-- Preserves existing translations
-- Shows progress and usage statistics
+#### Command Line Options
 
-### 2. Extract Translatable Content
+| Option | Description | Example |
+|--------|-------------|---------|
+| `--sync` | Translate only missing keys (default) | `--sync` |
+| `--force` | Retranslate all keys, overwrite existing | `--force` |
+| `--check` | Check for missing translations without changes | `--check` |
+| `--namespace` | Target specific namespace(s) | `--namespace=legal-terms,translation` |
+| `--language` | Target specific language(s) | `--language=de,es` |
+| `--verbose` | Show detailed progress | `--verbose` |
+| `--dry-run` | Preview changes without writing files | `--dry-run` |
 
-**Purpose:** Find hardcoded strings that should be translated
+#### Examples
 
 ```bash
-# Scan codebase for hardcoded strings
+# Check translation status
+DEEPL_API_KEY=your_key tsx scripts/translate.ts --check
+
+# Force retranslate legal documents
+DEEPL_API_KEY=your_key tsx scripts/translate.ts --force --namespace=legal-terms,legal-privacy
+
+# Translate only to German and Spanish
+DEEPL_API_KEY=your_key tsx scripts/translate.ts --language=de,es
+
+# Verbose mode with dry run
+DEEPL_API_KEY=your_key tsx scripts/translate.ts --verbose --dry-run
+```
+
+#### Features
+
+- ✅ **Smart Sync**: Only translates missing keys, preserving existing work
+- 🚨 **Error Recovery**: Failed translations are logged to `.tmp/failed-translations.log`
+- 📊 **Usage Tracking**: Shows API usage and warns when approaching limits
+- 🎨 **Colored Output**: Clear, readable console output with progress indicators
+- ⚡ **Rate Limiting**: Automatic retry with exponential backoff
+- 🔑 **Multi-API Support**: Works with both Free and Pro DeepL keys
+
+## Helper Scripts
+
+### `extract-translatable.ts` - Find Hardcoded Strings
+
+Scans your codebase to identify strings that should be translated.
+
+```bash
+# Find hardcoded strings
 tsx scripts/extract-translatable.ts
 
 # Generate detailed report
 tsx scripts/extract-translatable.ts --report
 
-# Auto-add to translation files
+# Auto-fix by adding to translation files
 tsx scripts/extract-translatable.ts --fix
 ```
 
-This script:
-- Scans all React components
-- Identifies hardcoded text
+**Output:**
+- Lists top hardcoded strings by frequency
 - Suggests translation keys
-- Can automatically add to translation files
-
-### 3. Comprehensive Translation
-
-**Purpose:** Full-featured translation with advanced options
-
-```bash
-# Translate everything
-DEEPL_API_KEY=your_key tsx scripts/translate-all.ts
-
-# Translate specific namespace
-DEEPL_API_KEY=your_key tsx scripts/translate-all.ts --namespace=translation
-
-# Translate to specific language
-DEEPL_API_KEY=your_key tsx scripts/translate-all.ts --language=es
-
-# Check translation status only
-DEEPL_API_KEY=your_key tsx scripts/translate-all.ts --check-only
-
-# Force retranslation (overwrites existing)
-DEEPL_API_KEY=your_key tsx scripts/translate-all.ts --force
-```
-
-### 4. Legacy Scripts
-
-- `translate-content.ts` - Translates legal documents from React components
-- `translate-missing.ts` - Fills in missing translations
+- Can automatically add to `translation.json`
+- Generates migration guide
 
 ## GitHub Actions Automation
 
-### Automatic Translation Workflow
+### Automated Workflow Features
 
-The `.github/workflows/translate.yml` workflow automatically translates content when:
+The `.github/workflows/translate.yml` workflow provides:
 
-1. **On Push to main/dev branches** - When English translation files change
-2. **Manual Trigger** - Via GitHub Actions UI with options:
-   - Specific namespace
-   - Specific language
-   - All translations
+1. **Automatic Triggers**:
+   - On push to `main` or `dev` when English files change
+   - Weekly scheduled runs (Mondays at 9 AM UTC)
+   - Manual trigger with custom options
 
-### Setting up GitHub Secrets
+2. **Pull Request Creation**:
+   - Creates a new branch `chore/translation-updates-YYYY-MM-DD`
+   - Opens a PR with detailed changes
+   - Assigns reviewers automatically
+   - Includes review checklist
 
-Add your DeepL API key to GitHub Secrets:
+3. **Manual Dispatch Options**:
+   - `mode`: sync, force, or check
+   - `namespace`: Specific namespaces to translate
+   - `language`: Specific languages to target
 
-1. Go to Settings → Secrets and variables → Actions
-2. Add new repository secret: `DEEPL_API_KEY`
-3. Paste your DeepL API key
+### Setting Up GitHub Actions
+
+1. **Add DeepL API Key**:
+   ```
+   Settings → Secrets → Actions → New repository secret
+   Name: DEEPL_API_KEY
+   Value: your-api-key-here
+   ```
+
+2. **Workflow Will**:
+   - Run automatically on English content changes
+   - Create PRs instead of direct commits
+   - Include failed translations log if any errors occur
 
 ## Development Workflow
 
 ### Adding New Translations
 
-1. **Add to English source file:**
-
+1. **Add to English source**:
 ```json
 // public/locales/en/translation.json
 {
   "newFeature": {
-    "title": "New Feature",
-    "description": "This is a new feature"
+    "title": "My New Feature",
+    "description": "Feature description"
   }
 }
 ```
 
-2. **Use in React component:**
-
+2. **Use in React component**:
 ```tsx
 import { useTranslation } from 'react-i18next'
 
 function Component() {
   const { t } = useTranslation()
-
   return (
     <div>
       <h1>{t('newFeature.title')}</h1>
@@ -153,191 +188,23 @@ function Component() {
 }
 ```
 
-3. **Sync translations:**
-
+3. **Sync translations**:
 ```bash
-DEEPL_API_KEY=your_key tsx scripts/sync-translations.ts
+DEEPL_API_KEY=your_key tsx scripts/translate.ts
 ```
 
-### Adding New Language
+### Legal Documents
 
-1. **Update target languages in scripts:**
-
-```typescript
-// scripts/sync-translations.ts
-const TARGET_LANGUAGES: deepl.TargetLanguageCode[] = [
-  'de', 'es', 'fr', 'it',
-  'pt-PT', // Add Portuguese
-]
-```
-
-2. **Run sync script:**
-
-```bash
-DEEPL_API_KEY=your_key tsx scripts/sync-translations.ts
-```
-
-3. **Update i18n configuration if needed:**
-
-```typescript
-// src/i18n.ts
-// Add language detection support
-```
-
-### Legal Document Updates
-
-When updating legal documents:
-
-1. **Edit the source component:**
+Legal documents are now loaded directly from JSON translation files:
 
 ```tsx
-// src/app/legal/terms-of-service/page.tsx
-const content = `
-  <h1>Updated Terms</h1>
-  <p>New content here...</p>
-`
+// Components automatically load from translation files
+<LegalDocument namespace="legal-terms" />
+<LegalDocument namespace="legal-privacy" />
+<LegalDocument namespace="legal-cookies" />
 ```
 
-2. **Extract and translate:**
-
-```bash
-# Extract content from React components
-DEEPL_API_KEY=your_key tsx scripts/translate-content.ts
-```
-
-## Best Practices
-
-### 1. Translation Keys
-
-Use hierarchical, descriptive keys:
-
-```json
-{
-  "dashboard": {
-    "header": {
-      "title": "Dashboard",
-      "subtitle": "Welcome back"
-    },
-    "stats": {
-      "totalUsers": "Total Users",
-      "activeNow": "Active Now"
-    }
-  }
-}
-```
-
-### 2. Placeholders and Variables
-
-Use interpolation for dynamic content:
-
-```json
-{
-  "welcome": "Welcome, {{name}}!",
-  "itemCount": "You have {{count}} item",
-  "itemCount_plural": "You have {{count}} items"
-}
-```
-
-```tsx
-t('welcome', { name: user.name })
-t('itemCount', { count: 5 })
-```
-
-### 3. Context-Specific Translations
-
-Provide context for better translations:
-
-```json
-{
-  "button": {
-    "submit": "Submit",
-    "submitForm": "Submit Form",
-    "submitApplication": "Submit Application"
-  }
-}
-```
-
-### 4. HTML Content
-
-Use HTML in translations when needed:
-
-```json
-{
-  "terms": {
-    "agree": "I agree to the <a>Terms of Service</a>"
-  }
-}
-```
-
-```tsx
-<Trans i18nKey="terms.agree">
-  I agree to the <Link to="/terms">Terms of Service</Link>
-</Trans>
-```
-
-## Monitoring and Maintenance
-
-### Check Translation Coverage
-
-```bash
-# Check for missing translations
-DEEPL_API_KEY=your_key tsx scripts/translate-all.ts --check-only
-```
-
-### Extract Hardcoded Strings
-
-```bash
-# Find strings that should be translated
-tsx scripts/extract-translatable.ts --report
-```
-
-### Monitor DeepL Usage
-
-The scripts show API usage statistics:
-
-```
-📊 Usage: 229,163 / 500,000 (46%)
-```
-
-Monitor usage to avoid hitting limits.
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Rate Limiting**
-   - Scripts include automatic delays
-   - Wait and retry if rate limited
-
-2. **Missing Environment Variable**
-   ```bash
-   export DEEPL_API_KEY=your_key
-   ```
-
-3. **File Not Found**
-   - Ensure English source files exist
-   - Run from project root
-
-4. **Invalid API Key**
-   - Check key at https://www.deepl.com/account
-   - Ensure key has not expired
-
-### Testing Translations
-
-1. **Change language in browser:**
-
-```tsx
-// Programmatically
-i18n.changeLanguage('de')
-
-// Via UI language selector
-```
-
-2. **Check specific namespace:**
-
-```tsx
-const { t } = useTranslation('legal-terms')
-```
+The content is managed entirely through the translation system, making updates seamless across all languages.
 
 ## API Keys and Limits
 
@@ -346,81 +213,139 @@ const { t } = useTranslation('legal-terms')
 #### Free Plan
 - **Limit**: 500,000 characters/month
 - **Key Format**: Ends with `:fx` (e.g., `xxxx-xxxx-xxxx:fx`)
-- **Endpoint**: `https://api-free.deepl.com`
-- **Best For**: Initial setup, small projects
+- **Best For**: Development, small projects
 
 #### Pro Plan
-- **Limit**: Pay-per-use (shown as 1 trillion in API)
-- **Key Format**: Standard UUID format (e.g., `xxxx-xxxx-xxxx`)
-- **Endpoint**: `https://api.deepl.com`
-- **Best For**: Production use, regular updates
-- **Cost**: ~€20 per million characters after free tier
+- **Limit**: Pay-per-use (displays as 1 trillion)
+- **Key Format**: Standard UUID (e.g., `xxxx-xxxx-xxxx`)
+- **Best For**: Production, regular updates
+- **Cost**: ~€20 per million characters
 
-### API Key Detection
+### Automatic Detection
 
-The scripts automatically detect your key type:
-- Free keys (ending in `:fx`) → Use free endpoint
-- Pro keys → Use pro endpoint
-
-### Usage Monitoring
-
-The scripts provide detailed usage information:
+The script automatically detects your key type:
 ```
-📊 Usage: 0 / 1,000,000,000,000 (0%)  # Pro Plan
-📊 Usage: 250,000 / 500,000 (50%)      # Free Plan
+🔌 Checking DeepL API...
+Key type: PRO
+✅ Connected to DeepL
+📊 Usage: 380 / 1,000,000,000,000 (0%)
 ```
 
-**Warnings are shown when:**
-- 75% of quota used → Yellow warning
-- 90% of quota used → Red warning with character count remaining
+### Usage Warnings
+
+- **75% used**: Yellow warning
+- **90% used**: Red warning with remaining count
+- **Limit reached**: Clear error with resolution steps
+
+## Error Handling
+
+### Failed Translations Log
+
+Failed translations are logged to `.tmp/failed-translations.log`:
+```
+2025-01-15T10:30:00Z | translation | de | dashboard.title | Rate limit exceeded
+```
 
 ### Error Notifications
 
-The scripts include comprehensive error detection:
+The script provides clear, actionable error messages:
 
-1. **API Key Issues**
-   - Invalid or expired keys
-   - Wrong endpoint for key type
-   - Clear instructions for resolution
+```
+🚨🚨🚨 TRANSLATION API ERROR - ACTION REQUIRED! 🚨🚨🚨
 
-2. **Usage Limit Reached**
-   - Monthly quota exceeded
-   - Suggests upgrading or waiting
+❌ API Key Issue Detected
+   • Key type: PRO
+   • The API key may be expired or invalid
 
-3. **Rate Limiting**
-   - Automatic retry with delays
-   - Progress indication
+📝 To Fix:
+   1. Check your DeepL account
+   2. Verify the API key is active
+   3. Update DEEPL_API_KEY environment variable
+```
 
-### Usage Optimization
+## Best Practices
 
-- Sync script only translates missing keys
-- Caches translations in JSON files
-- Batch processing with delays
-- Character count tracking per session
+### 1. Translation Keys
 
-### Cost Estimation
+Use hierarchical, descriptive keys:
+```json
+{
+  "dashboard": {
+    "header": {
+      "title": "Dashboard",
+      "welcomeMessage": "Welcome back, {{name}}"
+    }
+  }
+}
+```
 
-**Monthly Usage Estimates:**
-- Initial translation: ~200,000 characters (all content)
-- Blog posts: ~25,000 characters per post × 4 languages = 100,000
-- Updates: ~10,000 characters for UI changes
+### 2. Regular Syncing
 
-**Recommendation**: Free plan sufficient after initial setup, Pro plan for heavy content creation
+- Run `--check` regularly to monitor translation coverage
+- Use GitHub Actions for automatic weekly syncs
+- Review PRs before merging translation updates
 
-## Contributing
+### 3. Cost Management
 
-When contributing translations:
+**Monthly estimates**:
+- Initial setup: ~200,000 characters
+- Blog post (5000 words): ~25,000 characters × 4 languages = 100,000
+- UI updates: ~10,000 characters
 
-1. Always edit English source files first
-2. Run sync script to update other languages
-3. Test translations in development
-4. Commit all language files together
-5. Include in PR: "Updated translations via DeepL"
+**Recommendation**: Free plan after initial setup, Pro for heavy content creation
+
+## Troubleshooting
+
+### Common Issues
+
+| Issue | Solution |
+|-------|----------|
+| API key error | Check key format (Free ends with `:fx`) |
+| Rate limiting | Script auto-retries with delays |
+| Missing translations | Run without `--check` flag |
+| Failed translations | Check `.tmp/failed-translations.log` |
+
+### Testing
+
+```bash
+# Test with check mode
+DEEPL_API_KEY=your_key tsx scripts/translate.ts --check
+
+# Test specific namespace
+DEEPL_API_KEY=your_key tsx scripts/translate.ts --namespace=translation --dry-run
+
+# View verbose output
+DEEPL_API_KEY=your_key tsx scripts/translate.ts --verbose
+```
+
+## Migration from Old System
+
+If you're migrating from the old multi-script system:
+
+1. **Old scripts moved to**: `scripts/deprecated/`
+2. **New unified script**: `scripts/translate.ts`
+3. **GitHub Actions**: Updated to use new script and create PRs
+4. **Legal components**: Now use `LegalDocument` component
+
+### What Changed
+
+- ✅ **One script instead of five**
+- ✅ **Consistent error handling**
+- ✅ **Failed translations log**
+- ✅ **PR creation instead of direct commits**
+- ✅ **Legal docs from JSON files**
+- ✅ **Better progress tracking**
 
 ## Support
 
 For translation issues:
-- Check this documentation
-- Review script outputs for errors
-- Verify API key and limits
-- Contact maintainers if needed
+1. Check this documentation
+2. Review `.tmp/failed-translations.log`
+3. Verify API key and limits
+4. Run with `--verbose` for detailed output
+5. Contact maintainers if needed
+
+---
+
+*Last updated: November 2024*
+*Unified translation system v2.0*
