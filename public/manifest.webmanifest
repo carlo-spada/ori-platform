@@ -2,8 +2,8 @@
   "name": "Ori - AI Career Companion",
   "short_name": "Ori",
   "description": "Your AI-powered career companion. Discover fulfilling work, bridge skill gaps, and accelerate your professional growth.",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "https://app.getori.app/",
+  "scope": "https://app.getori.app/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
@@ -31,7 +31,7 @@
       "name": "Dashboard",
       "short_name": "Dashboard",
       "description": "View your career dashboard",
-      "url": "/app/dashboard",
+      "url": "https://app.getori.app/dashboard",
       "icons": [
         {
           "src": "/icons/icon-192x192.png",
@@ -44,7 +44,7 @@
       "name": "Applications",
       "short_name": "Applications",
       "description": "Track your job applications",
-      "url": "/app/applications",
+      "url": "https://app.getori.app/applications",
       "icons": [
         {
           "src": "/icons/icon-192x192.png",
@@ -57,7 +57,7 @@
       "name": "Profile",
       "short_name": "Profile",
       "description": "Update your profile and goals",
-      "url": "/app/profile",
+      "url": "https://app.getori.app/profile",
       "icons": [
         {
           "src": "/icons/icon-192x192.png",
@@ -68,7 +68,7 @@
     }
   ],
   "share_target": {
-    "action": "/app/applications",
+    "action": "https://app.getori.app/applications",
     "method": "GET",
     "enctype": "application/x-www-form-urlencoded",
     "params": {

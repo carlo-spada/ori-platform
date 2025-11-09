@@ -38,7 +38,7 @@ export default function Signup() {
   // Redirect authenticated users
   useEffect(() => {
     if (user) {
-      router.push('/app/dashboard')
+      router.push('/dashboard')
     }
   }, [user, router])
 
