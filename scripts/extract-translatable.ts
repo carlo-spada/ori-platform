@@ -235,7 +235,7 @@ function generateTranslationKey(text: string, type: string): string {
 /**
  * Load existing translation file
  */
-async function loadTranslations(filePath: string): Promise<any> {
+async function loadTranslations(filePath: string): Promise<Record<string, unknown>> {
   try {
     const content = await fs.readFile(filePath, 'utf-8')
     return JSON.parse(content)
