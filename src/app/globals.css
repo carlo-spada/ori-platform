@@ -1,66 +1,22 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
 All colors MUST be HSL.
 */
 
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('/fonts/Inter-roman.var.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Inter';
-  font-style: italic;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url('/fonts/Inter-italic.var.woff2') format('woff2');
-}
-
-@theme {
-  /* Expose custom properties to Tailwind's theme system */
-  --background: var(--background);
-  --foreground: var(--foreground);
-  --card: var(--card);
-  --card-foreground: var(--card-foreground);
-  --popover: var(--popover);
-  --popover-foreground: var(--popover-foreground);
-  --primary: var(--primary);
-  --primary-foreground: var(--primary-foreground);
-  --secondary: var(--secondary);
-  --secondary-foreground: var(--secondary-foreground);
-  --muted: var(--muted);
-  --muted-foreground: var(--muted-foreground);
-  --accent: var(--accent);
-  --accent-foreground: var(--accent-foreground);
-  --destructive: var(--destructive);
-  --destructive-foreground: var(--destructive-foreground);
-  --border: var(--border);
-  --input: var(--input);
-  --ring: var(--ring);
-  --radius: var(--radius);
-
-  --bg: var(--bg);
-  --surface: var(--surface);
-  --text: var(--text);
-  --accent-2: var(--accent-2);
-
-  --sidebar-background: var(--sidebar-background);
-  --sidebar-foreground: var(--sidebar-foreground);
-  --sidebar-primary: var(--sidebar-primary);
-  --sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --sidebar-accent: var(--sidebar-accent);
-  --sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --sidebar-border: var(--sidebar-border);
-  --sidebar-ring: var(--sidebar-ring);
-}
-
 @layer base {
   :root {
-    /* Light mode values for custom properties */
+    /* AURA Brand Tokens - Light mode fallback */
+    --bg: 0 0% 100%;
+    --surface: 0 0% 98%;
+    --muted: 214 20% 70%;
+    --text: 215 27% 6%;
+    --accent: 203 100% 74%;
+    --accent-2: 248 100% 74%;
+
+    /* Shadcn compatibility */
     --background: 0 0% 100%;
     --foreground: 215 27% 6%;
     --card: 0 0% 98%;
@@ -81,27 +37,18 @@ All colors MUST be HSL.
     --input: 214 20% 85%;
     --ring: 203 100% 74%;
     --radius: 0.75rem;
-
-    /* Ori Brand Tokens - Light mode fallback */
-    --bg: var(--background);
-    --surface: var(--card);
-    --muted: var(--muted);
-    --text: var(--foreground);
-    --accent: var(--accent);
-    --accent-2: 248 100% 74%;
-
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 215 27% 6%;
-    --sidebar-primary: 203 100% 74%;
-    --sidebar-primary-foreground: 215 27% 6%;
-    --sidebar-accent: 203 100% 74%;
-    --sidebar-accent-foreground: 215 27% 6%;
-    --sidebar-border: 214 20% 85%;
-    --sidebar-ring: 203 100% 74%;
   }
 
   .dark {
-    /* Dark mode values for custom properties */
+    /* AURA Brand Tokens - Dark mode (primary) */
+    --bg: 215 27% 6%;
+    --surface: 215 22% 8%;
+    --muted: 214 20% 70%;
+    --text: 214 40% 95%;
+    --accent: 203 100% 74%;
+    --accent-2: 248 100% 74%;
+
+    /* Shadcn compatibility */
     --background: 215 27% 6%;
     --foreground: 214 40% 95%;
     --card: 215 22% 8%;
@@ -121,38 +68,20 @@ All colors MUST be HSL.
     --border: 214 20% 15%;
     --input: 214 20% 15%;
     --ring: 203 100% 74%;
-
-    /* Ori Brand Tokens - Dark mode (primary) */
-    --bg: var(--background);
-    --surface: var(--card);
-    --muted: var(--muted);
-    --text: var(--foreground);
-    --accent: var(--accent);
-    --accent-2: 248 100% 74%;
-
-    --sidebar-background: 215 27% 6%;
-    --sidebar-foreground: 214 40% 95%;
-    --sidebar-primary: 203 100% 74%;
-    --sidebar-primary-foreground: 215 27% 6%;
-    --sidebar-accent: 203 100% 74%;
-    --sidebar-accent-foreground: 215 27% 6%;
-    --sidebar-border: 214 20% 15%;
-    --sidebar-ring: 203 100% 74%;
   }
+}
 
+@layer base {
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
-    font-family:
-      var(--font-inter),
-      -apple-system,
-      BlinkMacSystemFont,
-      'Segoe UI',
-      system-ui,
-      sans-serif;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   }
 
   /* Reduced motion */
@@ -163,13 +92,13 @@ All colors MUST be HSL.
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
-      transition-delay: 0.01ms !important; /* Added this line for completeness */
     }
   }
 
   /* Focus visible styles */
   *:focus-visible {
-    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-background;
+    outline: none;
+    box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--accent));
   }
 }
 
@@ -200,11 +129,7 @@ All colors MUST be HSL.
 
   /* Gradient utility */
   .gradient-primary {
-    background: linear-gradient(
-      135deg,
-      hsl(var(--accent)),
-      hsl(var(--accent-2))
-    );
+    background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-2)));
   }
 
   /* Backdrop blur support */

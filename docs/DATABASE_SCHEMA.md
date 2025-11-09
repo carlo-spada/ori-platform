@@ -39,10 +39,16 @@
 - `goal` (TEXT) - Career goal
 - `cv_url` (TEXT) - Resume URL
 - `onboarding_completed` (BOOLEAN)
+- `stripe_customer_id` (TEXT, UNIQUE) - Stripe Customer ID
+- `stripe_subscription_id` (TEXT, UNIQUE) - Stripe Subscription ID
+- `subscription_status` (TEXT) - Subscription status (free, plus_monthly, plus_yearly, premium_monthly, premium_yearly, past_due, cancelled)
 
 **Indexes:**
 
 - `idx_user_profiles_target_roles` (GIN) on target_roles
+- `idx_user_profiles_stripe_customer_id` on stripe_customer_id
+- `idx_user_profiles_stripe_subscription_id` on stripe_subscription_id
+- `idx_user_profiles_subscription_status` on subscription_status
 
 **RLS:** Users can view/update only their own profile
 
@@ -185,7 +191,8 @@ created_at       TIMESTAMPTZ (default: NOW())
 1. `20251104192526_*.sql` - Initial user_profiles table
 2. `20251108003034_*.sql` - Conversations and messages tables
 3. `20251108020018_*.sql` - Onboarding fields (headline, location, target_roles)
-4. `20251108224444_*.sql` - Core schema (experiences, education, applications) ⭐ NEW
+4. `20251108224444_*.sql` - Core schema (experiences, education, applications)
+5. `20251108235959_*.sql` - Stripe integration fields (stripe_customer_id, stripe_subscription_id, subscription_status) ⭐ NEW
 
 **Applying Migrations:**
 
