@@ -278,8 +278,8 @@ paymentWebhookRoutes.post('/', async (req, res, next) => {
 
       // Payment method expiring soon
       case 'customer.source.expiring': {
-        const source = event.data.object
-        const customerId = source.customer as string
+        const source = event.data.object as { customer: string }
+        const customerId = source.customer
 
         console.log(`⚠️  Payment method expiring soon for customer ${customerId}`)
         // TODO: Send notification to user to update payment method
