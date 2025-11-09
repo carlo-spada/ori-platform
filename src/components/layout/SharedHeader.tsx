@@ -211,13 +211,13 @@ export function SharedHeader() {
         >
           <div
             ref={mobileMenuRef}
-            className="bg-surface fixed top-16 right-0 bottom-0 z-[60] w-full max-w-sm border-l border-white/10 shadow-2xl lg:hidden"
+            className="bg-surface fixed top-16 right-0 h-[calc(100vh-4rem)] z-[60] w-full max-w-sm overflow-hidden border-l border-white/10 shadow-2xl lg:hidden"
             role="dialog"
             aria-modal="true"
             aria-label="Main navigation"
             data-testid="mobile-menu"
           >
-            <div className="flex h-full flex-col">
+            <div className="flex h-full flex-col overflow-hidden">
               <div className="flex items-center justify-between border-b border-white/10 px-4 py-4">
                 <span className="text-lg font-semibold">Menu</span>
                 <button
@@ -234,10 +234,10 @@ export function SharedHeader() {
               </div>
 
               <nav
-                className="flex-1 overflow-y-auto px-4 py-6"
+                className="flex-1 overflow-y-auto overscroll-contain px-4 py-6"
                 aria-label="Mobile navigation"
               >
-                <ul className="space-y-2">
+                <ul className="space-y-2 pb-4">
                   {NAV_ITEMS.map((item) => (
                     <li key={item.slug}>
                       <Link
