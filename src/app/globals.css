@@ -132,6 +132,18 @@ All colors MUST be HSL.
     background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-2)));
   }
 
+  /* Enhanced gradient with animation */
+  .gradient-animated {
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
   /* Backdrop blur support */
   @supports (backdrop-filter: blur(12px)) {
     .backdrop-blur-header {
@@ -144,5 +156,36 @@ All colors MUST be HSL.
     .backdrop-blur-header {
       background-color: hsl(var(--surface) / 0.95);
     }
+  }
+
+  /* Button hover effects */
+  .btn-hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .btn-hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Smooth transitions for interactive elements */
+  .transition-smooth {
+    transition: all 0.2s ease;
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Glow effect */
+  .glow {
+    box-shadow: 0 0 20px hsl(var(--accent) / 0.5);
+  }
+
+  .glow-hover:hover {
+    box-shadow: 0 0 30px hsl(var(--accent) / 0.7);
   }
 }
