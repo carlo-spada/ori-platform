@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Section } from '@/components/ui/Section'
 import { useTranslation } from 'react-i18next'
+import { EarlyAccessModal } from '@/components/EarlyAccessModal'
 
 export interface BottomCTASectionProps {
   headline?: string
@@ -15,6 +17,7 @@ export interface BottomCTASectionProps {
 
 export function BottomCTASection(props?: BottomCTASectionProps) {
   const { t } = useTranslation()
+  const [showEarlyAccessModal, setShowEarlyAccessModal] = useState(false)
 
   const content = {
     headline: props?.headline ?? t('landing.bottomCta.headline'),
@@ -37,8 +40,12 @@ export function BottomCTASection(props?: BottomCTASectionProps) {
         </p>
 
         <div className="mb-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Button asChild size="lg" className="w-full sm:w-auto">
-            <Link href={content.primaryHref}>{content.primaryCta}</Link>
+          <Button
+            size="lg"
+            className="w-full sm:w-auto"
+            onClick={() => setShowEarlyAccessModal(true)}
+          >
+            {content.primaryCta}
           </Button>
 
           <Button
@@ -55,6 +62,13 @@ export function BottomCTASection(props?: BottomCTASectionProps) {
           {content.strapline}
         </p>
       </div>
+
+      {/* Early Access Modal */}
+      <EarlyAccessModal
+        isOpen={showEarlyAccessModal}
+        onClose={() => setShowEarlyAccessModal(false)}
+        trigger="bottom-cta"
+      />
     </Section>
   )
 }
