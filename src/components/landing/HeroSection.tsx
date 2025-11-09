@@ -1,11 +1,14 @@
+import { useState } from 'react'
 import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { Section } from '@/components/ui/Section'
 import { Illustration } from './Illustration'
+import { EarlyAccessModal } from '@/components/EarlyAccessModal'
 
 export function HeroSection() {
   const { t } = useTranslation()
+  const [showEarlyAccessModal, setShowEarlyAccessModal] = useState(false)
 
   return (
     <Section
@@ -40,12 +43,12 @@ export function HeroSection() {
         {/* CTAs */}
         <div className="mb-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Button
-            asChild
             size="lg"
             className="w-full sm:w-auto"
             data-testid="hero-primary-cta"
+            onClick={() => setShowEarlyAccessModal(true)}
           >
-            <Link href="/signup">{t('landing.hero.primaryCta')}</Link>
+            {t('landing.hero.primaryCta')}
           </Button>
 
           <Button
@@ -64,6 +67,13 @@ export function HeroSection() {
           {t('landing.hero.reassurance')}
         </p>
       </div>
+
+      {/* Early Access Modal */}
+      <EarlyAccessModal
+        isOpen={showEarlyAccessModal}
+        onClose={() => setShowEarlyAccessModal(false)}
+        trigger="hero"
+      />
     </Section>
   )
 }
