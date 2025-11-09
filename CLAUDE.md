@@ -73,7 +73,7 @@ The application uses subdomain-based routing to separate marketing and applicati
 - **Marketing Site** (`getori.app`): Public pages (landing, pricing, about, blog, features, legal)
 - **Application** (`app.getori.app`): Authenticated app (dashboard, profile, applications, login, signup)
 
-**Routing is handled automatically by middleware** (`src/middleware.ts`):
+**Routing is handled automatically by middleware** (`src/proxy.ts`):
 - Marketing pages on main domain redirect to app subdomain when accessing `/login`, `/signup`, `/app/*`
 - App subdomain root (`/`) rewrites to dashboard
 - Clean URLs on app subdomain: `/dashboard` instead of `/app/dashboard`

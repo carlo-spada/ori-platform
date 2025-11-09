@@ -57,7 +57,7 @@ The Ori Platform uses subdomain-based routing to separate the marketing site fro
 
 ## How It Works
 
-### Middleware Routing (`src/middleware.ts`)
+### Middleware Routing (`src/proxy.ts`)
 
 The Next.js middleware handles all subdomain routing:
 
@@ -238,7 +238,7 @@ When users install the PWA on their device, it opens directly to `app.getori.app
 If you experience redirect loops:
 1. Clear browser cache and cookies
 2. Check that both domains are properly configured in Vercel
-3. Verify middleware logic in `src/middleware.ts`
+3. Verify middleware logic in `src/proxy.ts`
 
 ### PWA Not Opening to App Subdomain
 
@@ -254,7 +254,7 @@ If you experience redirect loops:
 
 ### 404 Errors on App Routes
 
-1. Verify middleware is running (check `src/middleware.ts`)
+1. Verify middleware is running (check `src/proxy.ts`)
 2. Check that file structure in `src/app/app/*` is intact
 3. Verify rewrite rules in middleware
 
