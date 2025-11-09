@@ -11,12 +11,12 @@
     "setup:stripe": "ts-node-dev --transpile-only src/scripts/setupStripe.ts"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.45.0",
+    "@supabase/supabase-js": "^2.80.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "stripe": "^16.12.0",
-    "zod": "^3.23.0"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
@@ -28,6 +28,6 @@
     "supertest": "^7.1.4",
     "ts-jest": "^29.4.5",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.9.3"
   }
 }

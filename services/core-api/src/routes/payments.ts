@@ -4,6 +4,10 @@ import { validateRequest } from '../middleware/validation.js'
 import { authMiddleware, AuthRequest } from '../middleware/auth.js'
 import { supabase } from '../lib/supabase.js'
 import { stripe, getStatusFromPriceId } from '../lib/stripe.js'
+import {
+  sendPaymentFailureNotification,
+  sendPaymentMethodExpiringNotification,
+} from '../utils/notifications.js'
 
 const paymentRoutes: RouterType = Router()
 const paymentWebhookRoutes: RouterType = Router()
@@ -272,7 +276,9 @@ paymentWebhookRoutes.post('/', async (req, res, next) => {
           .eq('stripe_customer_id', customerId)
 
         console.log(`⚠️  Payment failed for customer ${customerId} - marked as past_due`)
-        // TODO: Send notification to user to update payment method
+
+        // Send notification to user to update payment method
+        await sendPaymentFailureNotification(supabase, customerId)
         break
       }
 
@@ -282,7 +288,9 @@ paymentWebhookRoutes.post('/', async (req, res, next) => {
         const customerId = source.customer
 
         console.log(`⚠️  Payment method expiring soon for customer ${customerId}`)
-        // TODO: Send notification to user to update payment method
+
+        // Send notification to user to update payment method
+        await sendPaymentMethodExpiringNotification(supabase, customerId)
         break
       }
 
