@@ -176,10 +176,10 @@ export default function PricingPage() {
       <Section data-testid="pricing-faq">
         <div className="mb-12 text-center">
           <h2 className="text-foreground mb-4 text-3xl font-semibold sm:text-4xl">
-            Frequently Asked Questions
+            {t('pricingPage.faqSection.title')}
           </h2>
           <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
-            Everything you need to know about Ori pricing.
+            {t('pricingPage.faqSection.subtitle')}
           </p>
         </div>
 

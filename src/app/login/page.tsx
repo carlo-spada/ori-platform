@@ -28,6 +28,18 @@ export default function Login() {
     }
   }, [user, router])
 
+  // Auto-show early access modal on page load
+  useEffect(() => {
+    const hasJoinedEarlyAccess = localStorage.getItem('ori-early-access')
+    if (!hasJoinedEarlyAccess) {
+      // Small delay to ensure smooth page render
+      const timer = setTimeout(() => {
+        setShowEarlyAccessModal(true)
+      }, 500)
+      return () => clearTimeout(timer)
+    }
+  }, [])
+
   const handleLoginClick = () => {
     // Show early access modal immediately on button click
     setShowEarlyAccessModal(true)

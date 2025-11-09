@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { z } from 'zod'
 import { useTranslation } from 'react-i18next'
 import {
@@ -37,6 +38,7 @@ interface EarlyAccessModalProps {
 }
 
 export function EarlyAccessModal({ isOpen, onClose, trigger = 'other' }: EarlyAccessModalProps) {
+  const router = useRouter()
   const { t } = useTranslation()
   const [email, setEmail] = useState('')
   const [firstName, setFirstName] = useState('')
@@ -70,7 +72,7 @@ export function EarlyAccessModal({ isOpen, onClose, trigger = 'other' }: EarlyAc
         description: t('earlyAccessModal.toast.successDescription'),
       })
 
-      // Close modal after 3 seconds
+      // Close modal and redirect to landing page after 3 seconds
       setTimeout(() => {
         onClose()
         // Reset for next time
@@ -79,6 +81,8 @@ export function EarlyAccessModal({ isOpen, onClose, trigger = 'other' }: EarlyAc
           setEmail('')
           setFirstName('')
         }, 500)
+        // Redirect to landing page
+        router.push('/')
       }, 3000)
 
     } catch (error) {

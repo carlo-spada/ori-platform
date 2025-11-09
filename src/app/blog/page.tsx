@@ -17,7 +17,8 @@ export default function BlogIndexPage() {
   const [currentPage, setCurrentPage] = useState(1)
 
   // Load posts from translations
-  const mockPosts: BlogPost[] = t('blogPage.index.posts', { returnObjects: true }) || [
+  const translatedPosts = t('blogPage.index.posts', { returnObjects: true })
+  const mockPosts: BlogPost[] = Array.isArray(translatedPosts) ? translatedPosts : [
     {
       slug: 'future-of-work-ai-human-collaboration',
       title: 'The Future of Work: AI and Human Collaboration',

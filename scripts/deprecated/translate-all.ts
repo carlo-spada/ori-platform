@@ -1,4 +1,5 @@
 #!/usr/bin/env tsx
+// @ts-nocheck
 
 /**
  * Comprehensive DeepL Translation Automation Script

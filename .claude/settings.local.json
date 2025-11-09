@@ -70,7 +70,8 @@
       "Bash(for lang in es fr it)",
       "Bash(do ls -1 public/locales/$lang/legal-terms.json)",
       "Bash(echo:*)",
-      "Bash(node -e:*)"
+      "Bash(node -e:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
