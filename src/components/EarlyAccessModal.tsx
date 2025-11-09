@@ -41,6 +41,8 @@ export function EarlyAccessModal({ isOpen, onClose, trigger = 'other' }: EarlyAc
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
 
+  console.log('EarlyAccessModal rendered, isOpen:', isOpen)
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 

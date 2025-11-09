@@ -3,31 +3,18 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { setDocumentMeta } from '@/lib/seo'
 import { useAuth } from '@/contexts/AuthProvider'
-import { toast } from '@/components/ui/sonner'
 import { CheckCircle2 } from 'lucide-react'
 import { EarlyAccessModal } from '@/components/EarlyAccessModal'
-import { useEarlyAccess } from '@/hooks/useEarlyAccess'
-
-const signupSchema = z.object({
-  email: z
-    .string()
-    .trim()
-    .email({ message: 'Please enter a valid email address' }),
-  password: z
-    .string()
-    .min(6, { message: 'Password must be at least 6 characters' }),
-})
 
 export default function Signup() {
   const router = useRouter()
-  const { signUp, user } = useAuth()
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const { user } = useAuth()
+  const [showEarlyAccessModal, setShowEarlyAccessModal] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false)
-  const { showModal, closeEarlyAccessModal, openEarlyAccessModal } = useEarlyAccess()
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     setDocumentMeta({
@@ -44,52 +31,10 @@ export default function Signup() {
     }
   }, [user, router])
 
-  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (isSubmitting) return
-
     // Show early access modal instead of attempting signup
-    openEarlyAccessModal()
-    return
-
-    /* Original signup code - preserved for future use
-    setIsSubmitting(true)
-
-    try {
-      const formData = new FormData(e.currentTarget)
-      const email = String(formData.get('email') || '').trim()
-      const password = String(formData.get('password') || '')
-
-      // Validate input
-      const validation = signupSchema.safeParse({ email, password })
-      if (!validation.success) {
-        const firstError = validation.error.issues[0]
-        toast.error('Invalid input', {
-          description: firstError.message,
-        })
-        return
-      }
-
-      const { error } = await signUp({ email, password })
-
-      if (error) {
-        toast.error('Signup failed', {
-          description: error.message,
-        })
-        return
-      }
-
-      // Show confirmation screen
-      setShowConfirmation(true)
-    } catch {
-      toast.error('Unexpected error', {
-        description:
-          'Something went wrong while creating your account. Please try again.',
-      })
-    } finally {
-      setIsSubmitting(false)
-    }
-    */
+    setShowEarlyAccessModal(true)
   }
 
   if (showConfirmation) {
@@ -230,8 +175,8 @@ export default function Signup() {
 
       {/* Early Access Modal */}
       <EarlyAccessModal
-        isOpen={showModal}
-        onClose={closeEarlyAccessModal}
+        isOpen={showEarlyAccessModal}
+        onClose={() => setShowEarlyAccessModal(false)}
         trigger="signup"
       />
     </div>
