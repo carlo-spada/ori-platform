@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { SubscriptionDetails } from '@/lib/types'
 import { Button } from '@/components/ui/button'
 import { getSupabaseClient } from '@/integrations/supabase/client'
-import { useToast } from '@/components/ui/use-toast'
+import { toast } from '@/components/ui/sonner'
 
 interface BillingSettingsProps {
   subscription?: SubscriptionDetails | null
@@ -27,7 +27,6 @@ export function BillingSettings({
   subscription,
   labels,
 }: BillingSettingsProps) {
-  const { toast } = useToast()
   const supabase = getSupabaseClient()
   const [isPortalLoading, setIsPortalLoading] = useState(false)
 
@@ -38,9 +37,7 @@ export function BillingSettings({
   const handleManageSubscription = async () => {
     if (isPortalLoading) return
     if (!supabase) {
-      toast({
-        variant: 'destructive',
-        title: 'Configuration error',
+      toast.error('Configuration error', {
         description:
           'Supabase is not configured. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.',
       })
@@ -68,9 +65,7 @@ export function BillingSettings({
       }
     } catch (error) {
       console.error('Error opening billing portal:', error)
-      toast({
-        variant: 'destructive',
-        title: 'Error',
+      toast.error('Error', {
         description: 'Could not open billing portal. Please try again.',
       })
       setIsPortalLoading(false)

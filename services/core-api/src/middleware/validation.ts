@@ -10,7 +10,7 @@ export function validateRequest<T extends z.ZodType>(schema: T) {
       if (error instanceof z.ZodError) {
         res.status(400).json({
           error: 'Validation failed',
-          details: error.errors,
+          details: error.issues,
         })
       } else {
         next(error)
