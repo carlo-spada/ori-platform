@@ -4,10 +4,22 @@ import type { NextRequest } from 'next/server'
 export function proxy(request: NextRequest) {
   const hostname = request.headers.get('host') || ''
   const { pathname } = request.nextUrl
+  const isLocalhost = hostname.includes('localhost') || hostname.includes('127.0.0.1')
+
+  // Helper to get base domain (strips www. and app. prefixes)
+  const getBaseDomain = (host: string): string => {
+    return host.replace(/^(www\.|app\.)/, '')
+  }
+
+  // Helper to construct app subdomain URL
+  const getAppHostname = (host: string): string => {
+    const baseDomain = getBaseDomain(host)
+    return `app.${baseDomain}`
+  }
 
   // Determine if this is the app subdomain
   const isAppSubdomain =
-    hostname.startsWith('app.') || hostname.startsWith('localhost:3000')
+    hostname.startsWith('app.') || isLocalhost
 
   // Routes that belong to the authenticated app
   const appRoutes = [
@@ -49,7 +61,9 @@ export function proxy(request: NextRequest) {
 
     if (isMarketingPage) {
       const url = request.nextUrl.clone()
-      url.hostname = hostname.replace('app.', '')
+      // Redirect to www subdomain for marketing pages
+      const baseDomain = getBaseDomain(hostname)
+      url.hostname = `www.${baseDomain}`
       return NextResponse.redirect(url)
     }
 
@@ -74,24 +88,27 @@ export function proxy(request: NextRequest) {
     }
   } else {
     // On main domain (marketing site)
-    // Redirect /app/* routes to app subdomain
-    if (pathname.startsWith('/app/')) {
-      const url = request.nextUrl.clone()
-      url.hostname = `app.${hostname}`
-      url.pathname = pathname.replace('/app', '')
-      return NextResponse.redirect(url)
-    }
+    // In production, redirect to app subdomain; in dev, allow access
+    if (!isLocalhost) {
+      // Redirect /app/* routes to app subdomain
+      if (pathname.startsWith('/app/')) {
+        const url = request.nextUrl.clone()
+        url.hostname = getAppHostname(hostname)
+        url.pathname = pathname.replace('/app', '') || '/dashboard'
+        return NextResponse.redirect(url)
+      }
 
-    // Redirect auth pages, onboarding, and select-plan to app subdomain
-    if (
-      pathname === '/login' ||
-      pathname === '/signup' ||
-      pathname === '/onboarding' ||
-      pathname === '/select-plan'
-    ) {
-      const url = request.nextUrl.clone()
-      url.hostname = `app.${hostname}`
-      return NextResponse.redirect(url)
+      // Redirect auth pages, onboarding, and select-plan to app subdomain
+      if (
+        pathname === '/login' ||
+        pathname === '/signup' ||
+        pathname === '/onboarding' ||
+        pathname === '/select-plan'
+      ) {
+        const url = request.nextUrl.clone()
+        url.hostname = getAppHostname(hostname)
+        return NextResponse.redirect(url)
+      }
     }
   }
 
