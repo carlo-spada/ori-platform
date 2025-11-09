@@ -14,7 +14,6 @@ export default function Signup() {
   const { user } = useAuth()
   const [showEarlyAccessModal, setShowEarlyAccessModal] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     setDocumentMeta({
@@ -31,9 +30,8 @@ export default function Signup() {
     }
   }, [user, router])
 
-  const handleSignup = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    // Show early access modal instead of attempting signup
+  const handleSignupClick = () => {
+    // Show early access modal immediately on button click
     setShowEarlyAccessModal(true)
   }
 
@@ -105,7 +103,7 @@ export default function Signup() {
           </p>
         </div>
 
-        <form onSubmit={handleSignup} className="space-y-6">
+        <div className="space-y-6">
           <div className="border-border bg-card space-y-4 rounded-xl border p-8">
             <div>
               <label
@@ -120,8 +118,6 @@ export default function Signup() {
                 name="email"
                 className="border-border bg-background text-foreground focus:ring-accent w-full rounded-lg border px-4 py-2 focus:ring-2 focus:outline-none"
                 placeholder="you@example.com"
-                required
-                disabled={isSubmitting}
               />
             </div>
 
@@ -138,17 +134,15 @@ export default function Signup() {
                 name="password"
                 className="border-border bg-background text-foreground focus:ring-accent w-full rounded-lg border px-4 py-2 focus:ring-2 focus:outline-none"
                 placeholder="••••••••"
-                required
                 minLength={6}
-                disabled={isSubmitting}
               />
               <p className="text-muted-foreground mt-1 text-xs">
                 Must be at least 6 characters
               </p>
             </div>
 
-            <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? 'Creating account...' : 'Create account'}
+            <Button type="button" onClick={handleSignupClick} className="w-full">
+              Create account
             </Button>
           </div>
 
@@ -170,7 +164,7 @@ export default function Signup() {
               ← Back to home
             </Link>
           </p>
-        </form>
+        </div>
       </div>
 
       {/* Early Access Modal */}

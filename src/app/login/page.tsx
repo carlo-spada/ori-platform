@@ -28,9 +28,8 @@ export default function Login() {
     }
   }, [user, router])
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    // Show early access modal instead of attempting login
+  const handleLoginClick = () => {
+    // Show early access modal immediately on button click
     setShowEarlyAccessModal(true)
   }
 
@@ -52,7 +51,7 @@ export default function Login() {
           </p>
         </div>
 
-        <form onSubmit={handleLogin} className="space-y-6">
+        <div className="space-y-6">
           <div className="border-border bg-card space-y-4 rounded-xl border p-8">
             <div>
               <label
@@ -67,7 +66,6 @@ export default function Login() {
                 name="email"
                 className="border-border bg-background text-foreground focus:ring-accent w-full rounded-lg border px-4 py-2 focus:ring-2 focus:outline-none"
                 placeholder="you@example.com"
-                required
               />
             </div>
 
@@ -84,11 +82,10 @@ export default function Login() {
                 name="password"
                 className="border-border bg-background text-foreground focus:ring-accent w-full rounded-lg border px-4 py-2 focus:ring-2 focus:outline-none"
                 placeholder="••••••••"
-                required
               />
             </div>
 
-            <Button type="submit" className="w-full">
+            <Button type="button" onClick={handleLoginClick} className="w-full">
               Log in
             </Button>
           </div>
@@ -111,7 +108,7 @@ export default function Login() {
               ← Back to home
             </Link>
           </p>
-        </form>
+        </div>
       </div>
 
       {/* Early Access Modal */}

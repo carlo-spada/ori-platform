@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { z } from 'zod'
+import { useTranslation } from 'react-i18next'
 import {
   Dialog,
   DialogContent,
@@ -36,6 +37,7 @@ interface EarlyAccessModalProps {
 }
 
 export function EarlyAccessModal({ isOpen, onClose, trigger = 'other' }: EarlyAccessModalProps) {
+  const { t } = useTranslation()
   const [email, setEmail] = useState('')
   const [firstName, setFirstName] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -64,8 +66,8 @@ export function EarlyAccessModal({ isOpen, onClose, trigger = 'other' }: EarlyAc
       setIsSuccess(true)
 
       // Show success toast
-      toast.success('Welcome to the Ori community!', {
-        description: 'Check your inbox for a special welcome message.',
+      toast.success(t('earlyAccessModal.toast.success'), {
+        description: t('earlyAccessModal.toast.successDescription'),
       })
 
       // Close modal after 3 seconds
@@ -83,7 +85,7 @@ export function EarlyAccessModal({ isOpen, onClose, trigger = 'other' }: EarlyAc
       if (error instanceof z.ZodError) {
         toast.error(error.issues[0].message)
       } else {
-        toast.error('Something went wrong. Please try again.')
+        toast.error(t('earlyAccessModal.toast.error'))
       }
     } finally {
       setIsSubmitting(false)
@@ -91,10 +93,10 @@ export function EarlyAccessModal({ isOpen, onClose, trigger = 'other' }: EarlyAc
   }
 
   const benefits = [
-    { icon: Rocket, text: "Be first to access Ori when we launch" },
-    { icon: Users, text: "Join our exclusive founding community" },
-    { icon: TrendingUp, text: "Shape the product with your feedback" },
-    { icon: Star, text: "Special perks for early supporters" },
+    { icon: Rocket, text: t('earlyAccessModal.benefits.firstAccess') },
+    { icon: Users, text: t('earlyAccessModal.benefits.foundingCommunity') },
+    { icon: TrendingUp, text: t('earlyAccessModal.benefits.shapeProduct') },
+    { icon: Star, text: t('earlyAccessModal.benefits.specialPerks') },
   ]
 
   return (
@@ -116,12 +118,11 @@ export function EarlyAccessModal({ isOpen, onClose, trigger = 'other' }: EarlyAc
               </div>
 
               <DialogTitle className="text-2xl sm:text-3xl font-bold text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                We're Building Something Special
+                {t('earlyAccessModal.title')}
               </DialogTitle>
 
               <DialogDescription className="text-center mt-3 text-base">
-                Ori is crafting the future of AI-powered career development.
-                Be among the first to experience it.
+                {t('earlyAccessModal.description')}
               </DialogDescription>
             </DialogHeader>
 
@@ -147,10 +148,10 @@ export function EarlyAccessModal({ isOpen, onClose, trigger = 'other' }: EarlyAc
               {/* Email form */}
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name (optional)</Label>
+                  <Label htmlFor="firstName">{t('earlyAccessModal.form.firstNameLabel')}</Label>
                   <Input
                     id="firstName"
-                    placeholder="Your first name"
+                    placeholder={t('earlyAccessModal.form.firstNamePlaceholder')}
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     disabled={isSubmitting}
@@ -159,13 +160,13 @@ export function EarlyAccessModal({ isOpen, onClose, trigger = 'other' }: EarlyAc
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email Address</Label>
+                  <Label htmlFor="email">{t('earlyAccessModal.form.emailLabel')}</Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <Input
                       id="email"
                       type="email"
-                      placeholder="your@email.com"
+                      placeholder={t('earlyAccessModal.form.emailPlaceholder')}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       disabled={isSubmitting}
@@ -185,11 +186,11 @@ export function EarlyAccessModal({ isOpen, onClose, trigger = 'other' }: EarlyAc
                     {isSubmitting ? (
                       <>
                         <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        Joining the waitlist...
+                        {t('earlyAccessModal.form.submitting')}
                       </>
                     ) : (
                       <>
-                        Join the Early Access List
+                        {t('earlyAccessModal.form.submitButton')}
                         <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                       </>
                     )}
@@ -200,8 +201,7 @@ export function EarlyAccessModal({ isOpen, onClose, trigger = 'other' }: EarlyAc
                 </Button>
 
                 <p className="text-xs text-center text-muted-foreground">
-                  We'll only send you important updates about Ori's development.
-                  No spam, ever. Unsubscribe anytime.
+                  {t('earlyAccessModal.form.disclaimer')}
                 </p>
               </form>
             </div>
@@ -219,19 +219,21 @@ export function EarlyAccessModal({ isOpen, onClose, trigger = 'other' }: EarlyAc
             </div>
 
             <div className="space-y-2">
-              <h3 className="text-2xl font-bold">You're on the list!</h3>
+              <h3 className="text-2xl font-bold">{t('earlyAccessModal.success.title')}</h3>
               <p className="text-muted-foreground max-w-sm mx-auto">
-                {firstName ? `Thanks ${firstName}! ` : 'Thanks! '}
-                We'll keep you posted on our journey to revolutionize career development.
+                {firstName
+                  ? t('earlyAccessModal.success.description', { name: ` ${firstName}` })
+                  : t('earlyAccessModal.success.descriptionNoName')
+                }
               </p>
             </div>
 
             <div className="bg-muted/50 rounded-lg p-4 max-w-sm mx-auto">
-              <p className="text-sm font-medium mb-2">What's next?</p>
+              <p className="text-sm font-medium mb-2">{t('earlyAccessModal.success.nextSteps.title')}</p>
               <ul className="text-sm text-muted-foreground space-y-1 text-left">
-                <li>• Check your inbox for a welcome email</li>
-                <li>• Follow our blog for weekly insights</li>
-                <li>• Join our community discussions</li>
+                <li>• {t('earlyAccessModal.success.nextSteps.checkInbox')}</li>
+                <li>• {t('earlyAccessModal.success.nextSteps.followBlog')}</li>
+                <li>• {t('earlyAccessModal.success.nextSteps.joinCommunity')}</li>
               </ul>
             </div>
           </div>
