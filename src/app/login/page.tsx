@@ -7,7 +7,7 @@ import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { setDocumentMeta } from '@/lib/seo'
 import { useAuth } from '@/contexts/AuthProvider'
-import { useToast } from '@/components/ui/use-toast'
+import { toast } from '@/components/ui/sonner'
 
 const loginSchema = z.object({
   email: z
@@ -22,7 +22,6 @@ const loginSchema = z.object({
 export default function Login() {
   const router = useRouter()
   const { signInWithPassword, user } = useAuth()
-  const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
@@ -55,9 +54,7 @@ export default function Login() {
       const validation = loginSchema.safeParse({ email, password })
       if (!validation.success) {
         const firstError = validation.error.issues[0]
-        toast({
-          variant: 'destructive',
-          title: 'Invalid input',
+        toast.error('Invalid input', {
           description: firstError.message,
         })
         return
@@ -66,23 +63,18 @@ export default function Login() {
       const { error } = await signInWithPassword({ email, password })
 
       if (error) {
-        toast({
-          variant: 'destructive',
-          title: 'Login failed',
+        toast.error('Login failed', {
           description: error.message,
         })
         return
       }
 
       // Success - redirect handled by useEffect when user state updates
-      toast({
-        title: 'Welcome back!',
+      toast.success('Welcome back!', {
         description: 'You have successfully logged in.',
       })
     } catch {
-      toast({
-        variant: 'destructive',
-        title: 'Unexpected error',
+      toast.error('Unexpected error', {
         description:
           'Something went wrong while logging you in. Please try again.',
       })

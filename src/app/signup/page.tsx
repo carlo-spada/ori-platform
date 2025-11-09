@@ -7,7 +7,7 @@ import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { setDocumentMeta } from '@/lib/seo'
 import { useAuth } from '@/contexts/AuthProvider'
-import { useToast } from '@/components/ui/use-toast'
+import { toast } from '@/components/ui/sonner'
 import { CheckCircle2 } from 'lucide-react'
 
 const signupSchema = z.object({
@@ -23,7 +23,6 @@ const signupSchema = z.object({
 export default function Signup() {
   const router = useRouter()
   const { signUp, user } = useAuth()
-  const { toast } = useToast()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false)
 
@@ -57,9 +56,7 @@ export default function Signup() {
       const validation = signupSchema.safeParse({ email, password })
       if (!validation.success) {
         const firstError = validation.error.issues[0]
-        toast({
-          variant: 'destructive',
-          title: 'Invalid input',
+        toast.error('Invalid input', {
           description: firstError.message,
         })
         return
@@ -68,9 +65,7 @@ export default function Signup() {
       const { error } = await signUp({ email, password })
 
       if (error) {
-        toast({
-          variant: 'destructive',
-          title: 'Signup failed',
+        toast.error('Signup failed', {
           description: error.message,
         })
         return
@@ -79,9 +74,7 @@ export default function Signup() {
       // Show confirmation screen
       setShowConfirmation(true)
     } catch {
-      toast({
-        variant: 'destructive',
-        title: 'Unexpected error',
+      toast.error('Unexpected error', {
         description:
           'Something went wrong while creating your account. Please try again.',
       })
