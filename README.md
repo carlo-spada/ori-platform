@@ -6,7 +6,7 @@
     <strong>Ori is an autonomous up-skilling and role-acquisition agent designed to guide every person toward the work that truly fits them.</strong>
   </p>
   <p>
-    <a href="https://app.getori.app">View Demo</a> · <a href="https://github.com/carlo-spada/ori-platform/issues">Report Bug</a> · <a href="https://github.com/carlo-spada/ori-platform/issues">Request Feature</a>
+    <a href="https://getori.app">Website</a> · <a href="https://app.getori.app">App</a> · <a href="https://github.com/carlo-spada/ori-platform/issues">Report Bug</a> · <a href="https://github.com/carlo-spada/ori-platform/issues">Request Feature</a>
   </p>
 </div>
 
@@ -24,6 +24,21 @@ This repository is a **pnpm workspace monorepo** containing the following core c
 - **`services/core-api/`**: A **Node.js/Express** backend API that handles user profiles, authentication, and business logic.
 - **`services/ai-engine/`**: A **Python/FastAPI** service that provides all AI-powered features, including semantic job matching, skill gap analysis, and learning path generation.
 - **`shared/`**: Shared packages (e.g., types, utils) used across the monorepo.
+
+### 🌐 Subdomain Architecture
+
+The platform uses subdomain-based routing for clean separation of concerns:
+
+- **`getori.app`** - Marketing site (landing, pricing, about, blog, features)
+- **`app.getori.app`** - Application (dashboard, profile, applications, login, signup)
+
+This architecture provides:
+- Clear mental model for users (marketing vs. app)
+- Clean URLs on app subdomain (`/dashboard` instead of `/app/dashboard`)
+- PWA that opens directly to the app subdomain
+- Automatic routing via Next.js middleware
+
+See [`docs/SUBDOMAIN_MIGRATION.md`](./docs/SUBDOMAIN_MIGRATION.md) for deployment details.
 
 ## 🛠️ Technology Stack
 

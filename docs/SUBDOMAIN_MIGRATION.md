@@ -1,232 +1,271 @@
-# Subdomain Migration Guide: app.getori.app
-
-This guide explains how to migrate the Ori Platform application to use the `app.getori.app` subdomain.
+# Subdomain Routing Architecture
 
 ## Overview
 
-The application will be accessible at:
-- **Production**: `https://app.getori.app`
-- **Current**: `https://ori-platform.vercel.app` (or custom domain if configured)
+The Ori Platform uses subdomain-based routing to separate the marketing site from the application:
 
-## Prerequisites
+- **Marketing Site**: `https://getori.app` - Public pages (landing, pricing, about, blog, features, legal)
+- **Application**: `https://app.getori.app` - Authenticated app (dashboard, profile, applications, etc.)
 
-1. You own the domain `getori.app`
-2. Access to DNS management for `getori.app`
-3. Access to Vercel project settings
-4. The `main` branch is deployed to production
+## Current Implementation Status
 
-## Step 1: Configure Vercel Domain
+✅ **Middleware routing implemented** - The application automatically routes based on subdomain
+✅ **PWA configured** - Installed app opens directly to `app.getori.app`
+✅ **Authentication updated** - Login/signup flows redirect to app subdomain
+✅ **URL rewrites active** - Clean URLs on app subdomain (`/dashboard` instead of `/app/dashboard`)
 
-### 1.1 Add Domain in Vercel
+## Architecture
 
-1. Go to your Vercel project: https://vercel.com/[your-team]/ori-platform
-2. Navigate to **Settings** → **Domains**
-3. Click **Add Domain**
-4. Enter: `app.getori.app`
-5. Click **Add**
+### Marketing Site (getori.app)
 
-### 1.2 Note the DNS Records
+**Public Pages:**
+- `/` - Landing page
+- `/about` - About us
+- `/pricing` - Pricing plans
+- `/blog` - Blog posts
+- `/blog/[slug]` - Individual blog posts
+- `/features` - Features overview
+- `/legal/privacy-policy` - Privacy policy
+- `/legal/terms-of-service` - Terms of service
+- `/legal/cookie-policy` - Cookie policy
 
-Vercel will provide DNS records to configure. You'll see one of:
-- **A Record**: Points to Vercel's IP address
-- **CNAME Record**: Points to `cname.vercel-dns.com`
+**Behavior:**
+- Accessing `/login`, `/signup`, `/onboarding`, `/select-plan`, or `/app/*` on main domain redirects to app subdomain
+- Marketing pages are not accessible on app subdomain (redirects to main domain)
 
-**Recommended**: Use CNAME if possible, as it's more flexible.
+### Application (app.getori.app)
 
-## Step 2: Configure DNS
+**Authentication Pages:**
+- `/login` - User login
+- `/signup` - User registration
+- `/select-plan` - Plan selection after signup
+- `/onboarding` - User onboarding flow
 
-### Option A: Using Cloudflare (Recommended)
+**Authenticated Pages:**
+- `/` - Dashboard (root redirects to dashboard)
+- `/dashboard` - User dashboard
+- `/profile` - User profile and settings
+- `/applications` - Job applications tracking
+- `/recommendations` - Job recommendations
+- `/settings` - Account settings
 
-1. Log into Cloudflare
-2. Select the `getori.app` domain
-3. Navigate to **DNS** → **Records**
-4. Click **Add record**
-5. Configure:
-   - **Type**: `CNAME`
-   - **Name**: `app`
-   - **Target**: `cname.vercel-dns.com`
-   - **Proxy status**: DNS only (gray cloud) initially
-   - **TTL**: Auto
-6. Click **Save**
+**Behavior:**
+- Root path `/` automatically shows dashboard
+- Clean URLs (e.g., `/dashboard` instead of `/app/dashboard`)
+- Marketing pages redirect to main domain
+- PWA installs open to this subdomain
 
-**Note**: After Vercel verifies the domain, you can enable Cloudflare proxy (orange cloud) for additional security and CDN benefits.
+## How It Works
 
-### Option B: Using Other DNS Providers
+### Middleware Routing (`src/middleware.ts`)
 
-1. Log into your DNS provider
-2. Navigate to DNS management for `getori.app`
-3. Add a new record:
-   - **Type**: `CNAME`
-   - **Host/Name**: `app`
-   - **Value/Target**: `cname.vercel-dns.com`
-   - **TTL**: 3600 (or default)
-4. Save the record
+The Next.js middleware handles all subdomain routing:
 
-## Step 3: Verify Domain in Vercel
+1. **Hostname Detection**: Checks if request is from `app.` subdomain
+2. **Automatic Redirects**: Routes users to correct subdomain based on page type
+3. **URL Rewrites**: Maps clean URLs to internal file structure
+4. **Backward Compatibility**: Redirects old `/app/*` URLs to new structure
 
-1. Return to Vercel project → **Settings** → **Domains**
-2. Wait for DNS propagation (can take 5-60 minutes)
-3. Vercel will automatically verify the domain
-4. Once verified, you'll see a green checkmark next to `app.getori.app`
+### URL Mapping
 
-## Step 4: Set as Primary Domain (Optional)
-
-If you want `app.getori.app` to be the canonical URL:
-
-1. In Vercel Domains settings
-2. Find `app.getori.app`
-3. Click the three dots **⋮** → **Set as Primary**
-4. This redirects all other domains to `app.getori.app`
-
-## Step 5: Update Application Configuration
-
-### 5.1 Environment Variables
-
-Update the following environment variables in Vercel:
-
-**Production Environment:**
-```env
-NEXT_PUBLIC_APP_URL=https://app.getori.app
-NEXT_PUBLIC_API_URL=https://app.getori.app/api
+**On App Subdomain:**
+```
+User visits: app.getori.app/dashboard
+Rewrites to: app.getori.app/app/dashboard (internal file path)
+File served: src/app/app/dashboard/page.tsx
 ```
 
-**For Supabase Redirect URLs:**
+**On Main Domain:**
+```
+User visits: getori.app/login
+Redirects to: app.getori.app/login
+```
+
+### File Structure
+
+The actual file structure remains unchanged:
+```
+src/app/
+├── page.tsx                 # Landing (marketing)
+├── about/                   # Marketing
+├── pricing/                 # Marketing
+├── login/                   # Auth (app subdomain)
+├── signup/                  # Auth (app subdomain)
+├── onboarding/              # App subdomain
+├── select-plan/             # App subdomain
+└── app/                     # Authenticated app routes
+    ├── dashboard/
+    ├── profile/
+    ├── applications/
+    ├── recommendations/
+    └── settings/
+```
+
+## Deployment Setup
+
+### Step 1: Configure Vercel Domains
+
+Add both domains in Vercel project settings:
+
+1. Go to Vercel project → **Settings** → **Domains**
+2. Add `getori.app` (main domain)
+3. Add `app.getori.app` (app subdomain)
+
+### Step 2: Configure DNS
+
+**Main Domain (`getori.app`):**
+- Type: `A` or `CNAME`
+- Target: Vercel's DNS target (provided in Vercel dashboard)
+
+**App Subdomain (`app.getori.app`):**
+- Type: `CNAME`
+- Name: `app`
+- Target: `cname.vercel-dns.com`
+
+### Step 3: Update Supabase Configuration
+
 1. Go to Supabase Dashboard → Authentication → URL Configuration
-2. Add to **Redirect URLs**:
-   - `https://app.getori.app/auth/callback`
+2. Update **Site URL**: `https://app.getori.app`
+3. Add **Redirect URLs**:
    - `https://app.getori.app/**` (wildcard for all auth flows)
+   - `https://app.getori.app/select-plan`
+   - `https://app.getori.app/dashboard`
+   - `https://app.getori.app/login`
 
-**For Stripe:**
+### Step 4: Update Stripe Configuration
+
 1. Go to Stripe Dashboard → Settings → Branding
-2. Update **Business website** to: `https://app.getori.app`
+2. Update **Business website**: `https://app.getori.app`
 3. Go to Developers → Webhooks
-4. Update webhook endpoint to: `https://app.getori.app/api/v1/payments/webhook`
+4. Update webhook endpoint: `https://app.getori.app/api/v1/payments/webhook`
 
-### 5.2 Update Next.js Metadata (Optional)
+### Step 5: Environment Variables
 
-If you want to add the canonical URL to metadata, update `src/app/layout.tsx`:
+No environment variables needed for subdomain routing (middleware handles it automatically).
 
-```typescript
-export const metadata: Metadata = {
-  title: 'Ori Platform',
-  description: '...',
-  metadataBase: new URL('https://app.getori.app'),
-  // ... rest of metadata
+Optional variables for external services:
+```env
+# Vercel (Production)
+NEXT_PUBLIC_APP_URL=https://app.getori.app
+FRONTEND_URL=https://app.getori.app
+```
+
+## Testing
+
+### Local Development
+
+To test subdomain routing locally:
+
+1. **Add to `/etc/hosts`:**
+   ```
+   127.0.0.1 app.localhost
+   127.0.0.1 localhost
+   ```
+
+2. **Start dev server:**
+   ```bash
+   pnpm dev
+   ```
+
+3. **Test URLs:**
+   - `http://localhost:3000` - Marketing site
+   - `http://app.localhost:3000` - App subdomain
+   - `http://localhost:3000/login` - Redirects to app subdomain
+   - `http://app.localhost:3000/` - Shows dashboard
+
+### Production Testing
+
+After deployment, verify:
+
+- [ ] `https://getori.app` - Landing page loads
+- [ ] `https://getori.app/pricing` - Pricing page loads
+- [ ] `https://getori.app/login` - Redirects to `https://app.getori.app/login`
+- [ ] `https://app.getori.app` - Shows dashboard (when logged in)
+- [ ] `https://app.getori.app/dashboard` - Dashboard loads
+- [ ] `https://app.getori.app/pricing` - Redirects to `https://getori.app/pricing`
+- [ ] Login flow works correctly
+- [ ] Signup flow works correctly
+- [ ] Onboarding redirects to dashboard
+- [ ] PWA install opens to app subdomain
+
+## PWA Configuration
+
+The PWA manifest is configured to open the app subdomain:
+
+```json
+{
+  "start_url": "https://app.getori.app/",
+  "scope": "https://app.getori.app/",
+  "shortcuts": [
+    { "url": "https://app.getori.app/dashboard" },
+    { "url": "https://app.getori.app/applications" },
+    { "url": "https://app.getori.app/profile" }
+  ]
 }
 ```
 
-## Step 6: Test the Migration
+When users install the PWA on their device, it opens directly to `app.getori.app`.
 
-1. **DNS Propagation Check**:
-   ```bash
-   nslookup app.getori.app
-   # Should return Vercel's IP or CNAME
-   ```
+## Migration Checklist
 
-2. **SSL Certificate**:
-   - Visit `https://app.getori.app`
-   - Check for valid SSL certificate (Vercel auto-provisions)
+- [x] Middleware routing implemented
+- [x] PWA manifest updated
+- [x] Authentication redirects updated
+- [x] URL rewrites configured
+- [ ] Both domains configured in Vercel
+- [ ] DNS records configured
+- [ ] Supabase redirect URLs updated
+- [ ] Stripe webhook endpoint updated
+- [ ] SSL certificates verified
+- [ ] Production testing completed
 
-3. **Functionality Tests**:
-   - [ ] Homepage loads correctly
-   - [ ] Login/signup works
-   - [ ] Authentication redirects properly
-   - [ ] API calls resolve correctly
-   - [ ] PWA install prompt appears
-   - [ ] Stripe payment flows work
+## Troubleshooting
 
-4. **PWA Verification**:
-   - Open DevTools → Application → Manifest
-   - Verify manifest loads from correct URL
-   - Test "Add to Home Screen" on mobile
+### Redirect Loops
 
-## Step 7: Update Documentation
+If you experience redirect loops:
+1. Clear browser cache and cookies
+2. Check that both domains are properly configured in Vercel
+3. Verify middleware logic in `src/middleware.ts`
 
-Update the following files to reference the new domain:
+### PWA Not Opening to App Subdomain
 
-- [ ] `README.md` - Update demo/deployment URLs
-- [ ] `CLAUDE.md` - Update any hardcoded URLs
-- [ ] `.env.example` - Update example URLs
-- [ ] Any marketing materials or external links
+1. Uninstall existing PWA
+2. Clear browser cache
+3. Reinstall PWA from `https://app.getori.app`
+
+### Authentication Issues
+
+1. Verify Supabase redirect URLs include `https://app.getori.app/**`
+2. Check that `emailRedirectTo` in AuthProvider points to app subdomain
+3. Clear browser cookies and retry
+
+### 404 Errors on App Routes
+
+1. Verify middleware is running (check `src/middleware.ts`)
+2. Check that file structure in `src/app/app/*` is intact
+3. Verify rewrite rules in middleware
 
 ## Rollback Plan
 
 If issues occur:
 
-1. **Remove Domain Assignment**:
-   - In Vercel → Domains, delete `app.getori.app`
+1. **Remove app subdomain from Vercel:**
+   - Vercel → Domains → Delete `app.getori.app`
 
-2. **Revert Environment Variables**:
-   - Restore previous `NEXT_PUBLIC_APP_URL` values
+2. **Revert middleware:**
+   ```bash
+   git revert <commit-hash>
+   git push origin main
+   ```
 
-3. **Revert External Services**:
-   - Update Supabase redirect URLs back to previous domain
-   - Update Stripe webhook endpoint back to previous domain
+3. **Restore old URLs:**
+   - Update Supabase redirect URLs back to old domain
+   - Update Stripe webhook back to old domain
 
-## DNS Propagation Troubleshooting
+## Support Resources
 
-**Slow propagation?**
-- Use `dig app.getori.app` to check current DNS resolution
-- Clear browser cache: `Cmd+Shift+R` (Mac) or `Ctrl+Shift+R` (Windows)
-- Try incognito/private browsing mode
-- Check https://www.whatsmydns.net/#CNAME/app.getori.app
-
-**Vercel not detecting domain?**
-- Ensure DNS record is exactly `cname.vercel-dns.com` (no trailing dot)
-- Wait at least 5-10 minutes after DNS changes
-- Click "Refresh" in Vercel domain settings
-
-**SSL certificate issues?**
-- Vercel auto-provisions SSL via Let's Encrypt
-- This happens automatically after domain verification
-- Can take 1-5 minutes after verification
-
-## Post-Migration Checklist
-
-- [ ] DNS record created and propagated
-- [ ] Domain verified in Vercel
-- [ ] SSL certificate active
-- [ ] Environment variables updated
-- [ ] Supabase redirect URLs updated
-- [ ] Stripe webhooks updated
-- [ ] Authentication flows tested
-- [ ] PWA install tested on mobile
-- [ ] Documentation updated
-- [ ] Old domain redirects configured (if needed)
-
-## Additional Notes
-
-### Marketing Domain vs App Domain
-
-Consider this architecture:
-- **Marketing/Landing**: `https://getori.app` (main website)
-- **Application**: `https://app.getori.app` (logged-in experience)
-- **API**: `https://api.getori.app` (optional, if separating API)
-
-This separation allows:
-- Different deployment configurations
-- Separate analytics/tracking
-- Clearer user mental model
-- Better SEO for marketing content
-
-### Future Considerations
-
-**Preview Deployments**:
-- Vercel automatically creates preview URLs for PRs
-- Format: `ori-platform-git-[branch]-[team].vercel.app`
-- These remain accessible even with custom domain
-
-**Staging Environment**:
-- Consider: `staging.app.getori.app` for testing
-- Requires separate Vercel project or branch-based deployment
-
-**API Subdomain**:
-- If API grows large, consider: `api.getori.app`
-- Currently API is served from Next.js app routes
-- This would require architectural changes
-
-## Support
-
-- **Vercel Docs**: https://vercel.com/docs/projects/domains
+- **Vercel Domains**: https://vercel.com/docs/projects/domains
+- **Next.js Middleware**: https://nextjs.org/docs/app/building-your-application/routing/middleware
 - **DNS Checker**: https://dnschecker.org
 - **SSL Checker**: https://www.ssllabs.com/ssltest/

@@ -1,7 +1,23 @@
 # API Endpoints Reference
 
-**Base URL:** `http://localhost:3001/api/v1` (development)
-**Authentication:** All endpoints require JWT token (except `/health`)
+## Base URLs
+
+- **Development:** `http://localhost:3001/api/v1`
+- **Production:** `https://app.getori.app/api/v1`
+
+## Subdomain Architecture
+
+The platform uses subdomain-based routing:
+- **Marketing:** `https://getori.app` - Public pages
+- **Application:** `https://app.getori.app` - All API endpoints, authentication, and app features
+
+All API endpoints are served from the app subdomain (`app.getori.app/api/v1/*`).
+
+## Authentication
+
+All endpoints require JWT token in `Authorization: Bearer <token>` header (except `/health`).
+
+Supabase authentication is handled client-side, with tokens automatically included in requests via the API client layer.
 
 ---
 

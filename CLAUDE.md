@@ -66,6 +66,39 @@ git push origin dev
 
 Ori Platform is an AI-powered career companion built as a pnpm workspace monorepo. The project combines a Next.js 16 frontend with backend microservices, designed to help users discover and pursue fulfilling professional roles through personalized career guidance, up-skilling paths, and real-time market intelligence.
 
+## Subdomain Architecture
+
+The application uses subdomain-based routing to separate marketing and application experiences:
+
+- **Marketing Site** (`getori.app`): Public pages (landing, pricing, about, blog, features, legal)
+- **Application** (`app.getori.app`): Authenticated app (dashboard, profile, applications, login, signup)
+
+**Routing is handled automatically by middleware** (`src/middleware.ts`):
+- Marketing pages on main domain redirect to app subdomain when accessing `/login`, `/signup`, `/app/*`
+- App subdomain root (`/`) rewrites to dashboard
+- Clean URLs on app subdomain: `/dashboard` instead of `/app/dashboard`
+- PWA configured to open directly to `app.getori.app`
+
+**File Structure** (unchanged):
+```
+src/app/
+├── page.tsx              # Landing (marketing - getori.app)
+├── about/                # Marketing pages
+├── pricing/              # Marketing pages
+├── login/                # Auth (app.getori.app)
+├── signup/               # Auth (app.getori.app)
+├── onboarding/           # App (app.getori.app)
+├── select-plan/          # App (app.getori.app)
+└── app/                  # Authenticated routes (app.getori.app)
+    ├── dashboard/
+    ├── profile/
+    ├── applications/
+    ├── recommendations/
+    └── settings/
+```
+
+See `docs/SUBDOMAIN_MIGRATION.md` for complete setup and deployment details.
+
 ## Monorepo Structure
 
 This is a pnpm workspace. The key directories are:
