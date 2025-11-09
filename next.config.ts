@@ -16,6 +16,15 @@ const withPWA = withPWAInit({
 const nextConfig: NextConfig = {
   // Explicitly declare Turbopack config so Next.js 16 knows we're opting in/out intentionally.
   turbopack: {},
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
+      },
+    ],
+  },
 }
 
 export default isPWAEnabled ? withPWA(nextConfig) : nextConfig
