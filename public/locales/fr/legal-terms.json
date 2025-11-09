@@ -8,27 +8,27 @@
       "label": "1. Introduction"
     },
     {
-      "id": "éligibilité",
+      "id": "eligibility",
       "label": "2. Éligibilité"
     },
     {
-      "id": "enregistrement du compte",
+      "id": "account-registration",
       "label": "3. Enregistrement et sécurité du compte"
     },
     {
-      "id": "abonnements",
+      "id": "subscriptions",
       "label": "4. Plans, abonnements et facturation"
     },
     {
-      "id": "procès-promotions",
+      "id": "trials-promotions",
       "label": "5. Essais et promotions"
     },
     {
-      "id": "limites d'utilisation",
+      "id": "usage-limits",
       "label": "6. Limites d'utilisation et utilisation équitable"
     },
     {
-      "id": "utilisation acceptable",
+      "id": "acceptable-use",
       "label": "7. Utilisation acceptable"
     },
     {
@@ -36,47 +36,47 @@
       "label": "8. Orientations et pas de garanties"
     },
     {
-      "id": "contenu utilisateur",
+      "id": "user-content",
       "label": "9. Votre contenu"
     },
     {
-      "id": "propriété intellectuelle",
+      "id": "intellectual-property",
       "label": "10. Propriété intellectuelle"
     },
     {
-      "id": "services de tiers",
+      "id": "third-party-services",
       "label": "11. Services et liens de tiers"
     },
     {
-      "id": "vie privée",
+      "id": "privacy",
       "label": "12. Privacy"
     },
     {
-      "id": "résiliation",
+      "id": "termination",
       "label": "13. Suspension et résiliation"
     },
     {
-      "id": "clauses de non-responsabilité",
+      "id": "disclaimers",
       "label": "14. Clause de non-responsabilité"
     },
     {
-      "id": "limitation de responsabilité",
+      "id": "limitation-of-liability",
       "label": "15. Limitation de la responsabilité"
     },
     {
-      "id": "indemnisation",
+      "id": "indemnification",
       "label": "16. Indemnisation"
     },
     {
-      "id": "droit applicable",
+      "id": "governing-law",
       "label": "17. Droit applicable et règlement des litiges"
     },
     {
-      "id": "changements",
+      "id": "changes",
       "label": "18. Modifications du service ou des conditions"
     },
     {
-      "id": "divers",
+      "id": "miscellaneous",
       "label": "19. Divers"
     },
     {

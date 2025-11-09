@@ -1,6 +1,9 @@
-import { LegalPageLayout } from '@/components/legal/LegalPageLayout'
+'use client'
 
-const content = `
+import { LegalPageLayout } from '@/components/legal/LegalPageLayout'
+import { useTranslation } from 'react-i18next'
+
+const FALLBACK_CONTENT = `
 <h2 id="introduction">1. Introduction</h2>
 <p>Welcome to <strong>Ori</strong> ("Ori", "we", "us", or "our"). These Terms of Service ("Terms") govern your access to and use of our websites, applications, and related services (collectively, the "Service").</p>
 <p>By creating an account, accessing, or using the Service, you agree to be bound by these Terms. If you do not agree, you must not use the Service.</p>
@@ -138,46 +141,67 @@ const content = `
 </footer>
 `
 
+const FALLBACK_TOC_ITEMS = [
+  { id: 'introduction', label: '1. Introduction' },
+  { id: 'eligibility', label: '2. Eligibility' },
+  {
+    id: 'account-registration',
+    label: '3. Account Registration and Security',
+  },
+  { id: 'subscriptions', label: '4. Plans, Subscriptions, and Billing' },
+  { id: 'trials-promotions', label: '5. Trials and Promotions' },
+  { id: 'usage-limits', label: '6. Usage Limits and Fair Use' },
+  { id: 'acceptable-use', label: '7. Acceptable Use' },
+  {
+    id: 'ai-guidance-disclaimer',
+    label: '8. Ori Guidance and No Guarantees',
+  },
+  { id: 'user-content', label: '9. Your Content' },
+  { id: 'intellectual-property', label: '10. Intellectual Property' },
+  {
+    id: 'third-party-services',
+    label: '11. Third-Party Services and Links',
+  },
+  { id: 'privacy', label: '12. Privacy' },
+  { id: 'termination', label: '13. Suspension and Termination' },
+  { id: 'disclaimers', label: '14. Disclaimers' },
+  { id: 'limitation-of-liability', label: '15. Limitation of Liability' },
+  { id: 'indemnification', label: '16. Indemnification' },
+  {
+    id: 'governing-law',
+    label: '17. Governing Law and Dispute Resolution',
+  },
+  { id: 'changes', label: '18. Changes to the Service or Terms' },
+  { id: 'miscellaneous', label: '19. Miscellaneous' },
+  { id: 'contact', label: '20. Contact' },
+]
+
 export default function TermsOfServicePage() {
+  const { t, ready } = useTranslation('legal-terms')
+
+  // Use translated content if available, otherwise fallback to English
+  const title = ready ? t('title', 'Terms of Service') : 'Terms of Service'
+  const lastUpdated = ready
+    ? t('lastUpdated', 'Last updated: March 1, 2025')
+    : 'Last updated: March 1, 2025'
+  const content = ready ? t('content', FALLBACK_CONTENT) : FALLBACK_CONTENT
+
+  // Get tocItems with proper fallback
+  let tocItems = FALLBACK_TOC_ITEMS
+  if (ready) {
+    const translatedTocItems = t('tocItems', { returnObjects: true })
+    // Ensure we got an actual array, not just the key string
+    if (Array.isArray(translatedTocItems)) {
+      tocItems = translatedTocItems as typeof FALLBACK_TOC_ITEMS
+    }
+  }
+
   return (
     <LegalPageLayout
-      title="Terms of Service"
-      lastUpdated="Last updated: March 1, 2025"
+      title={title}
+      lastUpdated={lastUpdated}
       metaDescription="Read Ori's Terms of Service to understand the rules and guidelines for using our platform."
-      tocItems={[
-        { id: 'introduction', label: '1. Introduction' },
-        { id: 'eligibility', label: '2. Eligibility' },
-        {
-          id: 'account-registration',
-          label: '3. Account Registration and Security',
-        },
-        { id: 'subscriptions', label: '4. Plans, Subscriptions, and Billing' },
-        { id: 'trials-promotions', label: '5. Trials and Promotions' },
-        { id: 'usage-limits', label: '6. Usage Limits and Fair Use' },
-        { id: 'acceptable-use', label: '7. Acceptable Use' },
-        {
-          id: 'ai-guidance-disclaimer',
-          label: '8. Ori Guidance and No Guarantees',
-        },
-        { id: 'user-content', label: '9. Your Content' },
-        { id: 'intellectual-property', label: '10. Intellectual Property' },
-        {
-          id: 'third-party-services',
-          label: '11. Third-Party Services and Links',
-        },
-        { id: 'privacy', label: '12. Privacy' },
-        { id: 'termination', label: '13. Suspension and Termination' },
-        { id: 'disclaimers', label: '14. Disclaimers' },
-        { id: 'limitation-of-liability', label: '15. Limitation of Liability' },
-        { id: 'indemnification', label: '16. Indemnification' },
-        {
-          id: 'governing-law',
-          label: '17. Governing Law and Dispute Resolution',
-        },
-        { id: 'changes', label: '18. Changes to the Service or Terms' },
-        { id: 'miscellaneous', label: '19. Miscellaneous' },
-        { id: 'contact', label: '20. Contact' },
-      ]}
+      tocItems={tocItems}
       content={content}
     />
   )
