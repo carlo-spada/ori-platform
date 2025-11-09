@@ -21,7 +21,7 @@ COMMENT ON COLUMN public.user_profiles.long_term_vision IS 'User''s long-term ca
 -- CREATE EXPERIENCES TABLE
 -- ============================================================================
 
-CREATE TABLE public.experiences (
+CREATE TABLE IF NOT EXISTS public.experiences (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   company TEXT NOT NULL,
@@ -71,7 +71,7 @@ CREATE TRIGGER update_experiences_updated_at
 -- CREATE EDUCATION TABLE
 -- ============================================================================
 
-CREATE TABLE public.education (
+CREATE TABLE IF NOT EXISTS public.education (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   institution TEXT NOT NULL,
@@ -122,19 +122,23 @@ CREATE TRIGGER update_education_updated_at
 -- CREATE APPLICATION STATUS ENUM
 -- ============================================================================
 
-CREATE TYPE application_status AS ENUM (
-  'applied',
-  'interviewing',
-  'offer',
-  'rejected',
-  'paused'
-);
+DO $$ BEGIN
+  CREATE TYPE application_status AS ENUM (
+    'applied',
+    'interviewing',
+    'offer',
+    'rejected',
+    'paused'
+  );
+EXCEPTION
+  WHEN duplicate_object THEN null;
+END $$;
 
 -- ============================================================================
 -- CREATE APPLICATIONS TABLE
 -- ============================================================================
 
-CREATE TABLE public.applications (
+CREATE TABLE IF NOT EXISTS public.applications (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   job_title TEXT NOT NULL,
