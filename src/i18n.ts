@@ -14,12 +14,14 @@ i18n.use(initReactI18next).init({
   fallbackLng: 'en',
   lng: 'en', // Set default language for SSR
   debug: process.env.NODE_ENV === 'development',
+  ns: ['translation', 'legal-terms', 'legal-privacy', 'legal-cookies'],
+  defaultNS: 'translation',
   interpolation: {
     escapeValue: false, // React already protects from XSS
   },
   backend: isBrowser
     ? {
-        loadPath: '/locales/{{lng}}/translation.json',
+        loadPath: '/locales/{{lng}}/{{ns}}.json',
       }
     : undefined,
   // Provide empty resources for SSR to prevent hanging
@@ -27,6 +29,9 @@ i18n.use(initReactI18next).init({
     ? {
         en: {
           translation: {},
+          'legal-terms': {},
+          'legal-privacy': {},
+          'legal-cookies': {},
         },
       }
     : undefined,
