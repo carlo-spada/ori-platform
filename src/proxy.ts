@@ -6,6 +6,17 @@ export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const isLocalhost = hostname.includes('localhost') || hostname.includes('127.0.0.1')
 
+  // Helper to get base domain (strips www. and app. prefixes)
+  const getBaseDomain = (host: string): string => {
+    return host.replace(/^(www\.|app\.)/, '')
+  }
+
+  // Helper to construct app subdomain URL
+  const getAppHostname = (host: string): string => {
+    const baseDomain = getBaseDomain(host)
+    return `app.${baseDomain}`
+  }
+
   // Determine if this is the app subdomain
   const isAppSubdomain =
     hostname.startsWith('app.') || isLocalhost
@@ -50,7 +61,9 @@ export function proxy(request: NextRequest) {
 
     if (isMarketingPage) {
       const url = request.nextUrl.clone()
-      url.hostname = hostname.replace('app.', '')
+      // Redirect to www subdomain for marketing pages
+      const baseDomain = getBaseDomain(hostname)
+      url.hostname = `www.${baseDomain}`
       return NextResponse.redirect(url)
     }
 
@@ -80,8 +93,8 @@ export function proxy(request: NextRequest) {
       // Redirect /app/* routes to app subdomain
       if (pathname.startsWith('/app/')) {
         const url = request.nextUrl.clone()
-        url.hostname = `app.${hostname}`
-        url.pathname = pathname.replace('/app', '')
+        url.hostname = getAppHostname(hostname)
+        url.pathname = pathname.replace('/app', '') || '/dashboard'
         return NextResponse.redirect(url)
       }
 
@@ -93,7 +106,7 @@ export function proxy(request: NextRequest) {
         pathname === '/select-plan'
       ) {
         const url = request.nextUrl.clone()
-        url.hostname = `app.${hostname}`
+        url.hostname = getAppHostname(hostname)
         return NextResponse.redirect(url)
       }
     }
