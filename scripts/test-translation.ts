@@ -20,8 +20,12 @@ async function main() {
   console.log('=' .repeat(50))
 
   try {
-    // Try with regular endpoint (the error says to use api.deepl.com)
-    const translator = new deepl.Translator(DEEPL_API_KEY)
+    // Handle both free and Pro keys
+    const isFreeKey = DEEPL_API_KEY.endsWith(':fx')
+    const translator = new deepl.Translator(DEEPL_API_KEY, {
+      serverUrl: isFreeKey ? 'https://api-free.deepl.com' : undefined
+    })
+    console.log(`API Key Type: ${isFreeKey ? 'FREE' : 'PRO'}`)
 
     // Check API connection
     const usage = await translator.getUsage()

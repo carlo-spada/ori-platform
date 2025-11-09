@@ -20,10 +20,50 @@ const DEEPL_API_KEY = process.env.DEEPL_API_KEY
 
 if (!DEEPL_API_KEY) {
   console.error('❌ Error: DEEPL_API_KEY environment variable is required')
+  console.error('Get your API key from: https://www.deepl.com/pro-api')
   process.exit(1)
 }
 
-const translator = new deepl.Translator(DEEPL_API_KEY)
+// Detect API key type (free keys end with :fx)
+const isFreeKey = DEEPL_API_KEY.endsWith(':fx')
+const serverUrl = isFreeKey ? 'https://api-free.deepl.com' : undefined
+
+// Create translator with appropriate endpoint
+const translator = new deepl.Translator(DEEPL_API_KEY, { serverUrl })
+
+// Error notification helper
+function notifyError(error: any, context: string) {
+  console.error('\n' + '🚨'.repeat(20))
+  console.error('🚨 TRANSLATION API ERROR - ACTION REQUIRED!')
+  console.error('🚨'.repeat(20))
+
+  if (error.message?.includes('Authorization failure')) {
+    console.error('\n❌ API Key Issue Detected:')
+    console.error('   - The API key may have expired or is invalid')
+    console.error('   - Current key type: ' + (isFreeKey ? 'FREE (ends with :fx)' : 'PRO'))
+    console.error('\n📝 To Fix:')
+    console.error('   1. Check your DeepL account: https://www.deepl.com/account')
+    console.error('   2. Get a new API key if needed')
+    console.error('   3. Update the DEEPL_API_KEY environment variable')
+    console.error('   4. For GitHub Actions: Update the secret in repository settings')
+  } else if (error.message?.includes('quota exceeded') || error.message?.includes('limit')) {
+    console.error('\n⚠️  Usage Limit Reached:')
+    console.error('   - You have exceeded your monthly character limit')
+    console.error('   - Consider upgrading your plan or waiting for the next billing cycle')
+    console.error('   - Visit: https://www.deepl.com/account/usage')
+  } else if (error.message?.includes('Too many requests')) {
+    console.error('\n🔄 Rate Limit Hit:')
+    console.error('   - Too many requests in a short time')
+    console.error('   - The script will automatically retry with delays')
+  } else {
+    console.error('\n❌ Unexpected Error:')
+    console.error(`   - Context: ${context}`)
+    console.error(`   - Error: ${error.message || error}`)
+    console.error('\n📧 Please notify the team about this issue')
+  }
+
+  console.error('\n' + '🚨'.repeat(20) + '\n')
+}
 
 // Target languages
 const TARGET_LANGUAGES: deepl.TargetLanguageCode[] = ['de', 'es', 'fr', 'it']
@@ -216,15 +256,27 @@ async function main() {
   try {
     // Check DeepL API
     console.log('\n🔌 Checking DeepL API...')
-    const usage = await translator.getUsage()
+    console.log(`   Key type: ${isFreeKey ? 'FREE' : 'PRO'}`)
+
+    let usage
+    try {
+      usage = await translator.getUsage()
+    } catch (error: any) {
+      notifyError(error, 'API Connection Check')
+      throw error
+    }
 
     if (usage.character) {
       const percent = Math.round((usage.character.count / usage.character.limit) * 100)
-      console.log(`✅ Connected to DeepL`)
+      console.log(`✅ Connected to DeepL ${isFreeKey ? 'Free' : 'Pro'} API`)
       console.log(`📊 Usage: ${usage.character.count.toLocaleString()} / ${usage.character.limit.toLocaleString()} (${percent}%)`)
 
       if (percent >= 90) {
-        console.warn('⚠️  Warning: Near character limit!')
+        console.warn('\n⚠️  WARNING: Near character limit!')
+        console.warn(`   Only ${(usage.character.limit - usage.character.count).toLocaleString()} characters remaining`)
+        console.warn('   Consider upgrading or waiting for reset')
+      } else if (percent >= 75) {
+        console.warn(`⚠️  Note: ${percent}% of monthly quota used`)
       }
     }
 
@@ -255,8 +307,11 @@ async function main() {
       console.log(`📝 Characters used in this session: ${used.toLocaleString()}`)
     }
 
-  } catch (error) {
-    console.error('\n❌ Translation sync failed:', error)
+  } catch (error: any) {
+    if (!error.message?.includes('ACTION REQUIRED')) {
+      notifyError(error, 'Translation Sync Process')
+    }
+    console.error('\n❌ Translation sync failed')
     process.exit(1)
   }
 }

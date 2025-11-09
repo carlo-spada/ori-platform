@@ -341,17 +341,71 @@ const { t } = useTranslation('legal-terms')
 
 ## API Keys and Limits
 
-### DeepL API
+### DeepL API Plans
 
-- Free tier: 500,000 characters/month
-- Pro tier: Unlimited with pay-per-use
-- Get key: https://www.deepl.com/pro-api
+#### Free Plan
+- **Limit**: 500,000 characters/month
+- **Key Format**: Ends with `:fx` (e.g., `xxxx-xxxx-xxxx:fx`)
+- **Endpoint**: `https://api-free.deepl.com`
+- **Best For**: Initial setup, small projects
+
+#### Pro Plan
+- **Limit**: Pay-per-use (shown as 1 trillion in API)
+- **Key Format**: Standard UUID format (e.g., `xxxx-xxxx-xxxx`)
+- **Endpoint**: `https://api.deepl.com`
+- **Best For**: Production use, regular updates
+- **Cost**: ~€20 per million characters after free tier
+
+### API Key Detection
+
+The scripts automatically detect your key type:
+- Free keys (ending in `:fx`) → Use free endpoint
+- Pro keys → Use pro endpoint
+
+### Usage Monitoring
+
+The scripts provide detailed usage information:
+```
+📊 Usage: 0 / 1,000,000,000,000 (0%)  # Pro Plan
+📊 Usage: 250,000 / 500,000 (50%)      # Free Plan
+```
+
+**Warnings are shown when:**
+- 75% of quota used → Yellow warning
+- 90% of quota used → Red warning with character count remaining
+
+### Error Notifications
+
+The scripts include comprehensive error detection:
+
+1. **API Key Issues**
+   - Invalid or expired keys
+   - Wrong endpoint for key type
+   - Clear instructions for resolution
+
+2. **Usage Limit Reached**
+   - Monthly quota exceeded
+   - Suggests upgrading or waiting
+
+3. **Rate Limiting**
+   - Automatic retry with delays
+   - Progress indication
 
 ### Usage Optimization
 
 - Sync script only translates missing keys
 - Caches translations in JSON files
 - Batch processing with delays
+- Character count tracking per session
+
+### Cost Estimation
+
+**Monthly Usage Estimates:**
+- Initial translation: ~200,000 characters (all content)
+- Blog posts: ~25,000 characters per post × 4 languages = 100,000
+- Updates: ~10,000 characters for UI changes
+
+**Recommendation**: Free plan sufficient after initial setup, Pro plan for heavy content creation
 
 ## Contributing
 
