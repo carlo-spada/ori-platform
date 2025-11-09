@@ -83,23 +83,35 @@ Redirects to: app.getori.app/login
 
 ### File Structure
 
-The actual file structure remains unchanged:
+The file structure remains unchanged - subdomain routing is handled entirely by middleware:
+
 ```
 src/app/
-├── page.tsx                 # Landing (marketing)
-├── about/                   # Marketing
-├── pricing/                 # Marketing
-├── login/                   # Auth (app subdomain)
-├── signup/                  # Auth (app subdomain)
-├── onboarding/              # App subdomain
-├── select-plan/             # App subdomain
-└── app/                     # Authenticated app routes
-    ├── dashboard/
-    ├── profile/
-    ├── applications/
-    ├── recommendations/
-    └── settings/
+├── page.tsx                 # Landing page → getori.app
+├── about/                   # Marketing → getori.app
+├── pricing/                 # Marketing → getori.app
+├── blog/                    # Marketing → getori.app
+├── features/                # Marketing → getori.app
+├── legal/                   # Marketing → getori.app
+│   ├── privacy-policy/
+│   ├── terms-of-service/
+│   └── cookie-policy/
+├── login/                   # Auth → app.getori.app (redirected by middleware)
+├── signup/                  # Auth → app.getori.app (redirected by middleware)
+├── onboarding/              # Onboarding → app.getori.app
+├── select-plan/             # Plan selection → app.getori.app
+└── app/                     # Authenticated routes → app.getori.app
+    ├── dashboard/           # Served as /dashboard on app subdomain
+    ├── profile/             # Served as /profile on app subdomain
+    ├── applications/        # Served as /applications on app subdomain
+    ├── recommendations/     # Served as /recommendations on app subdomain
+    └── settings/            # Served as /settings on app subdomain
 ```
+
+**Key Points:**
+- No files need to be moved - middleware handles all routing
+- Routes in `app/` folder are served with clean URLs on app subdomain
+- Example: File at `src/app/app/dashboard/page.tsx` is accessible at `app.getori.app/dashboard`
 
 ## Deployment Setup
 
