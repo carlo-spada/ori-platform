@@ -6,7 +6,7 @@
     <strong>Ori is an autonomous up-skilling and role-acquisition agent designed to guide every person toward the work that truly fits them.</strong>
   </p>
   <p>
-    <a href="#">View Demo</a> · <a href="#">Report Bug</a> · <a href="#">Request Feature</a>
+    <a href="https://app.getori.app">View Demo</a> · <a href="https://github.com/carlo-spada/ori-platform/issues">Report Bug</a> · <a href="https://github.com/carlo-spada/ori-platform/issues">Request Feature</a>
   </p>
 </div>
 
