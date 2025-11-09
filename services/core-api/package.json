@@ -7,7 +7,8 @@
     "build": "tsc",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "setup:stripe": "ts-node-dev --transpile-only src/scripts/setupStripe.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",
