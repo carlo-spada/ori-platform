@@ -1,6 +1,7 @@
 import { Router, type Router as RouterType } from 'express'
 import { authMiddleware, AuthRequest } from '../middleware/auth.js'
 import { supabase } from '../lib/supabase.js'
+import { ensureStripeCustomer, getUserEmail } from '../lib/stripeHelpers.js'
 
 const router: RouterType = Router()
 
@@ -196,6 +197,10 @@ router.put('/onboarding', authMiddleware, async (req: AuthRequest, res) => {
   }
 
   try {
+    // Ensure user has a Stripe customer (create if doesn't exist)
+    const userEmail = await getUserEmail(req.user.id)
+    await ensureStripeCustomer(req.user.id, userEmail, full_name)
+
     // Build update object with only provided fields
     const updateData: Record<string, unknown> = {
       onboarding_completed: true,
