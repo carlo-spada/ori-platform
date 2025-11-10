@@ -10,26 +10,34 @@
     }
   },
   "footer": {
+    "brand": {
+      "tagline": "The future of work is human.",
+      "cta": "Get started"
+    },
     "columns": {
       "product": {
         "title": "Product",
         "features": "Features",
-        "pricing": "Pricing",
+        "pricing": "Pricing"
+      },
+      "company": {
+        "title": "Company",
         "about": "About",
-        "blog": "Blog",
-        "journey": "Our Journey"
+        "journey": "Our Journey",
+        "blog": "Blog"
       },
-      "support": {
-        "title": "Support",
-        "contact": "Contact Us",
-        "help": "Help Center"
-      },
-      "legal": {
-        "title": "Legal",
-        "terms": "Terms of Service",
+      "helpLegal": {
+        "title": "Help & Legal",
+        "contact": "Contact",
+        "helpCenter": "Help Center",
         "privacy": "Privacy Policy",
+        "terms": "Terms of Service",
         "cookies": "Cookie Policy"
       }
+    },
+    "meta": {
+      "copyright": "© {{year}} Ori. All rights reserved.",
+      "followUs": "Follow us"
     }
   },
   "social": {
