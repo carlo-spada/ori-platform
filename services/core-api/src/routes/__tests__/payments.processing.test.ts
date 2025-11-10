@@ -19,8 +19,8 @@ import {
   createTestCharge,
   testPlans,
   testScenarios,
+  generateTestEmail,
 } from './fixtures/stripe.fixtures';
-import { generateTestEmail } from './fixtures/test-setup';
 
 describe('Payment - Payment Intent Creation', () => {
   let customerId: string;

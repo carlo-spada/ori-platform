@@ -19,8 +19,9 @@ import {
   createTestSubscription,
   testWebhookEvents,
   generateTestEmail,
+  generateTestUserId,
 } from './fixtures/stripe.fixtures';
-import { generateTestUserId, createTestWebhookSignature } from './fixtures/test-setup';
+import { createTestWebhookSignature } from './fixtures/test-setup';
 
 describe('Stripe Webhooks - Event Handling', () => {
   let customerId: string;

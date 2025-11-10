@@ -12,11 +12,12 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach } from '@jest/globals';
-import { createMockSupabaseClient, generateTestUserId, generateTestEmail } from './fixtures/test-setup';
+import { createMockSupabaseClient } from './fixtures/test-setup';
 import {
   createTestCustomer,
   createTestPaymentMethod,
-  generateTestEmail as generateEmail,
+  generateTestUserId,
+  generateTestEmail,
   StripeTestCustomer,
 } from './fixtures/stripe.fixtures';
 

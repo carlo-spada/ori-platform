@@ -20,8 +20,9 @@ import {
   testPlans,
   testScenarios,
   StripeTestSubscription,
+  generateTestUserId,
+  generateTestEmail,
 } from './fixtures/stripe.fixtures';
-import { generateTestUserId, generateTestEmail } from './fixtures/test-setup';
 
 describe('Payment - Subscription Creation', () => {
   let customerId: string;
