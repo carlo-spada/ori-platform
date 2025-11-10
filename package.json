@@ -2,11 +2,6 @@
   "name": "ori-platform",
   "version": "0.1.0",
   "private": true,
-  "pnpm": {
-    "overrides": {
-      "path-to-regexp": ">=6.3.0"
-    }
-  },
   "scripts": {
     "dev": "next dev --webpack",
     "dev:api": "pnpm --filter @ori/core-api dev",
@@ -112,6 +107,7 @@
   },
   "pnpm": {
     "overrides": {
+      "path-to-regexp": ">=6.3.0",
       "undici": ">=5.29.0",
       "esbuild": ">=0.25.0"
     }
