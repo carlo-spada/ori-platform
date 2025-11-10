@@ -88,6 +88,8 @@ Covers:
 | `.claude/mcp-setup-guide.md` | MCP setup instructions | 10 min | Engineers |
 | `PHASE2_COMPLETION_SUMMARY.md` | What Phase 2 delivered | 10 min | Reference |
 | `PHASE3_COMPLETION_SUMMARY.md` | What Phase 3 delivered | 10 min | Reference |
+| `CLEANUP_SUMMARY.md` | Documentation cleanup results | 10 min | Reference |
+| `DOCUMENTATION_GOVERNANCE.md` | Prevention framework | 20 min | All devs |
 
 ---
 
@@ -108,9 +110,14 @@ Current Phase: MCP Refactoring
 │  ├─ MCP_REFACTORING_PLAN.md ⭐ ENGINEERS START HERE
 │  └─ .claude/mcp-setup-guide.md (setup)
 │
+├─ Governance & Prevention
+│  ├─ DOCUMENTATION_GOVERNANCE.md (framework)
+│  └─ check-documentation.sh (automated health check)
+│
 └─ Reference
    ├─ PHASE2_COMPLETION_SUMMARY.md
    ├─ PHASE3_COMPLETION_SUMMARY.md
+   ├─ CLEANUP_SUMMARY.md
    └─ docs/archive/deprecated-mcp-docs/ (old docs)
 ```
 
@@ -176,6 +183,7 @@ When archiving old documents:
 - [`architecture/overview.md`](architecture/overview.md) - System architecture
 
 **Operations**:
+- [`AUTO_PR_REVIEW.md`](AUTO_PR_REVIEW.md) - Automated PR review process
 - [`DATABASE_MIGRATION.md`](DATABASE_MIGRATION.md) - Migration tracking
 - [`TRANSLATION_WORKFLOW.md`](TRANSLATION_WORKFLOW.md) - i18n workflow
 - [`BRANCH_PROTECTION_SETUP.md`](BRANCH_PROTECTION_SETUP.md) - GitHub setup
