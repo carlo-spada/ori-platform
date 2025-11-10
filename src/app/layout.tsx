@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Providers } from './providers'
+import { OnboardingGuard } from '@/components/auth/OnboardingGuard'
 import { Sonner } from '@/components/ui/sonner'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Analytics } from '@vercel/analytics/react'
@@ -42,8 +43,10 @@ export default function RootLayout({
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className="bg-background text-foreground antialiased">
         <Providers>
-          <Sonner />
-          {children}
+          <OnboardingGuard>
+            <Sonner />
+            {children}
+          </OnboardingGuard>
         </Providers>
         <SpeedInsights />
         <Analytics />
