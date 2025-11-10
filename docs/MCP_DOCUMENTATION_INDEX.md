@@ -172,10 +172,12 @@ When archiving old documents:
 **Core Technical Docs**:
 - [`DATABASE_SCHEMA.md`](DATABASE_SCHEMA.md) - Database structure
 - [`API_ENDPOINTS.md`](API_ENDPOINTS.md) - API documentation
+- [`SUBDOMAIN_MIGRATION.md`](SUBDOMAIN_MIGRATION.md) - Subdomain routing setup
 - [`architecture/overview.md`](architecture/overview.md) - System architecture
 
 **Operations**:
 - [`DATABASE_MIGRATION.md`](DATABASE_MIGRATION.md) - Migration tracking
+- [`TRANSLATION_WORKFLOW.md`](TRANSLATION_WORKFLOW.md) - i18n workflow
 - [`BRANCH_PROTECTION_SETUP.md`](BRANCH_PROTECTION_SETUP.md) - GitHub setup
 
 **Legacy**:
