@@ -37,6 +37,21 @@ export function SharedFooter() {
           href: '/blog',
           external: false,
         },
+        {
+          label: t('footer.columns.product.journey'),
+          href: '/journey',
+          external: false,
+        },
+      ],
+    },
+    {
+      title: t('footer.columns.support.title'),
+      links: [
+        {
+          label: t('footer.columns.support.contact'),
+          href: '/contact',
+          external: false,
+        },
       ],
     },
     {

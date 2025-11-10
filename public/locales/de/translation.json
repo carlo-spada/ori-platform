@@ -788,8 +788,8 @@
     "basicInfo": {
       "headline": "Erzählen Sie uns ein wenig über sich selbst.",
       "description": "Ori nutzt diese Informationen, um Ihre Chancen besser zu kontextualisieren.",
-      "headlineLabel": "Professionelle Schlagzeile",
-      "headlinePlaceholder": "Software-Ingenieur | KI-Enthusiast",
+      "headlineLabel": "Aktuelle Position",
+      "headlinePlaceholder": "z. B. Senior Software-Ingenieur",
       "locationLabel": "Standort",
       "locationPlaceholder": "San Francisco, CA"
     },
@@ -802,10 +802,10 @@
     },
     "goals": {
       "headline": "Was wollen Sie erreichen?",
-      "description": "Teilen Sie uns mit, in welche Richtung Sie Ihre Karriere lenken möchten.",
-      "longTermVisionLabel": "Langfristige Vision",
+      "description": "Teilen Sie uns mit, in welche Richtung Sie Ihre Karriere lenken möchten. Sie können einen oder beide der folgenden Abschnitte ausfüllen.",
+      "longTermVisionLabel": "Langfristige Vision (optional)",
       "longTermVisionPlaceholder": "Beschreiben Sie kurz die Art der Arbeit und den Einfluss, den Sie in Zukunft haben möchten..",
-      "targetRolesLabel": "Zielrollen",
+      "targetRolesLabel": "Zielrollen (optional)",
       "targetRolesPlaceholder": "Eine Rolle hinzufügen (z. B. Senior Data Scientist, Head of Product)",
       "helper": "Fügen Sie 1-3 Rollen hinzu, in die Sie gerne hineinwachsen würden."
     },

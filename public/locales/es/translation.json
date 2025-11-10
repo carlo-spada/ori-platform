@@ -788,8 +788,8 @@
     "basicInfo": {
       "headline": "Háblenos un poco de usted.",
       "description": "Ori utiliza esta información para contextualizar mejor sus oportunidades.",
-      "headlineLabel": "Titular profesional",
-      "headlinePlaceholder": "Ingeniero de software | Entusiasta de la IA",
+      "headlineLabel": "Puesto actual",
+      "headlinePlaceholder": "p. ej., Ingeniero de Software Senior",
       "locationLabel": "Ubicación",
       "locationPlaceholder": "San Francisco, CA"
     },
@@ -802,10 +802,10 @@
     },
     "goals": {
       "headline": "¿Cuál es su objetivo?",
-      "description": "Comparte la dirección que te gustaría que tomara tu carrera.",
-      "longTermVisionLabel": "Visión a largo plazo",
+      "description": "Comparte la dirección que te gustaría que tomara tu carrera. Puede rellenar una o ambas secciones a continuación.",
+      "longTermVisionLabel": "Visión a largo plazo (opcional)",
       "longTermVisionPlaceholder": "Describa brevemente el tipo de trabajo y la repercusión que le gustaría tener en el futuro..",
-      "targetRolesLabel": "Funciones objetivo",
+      "targetRolesLabel": "Funciones objetivo (opcional)",
       "targetRolesPlaceholder": "Añadir una función (por ejemplo, Científico de Datos Senior, Jefe de Producto)",
       "helper": "Añade de 1 a 3 funciones que te gustaría desempeñar."
     },

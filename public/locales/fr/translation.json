@@ -788,8 +788,8 @@
     "basicInfo": {
       "headline": "Parlez-nous un peu de vous.",
       "description": "Ori utilise ces informations pour mieux contextualiser vos opportunités.",
-      "headlineLabel": "Titre professionnel",
-      "headlinePlaceholder": "Ingénieur logiciel | Passionné d'IA",
+      "headlineLabel": "Poste actuel",
+      "headlinePlaceholder": "p. ex., Ingénieur logiciel senior",
       "locationLabel": "Localisation",
       "locationPlaceholder": "San Francisco, CA"
     },
@@ -802,10 +802,10 @@
     },
     "goals": {
       "headline": "Quel est votre objectif ?",
-      "description": "Faites part de l'orientation que vous souhaitez donner à votre carrière.",
-      "longTermVisionLabel": "Vision à long terme",
+      "description": "Faites part de l'orientation que vous souhaitez donner à votre carrière. Vous pouvez remplir l'une ou les deux sections ci-dessous.",
+      "longTermVisionLabel": "Vision à long terme (facultatif)",
       "longTermVisionPlaceholder": "Décrivez brièvement le type de travail et l'impact que vous aimeriez avoir à l'avenir..",
-      "targetRolesLabel": "Rôles cibles",
+      "targetRolesLabel": "Rôles cibles (facultatif)",
       "targetRolesPlaceholder": "Ajouter un rôle (par exemple, Data Scientist senior, Chef de produit)",
       "helper": "Ajoutez 1 à 3 rôles dans lesquels vous seriez enthousiaste à l'idée d'évoluer."
     },

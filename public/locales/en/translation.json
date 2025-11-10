@@ -4,6 +4,7 @@
       "features": "Features",
       "pricing": "Pricing",
       "about": "About",
+      "journey": "Journey",
       "blog": "Blog"
     }
   },
@@ -14,7 +15,13 @@
         "features": "Features",
         "pricing": "Pricing",
         "about": "About",
-        "blog": "Blog"
+        "blog": "Blog",
+        "journey": "Our Journey"
+      },
+      "support": {
+        "title": "Support",
+        "contact": "Contact Us",
+        "help": "Help Center"
       },
       "legal": {
         "title": "Legal",
@@ -777,8 +784,8 @@
     "basicInfo": {
       "headline": "Tell us a bit about yourself.",
       "description": "Ori uses this information to better contextualize your opportunities.",
-      "headlineLabel": "Professional headline",
-      "headlinePlaceholder": "Software Engineer | AI Enthusiast",
+      "headlineLabel": "Current role",
+      "headlinePlaceholder": "e.g., Senior Software Engineer",
       "locationLabel": "Location",
       "locationPlaceholder": "San Francisco, CA"
     },
@@ -791,10 +798,10 @@
     },
     "goals": {
       "headline": "What are you aiming for?",
-      "description": "Share the direction you'd like your career to move in.",
-      "longTermVisionLabel": "Long-term vision",
+      "description": "Share the direction you'd like your career to move in. You can fill out either or both sections below.",
+      "longTermVisionLabel": "Long-term vision (optional)",
       "longTermVisionPlaceholder": "Briefly describe the kind of work and impact you'd like to have in the future…",
-      "targetRolesLabel": "Target roles",
+      "targetRolesLabel": "Target roles (optional)",
       "targetRolesPlaceholder": "Add a role (e.g., Senior Data Scientist, Head of Product)",
       "helper": "Add 1–3 roles you'd be excited to grow into."
     },
@@ -845,6 +852,132 @@
       "successDescription": "Check your inbox for a special welcome message.",
       "error": "Something went wrong. Please try again.",
       "invalidEmail": "Please enter a valid email address"
+    }
+  },
+  "contactPage": {
+    "meta": {
+      "title": "Contact Us | Ori",
+      "description": "Get in touch with the Ori team. We'd love to hear from you."
+    },
+    "hero": {
+      "eyebrow": "Let's chat",
+      "headline": "We'd love to hear from you",
+      "subheadline": "Whether you have a question, feedback, or just want to say hi—we're all ears."
+    },
+    "contactInfo": {
+      "title": "Get in touch",
+      "email": {
+        "label": "Email us",
+        "value": "support@getori.app",
+        "description": "We typically respond within 24 hours"
+      },
+      "note": "You can also reach us through the form, and we'll get back to you as soon as possible."
+    },
+    "form": {
+      "title": "Send us a message",
+      "nameLabel": "Your name",
+      "namePlaceholder": "Jane Doe",
+      "emailLabel": "Email address",
+      "emailPlaceholder": "jane@example.com",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Tell us what's on your mind...",
+      "submitButton": "Send message",
+      "submitting": "Sending...",
+      "successTitle": "Message sent!",
+      "successDescription": "Thanks for reaching out. We'll get back to you soon.",
+      "errorTitle": "Something went wrong",
+      "errorDescription": "Please try again or email us directly at support@getori.app"
+    }
+  },
+  "journeyPage": {
+    "meta": {
+      "title": "Our Journey | Ori",
+      "description": "Where we're going and how we're getting there—at 10x speed."
+    },
+    "hero": {
+      "eyebrow": "The path ahead",
+      "headline": "Our journey to revolutionize careers",
+      "subheadline": "Here's what we're building, when we're building it, and why it matters. This is our roadmap—accelerated 10x for you."
+    },
+    "intro": {
+      "title": "Why we exist",
+      "body": "Careers are not linear. People change, pivot, and evolve. Yet, the tools for career development are stuck in the past—static job boards and one-size-fits-all advice. Ori is different. We're building a lifelong AI companion that grows with you, understands your unique path, and helps you navigate every transition with confidence."
+    },
+    "timeline": {
+      "title": "The roadmap",
+      "phases": [
+        {
+          "phase": "Phase 1",
+          "period": "Q1 2025",
+          "status": "In Progress",
+          "title": "Foundation",
+          "description": "Building the core platform and AI matching engine",
+          "milestones": [
+            "Smart profile system with skills & goals tracking",
+            "AI-powered job matching algorithm",
+            "User authentication & onboarding flow",
+            "Basic dashboard with personalized recommendations"
+          ]
+        },
+        {
+          "phase": "Phase 2",
+          "period": "Q2 2025",
+          "status": "Planned",
+          "title": "Intelligence",
+          "description": "Making Ori truly adaptive and insightful",
+          "milestones": [
+            "Learning path recommendations",
+            "Career trajectory analysis",
+            "Skills gap identification",
+            "Personalized growth insights"
+          ]
+        },
+        {
+          "phase": "Phase 3",
+          "period": "Q3 2025",
+          "status": "Planned",
+          "title": "Amplification",
+          "description": "Empowering you to take action",
+          "milestones": [
+            "AI application builder (resumes, cover letters)",
+            "Interview preparation tools",
+            "Salary negotiation guidance",
+            "Application tracking system"
+          ]
+        },
+        {
+          "phase": "Phase 4",
+          "period": "Q4 2025",
+          "status": "Planned",
+          "title": "Community",
+          "description": "Connecting people on similar journeys",
+          "milestones": [
+            "Peer connection features",
+            "Mentor matching system",
+            "Industry insights & trends",
+            "Success stories & case studies"
+          ]
+        },
+        {
+          "phase": "Phase 5",
+          "period": "2026+",
+          "status": "Vision",
+          "title": "Evolution",
+          "description": "Becoming your lifelong career companion",
+          "milestones": [
+            "Predictive career modeling",
+            "Life-work balance optimization",
+            "Long-term financial planning integration",
+            "Multi-decade career arc visualization"
+          ]
+        }
+      ]
+    },
+    "cta": {
+      "title": "Join us on this journey",
+      "description": "Be part of building the future of career development. Your feedback shapes where we go next.",
+      "primaryButton": "Get early access",
+      "secondaryButton": "Contact us"
     }
   }
 }
