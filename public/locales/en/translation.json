@@ -5,7 +5,8 @@
       "pricing": "Pricing",
       "about": "About",
       "journey": "Journey",
-      "blog": "Blog"
+      "blog": "Blog",
+      "contact": "Contact Us"
     }
   },
   "footer": {
@@ -978,6 +979,85 @@
       "description": "Be part of building the future of career development. Your feedback shapes where we go next.",
       "primaryButton": "Get early access",
       "secondaryButton": "Contact us"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Log In - Ori",
+      "description": "Log in to your Ori account to continue your career journey.",
+      "heading": "Welcome back",
+      "subheading": "Log in to continue your career journey",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "submitButton": "Log in",
+      "submitting": "Logging in...",
+      "noAccount": "Don't have an account?",
+      "signupLink": "Sign up",
+      "backToHome": "← Back to home",
+      "errors": {
+        "fillFields": "Please fill in all fields",
+        "failed": "Failed to log in. Please check your credentials."
+      },
+      "success": "Welcome back!"
+    },
+    "signup": {
+      "title": "Sign Up - Ori",
+      "description": "Create your Ori account and start your personalized career journey.",
+      "heading": "Get started",
+      "subheading": "Create your account to begin your career journey",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "passwordHelper": "Must be at least 6 characters",
+      "submitButton": "Create account",
+      "submitting": "Creating account...",
+      "hasAccount": "Already have an account?",
+      "loginLink": "Log in",
+      "backToHome": "← Back to home",
+      "errors": {
+        "fillFields": "Please fill in all fields",
+        "passwordLength": "Password must be at least 6 characters",
+        "failed": "Failed to create account. Please try again."
+      },
+      "confirmation": {
+        "heading": "Check your email",
+        "message": "We've sent you a confirmation link. Please check your email and click the link to verify your account.",
+        "loginButton": "Go to login"
+      },
+      "success": "Welcome to Ori Beta! Check your email to verify your account."
+    }
+  },
+  "betaWarning": {
+    "title": "Welcome to Ori Beta",
+    "subtitle": "You're joining us in the early stages",
+    "warning": {
+      "title": "We're still in active development",
+      "message": "Not all features are fully functional yet. You may encounter bugs, incomplete features, or unexpected behavior as we continue building."
+    },
+    "expectations": {
+      "title": "What to expect:",
+      "bugs": "Some features may not work as expected",
+      "newFeatures": "New features and improvements added regularly",
+      "feedback": "Your feedback helps us improve faster"
+    },
+    "community": {
+      "title": "Join our beta tester community",
+      "message": "Get updates on new features and be part of shaping Ori's future",
+      "firstNameLabel": "First Name (Optional)",
+      "firstNamePlaceholder": "Your first name",
+      "emailLabel": "Email Address *",
+      "emailPlaceholder": "you@example.com"
+    },
+    "actions": {
+      "cancel": "Maybe later",
+      "proceed": "I understand, let's go!",
+      "joining": "Joining..."
+    },
+    "errors": {
+      "emailRequired": "Please enter your email address"
     }
   }
 }

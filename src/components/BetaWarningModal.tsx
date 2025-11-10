@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Dialog,
   DialogContent,
@@ -29,13 +30,14 @@ export function BetaWarningModal({
   onProceed,
   defaultEmail = '',
 }: BetaWarningModalProps) {
+  const { t } = useTranslation()
   const [email, setEmail] = useState(defaultEmail)
   const [firstName, setFirstName] = useState('')
   const { mutate: submitBetaTester, isPending } = useSubmitBetaTester()
 
   const handleProceed = async () => {
     if (!email) {
-      toast.error('Please enter your email address')
+      toast.error(t('betaWarning.errors.emailRequired'))
       return
     }
 
@@ -70,9 +72,9 @@ export function BetaWarningModal({
               <Rocket className="h-6 w-6 text-amber-600 dark:text-amber-500" />
             </div>
             <div>
-              <DialogTitle className="text-xl">Welcome to Ori Beta</DialogTitle>
+              <DialogTitle className="text-xl">{t('betaWarning.title')}</DialogTitle>
               <DialogDescription>
-                You're joining us in the early stages
+                {t('betaWarning.subtitle')}
               </DialogDescription>
             </div>
           </div>
@@ -84,31 +86,29 @@ export function BetaWarningModal({
               <AlertTriangle className="h-5 w-5 flex-shrink-0 text-amber-600 dark:text-amber-500" />
               <div className="space-y-2">
                 <p className="text-sm font-medium text-amber-900 dark:text-amber-100">
-                  We're still in active development
+                  {t('betaWarning.warning.title')}
                 </p>
                 <p className="text-sm text-amber-800 dark:text-amber-200">
-                  Not all features are fully functional yet. You may encounter
-                  bugs, incomplete features, or unexpected behavior as we
-                  continue building.
+                  {t('betaWarning.warning.message')}
                 </p>
               </div>
             </div>
           </div>
 
           <div className="space-y-3">
-            <p className="text-sm font-medium">What to expect:</p>
+            <p className="text-sm font-medium">{t('betaWarning.expectations.title')}</p>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex gap-2">
                 <Bug className="mt-0.5 h-4 w-4 flex-shrink-0" />
-                <span>Some features may not work as expected</span>
+                <span>{t('betaWarning.expectations.bugs')}</span>
               </li>
               <li className="flex gap-2">
                 <Rocket className="mt-0.5 h-4 w-4 flex-shrink-0" />
-                <span>New features and improvements added regularly</span>
+                <span>{t('betaWarning.expectations.newFeatures')}</span>
               </li>
               <li className="flex gap-2">
                 <MessageSquare className="mt-0.5 h-4 w-4 flex-shrink-0" />
-                <span>Your feedback helps us improve faster</span>
+                <span>{t('betaWarning.expectations.feedback')}</span>
               </li>
             </ul>
           </div>
@@ -116,21 +116,21 @@ export function BetaWarningModal({
           {/* Email capture form */}
           <div className="space-y-4 rounded-lg border bg-card p-4">
             <p className="text-sm font-medium">
-              Join our beta tester community
+              {t('betaWarning.community.title')}
             </p>
             <p className="text-sm text-muted-foreground">
-              Get updates on new features and be part of shaping Ori's future
+              {t('betaWarning.community.message')}
             </p>
 
             <div className="space-y-3">
               <div>
                 <Label htmlFor="beta-first-name" className="text-xs">
-                  First Name (Optional)
+                  {t('betaWarning.community.firstNameLabel')}
                 </Label>
                 <Input
                   id="beta-first-name"
                   type="text"
-                  placeholder="Your first name"
+                  placeholder={t('betaWarning.community.firstNamePlaceholder')}
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   disabled={isPending}
@@ -140,14 +140,14 @@ export function BetaWarningModal({
 
               <div>
                 <Label htmlFor="beta-email" className="text-xs">
-                  Email Address *
+                  {t('betaWarning.community.emailLabel')}
                 </Label>
                 <div className="relative mt-1">
                   <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     id="beta-email"
                     type="email"
-                    placeholder="you@example.com"
+                    placeholder={t('betaWarning.community.emailPlaceholder')}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     disabled={isPending}
@@ -167,14 +167,14 @@ export function BetaWarningModal({
             disabled={isPending}
             className="w-full sm:w-auto"
           >
-            Maybe later
+            {t('betaWarning.actions.cancel')}
           </Button>
           <Button
             onClick={handleProceed}
             disabled={isPending || !email}
             className="w-full sm:w-auto"
           >
-            {isPending ? 'Joining...' : "I understand, let's go!"}
+            {isPending ? t('betaWarning.actions.joining') : t('betaWarning.actions.proceed')}
           </Button>
         </DialogFooter>
       </DialogContent>
