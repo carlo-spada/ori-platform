@@ -52,13 +52,13 @@ function MobileApplicationCard({
   )
 
   return (
-    <article className="border-border bg-card space-y-3 rounded-2xl border p-4">
+    <article className="space-y-3 rounded-2xl border border-border bg-card p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1">
-          <h3 className="text-foreground font-semibold">
+          <h3 className="font-semibold text-foreground">
             {application.jobTitle}
           </h3>
-          <div className="text-muted-foreground mt-1 flex items-center gap-2 text-sm">
+          <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
             <span className="font-medium">{application.company}</span>
             {application.location && (
               <>
@@ -77,7 +77,7 @@ function MobileApplicationCard({
         />
       </div>
 
-      <div className="text-muted-foreground flex flex-col gap-1 text-xs">
+      <div className="flex flex-col gap-1 text-xs text-muted-foreground">
         <div className="flex items-center gap-1">
           <Calendar className="h-3 w-3" aria-hidden="true" />
           <span>Applied {dateText}</span>
@@ -102,7 +102,7 @@ function MobileApplicationCard({
             >
               <SelectValue />
             </SelectTrigger>
-            <SelectContent className="border-border bg-popover z-50">
+            <SelectContent className="z-50 border-border bg-popover">
               {Object.entries(statusLabels).map(([value, label]) => (
                 <SelectItem key={value} value={value}>
                   {label}
@@ -144,40 +144,40 @@ export function ApplicationTable({
       <div className="hidden overflow-x-auto md:block">
         <table className="min-w-full text-sm">
           <thead>
-            <tr className="border-border border-b">
+            <tr className="border-b border-border">
               <th
                 scope="col"
-                className="text-foreground px-4 py-3 text-left font-semibold"
+                className="px-4 py-3 text-left font-semibold text-foreground"
               >
                 {labels.jobTitle}
               </th>
               <th
                 scope="col"
-                className="text-foreground px-4 py-3 text-left font-semibold"
+                className="px-4 py-3 text-left font-semibold text-foreground"
               >
                 {labels.company}
               </th>
               <th
                 scope="col"
-                className="text-foreground px-4 py-3 text-left font-semibold"
+                className="px-4 py-3 text-left font-semibold text-foreground"
               >
                 {labels.applicationDate}
               </th>
               <th
                 scope="col"
-                className="text-foreground px-4 py-3 text-left font-semibold"
+                className="px-4 py-3 text-left font-semibold text-foreground"
               >
                 {labels.status}
               </th>
               <th
                 scope="col"
-                className="text-foreground px-4 py-3 text-left font-semibold"
+                className="px-4 py-3 text-left font-semibold text-foreground"
               >
                 {labels.lastUpdated}
               </th>
               <th
                 scope="col"
-                className="text-foreground px-4 py-3 text-right font-semibold"
+                className="px-4 py-3 text-right font-semibold text-foreground"
               >
                 {labels.actions}
               </th>
@@ -201,22 +201,22 @@ export function ApplicationTable({
               return (
                 <tr
                   key={app.id}
-                  className="border-border hover:bg-muted/5 border-b"
+                  className="border-b border-border hover:bg-muted/5"
                 >
                   <td className="px-4 py-3">
-                    <div className="text-foreground font-medium">
+                    <div className="font-medium text-foreground">
                       {app.jobTitle}
                     </div>
                     {app.location && (
-                      <div className="text-muted-foreground mt-0.5 text-xs">
+                      <div className="mt-0.5 text-xs text-muted-foreground">
                         {app.location}
                       </div>
                     )}
                   </td>
-                  <td className="text-muted-foreground px-4 py-3">
+                  <td className="px-4 py-3 text-muted-foreground">
                     {app.company}
                   </td>
-                  <td className="text-muted-foreground px-4 py-3">
+                  <td className="px-4 py-3 text-muted-foreground">
                     <time dateTime={app.applicationDate}>{dateText}</time>
                   </td>
                   <td className="px-4 py-3">
@@ -225,7 +225,7 @@ export function ApplicationTable({
                       labelMap={statusLabels}
                     />
                   </td>
-                  <td className="text-muted-foreground px-4 py-3">
+                  <td className="px-4 py-3 text-muted-foreground">
                     <time dateTime={app.lastUpdated}>{lastUpdatedText}</time>
                   </td>
                   <td className="px-4 py-3">
@@ -243,7 +243,7 @@ export function ApplicationTable({
                           >
                             <SelectValue />
                           </SelectTrigger>
-                          <SelectContent className="border-border bg-popover z-50">
+                          <SelectContent className="z-50 border-border bg-popover">
                             {Object.entries(statusLabels).map(
                               ([value, label]) => (
                                 <SelectItem key={value} value={value}>

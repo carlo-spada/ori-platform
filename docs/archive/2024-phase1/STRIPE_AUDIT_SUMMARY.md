@@ -9,22 +9,23 @@
 
 ## Quick Facts
 
-| Metric | Value |
-|--------|-------|
-| **Stripe Code** | 1,122 LOC across 9 implementation files |
-| **Files Analyzed** | 15 (9 implementation + 4 config + 2 migration) |
-| **Test Coverage** | 0% (no automated tests) |
-| **Webhook Events Handled** | 7 of 15+ relevant events |
-| **API Endpoints** | 5 payment-related endpoints |
-| **Environment Variables** | 8 required for backend, 2 for frontend |
-| **MCP Integration Readiness** | 4/5 stars (HIGH) |
-| **Documentation Generated** | 60KB in 3 detailed documents |
+| Metric                        | Value                                          |
+| ----------------------------- | ---------------------------------------------- |
+| **Stripe Code**               | 1,122 LOC across 9 implementation files        |
+| **Files Analyzed**            | 15 (9 implementation + 4 config + 2 migration) |
+| **Test Coverage**             | 0% (no automated tests)                        |
+| **Webhook Events Handled**    | 7 of 15+ relevant events                       |
+| **API Endpoints**             | 5 payment-related endpoints                    |
+| **Environment Variables**     | 8 required for backend, 2 for frontend         |
+| **MCP Integration Readiness** | 4/5 stars (HIGH)                               |
+| **Documentation Generated**   | 60KB in 3 detailed documents                   |
 
 ---
 
 ## Key Findings
 
 ### What's Working Well (12 items)
+
 1. Frontend Stripe.js integration with proper lazy loading
 2. Backend Stripe client initialized correctly with API version pinning
 3. Customer creation with Supabase synchronization
@@ -39,12 +40,14 @@
 12. Database schema with proper constraints and indexes
 
 ### Critical Gaps (4 items)
+
 1. **No Automated Tests** - 0% coverage, all manual testing
 2. **Incomplete Webhook Handling** - Only 7 of 15+ relevant events
 3. **No Webhook Logging** - Makes debugging difficult
 4. **Code Duplication** - Customer creation in 2 places
 
 ### Important Missing Features (8 items)
+
 1. Refund processing
 2. Subscription management UI (upgrade/downgrade)
 3. Invoice tracking and history
@@ -86,6 +89,7 @@ Webhook Handler
 ## Payment Flow Summary
 
 **User subscription workflow:**
+
 1. User selects plan → Frontend loads PaymentForm
 2. Component mounts → Creates Setup Intent (API call)
 3. Display Stripe PaymentElement → User enters card
@@ -115,6 +119,7 @@ Prices:                        stripe.prices.search(), .create()
 ```
 
 **All these calls must be migrated to MCP for:**
+
 - Automated testing
 - Improved reliability
 - Better error handling
@@ -126,17 +131,20 @@ Prices:                        stripe.prices.search(), .create()
 ## Database Integration
 
 **Stripe fields added to `user_profiles` table:**
+
 - `stripe_customer_id` (TEXT UNIQUE) - Unique identifier for billing
 - `stripe_subscription_id` (TEXT UNIQUE) - Active subscription reference
 - `subscription_status` (TEXT) - Tracks billing state (7 possible values)
 
 **Optimizations:**
+
 - 3 indexes for fast lookups
 - CHECK constraint for data integrity
 - Proper documentation via SQL comments
 - Default values for safety
 
 **Subscription Status Values:**
+
 - `free` - No subscription
 - `plus_monthly`, `plus_yearly` - Plus tier subscriptions
 - `premium_monthly`, `premium_yearly` - Premium tier subscriptions
@@ -149,10 +157,10 @@ Prices:                        stripe.prices.search(), .create()
 
 **2 tiers × 2 billing cycles:**
 
-| Plan | Monthly | Yearly | Monthly Equivalent |
-|------|---------|--------|-------------------|
-| Plus | $5/mo | $48/yr | $4/mo (20% discount) |
-| Premium | $10/mo | $96/yr | $8/mo (20% discount) |
+| Plan    | Monthly | Yearly | Monthly Equivalent   |
+| ------- | ------- | ------ | -------------------- |
+| Plus    | $5/mo   | $48/yr | $4/mo (20% discount) |
+| Premium | $10/mo  | $96/yr | $8/mo (20% discount) |
 
 All prices stored in Stripe, configuration references them via environment variables.
 
@@ -187,6 +195,7 @@ NEXT_PUBLIC_API_URL=http://localhost:3001
 ## Webhook Event Handling
 
 **Currently handled (7 events):**
+
 - ✅ `checkout.session.completed` - Session completed
 - ✅ `customer.subscription.created` - Subscription created
 - ✅ `customer.subscription.updated` - Plan changed, status changed
@@ -196,6 +205,7 @@ NEXT_PUBLIC_API_URL=http://localhost:3001
 - ✅ `customer.source.expiring` - Triggers expiration warning
 
 **Missing (8+ events):**
+
 - `invoice.created` - Track invoices
 - `invoice.finalized` - Invoice ready
 - `customer.deleted` - Account deletion
@@ -226,6 +236,7 @@ Webhook handler MUST be registered before `express.json()` middleware because St
 **Readiness Assessment: 4/5 Stars**
 
 The codebase is excellent for MCP integration because:
+
 - Clear separation of concerns (lib, routes, helpers)
 - All Stripe calls in predictable locations
 - Dependency injection patterns already in place
@@ -233,6 +244,7 @@ The codebase is excellent for MCP integration because:
 - No tight coupling to Stripe SDK
 
 **Integration Path:**
+
 1. Create `StripeService` wrapper class
 2. Replace all direct Stripe SDK calls with MCP calls
 3. Build comprehensive test suite using MCP mocks
@@ -240,6 +252,7 @@ The codebase is excellent for MCP integration because:
 5. Remove Stripe SDK dependency from app code
 
 **Benefits:**
+
 - Programmatic testing without real Stripe API calls
 - Webhook simulation for testing
 - Test fixtures and data generation
@@ -253,7 +266,9 @@ The codebase is excellent for MCP integration because:
 Three comprehensive documents have been created:
 
 ### 1. STRIPE_INFRASTRUCTURE_AUDIT.md (32KB)
+
 **Complete technical audit including:**
+
 - Executive summary
 - File inventory (all 10 Stripe files)
 - Current implementation details (10 sections)
@@ -270,7 +285,9 @@ Three comprehensive documents have been created:
 ---
 
 ### 2. STRIPE_QUICK_REFERENCE.md (13KB)
+
 **Quick navigation guide including:**
+
 - At-a-glance metrics
 - Architecture diagram
 - File map (frontend/backend)
@@ -287,7 +304,9 @@ Three comprehensive documents have been created:
 ---
 
 ### 3. STRIPE_CODE_LOCATIONS.md (15KB)
+
 **Detailed code location guide including:**
+
 - 15 components documented with exact line numbers
 - File paths and LOC counts
 - Purpose and exports for each
@@ -328,13 +347,13 @@ Three comprehensive documents have been created:
 
 ## Estimated Effort for MCP Integration
 
-| Phase | Task | Hours | Dependencies |
-|-------|------|-------|--------------|
-| Phase 1 | Create StripeService | 8-12 | None |
-| Phase 2 | Migrate API calls | 12-16 | Phase 1 |
-| Phase 3 | Build test suite | 16-20 | Phase 1, 2 |
-| Phase 4 | Webhook testing | 8-12 | Phase 3 |
-| Phase 5 | Documentation | 4-6 | All |
+| Phase     | Task                     | Hours           | Dependencies  |
+| --------- | ------------------------ | --------------- | ------------- |
+| Phase 1   | Create StripeService     | 8-12            | None          |
+| Phase 2   | Migrate API calls        | 12-16           | Phase 1       |
+| Phase 3   | Build test suite         | 16-20           | Phase 1, 2    |
+| Phase 4   | Webhook testing          | 8-12            | Phase 3       |
+| Phase 5   | Documentation            | 4-6             | All           |
 | **TOTAL** | **Full MCP integration** | **48-66 hours** | **1-2 weeks** |
 
 ---
@@ -344,18 +363,21 @@ Three comprehensive documents have been created:
 After MCP integration is complete:
 
 **Quarter 2 (High Priority):**
+
 - Refund processing system
 - Subscription upgrade/downgrade
 - Invoice tracking and history
 - Email notification integration
 
 **Quarter 3 (Medium Priority):**
+
 - Advanced webhook events (disputes, chargebacks)
 - Payment analytics dashboard
 - Usage-based billing capability
 - Credit/prepayment system
 
 **Quarter 4 (Nice to Have):**
+
 - Dunning/retry logic improvements
 - Custom billing portal styling
 - Subscription pausing/resuming
@@ -383,12 +405,14 @@ After MCP integration is complete:
 ## Key Contacts & Resources
 
 **Stripe Documentation:**
+
 - API Reference: https://stripe.com/docs/api
 - Webhooks: https://stripe.com/docs/webhooks
 - Testing: https://stripe.com/docs/testing
 - Stripe CLI: https://stripe.com/docs/cli
 
 **Project Documentation:**
+
 - CLAUDE.md - Project principles and standards
 - AGENTS.md - Team workflow and responsibilities
 - MCP Integration Task: `.tasks/todo/mcp-integration/1-stripe-mcp.md`
@@ -401,6 +425,7 @@ After MCP integration is complete:
 The Ori Platform has a **functional, well-structured Stripe integration** that is ready for the next phase of development. The codebase demonstrates good engineering practices with proper separation of concerns, security considerations, and error handling.
 
 **Primary recommendations:**
+
 1. Implement Stripe MCP integration for automated testing
 2. Increase webhook event coverage
 3. Add comprehensive test suite

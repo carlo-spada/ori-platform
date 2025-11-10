@@ -184,28 +184,34 @@
 ### Pattern 1: Creating Test Fixtures with Stripe MCP
 
 ```typescript
-import { createStripeTestCustomer, createStripeTestSubscription } from '../fixtures/stripe.fixtures';
+import {
+  createStripeTestCustomer,
+  createStripeTestSubscription,
+} from '../fixtures/stripe.fixtures'
 
 describe('Payment Processing', () => {
   it('creates subscription for customer', async () => {
     // Use Stripe MCP to create test data
-    const customer = await createStripeTestCustomer('test@example.com');
+    const customer = await createStripeTestCustomer('test@example.com')
 
     // Make API call
     const response = await request(app)
       .post('/api/v1/payments/subscribe')
       .set('Authorization', `Bearer ${testToken}`)
-      .send({ customerId: customer.id, planId: 'price_monthly' });
+      .send({ customerId: customer.id, planId: 'price_monthly' })
 
     // Verify response
-    expect(response.status).toBe(200);
-    expect(response.body.subscriptionId).toBeDefined();
+    expect(response.status).toBe(200)
+    expect(response.body.subscriptionId).toBeDefined()
 
     // Verify database
-    const subscription = await db.query('SELECT * FROM subscriptions WHERE user_id = ?', [userId]);
-    expect(subscription).toHaveLength(1);
-  });
-});
+    const subscription = await db.query(
+      'SELECT * FROM subscriptions WHERE user_id = ?',
+      [userId],
+    )
+    expect(subscription).toHaveLength(1)
+  })
+})
 ```
 
 ### Pattern 2: Testing Webhook Handlers
@@ -214,23 +220,26 @@ describe('Payment Processing', () => {
 describe('Stripe Webhooks', () => {
   it('processes payment_intent.succeeded webhook', async () => {
     // Create test payment with Stripe MCP
-    const customer = await createStripeTestCustomer('test@example.com');
-    const payment = await simulateStripePayment(customer.id, 9900);
+    const customer = await createStripeTestCustomer('test@example.com')
+    const payment = await simulateStripePayment(customer.id, 9900)
 
     // Send webhook to handler
     const response = await request(app)
       .post('/api/v1/payments/webhook')
       .set('stripe-signature', generateSignature(payment.webhook))
-      .send(payment.webhook);
+      .send(payment.webhook)
 
     // Verify webhook was processed
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(200)
 
     // Verify database was updated
-    const transaction = await db.query('SELECT * FROM transactions WHERE payment_intent_id = ?', [payment.id]);
-    expect(transaction.status).toBe('succeeded');
-  });
-});
+    const transaction = await db.query(
+      'SELECT * FROM transactions WHERE payment_intent_id = ?',
+      [payment.id],
+    )
+    expect(transaction.status).toBe('succeeded')
+  })
+})
 ```
 
 ### Pattern 3: Testing Error Scenarios
@@ -239,19 +248,21 @@ describe('Stripe Webhooks', () => {
 describe('Payment Error Handling', () => {
   it('handles card declined error', async () => {
     // Simulate failure with Stripe MCP
-    const customer = await createStripeTestCustomer('test@example.com');
-    const failedPayment = await simulateStripePayment(customer.id, 9900, { status: 'failed' });
+    const customer = await createStripeTestCustomer('test@example.com')
+    const failedPayment = await simulateStripePayment(customer.id, 9900, {
+      status: 'failed',
+    })
 
     // Call API with failed payment
     const response = await request(app)
       .post('/api/v1/payments/confirm')
-      .send({ paymentIntentId: failedPayment.id });
+      .send({ paymentIntentId: failedPayment.id })
 
     // Verify error handling
-    expect(response.status).toBe(402); // Payment required
-    expect(response.body.error).toContain('declined');
-  });
-});
+    expect(response.status).toBe(402) // Payment required
+    expect(response.body.error).toContain('declined')
+  })
+})
 ```
 
 ---
@@ -285,6 +296,7 @@ describe('Payment Error Handling', () => {
 ### ❌ DON'T:
 
 1. **Hardcode test customer IDs**
+
    ```typescript
    // ❌ Bad - IDs change every test run
    const customerId = 'cus_test_12345';
@@ -294,6 +306,7 @@ describe('Payment Error Handling', () => {
    ```
 
 2. **Skip webhook signature validation tests**
+
    ```typescript
    // ❌ Bad - Webhook security not tested
    // Test only calls handler without verifying signature
@@ -302,6 +315,7 @@ describe('Payment Error Handling', () => {
    ```
 
 3. **Use production API in tests**
+
    ```typescript
    // ❌ Bad - Real money could be charged
    STRIPE_KEY=sk_live_...
@@ -311,6 +325,7 @@ describe('Payment Error Handling', () => {
    ```
 
 4. **Test only success paths**
+
    ```typescript
    // ❌ Bad - No error testing
    // Missing: failed payment, timeout, API error tests
@@ -345,17 +360,20 @@ describe('Payment Error Handling', () => {
 ## Phase 2 Timeline
 
 ### Week 2 (Preparation)
+
 - Day 5: Phase 2 kickoff meeting
 - Read all Phase 2 documentation
 - Get Stripe test API keys
 - Verify Stripe MCP is working
 
 ### Week 3 (Infrastructure & Basic Tests)
+
 - Day 1-2: Create test utilities and fixtures
 - Day 3-5: Implement payment creation and subscription tests
 - **Checkpoint**: 10-15 tests passing, basic infrastructure complete
 
 ### Week 4 (Webhooks & Advanced Tests)
+
 - Day 1-2: Implement webhook handler tests
 - Day 3-4: Implement error scenario tests
 - Day 5: Verify >90% test coverage, documentation
@@ -366,18 +384,21 @@ describe('Payment Error Handling', () => {
 ## Resources for Phase 2
 
 ### Documentation
+
 - `docs/STRIPE_INFRASTRUCTURE_AUDIT.md` - Technical analysis
 - `docs/STRIPE_QUICK_REFERENCE.md` - Quick reference guide
 - `docs/MCP_INTEGRATION_GUIDELINES_FOR_DEVELOPERS.md` - Integration patterns
 - `.claude/mcp-setup-guide.md` - Setup and troubleshooting
 
 ### Code References
+
 - `services/core-api/src/routes/payments.ts` - Payment route handlers
 - `services/core-api/src/services/stripe-service.ts` - Stripe service
 - `shared/types/src/index.ts` - Type definitions for payments
 - `docs/DATABASE_QUICK_REFERENCE.md` - Database schema reference
 
 ### Team Support
+
 - **MCP Issues**: Refer to `.claude/mcp-setup-guide.md` troubleshooting
 - **Architecture Questions**: Refer to `docs/STRIPE_INFRASTRUCTURE_AUDIT.md`
 - **Pattern Questions**: Refer to `docs/MCP_INTEGRATION_GUIDELINES_FOR_DEVELOPERS.md`
@@ -419,4 +440,3 @@ describe('Payment Error Handling', () => {
 **Duration**: 2 weeks (Weeks 3-4)
 **Team**: 2-3 engineers
 **Success Metric**: >90% test coverage + 30-40 new tests
-

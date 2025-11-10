@@ -9,17 +9,17 @@ Integrate the Resend MCP Server to simplify our email marketing and user communi
 ## Detailed Requirements
 
 1.  **Configure the Resend MCP Server:**
-    *   Set up the Resend MCP server in our Claude Code environment.
-    *   Ensure it is configured with the necessary API keys (from GitHub secrets).
+    - Set up the Resend MCP server in our Claude Code environment.
+    - Ensure it is configured with the necessary API keys (from GitHub secrets).
 
 2.  **Create an `EmailService`:**
-    *   Create a new service in `services/core-api/src/services/email.ts`.
-    *   This service should encapsulate all email-related logic and use the Resend MCP server for sending emails.
-    *   It should provide a simple, high-level API for our application to use (e.g., `sendWelcomeEmail`, `sendJobRecommendationEmail`).
+    - Create a new service in `services/core-api/src/services/email.ts`.
+    - This service should encapsulate all email-related logic and use the Resend MCP server for sending emails.
+    - It should provide a simple, high-level API for our application to use (e.g., `sendWelcomeEmail`, `sendJobRecommendationEmail`).
 
 3.  **Create and Test Email Templates:**
-    *   Create a new set of email templates for our transactional emails (e.g., welcome email, job recommendations, alerts).
-    *   Use the Resend MCP server to send test emails and verify that the templates are rendered correctly.
+    - Create a new set of email templates for our transactional emails (e.g., welcome email, job recommendations, alerts).
+    - Use the Resend MCP server to send test emails and verify that the templates are rendered correctly.
 
 ## Acceptance Criteria
 

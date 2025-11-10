@@ -81,7 +81,13 @@ All colors MUST be HSL.
     color: hsl(var(--foreground));
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-family:
+      'Inter',
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      system-ui,
+      sans-serif;
   }
 
   /* Reduced motion */
@@ -98,7 +104,9 @@ All colors MUST be HSL.
   /* Focus visible styles */
   *:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--accent));
+    box-shadow:
+      0 0 0 2px hsl(var(--background)),
+      0 0 0 4px hsl(var(--accent));
   }
 }
 
@@ -129,7 +137,11 @@ All colors MUST be HSL.
 
   /* Gradient utility */
   .gradient-primary {
-    background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-2)));
+    background: linear-gradient(
+      135deg,
+      hsl(var(--accent)),
+      hsl(var(--accent-2))
+    );
   }
 
   /* Enhanced gradient with animation */
@@ -139,9 +151,15 @@ All colors MUST be HSL.
   }
 
   @keyframes gradient-shift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
 
   /* Backdrop blur support */
@@ -160,7 +178,9 @@ All colors MUST be HSL.
 
   /* Button hover effects */
   .btn-hover-lift {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
   }
 
   .btn-hover-lift:hover {

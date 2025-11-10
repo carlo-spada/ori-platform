@@ -20,12 +20,14 @@ End-to-end smoke test of Stripe payment integration in production Vercel deploym
 ## Verification Steps
 
 ### 1. Environment Variables (5 min)
+
 - [ ] Verify `STRIPE_SECRET_KEY` in Vercel env vars
 - [ ] Verify `STRIPE_WEBHOOK_SECRET` in Vercel env vars
 - [ ] Verify `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` in Vercel env vars
 - [ ] Verify webhook endpoint URL configured in Stripe dashboard
 
 ### 2. Payment Flow Test (10 min)
+
 - [ ] Open production site: https://ori-platform-b57ndkgou-carlo-spada.vercel.app
 - [ ] Navigate to pricing/signup page
 - [ ] Select a plan (use test plan if available)
@@ -37,12 +39,14 @@ End-to-end smoke test of Stripe payment integration in production Vercel deploym
 - [ ] Check user dashboard shows active subscription
 
 ### 3. Webhook Verification (10 min)
+
 - [ ] Check Vercel logs for webhook events
 - [ ] Verify database updated with subscription_status
 - [ ] Test webhook with Stripe CLI: `stripe listen --forward-to https://...`
 - [ ] Trigger test events: `stripe trigger checkout.session.completed`
 
 ### 4. Error Handling (5 min)
+
 - [ ] Test with declined card: `4000 0000 0000 0002`
 - [ ] Verify error message shows to user
 - [ ] Verify no subscription created in database
@@ -58,6 +62,7 @@ End-to-end smoke test of Stripe payment integration in production Vercel deploym
 ## Troubleshooting Checklist
 
 If issues found:
+
 - [ ] Check Vercel deployment logs
 - [ ] Check Stripe dashboard for API errors
 - [ ] Verify environment variables match between services
@@ -75,6 +80,7 @@ If issues found:
 ## Documentation to Update
 
 After verification:
+
 - [ ] Document production webhook URL
 - [ ] Note any production-specific gotchas
 - [ ] Update deployment checklist if needed

@@ -18,6 +18,7 @@ GitHub Actions workflow failing with "workflow file issue" due to missing pnpm-l
 ## Solution
 
 Either:
+
 1. Generate pnpm-lock.yaml: `pnpm install` at root
 2. OR remove `--frozen-lockfile` flag from `.github/workflows/translate.yml`
 

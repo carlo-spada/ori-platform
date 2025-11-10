@@ -30,14 +30,14 @@ export function OriAnalysisCard({ analysis }: OriAnalysisCardProps) {
         {analysis.skillMatch && (
           <div className="flex items-start gap-2">
             <Check
-              className="text-primary mt-0.5 h-4 w-4 shrink-0"
+              className="mt-0.5 h-4 w-4 shrink-0 text-primary"
               aria-hidden="true"
             />
             <div>
               <span className="text-sm font-medium">
                 {t('jobDetailPage.analysis.skillMatchLabel')}:{' '}
               </span>
-              <span className="text-muted-foreground text-sm">
+              <span className="text-sm text-muted-foreground">
                 {analysis.skillMatch}
               </span>
             </div>
@@ -46,14 +46,14 @@ export function OriAnalysisCard({ analysis }: OriAnalysisCardProps) {
         {analysis.goalAlignment && (
           <div className="flex items-start gap-2">
             <Check
-              className="text-primary mt-0.5 h-4 w-4 shrink-0"
+              className="mt-0.5 h-4 w-4 shrink-0 text-primary"
               aria-hidden="true"
             />
             <div>
               <span className="text-sm font-medium">
                 {t('jobDetailPage.analysis.goalAlignmentLabel')}:{' '}
               </span>
-              <span className="text-muted-foreground text-sm">
+              <span className="text-sm text-muted-foreground">
                 {analysis.goalAlignment}
               </span>
             </div>
@@ -62,14 +62,14 @@ export function OriAnalysisCard({ analysis }: OriAnalysisCardProps) {
         {analysis.companyInsight && (
           <div className="flex items-start gap-2">
             <Check
-              className="text-primary mt-0.5 h-4 w-4 shrink-0"
+              className="mt-0.5 h-4 w-4 shrink-0 text-primary"
               aria-hidden="true"
             />
             <div>
               <span className="text-sm font-medium">
                 {t('jobDetailPage.analysis.companyInsightLabel')}:{' '}
               </span>
-              <span className="text-muted-foreground text-sm">
+              <span className="text-sm text-muted-foreground">
                 {analysis.companyInsight}
               </span>
             </div>

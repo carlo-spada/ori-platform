@@ -136,7 +136,9 @@ router.get('/history', authMiddleware, async (req: AuthRequest, res) => {
       .range(offset, offset + limit - 1)
 
     if (error) {
-      return res.status(500).json({ error: 'Failed to fetch notification history' })
+      return res
+        .status(500)
+        .json({ error: 'Failed to fetch notification history' })
     }
 
     return res.status(200).json({
@@ -236,7 +238,9 @@ router.post('/unsubscribe/:token', async (req, res) => {
       .single()
 
     if (fetchError || !preferences) {
-      return res.status(404).json({ error: 'Invalid or expired unsubscribe link' })
+      return res
+        .status(404)
+        .json({ error: 'Invalid or expired unsubscribe link' })
     }
 
     // Update to unsubscribed

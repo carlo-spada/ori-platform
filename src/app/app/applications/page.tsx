@@ -77,7 +77,7 @@ export default function Applications() {
     <div className="flex h-full flex-col gap-4">
       <header className="flex items-start justify-between gap-4">
         <div className="space-y-1">
-          <h1 className="text-foreground text-3xl font-bold sm:text-4xl">
+          <h1 className="text-3xl font-bold text-foreground sm:text-4xl">
             {t('applicationsPage.header.title')}
           </h1>
           <p className="text-muted-foreground">
@@ -97,7 +97,7 @@ export default function Applications() {
         </Tooltip>
       </header>
 
-      <section className="border-border bg-card flex-1 overflow-y-auto rounded-2xl border p-4 sm:p-6">
+      <section className="flex-1 overflow-y-auto rounded-2xl border border-border bg-card p-4 sm:p-6">
         {applications.length > 0 ? (
           <ApplicationTable
             applications={applications}

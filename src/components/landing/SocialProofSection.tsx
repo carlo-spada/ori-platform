@@ -27,10 +27,10 @@ export function SocialProofSection() {
   return (
     <Section data-testid="socialproof" className="bg-surface/50">
       <div className="mb-12 text-center">
-        <h2 className="text-foreground mb-4 text-3xl font-semibold sm:text-4xl">
+        <h2 className="mb-4 text-3xl font-semibold text-foreground sm:text-4xl">
           {t('landing.testimonialsTitle')}
         </h2>
-        <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
+        <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
           {t('landing.testimonialsSubtitle')}
         </p>
       </div>
@@ -39,18 +39,18 @@ export function SocialProofSection() {
         {testimonials.map((testimonial, index) => (
           <Card
             key={index}
-            className="border-border bg-card hover:border-accent/50 p-6 transition-colors duration-200"
+            className="border-border bg-card p-6 transition-colors duration-200 hover:border-accent/50"
           >
-            <Quote className="text-accent/30 mb-4 h-8 w-8" aria-hidden="true" />
-            <blockquote className="text-foreground mb-4 text-base leading-relaxed">
+            <Quote className="mb-4 h-8 w-8 text-accent/30" aria-hidden="true" />
+            <blockquote className="mb-4 text-base leading-relaxed text-foreground">
               &quot;{testimonial.quote}&quot;
             </blockquote>
-            <div className="border-border mt-4 border-t pt-4">
+            <div className="mt-4 border-t border-border pt-4">
               <cite className="not-italic">
-                <p className="text-foreground font-medium">
+                <p className="font-medium text-foreground">
                   {testimonial.author}
                 </p>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-sm text-muted-foreground">
                   {testimonial.role}
                 </p>
               </cite>

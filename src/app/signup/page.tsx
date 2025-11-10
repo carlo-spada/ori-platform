@@ -79,7 +79,9 @@ export default function Signup() {
       }
     } catch (error: any) {
       console.error('Signup error:', error)
-      toast.error(error.message || 'Failed to create account. Please try again.')
+      toast.error(
+        error.message || 'Failed to create account. Please try again.',
+      )
     } finally {
       setIsLoading(false)
     }
@@ -87,24 +89,24 @@ export default function Signup() {
 
   if (showConfirmation) {
     return (
-      <div className="bg-background flex min-h-screen w-full items-center justify-center px-4">
+      <div className="flex min-h-screen w-full items-center justify-center bg-background px-4">
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
             <Link
               href="/"
-              className="text-foreground hover:text-accent mb-4 inline-block text-2xl font-semibold transition-colors"
+              className="mb-4 inline-block text-2xl font-semibold text-foreground transition-colors hover:text-accent"
             >
               Ori
             </Link>
           </div>
 
-          <div className="border-border bg-card space-y-6 rounded-xl border p-8">
+          <div className="space-y-6 rounded-xl border border-border bg-card p-8">
             <div className="flex justify-center">
-              <CheckCircle2 className="text-accent h-16 w-16" />
+              <CheckCircle2 className="h-16 w-16 text-accent" />
             </div>
 
             <div className="space-y-2 text-center">
-              <h1 className="text-foreground text-2xl font-bold">
+              <h1 className="text-2xl font-bold text-foreground">
                 Check your email
               </h1>
               <p className="text-muted-foreground">
@@ -125,7 +127,7 @@ export default function Signup() {
           <p className="mt-6 text-center">
             <Link
               href="/"
-              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               ← Back to home
             </Link>
@@ -136,16 +138,16 @@ export default function Signup() {
   }
 
   return (
-    <div className="bg-background flex min-h-screen w-full items-center justify-center px-4">
+    <div className="flex min-h-screen w-full items-center justify-center bg-background px-4">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
           <Link
             href="/"
-            className="text-foreground hover:text-accent mb-4 inline-block text-2xl font-semibold transition-colors"
+            className="mb-4 inline-block text-2xl font-semibold text-foreground transition-colors hover:text-accent"
           >
             Ori
           </Link>
-          <h1 className="text-foreground mb-2 text-3xl font-bold">
+          <h1 className="mb-2 text-3xl font-bold text-foreground">
             Get started
           </h1>
           <p className="text-muted-foreground">
@@ -154,11 +156,11 @@ export default function Signup() {
         </div>
 
         <form onSubmit={handleSignupClick} className="space-y-6">
-          <div className="border-border bg-card space-y-4 rounded-xl border p-8">
+          <div className="space-y-4 rounded-xl border border-border bg-card p-8">
             <div>
               <label
                 htmlFor="email"
-                className="text-foreground mb-2 block text-sm font-medium"
+                className="mb-2 block text-sm font-medium text-foreground"
               >
                 Email
               </label>
@@ -169,7 +171,7 @@ export default function Signup() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={isLoading}
-                className="border-border bg-background text-foreground focus:ring-accent w-full rounded-lg border px-4 py-2 focus:ring-2 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-accent disabled:cursor-not-allowed disabled:opacity-50"
                 placeholder="you@example.com"
                 required
               />
@@ -178,7 +180,7 @@ export default function Signup() {
             <div>
               <label
                 htmlFor="password"
-                className="text-foreground mb-2 block text-sm font-medium"
+                className="mb-2 block text-sm font-medium text-foreground"
               >
                 Password
               </label>
@@ -189,12 +191,12 @@ export default function Signup() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isLoading}
-                className="border-border bg-background text-foreground focus:ring-accent w-full rounded-lg border px-4 py-2 focus:ring-2 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-accent disabled:cursor-not-allowed disabled:opacity-50"
                 placeholder="••••••••"
                 minLength={6}
                 required
               />
-              <p className="text-muted-foreground mt-1 text-xs">
+              <p className="mt-1 text-xs text-muted-foreground">
                 Must be at least 6 characters
               </p>
             </div>
@@ -211,11 +213,11 @@ export default function Signup() {
             </Button>
           </div>
 
-          <p className="text-muted-foreground text-center text-sm">
+          <p className="text-center text-sm text-muted-foreground">
             Already have an account?{' '}
             <Link
               href="/login"
-              className="text-accent hover:text-accent/80 underline underline-offset-2"
+              className="text-accent underline underline-offset-2 hover:text-accent/80"
             >
               Log in
             </Link>
@@ -224,7 +226,7 @@ export default function Signup() {
           <p className="text-center">
             <Link
               href="/"
-              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               ← Back to home
             </Link>

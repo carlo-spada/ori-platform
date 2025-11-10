@@ -14,12 +14,14 @@ This document outlines a comprehensive strategy for integrating three critical M
 ### Why This Matters
 
 Current State Problems:
+
 - **Stripe testing** requires manual dashboard context-switching (slows development)
 - **Email infrastructure** is placeholder-only; scaling will require significant refactoring
 - **Database testing** lacks in-CLI tools; developers switch contexts constantly
 - **No programmatic access patterns** to payment, email, or database workflows from development environment
 
 MCP Integration Benefits:
+
 - **90% reduction in context-switching** for payment/email/database tasks
 - **40% faster iteration** on payment flows and email campaigns
 - **Single source of truth** for database schema and queries
@@ -35,6 +37,7 @@ MCP Integration Benefits:
 **Objective**: Establish baseline and identify all systems affected by Phase 1 MCPs
 
 **Tasks**:
+
 1. **Payment System Audit** (Stripe)
    - [ ] Document all Stripe API call patterns in codebase
    - [ ] Map webhook handlers and their test coverage
@@ -57,12 +60,14 @@ MCP Integration Benefits:
    - **Files to audit**: `supabase/migrations/`, `services/core-api/src/__tests__/setup.ts`
 
 **Deliverables**:
+
 - `docs/MCP_AUDIT_BASELINE.md` (3-5 pages)
 - `docs/STRIPE_MCP_READINESS.md` (system inventory)
 - `docs/RESEND_MCP_READINESS.md` (system inventory)
 - `docs/POSTGRES_MCP_READINESS.md` (system inventory)
 
 **Success Criteria**:
+
 - All three audit documents completed
 - Zero ambiguity about which systems depend on payment/email/database infrastructure
 - Team consensus on baseline understanding
@@ -74,6 +79,7 @@ MCP Integration Benefits:
 **Objective**: Bootstrap MCP servers locally with working configurations
 
 **Tasks**:
+
 1. **Stripe MCP Server Setup**
    - [ ] Add Stripe MCP configuration to `.claude/mcp.json`
    - [ ] Test Stripe API connectivity with mock customer creation
@@ -93,11 +99,13 @@ MCP Integration Benefits:
    - [ ] Document connection pooling configuration
 
 **Deliverables**:
+
 - `.claude/mcp.json` updated with Phase 1 MCPs
 - `.claude/mcp-setup-guide.md` (developer onboarding for MCP setup)
 - Test results showing all three MCPs functional
 
 **Success Criteria**:
+
 - All three MCPs successfully initialize in local environment
 - Team members can spin up MCP servers in <5 minutes
 - Clear error messages if configuration is incorrect
@@ -109,6 +117,7 @@ MCP Integration Benefits:
 **Objective**: Create documentation structure for future phases
 
 **Tasks**:
+
 1. **Update CLAUDE.md**
    - Add "MCP-First Development Patterns" section
    - Document when to use each Phase 1 MCP
@@ -125,11 +134,13 @@ MCP Integration Benefits:
    - Common MCP patterns and anti-patterns
 
 **Deliverables**:
+
 - Updated `CLAUDE.md` with MCP integration section
 - Updated `AGENTS.md` with Claude's MCP responsibilities
 - New `docs/MCP_INTEGRATION_QUICK_REFERENCE.md`
 
 **Success Criteria**:
+
 - Clear guidance on which MCP to use for which task
 - Any new developer can onboard to MCP workflow in <1 hour
 - Links between documentation are bidirectional
@@ -143,12 +154,14 @@ MCP Integration Benefits:
 **Objective**: Replace manual Stripe dashboard testing with MCP-based workflows
 
 **Current State Problems**:
+
 - Developers manually navigate Stripe dashboard to test payment flows
 - Webhook simulation requires external tools or manual cURL requests
 - Payment scenarios (upgrade, downgrade, cancellation) require manual setup
 - Test data isolated from code, hard to reproduce issues
 
 **Solution Architecture**:
+
 ```
 Old Flow:
 Developer → Manual Stripe Dashboard → Test webhook manually → Copy webhook data → Paste into code
@@ -188,12 +201,14 @@ Developer → Stripe MCP (in Claude Code) → Generate test scenarios → Simula
    - [ ] Output to development Stripe account
 
 **Deliverables**:
+
 - `docs/STRIPE_MCP_WORKFLOWS.md` (comprehensive guide)
 - Updated payment test files using MCP patterns
 - New npm script for MCP-assisted testing
 - Webhook scenario generator tool
 
 **Success Criteria**:
+
 - All existing payment tests pass with new MCP-based approach
 - New developers can test payment flows without leaving Claude Code
 - Stripe dashboard context-switching reduced by 80%+
@@ -223,12 +238,14 @@ Developer → Stripe MCP (in Claude Code) → Generate test scenarios → Simula
    - [ ] Add to onboarding checklist
 
 **Deliverables**:
+
 - `docs/DEPRECATIONS.md` (Stripe manual testing section)
 - Video demo and FAQ
 - Migration guide for existing tests
 - Onboarding checklist update
 
 **Success Criteria**:
+
 - Team consensus on deprecation timeline
 - All team members trained on new MCP workflows
 - Zero ambiguity about what's being phased out and why
@@ -242,12 +259,14 @@ Developer → Stripe MCP (in Claude Code) → Generate test scenarios → Simula
 **Objective**: Replace placeholder email system with production-ready Resend MCP integration
 
 **Current State Problems**:
+
 - `services/core-api/src/utils/notifications.ts` is empty placeholder
 - No email sending capability exists
 - Scaling email will require significant backend refactoring
 - No transactional email templates
 
 **Solution Architecture**:
+
 ```
 Old Flow:
 App → Placeholder notification function → Nothing happens
@@ -291,6 +310,7 @@ App → Core API email trigger → Resend MCP → Test in development → Produc
    - [ ] Document template authoring patterns
 
 **Deliverables**:
+
 - `services/core-api/src/services/email.ts` (email service)
 - `services/core-api/src/templates/` directory with email templates
 - `docs/RESEND_MCP_WORKFLOWS.md` (testing guide)
@@ -298,6 +318,7 @@ App → Core API email trigger → Resend MCP → Test in development → Produc
 - Email testing helper functions
 
 **Success Criteria**:
+
 - All email trigger points working end-to-end
 - Developers can test email changes locally without external services
 - Email templates fully customizable and previewable
@@ -332,12 +353,14 @@ App → Core API email trigger → Resend MCP → Test in development → Produc
    - [ ] Unsubscribe links configured
 
 **Deliverables**:
+
 - Email service test suite (>80% coverage)
 - Production readiness checklist
 - Email delivery monitoring documentation
 - Runbook for email troubleshooting
 
 **Success Criteria**:
+
 - All email tests passing
 - Team consensus on production readiness
 - No manual email configuration required for new environments
@@ -352,12 +375,14 @@ App → Core API email trigger → Resend MCP → Test in development → Produc
 **Objective**: Enable in-CLI database exploration and testing via PostgreSQL MCP
 
 **Current State Problems**:
+
 - Developers use external database tools (psql, DBeaver) for schema exploration
 - RLS policy testing requires separate tooling
 - Migration testing requires manual database setup/cleanup
 - Data debugging requires context-switching
 
 **Solution Architecture**:
+
 ```
 Old Flow:
 Developer → Open DBeaver/psql → Execute manual queries → Review results → Copy to code
@@ -401,6 +426,7 @@ Developer → PostgreSQL MCP in Claude Code → Automatic schema awareness → R
    - [ ] Create database snapshot utilities
 
 **Deliverables**:
+
 - `docs/POSTGRES_MCP_WORKFLOWS.md` (comprehensive guide)
 - Schema documentation auto-generated
 - RLS policy testing helper functions
@@ -408,6 +434,7 @@ Developer → PostgreSQL MCP in Claude Code → Automatic schema awareness → R
 - Database development utilities
 
 **Success Criteria**:
+
 - All schema queries runnable from Claude Code without external tools
 - RLS policies fully testable via MCP
 - Developers no longer need external database clients for common tasks
@@ -440,12 +467,14 @@ Developer → PostgreSQL MCP in Claude Code → Automatic schema awareness → R
    - [ ] Run team workshop
 
 **Deliverables**:
+
 - Comprehensive test suite for PostgreSQL MCP patterns
 - Database tool deprecation guide
 - Team training materials
 - Developer workflow video
 
 **Success Criteria**:
+
 - Team comfortable using PostgreSQL MCP for daily database tasks
 - No external database tools required for normal development
 - All database operations traceable and logged
@@ -466,16 +495,19 @@ Developer → PostgreSQL MCP in Claude Code → Automatic schema awareness → R
 ### Deprecation Process
 
 **Week 1 of Phase X**:
+
 1. Announce deprecation timeline to team
 2. Publish migration guides
 3. Start training on new workflows
 
 **Week 2 of Phase X**:
+
 1. Monitor adoption of new workflows
 2. Answer questions and refine documentation
 3. Maintain both systems fully functional
 
 **Week 1 after Phase X**:
+
 1. Enforce use of new workflows
 2. Archive documentation for old systems
 3. Remove old system code/configuration
@@ -483,6 +515,7 @@ Developer → PostgreSQL MCP in Claude Code → Automatic schema awareness → R
 ### Documentation for Each Deprecation
 
 Each deprecation requires:
+
 1. **What's changing**: Specific system/workflow being deprecated
 2. **Why it's changing**: Benefits of new approach
 3. **How to migrate**: Step-by-step migration guide
@@ -493,18 +526,21 @@ Each deprecation requires:
 ### System-Specific Deprecation Plans
 
 #### Stripe Manual Testing (Phase 2)
+
 **Deprecated**: Manual Stripe dashboard navigation for testing
 **Reason**: Slower, error-prone, requires context-switching
 **Migration Timeline**: 2 weeks after Phase 2 completion
 **Fallback**: Stripe dashboard still accessible for edge cases
 
 #### Email Placeholder System (Phase 3)
+
 **Deprecated**: `services/core-api/src/utils/notifications.ts` placeholder
 **Reason**: Will be replaced by full Resend email service
 **Migration Timeline**: 1 week after Phase 3 completion
 **Fallback**: Manual email sending via direct Resend API
 
 #### External Database Tools (Phase 4)
+
 **Deprecated**: Required use of external database clients (psql, DBeaver)
 **Reason**: PostgreSQL MCP provides equivalent or better functionality
 **Migration Timeline**: 2 weeks after Phase 4 completion
@@ -515,30 +551,35 @@ Each deprecation requires:
 ## Success Metrics & Validation
 
 ### Development Velocity
+
 - **Metric**: Time to test new payment flow (Stripe)
 - **Baseline**: ~15 minutes (Stripe dashboard navigation)
 - **Target**: <3 minutes (MCP workflow)
 - **Success**: 80%+ reduction in time
 
 ### Context Switching
+
 - **Metric**: Tools open during payment/email/database development
 - **Baseline**: 4+ (IDE, Stripe dashboard, email service, database client)
 - **Target**: 1 (IDE only, via MCP)
 - **Success**: All work done from IDE
 
 ### Onboarding Time
+
 - **Metric**: Time for new developer to be productive with payment/email/database
 - **Baseline**: 2-3 hours
 - **Target**: <1 hour
 - **Success**: Clear documentation, zero manual setup
 
 ### Test Coverage
+
 - **Metric**: Test coverage for payment/email/database code
 - **Baseline**: Current coverage levels
 - **Target**: +20% absolute coverage
 - **Success**: Easier to write tests with MCP assistance
 
 ### Team Adoption
+
 - **Metric**: % of new code using MCP patterns
 - **Target**: 90%+ within 2 weeks of deprecation
 - **Success**: Team naturally prefers MCP workflows
@@ -548,40 +589,50 @@ Each deprecation requires:
 ## Risk Management
 
 ### Risk #1: MCP Server Unreliability
+
 **Impact**: Development blocked if MCP servers crash
 **Mitigation**:
+
 - Comprehensive error handling in all MCP integrations
 - Fallback to traditional methods if MCP unavailable
 - Local MCP server redundancy
 - Clear error messages and recovery procedures
 
 ### Risk #2: API Rate Limiting
+
 **Impact**: Stripe/Resend rate limits could block development
 **Mitigation**:
+
 - Use sandbox/test environments exclusively in development
 - Document rate limit thresholds
 - Implement caching for frequent queries
 - Graceful degradation if limits exceeded
 
 ### Risk #3: Data Loss During Migration
+
 **Impact**: Losing existing email/payment configuration
 **Mitigation**:
+
 - Backup all existing configurations before migration
 - Parallel operation of old and new systems
 - Validation checks before deprecating old systems
 - Detailed migration procedures with checkpoints
 
 ### Risk #4: Team Resistance
+
 **Impact**: Team continues using old workflows, MCP integration fails
 **Mitigation**:
+
 - Early training and buy-in
 - Clear benefits communication
 - Minimal disruption to existing workflows
 - Support during transition period
 
 ### Risk #5: Integration Complexity
+
 **Impact**: Integration takes longer than planned, schedule slips
 **Mitigation**:
+
 - Iterative validation of each integration step
 - Clear integration criteria before moving to next phase
 - Buffer time in schedule
@@ -591,17 +642,17 @@ Each deprecation requires:
 
 ## Implementation Responsibility Matrix
 
-| Task | Owner | Support | Review |
-|------|-------|---------|--------|
-| Infrastructure Audit | Claude | Gemini | Codex |
-| MCP Server Setup | Claude | Team | Codex |
-| Payment Testing | Claude | Team | Codex |
-| Email Service | Claude | Team | Codex |
-| Database Tooling | Claude | Team | Codex |
-| Documentation | Claude | Gemini | Codex |
-| Deprecation Timeline | Gemini | Claude | Carlo |
-| Team Training | Gemini | Claude | - |
-| Final Review & Approval | Carlo | Team | - |
+| Task                    | Owner  | Support | Review |
+| ----------------------- | ------ | ------- | ------ |
+| Infrastructure Audit    | Claude | Gemini  | Codex  |
+| MCP Server Setup        | Claude | Team    | Codex  |
+| Payment Testing         | Claude | Team    | Codex  |
+| Email Service           | Claude | Team    | Codex  |
+| Database Tooling        | Claude | Team    | Codex  |
+| Documentation           | Claude | Gemini  | Codex  |
+| Deprecation Timeline    | Gemini | Claude  | Carlo  |
+| Team Training           | Gemini | Claude  | -      |
+| Final Review & Approval | Carlo  | Team    | -      |
 
 ---
 
@@ -658,6 +709,7 @@ Post-Phase: Ongoing
 ## Questions & Contact
 
 For questions about this plan:
+
 - **Implementation details**: Claude (via GitHub issues/PRs)
 - **Strategic guidance**: Gemini (via AGENTS.md)
 - **Code quality**: Codex (via code reviews)

@@ -93,12 +93,12 @@ export default function SelectPlanPage() {
   }
 
   return (
-    <div className="bg-background text-foreground min-h-screen px-4 py-12">
+    <div className="min-h-screen bg-background px-4 py-12 text-foreground">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-12 text-center">
           <h1 className="mb-4 text-4xl font-bold">Choose Your Plan</h1>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-lg text-muted-foreground">
             Start your career journey with the plan that fits your needs
           </p>
         </div>
@@ -109,7 +109,7 @@ export default function SelectPlanPage() {
             <span
               className={
                 billingInterval === 'monthly'
-                  ? 'text-foreground font-semibold'
+                  ? 'font-semibold text-foreground'
                   : 'text-muted-foreground'
               }
             >
@@ -121,7 +121,7 @@ export default function SelectPlanPage() {
                   billingInterval === 'monthly' ? 'yearly' : 'monthly',
                 )
               }
-              className="bg-accent relative h-8 w-16 rounded-full transition-colors"
+              className="relative h-8 w-16 rounded-full bg-accent transition-colors"
             >
               <div
                 className={`absolute top-1 h-6 w-6 rounded-full bg-white shadow-md transition-transform ${
@@ -134,12 +134,12 @@ export default function SelectPlanPage() {
             <span
               className={
                 billingInterval === 'yearly'
-                  ? 'text-foreground font-semibold'
+                  ? 'font-semibold text-foreground'
                   : 'text-muted-foreground'
               }
             >
               Yearly{' '}
-              <span className="text-accent text-sm font-semibold">
+              <span className="text-sm font-semibold text-accent">
                 (Save 20%)
               </span>
             </span>
@@ -151,13 +151,11 @@ export default function SelectPlanPage() {
           <div className="grid gap-8 md:grid-cols-3">
             {/* Free Plan */}
             <div
-              className={`border-border bg-card relative rounded-2xl border p-8 ${
-                selectedPlan === 'free' ? 'ring-accent ring-2' : ''
+              className={`relative rounded-2xl border border-border bg-card p-8 ${
+                selectedPlan === 'free' ? 'ring-2 ring-accent' : ''
               }`}
             >
-              <h3 className="mb-2 text-2xl font-bold">
-                {PLANS.free.name}
-              </h3>
+              <h3 className="mb-2 text-2xl font-bold">{PLANS.free.name}</h3>
               <div className="mb-6">
                 <span className="text-4xl font-bold">$0</span>
                 <span className="text-muted-foreground">/month</span>
@@ -165,7 +163,7 @@ export default function SelectPlanPage() {
               <ul className="mb-8 space-y-3">
                 {PLANS.free.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <Check className="text-accent mt-0.5 h-5 w-5 shrink-0" />
+                    <Check className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
                     <span className="text-sm">{feature}</span>
                   </li>
                 ))}
@@ -181,10 +179,10 @@ export default function SelectPlanPage() {
 
             {/* Plus Plan */}
             <div
-              className={`border-border bg-card relative rounded-2xl border p-8 ${
+              className={`relative rounded-2xl border border-border bg-card p-8 ${
                 selectedPlan === 'plus_monthly' ||
                 selectedPlan === 'plus_yearly'
-                  ? 'ring-accent ring-2'
+                  ? 'ring-2 ring-accent'
                   : ''
               }`}
             >
@@ -200,7 +198,7 @@ export default function SelectPlanPage() {
               <ul className="mb-8 space-y-3">
                 {PLANS.plus.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <Check className="text-accent mt-0.5 h-5 w-5 shrink-0" />
+                    <Check className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
                     <span className="text-sm">{feature}</span>
                   </li>
                 ))}
@@ -215,19 +213,17 @@ export default function SelectPlanPage() {
 
             {/* Premium Plan */}
             <div
-              className={`border-border bg-card relative rounded-2xl border p-8 ${
+              className={`relative rounded-2xl border border-border bg-card p-8 ${
                 selectedPlan === 'premium_monthly' ||
                 selectedPlan === 'premium_yearly'
-                  ? 'ring-accent ring-2'
+                  ? 'ring-2 ring-accent'
                   : ''
               }`}
             >
-              <div className="bg-accent absolute right-4 top-4 rounded-full px-3 py-1 text-xs font-semibold text-white">
+              <div className="absolute right-4 top-4 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-white">
                 Popular
               </div>
-              <h3 className="mb-2 text-2xl font-bold">
-                {PLANS.premium.name}
-              </h3>
+              <h3 className="mb-2 text-2xl font-bold">{PLANS.premium.name}</h3>
               <div className="mb-6">
                 <span className="text-4xl font-bold">
                   ${PLANS.premium.price[billingInterval]}
@@ -239,7 +235,7 @@ export default function SelectPlanPage() {
               <ul className="mb-8 space-y-3">
                 {PLANS.premium.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <Check className="text-accent mt-0.5 h-5 w-5 shrink-0" />
+                    <Check className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
                     <span className="text-sm">{feature}</span>
                   </li>
                 ))}
@@ -255,11 +251,11 @@ export default function SelectPlanPage() {
         ) : (
           /* Payment Form */
           <div className="mx-auto max-w-lg">
-            <div className="border-border bg-card mb-6 rounded-2xl border p-8">
+            <div className="mb-6 rounded-2xl border border-border bg-card p-8">
               <h2 className="mb-2 text-2xl font-bold">Complete Payment</h2>
-              <p className="text-muted-foreground mb-6">
+              <p className="mb-6 text-muted-foreground">
                 You selected:{' '}
-                <span className="text-foreground font-semibold">
+                <span className="font-semibold text-foreground">
                   {selectedPlan.includes('plus') ? 'Plus' : 'Premium'} (
                   {billingInterval})
                 </span>

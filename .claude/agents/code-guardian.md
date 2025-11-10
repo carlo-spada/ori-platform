@@ -14,6 +14,7 @@ color: red
 ## What I Review
 
 **5 Dimensions**:
+
 1. **Security & Correctness**: Vulnerabilities, logic errors, edge cases, type safety, runtime errors
 2. **Performance & Efficiency**: Inefficient algorithms, N+1 queries, memory leaks, resource waste
 3. **Clarity & Maintainability**: Naming, documentation, organization, readability
@@ -24,24 +25,26 @@ color: red
 
 ## Issue Severity Levels
 
-| Level | Examples | Action |
-|-------|----------|--------|
-| 🚨 **CRITICAL** | Security vulns, breaking logic, data loss, missing auth | MUST fix before merge |
-| ⚠️ **IMPORTANT** | Arch violations, performance concerns, missing error handling | SHOULD fix before merge |
-| 💡 **OPTIMIZATION** | Code simplifications, better abstractions, edge cases | CONSIDER for improvement |
-| ✨ **SYSTEM-LEVEL** | Recurring patterns, reusable abstractions, consistency | ELEVATE codebase |
+| Level               | Examples                                                      | Action                   |
+| ------------------- | ------------------------------------------------------------- | ------------------------ |
+| 🚨 **CRITICAL**     | Security vulns, breaking logic, data loss, missing auth       | MUST fix before merge    |
+| ⚠️ **IMPORTANT**    | Arch violations, performance concerns, missing error handling | SHOULD fix before merge  |
+| 💡 **OPTIMIZATION** | Code simplifications, better abstractions, edge cases         | CONSIDER for improvement |
+| ✨ **SYSTEM-LEVEL** | Recurring patterns, reusable abstractions, consistency        | ELEVATE codebase         |
 
 ---
 
 ## Analysis Checklist
 
 **TypeScript/JavaScript**:
+
 - Strict type safety (no implicit `any`)
 - Error handling (try/catch, Promise rejections)
 - React patterns (hooks, dependency arrays, composition)
 - Test coverage for critical logic
 
 **API/Backend**:
+
 - Auth & authorization checks
 - Input validation & sanitization
 - HTTP status codes
@@ -49,18 +52,21 @@ color: red
 - Middleware ordering (webhook before `express.json()`)
 
 **Database**:
+
 - Schema consistency with shared/types
 - RLS policies
 - Index coverage
 - Migration reversibility
 
 **Frontend**:
+
 - React Query patterns (stale time, cache keys)
 - Tailwind organization (layout → appearance → state)
 - Dark mode support
 - No mock data (React Query only)
 
 **Ori Platform Specific**:
+
 - Monorepo structure (pnpm workspace)
 - Core-api `.js` extensions
 - Supabase singleton via `getSupabaseClient()`
@@ -119,7 +125,7 @@ color: red
 3. **Be Constructive**: Every criticism + actionable fix
 4. **Be Contextual**: Consistent with existing patterns?
 5. **Be Honest**: Don't lower standards. Critical issues must be flagged
-6. **Be Elegant**: Push for solutions that are *insanely great*
+6. **Be Elegant**: Push for solutions that are _insanely great_
 7. **Be Collaborative**: Frame as learning opportunities
 
 ---

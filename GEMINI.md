@@ -46,23 +46,28 @@ My role: Understand vision → Research solutions → Design plans → Create ta
 **Estimated Duration**: X days
 
 ## Overview
+
 What this feature does and why it matters.
 
 ## Acceptance Criteria
+
 - [ ] Criterion 1
 - [ ] Criterion 2
 - [ ] Criterion 3
 
 ## Work Units
+
 - **A.md**: First part (backend setup, etc.)
 - **B.md**: Second part (frontend component, etc.)
 - **C.md**: Third part (testing, integration, etc.)
 
 ## Dependencies
+
 - Other tasks this depends on
 - External dependencies
 
 ## Notes
+
 Helpful context for implementing agents.
 ```
 
@@ -75,17 +80,21 @@ Helpful context for implementing agents.
 **Estimated**: 4 hours
 
 ## What to Do
+
 Clear, step-by-step instructions.
+
 1. Step 1
 2. Step 2
 3. Step 3
 
 ## Acceptance Criteria
+
 - [ ] Thing is done
 - [ ] Tests pass
 - [ ] Documentation updated
 
 ## Resources
+
 - Links to relevant code
 - API references
 ```
@@ -103,18 +112,22 @@ Clear, step-by-step instructions.
 **Estimated**: 30 min
 
 ## Problem
+
 Button color doesn't match brand.
 
 ## Solution
+
 Update src/components/ui/Button.tsx with correct color.
 
 ## Steps
+
 1. Open file
 2. Change color
 3. Test in browser
 4. Run lint
 
 ## Acceptance Criteria
+
 - [ ] Button matches brand color
 - [ ] Linting passes
 - [ ] Visually verified
@@ -136,14 +149,14 @@ Always reference these when planning:
 
 ## Key Governance Rules
 
-| Rule | Reason |
-|------|--------|
-| **No duplicates** | One task per work item |
-| **No vague tasks** | Clear acceptance criteria |
-| **Move entire folders** | Large features stay together |
-| **Commit immediately** | Team can see plan right away |
-| **Break epics into A/B/C** | Smaller = faster completion |
-| **Archive, don't delete** | Git history preserved |
+| Rule                       | Reason                       |
+| -------------------------- | ---------------------------- |
+| **No duplicates**          | One task per work item       |
+| **No vague tasks**         | Clear acceptance criteria    |
+| **Move entire folders**    | Large features stay together |
+| **Commit immediately**     | Team can see plan right away |
+| **Break epics into A/B/C** | Smaller = faster completion  |
+| **Archive, don't delete**  | Git history preserved        |
 
 See `.tasks/TASK_GOVERNANCE.md` for complete rules.
 
@@ -152,6 +165,7 @@ See `.tasks/TASK_GOVERNANCE.md` for complete rules.
 ## Common Task Patterns
 
 ### Backend API Feature
+
 ```
 api-payments/
 ├── README.md (overview, acceptance criteria)
@@ -161,6 +175,7 @@ api-payments/
 ```
 
 ### Frontend Feature
+
 ```
 dashboard-redesign/
 ├── README.md
@@ -170,6 +185,7 @@ dashboard-redesign/
 ```
 
 ### Full-Stack Feature
+
 ```
 skill-recommendations/
 ├── README.md
@@ -179,6 +195,7 @@ skill-recommendations/
 ```
 
 ### Bug Fix (Small)
+
 ```
 single file: fix-auth-redirect.md (not a folder)
 ```
@@ -235,6 +252,7 @@ After any major change or new task pattern, update:
 ## Task Health Metrics (Quarterly Audit)
 
 **Target distribution**:
+
 - `todo/`: 20-50 tasks (healthy backlog)
 - `in-progress/`: 2-5 items (focused execution, WIP limit enforced)
 - `in-review/`: 0-3 items (awaiting review)
@@ -242,6 +260,7 @@ After any major change or new task pattern, update:
 - `backlog/`: Growing over time (archived/superseded tasks)
 
 **If metrics off**:
+
 - Too many in `todo`: Prioritize, archive old ones to backlog
 - Stuck in `in-progress`: Claude blocked? Unblock or archive
 - Stuck in `in-review`: Codex review bottleneck?
@@ -319,6 +338,7 @@ Then write tasks that Claude can execute without questions.
 ## When to Escalate
 
 Ask human (Carlo) for guidance if:
+
 - Strategic direction unclear (should we build X or Y?)
 - Architecture mismatch detected (conflicts with existing patterns)
 - Significant refactoring needed (major codebase reorganization)

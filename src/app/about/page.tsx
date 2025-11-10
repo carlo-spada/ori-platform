@@ -34,21 +34,21 @@ export default function AboutPage() {
       {/* Page Header */}
       <Section data-testid="about-header" className="text-center">
         {t('aboutPage.header.eyebrow') && (
-          <p className="text-primary mb-3 text-sm font-medium tracking-wide uppercase">
+          <p className="mb-3 text-sm font-medium uppercase tracking-wide text-primary">
             {t('aboutPage.header.eyebrow')}
           </p>
         )}
-        <h1 className="text-foreground mx-auto mb-6 max-w-4xl text-4xl font-bold sm:text-5xl lg:text-6xl">
+        <h1 className="mx-auto mb-6 max-w-4xl text-4xl font-bold text-foreground sm:text-5xl lg:text-6xl">
           {t('aboutPage.header.title')}
         </h1>
-        <p className="text-muted-foreground mx-auto max-w-3xl text-lg leading-relaxed sm:text-xl">
+        <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
           {t('aboutPage.header.subheadline')}
         </p>
       </Section>
 
       {/* The Problem Section */}
       <Section data-testid="about-problem" className="max-w-4xl">
-        <h2 className="text-foreground mb-8 text-3xl font-bold sm:text-4xl">
+        <h2 className="mb-8 text-3xl font-bold text-foreground sm:text-4xl">
           {t('aboutPage.problem.title')}
         </h2>
         <div className="space-y-6">
@@ -57,7 +57,7 @@ export default function AboutPage() {
           ).map((paragraph: string, index: number) => (
             <p
               key={index}
-              className="text-muted-foreground text-lg leading-relaxed"
+              className="text-lg leading-relaxed text-muted-foreground"
             >
               {paragraph}
             </p>
@@ -67,7 +67,7 @@ export default function AboutPage() {
 
       {/* The Vision Section */}
       <Section data-testid="about-vision" className="max-w-4xl">
-        <h2 className="text-foreground mb-8 text-3xl font-bold sm:text-4xl">
+        <h2 className="mb-8 text-3xl font-bold text-foreground sm:text-4xl">
           {t('aboutPage.vision.title')}
         </h2>
         <div className="space-y-6">
@@ -76,7 +76,7 @@ export default function AboutPage() {
           ).map((paragraph: string, index: number) => (
             <p
               key={index}
-              className="text-muted-foreground text-lg leading-relaxed"
+              className="text-lg leading-relaxed text-muted-foreground"
             >
               {paragraph}
             </p>
@@ -86,7 +86,7 @@ export default function AboutPage() {
 
       {/* Our Values Section */}
       <Section data-testid="about-values" className="max-w-6xl">
-        <h2 className="text-foreground mb-12 text-center text-3xl font-bold sm:text-4xl">
+        <h2 className="mb-12 text-center text-3xl font-bold text-foreground sm:text-4xl">
           {t('aboutPage.values.title')}
         </h2>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -104,10 +104,10 @@ export default function AboutPage() {
 
       {/* Final CTA Section */}
       <Section data-testid="about-cta" className="max-w-3xl text-center">
-        <h2 className="text-foreground mb-6 text-3xl font-bold sm:text-4xl">
+        <h2 className="mb-6 text-3xl font-bold text-foreground sm:text-4xl">
           {t('aboutPage.cta.title')}
         </h2>
-        <p className="text-muted-foreground mb-8 text-lg leading-relaxed">
+        <p className="mb-8 text-lg leading-relaxed text-muted-foreground">
           {t('aboutPage.cta.body')}
         </p>
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">

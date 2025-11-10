@@ -45,7 +45,7 @@ export function AccountSettings({
   return (
     <>
       <section className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-6">
-        <h2 className="text-foreground text-xl font-semibold">
+        <h2 className="text-xl font-semibold text-foreground">
           {labels.heading}
         </h2>
 
@@ -53,7 +53,7 @@ export function AccountSettings({
           <div className="space-y-2">
             <label
               htmlFor="email"
-              className="text-foreground text-sm font-medium"
+              className="text-sm font-medium text-foreground"
             >
               {labels.emailLabel}
             </label>
@@ -62,7 +62,7 @@ export function AccountSettings({
               type="email"
               value={user.email}
               readOnly
-              className="text-foreground w-full cursor-not-allowed rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2 text-sm opacity-70"
+              className="w-full cursor-not-allowed rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2 text-sm text-foreground opacity-70"
             />
           </div>
 
@@ -81,17 +81,13 @@ export function AccountSettings({
               {labels.exportDataLabel}
             </Button>
           </div>
-          <p className="text-muted-foreground text-xs">
+          <p className="text-xs text-muted-foreground">
             {labels.exportDataHelper}
           </p>
 
           {onLogout && (
-            <div className="mt-4 pt-4 border-t border-white/10">
-              <Button
-                variant="outline"
-                onClick={onLogout}
-                className="w-full"
-              >
+            <div className="mt-4 border-t border-white/10 pt-4">
+              <Button variant="outline" onClick={onLogout} className="w-full">
                 {labels.logoutLabel || 'Log out'}
               </Button>
             </div>

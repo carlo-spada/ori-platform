@@ -17,12 +17,14 @@ Model Context Protocol (MCP) is a **standard for AI agents to access external to
 ### Why It Matters
 
 Before MCPs, Claude had to work with:
+
 - Static knowledge about APIs
 - No real-time data from your systems
 - No ability to take actions in your tools
 - Manual integration for each service
 
 With MCPs, Claude can:
+
 - ✅ Query your live systems in real-time
 - ✅ Take actions (create customers, send emails, etc.)
 - ✅ Use the same standard interface for all tools
@@ -31,6 +33,7 @@ With MCPs, Claude can:
 ### The MCP Ecosystem
 
 MCPs are provided by:
+
 - **Service providers** (Stripe, Resend, etc.) publish MCP servers
 - **Developers** configure these servers in their projects
 - **Claude** connects to these servers and uses them naturally
@@ -42,6 +45,7 @@ MCPs are provided by:
 ### The Problem We Solved
 
 **Before MCPs** at Ori:
+
 - To test payment flows, engineers manually opened Stripe dashboard
 - To test emails, engineers manually created test data
 - To debug database issues, engineers connected via SQL client
@@ -53,6 +57,7 @@ MCPs are provided by:
 ### The Solution: MCPs
 
 **With MCPs** at Ori:
+
 - Claude helps engineers test Stripe payments **without leaving the IDE**
 - Claude helps design and test emails **inline with development**
 - Claude helps introspect the database **through natural conversation**
@@ -101,6 +106,7 @@ MCPs are provided by:
 ### What Each MCP Does
 
 #### Stripe MCP (Payments)
+
 ```
 Claude ←→ Stripe MCP ←→ Stripe API
 
@@ -115,6 +121,7 @@ Enables:
 **When You Use It**: Testing payment flows, validating transactions, creating test data
 
 #### Resend MCP (Email)
+
 ```
 Claude ←→ Resend MCP ←→ Resend API
 
@@ -129,6 +136,7 @@ Enables:
 **When You Use It**: Designing emails, testing templates, validating formatting
 
 #### PostgreSQL MCP (Database)
+
 ```
 Claude ←→ PostgreSQL MCP ←→ Supabase PostgreSQL
 
@@ -148,26 +156,29 @@ Enables:
 
 ### Overview Table
 
-| MCP | Service | Purpose | Phase | Test Keys | Status |
-|-----|---------|---------|-------|-----------|--------|
-| **Stripe** | Stripe (Payments) | Payment system testing & integration | Phase 2 | Test mode API keys | Ready ✅ |
-| **Resend** | Resend (Email) | Email system implementation & testing | Phase 3 | Test API key | Ready ✅ |
-| **PostgreSQL** | Supabase (Database) | Database exploration & RLS testing | Phase 4 | Connection string | Ready ✅ |
+| MCP            | Service             | Purpose                               | Phase   | Test Keys          | Status   |
+| -------------- | ------------------- | ------------------------------------- | ------- | ------------------ | -------- |
+| **Stripe**     | Stripe (Payments)   | Payment system testing & integration  | Phase 2 | Test mode API keys | Ready ✅ |
+| **Resend**     | Resend (Email)      | Email system implementation & testing | Phase 3 | Test API key       | Ready ✅ |
+| **PostgreSQL** | Supabase (Database) | Database exploration & RLS testing    | Phase 4 | Connection string  | Ready ✅ |
 
 ### MCP 1: Stripe (Payment Processing)
 
 **What It Does**:
+
 - Enables Claude to interact with Stripe for payment testing
 - Create test customers, charges, subscriptions
 - Simulate payment scenarios and webhooks
 - Validate payment flow behavior
 
 **Where It's Configured**:
+
 - Configuration: `.claude/mcp.json` (Stripe server definition)
 - Environment: `STRIPE_API_KEY`, `STRIPE_WEBHOOK_SECRET`
 - Setup: `.claude/mcp-setup-guide.md` (Step 1)
 
 **When to Use It**:
+
 - ✅ Creating test payment scenarios
 - ✅ Validating payment processing logic
 - ✅ Testing webhook handlers
@@ -175,6 +186,7 @@ Enables:
 - ✅ Building automated payment tests
 
 **Example Usage**:
+
 ```
 "Create a test customer in Stripe for john@example.com"
 "Simulate a successful payment of $50"
@@ -191,17 +203,20 @@ Enables:
 ### MCP 2: Resend (Email Service)
 
 **What It Does**:
+
 - Enables Claude to preview and test email templates
 - Validate email rendering and variables
 - Test email delivery and formatting
 - Help design email workflows
 
 **Where It's Configured**:
+
 - Configuration: `.claude/mcp.json` (Resend server definition)
 - Environment: `RESEND_API_KEY`
 - Setup: `.claude/mcp-setup-guide.md` (Step 2)
 
 **When to Use It**:
+
 - ✅ Designing email templates
 - ✅ Testing email rendering
 - ✅ Validating email variables
@@ -209,6 +224,7 @@ Enables:
 - ✅ Building email workflows
 
 **Example Usage**:
+
 ```
 "Preview the welcome email template"
 "Test this email with variables: name=John, plan=Pro"
@@ -225,17 +241,20 @@ Enables:
 ### MCP 3: PostgreSQL (Database)
 
 **What It Does**:
+
 - Enables Claude to explore your database schema
 - Query data for debugging
 - Test RLS (Row Level Security) policies
 - Validate migrations and data integrity
 
 **Where It's Configured**:
+
 - Configuration: `.claude/mcp.json` (PostgreSQL server definition)
 - Environment: `DATABASE_URL`
 - Setup: `.claude/mcp-setup-guide.md` (Step 3)
 
 **When to Use It**:
+
 - ✅ Understanding database schema
 - ✅ Testing RLS policies
 - ✅ Debugging data issues
@@ -243,6 +262,7 @@ Enables:
 - ✅ Exploring relationships
 
 **Example Usage**:
+
 ```
 "Show me the structure of the user_profiles table"
 "List all RLS policies on the applications table"
@@ -302,6 +322,7 @@ Efficiency Gain: 30-40% faster development 📈
 ### Real Example: Testing a Payment Feature
 
 #### Without MCPs:
+
 ```
 1. Write checkout component (5 min)
 2. Open Stripe dashboard to create test customer (2 min)
@@ -315,6 +336,7 @@ Total: 15 minutes of coding + tool switching
 ```
 
 #### With MCPs:
+
 ```
 1. Write checkout component (5 min)
 2. Tell Claude: "Create test customer and charge"
@@ -332,20 +354,24 @@ Savings: 4-5 minutes saved per test cycle
 ## Part 6: Phase Breakdown & Timeline
 
 ### Phase 1: Infrastructure & Setup (Week 1) ✅
+
 **Status**: Complete
 **What Happened**:
+
 - Audited all three systems (Stripe, Resend, PostgreSQL)
 - Configured MCPs in `.claude/mcp.json`
 - Created setup guide for developers
 - Prepared team training materials
 
 **Deliverables**:
+
 - ✅ 11 comprehensive audit documents
 - ✅ MCP configuration file
 - ✅ Setup guide (5000+ words)
 - ✅ This training document
 
 **What You Need to Do**:
+
 1. Read this document (15 min) ✅ You're doing it!
 2. Follow setup guide to get API keys (10 min)
 3. Set environment variables in `.env.local` (5 min)
@@ -358,6 +384,7 @@ Savings: 4-5 minutes saved per test cycle
 **Purpose**: Replace manual Stripe testing with MCP-based testing
 
 **What We'll Build**:
+
 - Automated payment tests using Stripe MCP
 - Test data generation with MCP
 - Webhook simulation and testing
@@ -376,6 +403,7 @@ Savings: 4-5 minutes saved per test cycle
 **Purpose**: Build email system using Resend MCP
 
 **What We'll Build**:
+
 - Email templates (welcome, payment confirmation, recommendations, etc.)
 - Email delivery integration
 - Preference management
@@ -394,6 +422,7 @@ Savings: 4-5 minutes saved per test cycle
 **Purpose**: Enable database exploration and RLS testing from IDE
 
 **What We'll Build**:
+
 - Database schema introspection tools
 - RLS policy testing automation
 - Migration validation tools
@@ -412,11 +441,13 @@ Savings: 4-5 minutes saved per test cycle
 ### Your Setup Checklist ✅
 
 **Today** (Right now):
+
 - [ ] Read this training document (15 min) ← You are here
 - [ ] Review `.claude/mcp-setup-guide.md` (20 min)
 - [ ] Understand Phase 2-4 timeline
 
 **Tomorrow**:
+
 - [ ] Get API keys (following setup guide)
   - [ ] Stripe test API key + webhook secret
   - [ ] Resend test API key
@@ -426,6 +457,7 @@ Savings: 4-5 minutes saved per test cycle
 - [ ] Ask for help if stuck (see support section below)
 
 **This Week**:
+
 - [ ] Attend team workshop (TBD)
 - [ ] Ask questions about MCPs
 - [ ] Get ready for Phase 2 kickoff
@@ -433,6 +465,7 @@ Savings: 4-5 minutes saved per test cycle
 ### Support & Resources
 
 **Where to Find Help**:
+
 1. **Setup Issues**: See troubleshooting in `.claude/mcp-setup-guide.md`
 2. **How MCPs Work**: Refer back to this document
 3. **Phase 2 Details**: See `docs/PHASE2_STRIPE_READINESS_CHECKLIST.md`
@@ -440,6 +473,7 @@ Savings: 4-5 minutes saved per test cycle
 5. **Questions**: Ask in team Slack or workshop
 
 **Key Documents** (For Your Bookmarks):
+
 - `.claude/mcp-setup-guide.md` - Setup and troubleshooting
 - `docs/MCP_INTEGRATION_GUIDELINES_FOR_DEVELOPERS.md` - Integration examples
 - `docs/PHASE1_AUDIT_DOCUMENTATION_INDEX.md` - All Phase 1 docs
@@ -449,37 +483,49 @@ Savings: 4-5 minutes saved per test cycle
 ## Part 8: Frequently Asked Questions
 
 ### Q: Do I have to use MCPs?
+
 **A**: No, but they'll make you more productive. Phase 2+ work will be much easier with MCPs. Without them, you'll be manually testing payments and other flows.
 
 ### Q: Will MCPs work with my development setup?
+
 **A**: Yes! As long as you can set environment variables, you can use MCPs. Setup takes 20-30 minutes for experienced developers.
 
 ### Q: What if I have test/sandbox API keys?
+
 **A**: That's exactly what you need! MCPs are designed to use test keys only. Production keys should NEVER be in development environments.
 
 ### Q: Can I disable an MCP if I don't need it?
+
 **A**: Yes. In `.claude/mcp.json`, set `"disabled": true` for any MCP you don't want to use.
 
 ### Q: Will MCPs have access to production data?
+
 **A**: No! You'll use test API keys (Stripe test mode, Resend test key) and development database. Your production systems are isolated and safe.
 
 ### Q: What if an MCP breaks or goes down?
+
 **A**: MCPs are provided by Stripe, Resend, and PostgreSQL. They're as reliable as their services. If the service is down, the MCP won't work, but it won't break your code.
 
 ### Q: Can I use MCPs for production-like testing?
+
 **A**: Yes! Test keys in Stripe and Resend are designed for this. You get realistic behavior without using production resources.
 
 ### Q: How do I report issues with MCPs?
+
 **A**: Check the troubleshooting section in `.claude/mcp-setup-guide.md` first. If still stuck, post in team Slack with the error message.
 
 ### Q: Will MCPs change how I write code?
+
 **A**: Not really. They're tools to help you test and debug faster. Your actual code (components, API endpoints, etc.) stays the same.
 
 ### Q: Do I need to update CLAUDE.md or code patterns for MCPs?
+
 **A**: Yes! See `docs/MCP_INTEGRATION_GUIDELINES_FOR_DEVELOPERS.md` for code patterns when using MCPs. Your team will maintain these patterns across the codebase.
 
 ### Q: What's the security model?
+
 **A**: - ✅ MCPs run locally on your machine
+
 - ✅ API keys are in environment variables, not code
 - ✅ Test keys used in development, production keys only in production
 - ✅ MCPs are read-only or test-mode write operations
@@ -516,4 +562,3 @@ Welcome to the future of AI-assisted development! 🚀
 **Last Updated**: November 10, 2025
 **Version**: 1.0
 **Questions?**: Ask in the team workshop or check the setup guide
-

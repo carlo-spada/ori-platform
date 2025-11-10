@@ -29,4 +29,5 @@ Integrate a dynamic checkout stage into the user onboarding process (`src/app/si
 - Existing frontend tests still pass, and new tests cover the dynamic plan selection, Stripe Elements integration, and redirection logic.
 
 ---
-**Note to Claude:** This task has been significantly refined to align with the new UX vision: the payment process is now an integral, dynamic part of the *onboarding checkout stage* for paid plans, using Stripe Elements for an embedded experience. This is not a separate, persistent "payments page."
+
+**Note to Claude:** This task has been significantly refined to align with the new UX vision: the payment process is now an integral, dynamic part of the _onboarding checkout stage_ for paid plans, using Stripe Elements for an embedded experience. This is not a separate, persistent "payments page."

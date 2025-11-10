@@ -27,7 +27,7 @@ export function BlogPostCard({
   return (
     <article
       className={cn(
-        'group border-border bg-card hover:border-accent/50 relative overflow-hidden rounded-xl border transition-all duration-200 hover:shadow-lg',
+        'group relative overflow-hidden rounded-xl border border-border bg-card transition-all duration-200 hover:border-accent/50 hover:shadow-lg',
         isFeatured && 'md:col-span-2 lg:col-span-3',
         className,
       )}
@@ -35,13 +35,13 @@ export function BlogPostCard({
     >
       <Link
         href={`/blog/${post.slug}`}
-        className="focus-visible:ring-accent block rounded-xl focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+        className="block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
         aria-label={`Read article: ${post.title}`}
       >
         {post.featureImageUrl && (
           <div
             className={cn(
-              'bg-muted relative aspect-[16/9] overflow-hidden',
+              'relative aspect-[16/9] overflow-hidden bg-muted',
               isFeatured && 'md:aspect-[21/9]',
             )}
           >
@@ -58,7 +58,7 @@ export function BlogPostCard({
           {/* Category and Tags */}
           {post.category && (
             <div className="mb-3">
-              <span className="text-primary inline-block text-xs font-medium tracking-wide uppercase">
+              <span className="inline-block text-xs font-medium uppercase tracking-wide text-primary">
                 {post.category}
               </span>
             </div>
@@ -67,7 +67,7 @@ export function BlogPostCard({
           {/* Title */}
           <h2
             className={cn(
-              'text-foreground group-hover:text-primary mb-3 font-bold transition-colors',
+              'mb-3 font-bold text-foreground transition-colors group-hover:text-primary',
               isFeatured
                 ? 'text-2xl sm:text-3xl lg:text-4xl'
                 : 'text-xl sm:text-2xl',
@@ -79,7 +79,7 @@ export function BlogPostCard({
           {/* Excerpt */}
           <p
             className={cn(
-              'text-muted-foreground mb-4 line-clamp-3',
+              'mb-4 line-clamp-3 text-muted-foreground',
               isFeatured ? 'text-base sm:text-lg' : 'text-sm sm:text-base',
             )}
           >
@@ -87,7 +87,7 @@ export function BlogPostCard({
           </p>
 
           {/* Metadata */}
-          <div className="text-muted-foreground flex items-center gap-4 text-xs sm:text-sm">
+          <div className="flex items-center gap-4 text-xs text-muted-foreground sm:text-sm">
             <span>{post.author}</span>
             <span aria-hidden="true">•</span>
             <time dateTime={post.date}>{formattedDate}</time>

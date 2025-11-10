@@ -1,4 +1,5 @@
 # Ori Platform: Architectural Audit Report
+
 ## MCP Integration Gap Analysis - Stripe & Resend
 
 **Date:** November 9, 2025
@@ -10,7 +11,7 @@
 
 ## Executive Summary
 
-The Ori Platform has a **critical architectural mismatch** between the intended design (using MCPs as the integration layer) and the current implementation (using direct SDK calls). 
+The Ori Platform has a **critical architectural mismatch** between the intended design (using MCPs as the integration layer) and the current implementation (using direct SDK calls).
 
 ### Key Findings:
 
@@ -31,11 +32,11 @@ The Ori Platform has a **critical architectural mismatch** between the intended 
 
 ### Critical Gaps:
 
-| Component | Intended | Actual | Gap | Severity |
-|-----------|----------|--------|-----|----------|
-| **Stripe** | MCP-based operations | Direct SDK calls (14 API types) | Complete mismatch | CRITICAL |
-| **Resend** | MCP-based email delivery | Custom HTTP wrapper | Not integrated | CRITICAL |
-| **Database** | MCP introspection (dev only) | Supabase client (production) | Acceptable | NONE |
+| Component    | Intended                     | Actual                          | Gap               | Severity |
+| ------------ | ---------------------------- | ------------------------------- | ----------------- | -------- |
+| **Stripe**   | MCP-based operations         | Direct SDK calls (14 API types) | Complete mismatch | CRITICAL |
+| **Resend**   | MCP-based email delivery     | Custom HTTP wrapper             | Not integrated    | CRITICAL |
+| **Database** | MCP introspection (dev only) | Supabase client (production)    | Acceptable        | NONE     |
 
 ---
 
@@ -70,7 +71,7 @@ The `.claude/mcp.json` configures Stripe MCP:
 **Location:** `/Users/carlo/Desktop/Projects/ori-platform/services/core-api/src/lib/stripe.ts`
 
 ```typescript
-import Stripe from 'stripe'  // Direct SDK import
+import Stripe from 'stripe' // Direct SDK import
 
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2024-06-20',
@@ -84,6 +85,7 @@ This direct SDK instantiation is then used throughout the codebase for **14 diff
 **All 14 API types being called directly (not via MCP):**
 
 #### Customer Management (2 types)
+
 ```typescript
 // File: services/core-api/src/routes/payments.ts (Line 52)
 const customer = await stripe.customers.create({...})
@@ -96,34 +98,40 @@ const customer = await stripe.customers.create({...})
 ```
 
 #### Payment Methods (1 type)
+
 ```typescript
-stripe.paymentMethods.attach()  // Not shown in core, but referenced
+stripe.paymentMethods.attach() // Not shown in core, but referenced
 ```
 
 #### Setup Intents (1 type)
+
 ```typescript
-stripe.setupIntents.create()  // For payment method collection
+stripe.setupIntents.create() // For payment method collection
 ```
 
 #### Subscriptions (2 types)
+
 ```typescript
-stripe.subscriptions.create()  // Create new subscription
-stripe.subscriptions.retrieve()  // Get subscription details
+stripe.subscriptions.create() // Create new subscription
+stripe.subscriptions.retrieve() // Get subscription details
 ```
 
 #### Checkout Sessions (1 type)
+
 ```typescript
 // File: services/core-api/src/routes/payments.ts (Line 69)
 const session = await stripe.checkout.sessions.create({...})
 ```
 
 #### Billing Portal (1 type)
+
 ```typescript
 // File: services/core-api/src/routes/payments.ts (Line 121)
 const session = await stripe.billingPortal.sessions.create({...})
 ```
 
 #### Webhook Verification (1 type)
+
 ```typescript
 // File: services/core-api/src/routes/payments.ts (Line 153)
 event = stripe.webhooks.constructEvent(
@@ -134,6 +142,7 @@ event = stripe.webhooks.constructEvent(
 ```
 
 #### Products (1 type)
+
 ```typescript
 // File: services/core-api/src/scripts/setupStripe.ts
 stripe.products.search()
@@ -141,6 +150,7 @@ stripe.products.create()
 ```
 
 #### Prices (1 type)
+
 ```typescript
 // File: services/core-api/src/scripts/setupStripe.ts
 stripe.prices.search()
@@ -148,9 +158,10 @@ stripe.prices.create()
 ```
 
 #### Additional Webhook Processing (4 types)
+
 ```typescript
 // Implicit in webhook handlers:
-stripe.subscriptions.retrieve()  // Line 177 in payments.ts
+stripe.subscriptions.retrieve() // Line 177 in payments.ts
 // Plus 3 more data extraction operations
 ```
 
@@ -161,7 +172,6 @@ stripe.subscriptions.retrieve()  // Line 177 in payments.ts
 1. **`src/lib/stripe.ts`** (9 lines)
    - Creates singleton Stripe instance
    - Sets API version
-   
 2. **`src/lib/stripeHelpers.ts`** (65 lines)
    - `ensureStripeCustomer()` - Creates customers directly
    - `getUserEmail()` - Auth lookups
@@ -268,6 +278,7 @@ const priceId = subscription.items.data[0]?.price.id
 ### 1.6 Test Impact
 
 **Current Test Status:**
+
 - Integration test: `payments.integration.test.ts` - EXISTS but uses mock data
 - Webhook tests: `payments.webhooks.test.ts` - Tests signature validation only
 - Coverage: 0% (no automated Stripe tests)
@@ -311,7 +322,7 @@ A **custom HTTP client wrapper** was built instead of using the MCP:
 class ResendClient {
   private apiKey: string
   private baseUrl = 'https://api.resend.com'  // Direct API call
-  
+
   async send(params: {...}): Promise<{...}> {
     const response = await fetch(`${this.baseUrl}/emails`, {
       method: 'POST',
@@ -330,14 +341,14 @@ class ResendClient {
 
 **File Analysis:**
 
-| Component | Status | Issue |
-|-----------|--------|-------|
-| **ResendClient class** | Implemented | Direct HTTP calls, not MCP |
-| **Email templates** | Fully implemented | 8 templates with HTML/CSS |
-| **emailService object** | Implemented | Provides 7 email types |
-| **Integration with webhooks** | Partial | Hooks exist but not called |
-| **Frontend integration** | None | No API endpoints exposed |
-| **Database tables** | Missing | notifications table not created |
+| Component                     | Status            | Issue                           |
+| ----------------------------- | ----------------- | ------------------------------- |
+| **ResendClient class**        | Implemented       | Direct HTTP calls, not MCP      |
+| **Email templates**           | Fully implemented | 8 templates with HTML/CSS       |
+| **emailService object**       | Implemented       | Provides 7 email types          |
+| **Integration with webhooks** | Partial           | Hooks exist but not called      |
+| **Frontend integration**      | None              | No API endpoints exposed        |
+| **Database tables**           | Missing           | notifications table not created |
 
 ### 2.3 The Resend HTTP Call Chain
 
@@ -356,14 +367,14 @@ export function getResendClient(): ResendClient {
 emailService.sendPaymentFailure = async (email, name, amount) => {
   const client = getResendClient()
   const html = generatePaymentFailureTemplate(name, amount, currency)
-  
+
   // 3. Direct HTTP call via fetch
   const response = await client.send({
     to: email,
     subject: 'Payment Failed - Action Required',
     html,
   })
-  
+
   return { id: response.id }
 }
 
@@ -391,6 +402,7 @@ const response = await fetch(`${this.baseUrl}/emails`, {
 7. **sendApplicationStatus()** - Application status update
 
 **Problem:** All these functions are defined but:
+
 - Never called from any webhook handler
 - No API endpoints exist to expose them
 - Direct HTTP calls instead of MCP
@@ -419,7 +431,7 @@ export async function sendPaymentFailureNotification(
   customerId: string,
 ): Promise<void> {
   // Gets user data...
-  
+
   // NEVER CALLS RESEND OR ANY EMAIL SERVICE
   await sendNotification(supabase, profile.user_id, {
     to: user.email,
@@ -447,7 +459,7 @@ export async function sendNotification(
     read: false,
     created_at: new Date().toISOString(),
   })
-  
+
   // EMAIL NEVER SENT - TABLE DOESN'T EVEN EXIST
   console.log(`📧 Notification sent to ${options.to}: ${options.subject}`)
 }
@@ -494,21 +506,21 @@ export async function sendNotification(
 
 ### 3.1 Architecture Mismatch Matrix
 
-| Feature | Intended | Actual | Status |
-|---------|----------|--------|--------|
-| **Stripe customer creation** | MCP | Direct SDK | Not implemented |
-| **Stripe checkout** | MCP | Direct SDK | Not implemented |
-| **Stripe subscriptions** | MCP | Direct SDK | Not implemented |
-| **Stripe webhooks** | MCP | Direct SDK | Not implemented |
-| **Stripe testing** | Via MCP | Manual testing | Not implemented |
-| **Email sending** | Resend MCP | Custom HTTP wrapper | Partially built |
-| **Email on payment failure** | MCP triggered | Never sent | Broken |
-| **Email on welcome** | MCP triggered | Not implemented | Missing |
-| **Email on recommendations** | MCP triggered | Not implemented | Missing |
-| **Email templates** | MCP rendered | Custom HTML | Built but unused |
-| **Database:** notifications | Tables created | Missing | Not created |
-| **Database:** preferences | Stored | Ignored | UI only |
-| **API endpoints** | Full CRUD | Partial | Only notifications routes |
+| Feature                      | Intended       | Actual              | Status                    |
+| ---------------------------- | -------------- | ------------------- | ------------------------- |
+| **Stripe customer creation** | MCP            | Direct SDK          | Not implemented           |
+| **Stripe checkout**          | MCP            | Direct SDK          | Not implemented           |
+| **Stripe subscriptions**     | MCP            | Direct SDK          | Not implemented           |
+| **Stripe webhooks**          | MCP            | Direct SDK          | Not implemented           |
+| **Stripe testing**           | Via MCP        | Manual testing      | Not implemented           |
+| **Email sending**            | Resend MCP     | Custom HTTP wrapper | Partially built           |
+| **Email on payment failure** | MCP triggered  | Never sent          | Broken                    |
+| **Email on welcome**         | MCP triggered  | Not implemented     | Missing                   |
+| **Email on recommendations** | MCP triggered  | Not implemented     | Missing                   |
+| **Email templates**          | MCP rendered   | Custom HTML         | Built but unused          |
+| **Database:** notifications  | Tables created | Missing             | Not created               |
+| **Database:** preferences    | Stored         | Ignored             | UI only                   |
+| **API endpoints**            | Full CRUD      | Partial             | Only notifications routes |
 
 ### 3.2 Code That Should Use MCP But Doesn't
 
@@ -548,12 +560,14 @@ export async function sendNotification(
 ### 3.4 Current Implementation Quality
 
 #### Stripe:
+
 - **Code Quality:** Good (well-structured, proper error handling)
 - **Test Coverage:** 0% (no automated tests)
 - **Integration:** Working (processes webhooks correctly)
 - **MCP Compliance:** 0% (not using MCP at all)
 
 #### Resend:
+
 - **Code Quality:** Excellent (templates well-designed)
 - **Test Coverage:** 0% (no tests)
 - **Integration:** Broken (functions exist but are never called)
@@ -601,7 +615,7 @@ export async function sendNotification(
    - Migrations and indexes
 
 2. **Create notification API endpoints** (6-8 hours)
-   - `GET /api/v1/notifications/preferences` 
+   - `GET /api/v1/notifications/preferences`
    - `PUT /api/v1/notifications/preferences`
    - `GET /api/v1/notifications`
    - Preference retrieval logic
@@ -664,13 +678,13 @@ The architecture was designed to use MCPs (`Phase 1` setup) but implementation d
 
 ### 5.4 Business Impact
 
-| Issue | Impact | Severity |
-|-------|--------|----------|
-| Email not being sent | Users don't get payment failure alerts | CRITICAL |
-| Can't test payment flows | Payment bugs discovered in production | HIGH |
-| No automated tests | Regression risk on payment changes | HIGH |
-| Missing database tables | Errors when sending notifications | CRITICAL |
-| MCP unused | Team losing promised benefits | MEDIUM |
+| Issue                    | Impact                                 | Severity |
+| ------------------------ | -------------------------------------- | -------- |
+| Email not being sent     | Users don't get payment failure alerts | CRITICAL |
+| Can't test payment flows | Payment bugs discovered in production  | HIGH     |
+| No automated tests       | Regression risk on payment changes     | HIGH     |
+| Missing database tables  | Errors when sending notifications      | CRITICAL |
+| MCP unused               | Team losing promised benefits          | MEDIUM   |
 
 ---
 
@@ -740,30 +754,30 @@ The architecture was designed to use MCPs (`Phase 1` setup) but implementation d
 
 ### Stripe Files Requiring Changes
 
-| File | Lines | Changes Required | Difficulty |
-|------|-------|------------------|------------|
-| `src/lib/stripe.ts` | 9 | Use MCP instead of SDK | Easy |
-| `src/lib/stripeHelpers.ts` | 65 | Use StripeService | Medium |
-| `src/routes/payments.ts` | 309 | 50+ API calls → MCP | Hard |
-| `src/scripts/setupStripe.ts` | 150+ | Product/price creation → MCP | Medium |
-| Tests: `payments.*.test.ts` | 2000+ | Add MCP mock tests | Hard |
+| File                         | Lines | Changes Required             | Difficulty |
+| ---------------------------- | ----- | ---------------------------- | ---------- |
+| `src/lib/stripe.ts`          | 9     | Use MCP instead of SDK       | Easy       |
+| `src/lib/stripeHelpers.ts`   | 65    | Use StripeService            | Medium     |
+| `src/routes/payments.ts`     | 309   | 50+ API calls → MCP          | Hard       |
+| `src/scripts/setupStripe.ts` | 150+  | Product/price creation → MCP | Medium     |
+| Tests: `payments.*.test.ts`  | 2000+ | Add MCP mock tests           | Hard       |
 
 ### Resend Files Requiring Changes
 
-| File | Lines | Changes Required | Difficulty |
-|------|-------|------------------|------------|
-| `src/lib/resend.ts` | 745 | Use Resend MCP instead of HTTP | Medium |
-| `src/utils/notifications.ts` | 119 | Connect to actual email service | Easy |
-| `src/routes/payments.ts` | 309 | Call email service from webhooks | Easy |
-| `src/routes/notifications.ts` | 340 | Implement all endpoints | Medium |
+| File                          | Lines | Changes Required                 | Difficulty |
+| ----------------------------- | ----- | -------------------------------- | ---------- |
+| `src/lib/resend.ts`           | 745   | Use Resend MCP instead of HTTP   | Medium     |
+| `src/utils/notifications.ts`  | 119   | Connect to actual email service  | Easy       |
+| `src/routes/payments.ts`      | 309   | Call email service from webhooks | Easy       |
+| `src/routes/notifications.ts` | 340   | Implement all endpoints          | Medium     |
 
 ### Database Changes Required
 
-| Change | Impact | Effort |
-|--------|--------|--------|
-| Create `notifications` table | Blocks email functionality | 1-2 hours |
-| Create `notification_preferences` table | Blocks preference saving | 1-2 hours |
-| Add RLS policies | Security compliance | 1-2 hours |
+| Change                                  | Impact                     | Effort    |
+| --------------------------------------- | -------------------------- | --------- |
+| Create `notifications` table            | Blocks email functionality | 1-2 hours |
+| Create `notification_preferences` table | Blocks preference saving   | 1-2 hours |
+| Add RLS policies                        | Security compliance        | 1-2 hours |
 
 ---
 
@@ -772,6 +786,7 @@ The architecture was designed to use MCPs (`Phase 1` setup) but implementation d
 ### Current Test Status
 
 **Stripe tests:**
+
 ```
 payments.customer.test.ts      - Tests exist but are stubs
 payments.subscription.test.ts  - Tests exist but are stubs
@@ -784,6 +799,7 @@ payments.integration.test.ts   - Tests exist but use mock data
 **Total coverage:** 0% for actual Stripe operations
 
 **Resend tests:**
+
 ```
 No tests exist
 ```
@@ -793,6 +809,7 @@ No tests exist
 ### What Tests Need to Be Added
 
 **For Stripe MCP:**
+
 1. Customer creation and retrieval
 2. Setup Intent creation and confirmation
 3. Subscription CRUD operations
@@ -802,6 +819,7 @@ No tests exist
 7. Error scenarios (declined cards, rate limits, etc.)
 
 **For Resend MCP:**
+
 1. Email template rendering
 2. Email sending for all 7 types
 3. Preference checking before sending
@@ -824,6 +842,7 @@ Both systems are **partially functional** but **completely misaligned** with the
 ### Root Cause
 
 The project architecture was designed in Phase 1 to use MCPs as the integration layer, but Phase 2 and Phase 3 implementations:
+
 - Built parallel systems using direct API calls
 - Skipped MCP integration
 - Created technical debt through non-standard patterns
@@ -843,6 +862,7 @@ The project architecture was designed in Phase 1 to use MCPs as the integration 
 ### Recommended Action
 
 **ACCEPT** the architectural debt for now AND **PLAN** MCP integration as a discrete Phase 2.5 task:
+
 - It will significantly improve testability
 - It will reduce future maintenance burden
 - It will align with documented architecture

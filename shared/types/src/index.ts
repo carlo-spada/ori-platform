@@ -39,7 +39,14 @@ export interface UserProfile {
   // Stripe billing fields
   stripe_customer_id?: string
   stripe_subscription_id?: string
-  subscription_status?: 'free' | 'plus_monthly' | 'plus_yearly' | 'premium_monthly' | 'premium_yearly' | 'past_due' | 'cancelled'
+  subscription_status?:
+    | 'free'
+    | 'plus_monthly'
+    | 'plus_yearly'
+    | 'premium_monthly'
+    | 'premium_yearly'
+    | 'past_due'
+    | 'cancelled'
   created_at?: string
   updated_at?: string
 }

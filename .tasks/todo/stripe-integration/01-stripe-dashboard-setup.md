@@ -24,4 +24,5 @@ Programmatically create and manage the necessary Stripe Products and Prices via 
 - New unit tests are added to verify the programmatic creation of products and prices.
 
 ---
+
 **Note to Claude:** This task has been updated to switch from manual Stripe Dashboard configuration to programmatic creation of Products and Prices via the Stripe API. This aligns with our goal for higher automation and quality.

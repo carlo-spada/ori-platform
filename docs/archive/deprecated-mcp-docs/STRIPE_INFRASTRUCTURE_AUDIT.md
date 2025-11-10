@@ -28,19 +28,19 @@ The Ori Platform has a **partially implemented Stripe payment system** with basi
 
 ### Total Stripe-Related Code: 1,122 Lines of Code (LOC)
 
-| File Path | Type | LOC | Purpose |
-|-----------|------|-----|---------|
-| `/src/lib/stripe.ts` | Frontend | 29 | Stripe.js initialization and lazy loading |
-| `/services/core-api/src/lib/stripe.ts` | Backend | 72 | Stripe client initialization and plan configuration |
-| `/services/core-api/src/lib/stripeHelpers.ts` | Backend | 81 | Customer creation and utility functions |
-| `/services/core-api/src/routes/payments.ts` | Backend | 308 | Checkout sessions, billing portal, webhooks |
-| `/src/integrations/api/payments.ts` | Frontend API | 76 | API client for payment endpoints |
-| `/src/components/payments/PaymentForm.tsx` | Frontend UI | 131 | React component for payment form |
-| `/services/core-api/src/routes/setupIntent.ts` | Backend | 65 | Setup Intent creation for payment collection |
-| `/services/core-api/src/routes/subscriptions.ts` | Backend | 99 | Subscription creation and management |
-| `/services/core-api/src/scripts/setupStripe.ts` | Setup Script | 261 | Idempotent product/price setup |
-| **Database Migration** | SQL | 32 lines | Stripe fields in user_profiles table |
-| **Configuration Documentation** | Task | Pending | Webhook setup guide (see tasks) |
+| File Path                                        | Type         | LOC      | Purpose                                             |
+| ------------------------------------------------ | ------------ | -------- | --------------------------------------------------- |
+| `/src/lib/stripe.ts`                             | Frontend     | 29       | Stripe.js initialization and lazy loading           |
+| `/services/core-api/src/lib/stripe.ts`           | Backend      | 72       | Stripe client initialization and plan configuration |
+| `/services/core-api/src/lib/stripeHelpers.ts`    | Backend      | 81       | Customer creation and utility functions             |
+| `/services/core-api/src/routes/payments.ts`      | Backend      | 308      | Checkout sessions, billing portal, webhooks         |
+| `/src/integrations/api/payments.ts`              | Frontend API | 76       | API client for payment endpoints                    |
+| `/src/components/payments/PaymentForm.tsx`       | Frontend UI  | 131      | React component for payment form                    |
+| `/services/core-api/src/routes/setupIntent.ts`   | Backend      | 65       | Setup Intent creation for payment collection        |
+| `/services/core-api/src/routes/subscriptions.ts` | Backend      | 99       | Subscription creation and management                |
+| `/services/core-api/src/scripts/setupStripe.ts`  | Setup Script | 261      | Idempotent product/price setup                      |
+| **Database Migration**                           | SQL          | 32 lines | Stripe fields in user_profiles table                |
+| **Configuration Documentation**                  | Task         | Pending  | Webhook setup guide (see tasks)                     |
 
 ---
 
@@ -55,18 +55,19 @@ The Ori Platform has a **partially implemented Stripe payment system** with basi
 const getStripe = (): Promise<Stripe | null> => {
   // Only loads in browser, returns null on server
   if (_stripePromise) return _stripePromise
-  
+
   const key = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
   _stripePromise = loadStripe(key)
   return _stripePromise
 }
 
 // Backward compatible export
-export const stripePromise = 
+export const stripePromise =
   typeof window !== 'undefined' ? getStripe() : Promise.resolve(null)
 ```
 
 **Status:** ✅ IMPLEMENTED
+
 - Lazy loads Stripe.js only in browser
 - Properly handles SSR/build environments
 - Configurable via environment variable
@@ -80,24 +81,26 @@ export const stripePromise =
 ```typescript
 // Server-side Stripe client with API version pinning
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2024-06-20'
+  apiVersion: '2024-06-20',
 })
 
 // Plan definitions (embedded, not loaded from Stripe)
 export const STRIPE_PLANS = {
-  plus_monthly:    { price: 500,   interval: 'month' },
-  plus_yearly:     { price: 4800,  interval: 'year'  },
-  premium_monthly: { price: 1000,  interval: 'month' },
-  premium_yearly:  { price: 9600,  interval: 'year'  }
+  plus_monthly: { price: 500, interval: 'month' },
+  plus_yearly: { price: 4800, interval: 'year' },
+  premium_monthly: { price: 1000, interval: 'month' },
+  premium_yearly: { price: 9600, interval: 'year' },
 }
 ```
 
 **Configuration:**
+
 - API Version: `2024-06-20` (pinned)
 - Plans: 2 tiers × 2 billing intervals = 4 price variations
 - Plan pricing: $5/mo Plus, $48/yr Plus (20% discount), $10/mo Premium, $96/yr Premium
 
 **Required Environment Variables:**
+
 - `STRIPE_SECRET_KEY` - Server-side secret (sk_test_xxx for sandbox)
 - `STRIPE_PRODUCT_PLUS_ID` - Created by setupStripe.ts
 - `STRIPE_PRODUCT_PREMIUM_ID` - Created by setupStripe.ts
@@ -108,6 +111,7 @@ export const STRIPE_PLANS = {
 - `STRIPE_WEBHOOK_SECRET` - For webhook signature verification
 
 **Status:** ✅ IMPLEMENTED
+
 - Proper client initialization with error handling
 - Typed plan configuration
 - Helper functions for plan lookups
@@ -131,6 +135,7 @@ export const STRIPE_PLANS = {
    - Required for customer creation
 
 **Status:** ✅ IMPLEMENTED
+
 - Idempotent customer creation
 - Database synchronization
 - Error handling with descriptive messages
@@ -151,6 +156,7 @@ export const STRIPE_PLANS = {
 ```
 
 **Flow:**
+
 1. Validates user authorization
 2. Fetches user from database
 3. Creates/retrieves Stripe customer
@@ -167,12 +173,14 @@ export const STRIPE_PLANS = {
 ```
 
 **Flow:**
+
 1. Validates user authorization
 2. Retrieves Stripe customer ID
 3. Creates billing portal session
 4. Returns portal URL for subscription management
 
 **Features:** Users can:
+
 - Update payment methods
 - View invoices
 - Cancel subscriptions
@@ -180,7 +188,8 @@ export const STRIPE_PLANS = {
 
 #### C. `POST /api/v1/payments/webhook` - Stripe Webhook Handler (Raw Body, BEFORE express.json())
 
-**Critical Implementation Detail:** 
+**Critical Implementation Detail:**
+
 ```typescript
 // In index.ts - MUST be before express.json()
 app.use(
@@ -188,31 +197,33 @@ app.use(
   express.raw({ type: 'application/json' }),
   paymentWebhookRoutes,
 )
-app.use(express.json())  // ← Other routes get JSON middleware
+app.use(express.json()) // ← Other routes get JSON middleware
 ```
 
 **Webhook Signature Verification:**
+
 ```typescript
 const event = stripe.webhooks.constructEvent(
-  req.body,  // Raw body (NOT parsed)
+  req.body, // Raw body (NOT parsed)
   req.headers['stripe-signature'],
-  process.env.STRIPE_WEBHOOK_SECRET!
+  process.env.STRIPE_WEBHOOK_SECRET!,
 )
 ```
 
 **Handled Events:**
 
-| Event | Action | Database Impact |
-|-------|--------|-----------------|
-| `checkout.session.completed` | Session completed | Updates subscription_id, subscription_status |
-| `customer.subscription.created` | Subscription created | Updates subscription_id, subscription_status |
-| `customer.subscription.updated` | Plan change, renewal, etc. | Updates subscription_status |
-| `customer.subscription.deleted` | User canceled | Sets subscription_status='cancelled', clears subscription_id |
-| `invoice.payment_succeeded` | Recurring payment successful | Logged for analytics |
-| `invoice.payment_failed` | Payment failed | Updates subscription_status='past_due', sends notification |
-| `customer.source.expiring` | Card expiring soon | Sends notification |
+| Event                           | Action                       | Database Impact                                              |
+| ------------------------------- | ---------------------------- | ------------------------------------------------------------ |
+| `checkout.session.completed`    | Session completed            | Updates subscription_id, subscription_status                 |
+| `customer.subscription.created` | Subscription created         | Updates subscription_id, subscription_status                 |
+| `customer.subscription.updated` | Plan change, renewal, etc.   | Updates subscription_status                                  |
+| `customer.subscription.deleted` | User canceled                | Sets subscription_status='cancelled', clears subscription_id |
+| `invoice.payment_succeeded`     | Recurring payment successful | Logged for analytics                                         |
+| `invoice.payment_failed`        | Payment failed               | Updates subscription_status='past_due', sends notification   |
+| `customer.source.expiring`      | Card expiring soon           | Sends notification                                           |
 
 **Status:** ✅ PARTIALLY IMPLEMENTED
+
 - Signature verification working
 - Core subscription events handled
 - Missing: invoices, payment intents, disputes
@@ -233,6 +244,7 @@ Returns: { clientSecret: string, setupIntentId: string }
 ```
 
 **Flow:**
+
 1. Validates authentication
 2. Gets user email
 3. Ensures Stripe customer exists
@@ -240,6 +252,7 @@ Returns: { clientSecret: string, setupIntentId: string }
 5. Returns client secret for frontend confirmation
 
 **Status:** ✅ IMPLEMENTED
+
 - Used by PaymentForm component
 - Properly scoped metadata
 
@@ -258,6 +271,7 @@ Returns: { subscriptionId: string, status: string }
 ```
 
 **Flow:**
+
 1. Validates plan configuration
 2. Ensures Stripe customer exists
 3. Attaches payment method to customer
@@ -267,6 +281,7 @@ Returns: { subscriptionId: string, status: string }
 7. Returns subscription details
 
 **Status:** ✅ IMPLEMENTED
+
 - Full subscription creation logic
 - Proper payment method attachment
 - Database synchronization
@@ -282,6 +297,7 @@ Returns: { subscriptionId: string, status: string }
 **Run with:** `pnpm run setup:stripe`
 
 **Features:**
+
 - Searches for existing products by name
 - Creates products if missing (Ori Plus, Ori Premium)
 - Creates monthly and yearly prices
@@ -290,6 +306,7 @@ Returns: { subscriptionId: string, status: string }
 - Outputs environment variable configuration
 
 **Example Output:**
+
 ```
 STRIPE_PRODUCT_PLUS_ID=prod_xxxxx
 STRIPE_PRICE_PLUS_MONTHLY_ID=price_xxxxx
@@ -300,6 +317,7 @@ STRIPE_PRICE_PREMIUM_YEARLY_ID=price_xxxxx
 ```
 
 **Status:** ✅ IMPLEMENTED
+
 - Comprehensive product/price setup
 - Idempotent (won't duplicate)
 - Uses product metadata for tier identification
@@ -313,7 +331,7 @@ STRIPE_PRICE_PREMIUM_YEARLY_ID=price_xxxxx
 **Purpose:** React component for collecting payment details using Stripe Elements
 
 ```typescript
-<PaymentForm 
+<PaymentForm
   planId="plus_monthly"
   onSuccess={() => { /* redirect */ }}
   onCancel={() => { /* go back */ }}
@@ -321,6 +339,7 @@ STRIPE_PRICE_PREMIUM_YEARLY_ID=price_xxxxx
 ```
 
 **Flow:**
+
 1. Component mounts → Creates Setup Intent via API
 2. Displays `PaymentElement` (Stripe's embedded payment form)
 3. User submits → Confirms Setup Intent with payment details
@@ -330,12 +349,14 @@ STRIPE_PRICE_PREMIUM_YEARLY_ID=price_xxxxx
 7. On error: toasts error and keeps form active
 
 **State Management:**
+
 - `clientSecret` - Setup Intent secret for payment confirmation
 - `isLoading` - Initial setup
 - `isProcessing` - Payment submission
 - Proper loading skeleton with animated dots
 
 **Status:** ✅ IMPLEMENTED
+
 - Clean, modern UI with Tailwind
 - Proper error handling with sonner toasts
 - Loading states
@@ -358,6 +379,7 @@ STRIPE_PRICE_PREMIUM_YEARLY_ID=price_xxxxx
    - Returns: `{ subscriptionId }`
 
 **Status:** ✅ IMPLEMENTED
+
 - Proper authentication header injection
 - Error handling with descriptive messages
 - Full type safety
@@ -382,6 +404,7 @@ subscription_status TEXT DEFAULT 'free'
 ```
 
 **Valid subscription_status values:**
+
 - `free` - No subscription
 - `plus_monthly` - Plus tier, monthly billing
 - `plus_yearly` - Plus tier, yearly billing
@@ -391,11 +414,13 @@ subscription_status TEXT DEFAULT 'free'
 - `cancelled` - User cancelled
 
 **Indexes:**
+
 - `idx_user_profiles_stripe_customer_id` - Fast lookup by customer
 - `idx_user_profiles_stripe_subscription_id` - Fast lookup by subscription
 - `idx_user_profiles_subscription_status` - Analytics/segmentation
 
 **Status:** ✅ IMPLEMENTED
+
 - Proper constraints and indexes
 - Clear documentation via COMMENTs
 
@@ -430,24 +455,25 @@ Supabase (Database updates)
 
 **Direct Stripe API calls made:**
 
-| Location | API Method | Purpose |
-|----------|-----------|---------|
-| `stripeHelpers.ts:37` | `stripe.customers.create()` | Create customer |
-| `payments.ts:52` | `stripe.customers.create()` | Create customer (legacy) |
-| `payments.ts:69` | `stripe.checkout.sessions.create()` | Create checkout session |
-| `payments.ts:121` | `stripe.billingPortal.sessions.create()` | Create portal session |
-| `payments.ts:153` | `stripe.webhooks.constructEvent()` | Verify webhook signature |
-| `payments.ts:177` | `stripe.subscriptions.retrieve()` | Get subscription details |
-| `setupIntent.ts:45` | `stripe.setupIntents.create()` | Create setup intent |
-| `subscriptions.ts:57` | `stripe.paymentMethods.attach()` | Attach payment method |
-| `subscriptions.ts:62` | `stripe.customers.update()` | Set default payment method |
-| `subscriptions.ts:69` | `stripe.subscriptions.create()` | Create subscription |
-| `setupStripe.ts:42` | `stripe.products.search()` | Search for existing products |
-| `setupStripe.ts:52` | `stripe.products.create()` | Create product |
-| `setupStripe.ts:98` | `stripe.prices.search()` | Search for existing prices |
-| `setupStripe.ts:110` | `stripe.prices.create()` | Create price |
+| Location              | API Method                               | Purpose                      |
+| --------------------- | ---------------------------------------- | ---------------------------- |
+| `stripeHelpers.ts:37` | `stripe.customers.create()`              | Create customer              |
+| `payments.ts:52`      | `stripe.customers.create()`              | Create customer (legacy)     |
+| `payments.ts:69`      | `stripe.checkout.sessions.create()`      | Create checkout session      |
+| `payments.ts:121`     | `stripe.billingPortal.sessions.create()` | Create portal session        |
+| `payments.ts:153`     | `stripe.webhooks.constructEvent()`       | Verify webhook signature     |
+| `payments.ts:177`     | `stripe.subscriptions.retrieve()`        | Get subscription details     |
+| `setupIntent.ts:45`   | `stripe.setupIntents.create()`           | Create setup intent          |
+| `subscriptions.ts:57` | `stripe.paymentMethods.attach()`         | Attach payment method        |
+| `subscriptions.ts:62` | `stripe.customers.update()`              | Set default payment method   |
+| `subscriptions.ts:69` | `stripe.subscriptions.create()`          | Create subscription          |
+| `setupStripe.ts:42`   | `stripe.products.search()`               | Search for existing products |
+| `setupStripe.ts:52`   | `stripe.products.create()`               | Create product               |
+| `setupStripe.ts:98`   | `stripe.prices.search()`                 | Search for existing prices   |
+| `setupStripe.ts:110`  | `stripe.prices.create()`                 | Create price                 |
 
 **All calls are:**
+
 - Synchronous/async-awaited ✅
 - Properly error handled ✅
 - Database synchronized ✅
@@ -458,16 +484,18 @@ Supabase (Database updates)
 ### 3. Webhook Processing
 
 **Webhook signature verification location:**
+
 ```typescript
 // services/core-api/src/routes/payments.ts:153
 const event = stripe.webhooks.constructEvent(
-  req.body,  // Raw body (CRITICAL - must be raw!)
-  sig,       // From headers['stripe-signature']
-  process.env.STRIPE_WEBHOOK_SECRET!
+  req.body, // Raw body (CRITICAL - must be raw!)
+  sig, // From headers['stripe-signature']
+  process.env.STRIPE_WEBHOOK_SECRET!,
 )
 ```
 
 **Critical requirement:**
+
 - Webhook route MUST be registered before `express.json()`
 - Raw body middleware applied: `express.raw({ type: 'application/json' })`
 - This is properly implemented in `services/core-api/src/index.ts:31-35`
@@ -479,12 +507,14 @@ const event = stripe.webhooks.constructEvent(
 ### Environment Variables Required
 
 **Frontend (`.env.local`):**
+
 ```env
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxxxx  # Public key
 NEXT_PUBLIC_API_URL=http://localhost:3001         # API base URL
 ```
 
 **Backend (`.env`):**
+
 ```env
 STRIPE_SECRET_KEY=sk_test_xxxxx                   # Secret key
 STRIPE_WEBHOOK_SECRET=whsec_xxxxx                 # Webhook signature key
@@ -501,11 +531,13 @@ FRONTEND_URL=http://localhost:3000                # For webhooks
 ### Supported Environments
 
 **Test/Development:**
+
 - Using Stripe test keys (prefix: `pk_test_`, `sk_test_`)
 - Stripe CLI for local webhook testing
 - Test cards: 4242 4242 4242 4242 (success), 4000 0000 0000 0002 (decline)
 
 **Production:**
+
 - Using Stripe live keys (prefix: `pk_live_`, `sk_live_`)
 - Webhook endpoint registered in Stripe dashboard
 - HTTPS requirement enforced by Stripe
@@ -519,12 +551,14 @@ FRONTEND_URL=http://localhost:3000                # For webhooks
 **Status:** ❌ NO AUTOMATED TESTS
 
 **Why?**
+
 - No Jest/Vitest test files for payment routes
 - No mock Stripe client
 - No test fixtures
 - No webhook simulation
 
 **Testing Approach (Current):**
+
 - Manual testing via Stripe Dashboard
 - Manual testing with Stripe CLI (command line)
 - Real Stripe API calls in development
@@ -578,19 +612,20 @@ FRONTEND_URL=http://localhost:3000                # For webhooks
 
 ### Implemented Webhook Events (7 total)
 
-| Event | Status | Action |
-|-------|--------|--------|
-| `checkout.session.completed` | ✅ | Update subscription from session |
-| `customer.subscription.created` | ✅ | Record new subscription |
-| `customer.subscription.updated` | ✅ | Handle plan changes, status updates |
-| `customer.subscription.deleted` | ✅ | Mark as cancelled |
-| `invoice.payment_succeeded` | ⚠️ | Logged only (no DB update) |
-| `invoice.payment_failed` | ✅ | Mark as past_due, send notification |
-| `customer.source.expiring` | ✅ | Send expiration notification |
+| Event                           | Status | Action                              |
+| ------------------------------- | ------ | ----------------------------------- |
+| `checkout.session.completed`    | ✅     | Update subscription from session    |
+| `customer.subscription.created` | ✅     | Record new subscription             |
+| `customer.subscription.updated` | ✅     | Handle plan changes, status updates |
+| `customer.subscription.deleted` | ✅     | Mark as cancelled                   |
+| `invoice.payment_succeeded`     | ⚠️     | Logged only (no DB update)          |
+| `invoice.payment_failed`        | ✅     | Mark as past_due, send notification |
+| `customer.source.expiring`      | ✅     | Send expiration notification        |
 
 ### Missing Webhook Events
 
 **Should be implemented:**
+
 - `invoice.created` - Track new invoices
 - `invoice.finalized` - Invoice ready for payment
 - `customer.deleted` - Handle account deletion
@@ -620,6 +655,7 @@ FRONTEND_URL=http://localhost:3000                # For webhooks
    - Prepared for email integration
 
 **Status:** ⚠️ PARTIALLY IMPLEMENTED
+
 - In-app notifications working
 - Email integration ready (commented placeholder)
 - Missing: SMS, Slack, webhook notifications
@@ -635,6 +671,7 @@ FRONTEND_URL=http://localhost:3000                # For webhooks
 **Goal:** Replace direct Stripe API calls with MCP server
 
 **Requirements:**
+
 1. Set up Stripe MCP server in Claude Code environment
 2. Create `StripeService` in `services/core-api/src/services/stripe.ts`
 3. Refactor existing code to use StripeService
@@ -642,6 +679,7 @@ FRONTEND_URL=http://localhost:3000                # For webhooks
 5. Use MCP for all Stripe interactions
 
 **Acceptance Criteria:**
+
 - MCP server configured
 - StripeService created and encapsulates all Stripe logic
 - All payment/subscription tests refactored to use StripeService
@@ -657,6 +695,7 @@ FRONTEND_URL=http://localhost:3000                # For webhooks
 **Goal:** Create comprehensive webhook setup guide
 
 **Deliverables:**
+
 - `docs/STRIPE_WEBHOOK_SETUP.md` - Complete setup guide
 - Local development setup with Stripe CLI
 - Production setup instructions
@@ -741,8 +780,8 @@ FRONTEND_URL=http://localhost:3000                # For webhooks
 ```json
 {
   "dependencies": {
-    "stripe": "^16.12.0",              // Server-side
-    "@stripe/stripe-js": "^8.3.0",     // Browser Stripe.js
+    "stripe": "^16.12.0", // Server-side
+    "@stripe/stripe-js": "^8.3.0", // Browser Stripe.js
     "@stripe/react-stripe-js": "^5.3.0" // React integration
   }
 }
@@ -769,21 +808,28 @@ export class StripeService {
   async ensureCustomer(userId, email): Promise<string>
   async getCustomer(customerId): Promise<Customer>
   async updateCustomer(customerId, data): Promise<Customer>
-  
+
   // Setup intents
   async createSetupIntent(customerId, planId): Promise<SetupIntent>
   async retrieveSetupIntent(setupIntentId): Promise<SetupIntent>
-  
+
   // Subscriptions
-  async createSubscription(customerId, priceId, paymentMethodId): Promise<Subscription>
+  async createSubscription(
+    customerId,
+    priceId,
+    paymentMethodId,
+  ): Promise<Subscription>
   async getSubscription(subscriptionId): Promise<Subscription>
   async updateSubscription(subscriptionId, data): Promise<Subscription>
   async cancelSubscription(subscriptionId): Promise<Subscription>
-  
+
   // Billing
-  async createBillingPortalSession(customerId, returnUrl): Promise<BillingPortalSession>
+  async createBillingPortalSession(
+    customerId,
+    returnUrl,
+  ): Promise<BillingPortalSession>
   async getInvoices(customerId): Promise<Invoice[]>
-  
+
   // Webhooks
   async verifyWebhookSignature(body, signature, secret): Promise<Event>
   async handleWebhookEvent(event): Promise<void>
@@ -817,8 +863,8 @@ const mockMcp = {
 
 ```typescript
 // services/core-api/.env
-MCP_STRIPE_MODE=test|live
-MCP_STRIPE_API_KEY=sk_test_xxxxx
+MCP_STRIPE_MODE = test | live
+MCP_STRIPE_API_KEY = sk_test_xxxxx
 // MCP server will use this instead of node_modules stripe
 ```
 
@@ -948,6 +994,7 @@ ori-platform/
 **Overall Readiness:** ⭐⭐⭐⭐☆ (4/5)
 
 **Strengths for MCP:**
+
 - Clean separation of concerns
 - Clear API boundaries
 - All direct Stripe calls in lib/routes
@@ -955,12 +1002,14 @@ ori-platform/
 - Configuration externalized
 
 **Challenges for MCP:**
+
 - No existing test suite to validate against
 - Multiple places with direct API calls
 - Some duplicate logic to consolidate
 - Need to establish test fixtures
 
 **Next Steps:**
+
 1. Create StripeService wrapper class
 2. Set up MCP server in development environment
 3. Migrate all Stripe API calls to use MCP
@@ -1041,6 +1090,7 @@ The Ori Platform has a **functional but incomplete** Stripe payment system that 
 4. Documenting webhook setup for developers
 
 With MCP integration, the development team will be able to:
+
 - Test payment flows programmatically
 - Avoid manual Stripe dashboard testing
 - Simulate webhook events reliably

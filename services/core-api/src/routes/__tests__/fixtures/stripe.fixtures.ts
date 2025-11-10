@@ -18,63 +18,70 @@
  */
 
 export interface StripeTestCustomer {
-  id: string;
-  email: string;
-  name?: string;
-  description?: string;
-  metadata?: Record<string, string>;
+  id: string
+  email: string
+  name?: string
+  description?: string
+  metadata?: Record<string, string>
 }
 
 export interface StripeTestPaymentMethod {
-  id: string;
-  type: 'card';
+  id: string
+  type: 'card'
   card: {
-    brand: string;
-    last4: string;
-    exp_month: number;
-    exp_year: number;
-  };
+    brand: string
+    last4: string
+    exp_month: number
+    exp_year: number
+  }
 }
 
 export interface StripeTestSubscription {
-  id: string;
-  customer: string;
-  status: 'active' | 'trialing' | 'past_due' | 'canceled' | 'unpaid';
+  id: string
+  customer: string
+  status: 'active' | 'trialing' | 'past_due' | 'canceled' | 'unpaid'
   items: {
     data: Array<{
-      id: string;
+      id: string
       price: {
-        id: string;
-        product: string;
+        id: string
+        product: string
         recurring: {
-          interval: 'month' | 'year';
-          interval_count: number;
-        };
-      };
-    }>;
-  };
-  current_period_start: number;
-  current_period_end: number;
-  cancel_at?: number;
+          interval: 'month' | 'year'
+          interval_count: number
+        }
+      }
+    }>
+  }
+  current_period_start: number
+  current_period_end: number
+  cancel_at?: number
 }
 
 export interface StripeTestPaymentIntent {
-  id: string;
-  status: 'requires_payment_method' | 'requires_confirmation' | 'requires_action' | 'processing' | 'requires_capture' | 'canceled' | 'succeeded';
-  amount: number;
-  currency: string;
-  customer?: string;
-  metadata?: Record<string, string>;
+  id: string
+  status:
+    | 'requires_payment_method'
+    | 'requires_confirmation'
+    | 'requires_action'
+    | 'processing'
+    | 'requires_capture'
+    | 'canceled'
+    | 'succeeded'
+  amount: number
+  currency: string
+  customer?: string
+  metadata?: Record<string, string>
 }
 
 export interface StripeTestCharge {
-  id: string;
-  amount: number;
-  currency: string;
-  status: 'succeeded' | 'failed' | 'pending';
-  customer?: string;
-  payment_method?: string;
-  description?: string;
+  id: string
+  amount: number
+  currency: string
+  status: 'succeeded' | 'failed' | 'pending'
+  customer?: string
+  payment_method?: string
+  description?: string
 }
 
 /**
@@ -92,7 +99,7 @@ export interface StripeTestCharge {
 export function createTestCustomer(
   email: string,
   name?: string,
-  metadata?: Record<string, string>
+  metadata?: Record<string, string>,
 ): StripeTestCustomer {
   return {
     id: `cus_test_${Math.random().toString(36).substr(2, 9)}`,
@@ -100,7 +107,7 @@ export function createTestCustomer(
     name,
     description: name ? `Test customer: ${name}` : undefined,
     metadata,
-  };
+  }
 }
 
 /**
@@ -120,7 +127,7 @@ export function createTestPaymentMethod(
   brand: string = 'visa',
   last4: string = '4242',
   expiryMonth: number = 12,
-  expiryYear: number = 2025
+  expiryYear: number = 2025,
 ): StripeTestPaymentMethod {
   return {
     id: `pm_test_${Math.random().toString(36).substr(2, 9)}`,
@@ -131,7 +138,7 @@ export function createTestPaymentMethod(
       exp_month: expiryMonth,
       exp_year: expiryYear,
     },
-  };
+  }
 }
 
 /**
@@ -150,9 +157,9 @@ export function createTestPaymentMethod(
 export function createTestSubscription(
   customerId: string,
   priceId: string,
-  status: 'active' | 'trialing' | 'past_due' | 'canceled' | 'unpaid' = 'active'
+  status: 'active' | 'trialing' | 'past_due' | 'canceled' | 'unpaid' = 'active',
 ): StripeTestSubscription {
-  const now = Math.floor(Date.now() / 1000);
+  const now = Math.floor(Date.now() / 1000)
   return {
     id: `sub_test_${Math.random().toString(36).substr(2, 9)}`,
     customer: customerId,
@@ -173,8 +180,8 @@ export function createTestSubscription(
       ],
     },
     current_period_start: now,
-    current_period_end: now + (30 * 24 * 60 * 60), // 30 days from now
-  };
+    current_period_end: now + 30 * 24 * 60 * 60, // 30 days from now
+  }
 }
 
 /**
@@ -192,7 +199,7 @@ export function createTestSubscription(
 export function createTestPaymentIntent(
   customerId: string | undefined,
   amount: number = 9900,
-  status: StripeTestPaymentIntent['status'] = 'succeeded'
+  status: StripeTestPaymentIntent['status'] = 'succeeded',
 ): StripeTestPaymentIntent {
   return {
     id: `pi_test_${Math.random().toString(36).substr(2, 9)}`,
@@ -203,7 +210,7 @@ export function createTestPaymentIntent(
     metadata: {
       test: 'true',
     },
-  };
+  }
 }
 
 /**
@@ -221,7 +228,7 @@ export function createTestPaymentIntent(
 export function createTestCharge(
   customerId: string | undefined,
   amount: number = 9900,
-  status: 'succeeded' | 'failed' | 'pending' = 'succeeded'
+  status: 'succeeded' | 'failed' | 'pending' = 'succeeded',
 ): StripeTestCharge {
   return {
     id: `ch_test_${Math.random().toString(36).substr(2, 9)}`,
@@ -231,7 +238,7 @@ export function createTestCharge(
     customer: customerId,
     payment_method: `pm_test_${Math.random().toString(36).substr(2, 9)}`,
     description: 'Test charge',
-  };
+  }
 }
 
 /**
@@ -262,7 +269,10 @@ export const testScenarios = {
    * Insufficient funds scenario
    */
   insufficientFunds: {
-    customer: createTestCustomer('insufficient@example.com', 'Insufficient User'),
+    customer: createTestCustomer(
+      'insufficient@example.com',
+      'Insufficient User',
+    ),
     paymentMethod: createTestPaymentMethod('visa', '0069'),
     charge: createTestCharge(undefined, 9900, 'failed'),
     description: 'Card has insufficient funds',
@@ -283,7 +293,11 @@ export const testScenarios = {
    */
   subscriptionTrial: {
     customer: createTestCustomer('trial@example.com', 'Trial User'),
-    subscription: createTestSubscription('cus_test_trial', 'price_monthly', 'trialing'),
+    subscription: createTestSubscription(
+      'cus_test_trial',
+      'price_monthly',
+      'trialing',
+    ),
     description: 'Active subscription with trial period',
   },
 
@@ -292,7 +306,11 @@ export const testScenarios = {
    */
   pastDueSubscription: {
     customer: createTestCustomer('pastdue@example.com', 'Past Due User'),
-    subscription: createTestSubscription('cus_test_pastdue', 'price_monthly', 'past_due'),
+    subscription: createTestSubscription(
+      'cus_test_pastdue',
+      'price_monthly',
+      'past_due',
+    ),
     description: 'Subscription with past due payment',
   },
 
@@ -301,10 +319,14 @@ export const testScenarios = {
    */
   canceledSubscription: {
     customer: createTestCustomer('canceled@example.com', 'Canceled User'),
-    subscription: createTestSubscription('cus_test_canceled', 'price_monthly', 'canceled'),
+    subscription: createTestSubscription(
+      'cus_test_canceled',
+      'price_monthly',
+      'canceled',
+    ),
     description: 'Canceled subscription',
   },
-};
+}
 
 /**
  * Stripe plan pricing configuration for tests
@@ -338,7 +360,7 @@ export const testPlans = {
     interval: 'year',
     name: 'Ori Premium - Yearly',
   },
-};
+}
 
 /**
  * Webhook event payloads for testing
@@ -362,7 +384,10 @@ export const testWebhookEvents = {
   /**
    * Customer subscription created event
    */
-  customerSubscriptionCreated: (customerId: string, subscriptionId: string) => ({
+  customerSubscriptionCreated: (
+    customerId: string,
+    subscriptionId: string,
+  ) => ({
     type: 'customer.subscription.created',
     data: {
       object: {
@@ -389,7 +414,11 @@ export const testWebhookEvents = {
   /**
    * Customer subscription updated event (plan change)
    */
-  customerSubscriptionUpdated: (customerId: string, subscriptionId: string, status: string) => ({
+  customerSubscriptionUpdated: (
+    customerId: string,
+    subscriptionId: string,
+    status: string,
+  ) => ({
     type: 'customer.subscription.updated',
     data: {
       object: {
@@ -403,7 +432,10 @@ export const testWebhookEvents = {
   /**
    * Customer subscription deleted event
    */
-  customerSubscriptionDeleted: (customerId: string, subscriptionId: string) => ({
+  customerSubscriptionDeleted: (
+    customerId: string,
+    subscriptionId: string,
+  ) => ({
     type: 'customer.subscription.deleted',
     data: {
       object: {
@@ -417,7 +449,11 @@ export const testWebhookEvents = {
   /**
    * Invoice payment succeeded event
    */
-  invoicePaymentSucceeded: (customerId: string, invoiceId: string, subscriptionId: string) => ({
+  invoicePaymentSucceeded: (
+    customerId: string,
+    invoiceId: string,
+    subscriptionId: string,
+  ) => ({
     type: 'invoice.payment_succeeded',
     data: {
       object: {
@@ -433,7 +469,11 @@ export const testWebhookEvents = {
   /**
    * Invoice payment failed event
    */
-  invoicePaymentFailed: (customerId: string, invoiceId: string, subscriptionId: string) => ({
+  invoicePaymentFailed: (
+    customerId: string,
+    invoiceId: string,
+    subscriptionId: string,
+  ) => ({
     type: 'invoice.payment_failed',
     data: {
       object: {
@@ -462,19 +502,19 @@ export const testWebhookEvents = {
       },
     },
   }),
-};
+}
 
 /**
  * Helper to generate realistic user IDs for testing
  */
 export function generateTestUserId(): string {
-  return `user_${Math.random().toString(36).substr(2, 9)}`;
+  return `user_${Math.random().toString(36).substr(2, 9)}`
 }
 
 /**
  * Helper to generate realistic email addresses for testing
  */
 export function generateTestEmail(): string {
-  const random = Math.random().toString(36).substr(2, 9);
-  return `test_${random}@example.com`;
+  const random = Math.random().toString(36).substr(2, 9)
+  return `test_${random}@example.com`
 }

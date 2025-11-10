@@ -5,22 +5,22 @@
  * Handles email template rendering, error handling, and notification tracking.
  */
 
-import { NotificationType } from '@ori/types';
+import { NotificationType } from '@ori/types'
 
 /**
  * Resend API client configuration
  * Uses environment variable RESEND_API_KEY
  */
 class ResendClient {
-  private apiKey: string;
-  private baseUrl = 'https://api.resend.com';
-  private fromEmail = 'noreply@getori.app';
-  private fromName = 'Ori';
+  private apiKey: string
+  private baseUrl = 'https://api.resend.com'
+  private fromEmail = 'noreply@getori.app'
+  private fromName = 'Ori'
 
   constructor() {
-    this.apiKey = process.env.RESEND_API_KEY || '';
+    this.apiKey = process.env.RESEND_API_KEY || ''
     if (!this.apiKey && process.env.NODE_ENV === 'production') {
-      throw new Error('RESEND_API_KEY environment variable is required');
+      throw new Error('RESEND_API_KEY environment variable is required')
     }
   }
 
@@ -28,14 +28,14 @@ class ResendClient {
    * Send email via Resend API
    */
   async send(params: {
-    to: string;
-    subject: string;
-    html: string;
-    text?: string;
-    replyTo?: string;
+    to: string
+    subject: string
+    html: string
+    text?: string
+    replyTo?: string
   }): Promise<{ id: string; from: string; to: string; created_at: string }> {
     if (!this.apiKey) {
-      return this.mockSend(params);
+      return this.mockSend(params)
     }
 
     try {
@@ -53,44 +53,47 @@ class ResendClient {
           text: params.text,
           reply_to: params.replyTo,
         }),
-      });
+      })
 
       if (!response.ok) {
-        throw new Error(`Resend API error: ${response.statusText}`);
+        throw new Error(`Resend API error: ${response.statusText}`)
       }
 
-      return response.json();
+      return response.json()
     } catch (error) {
-      throw new Error(`Failed to send email: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Failed to send email: ${error instanceof Error ? error.message : String(error)}`,
+      )
     }
   }
 
   /**
    * Mock send for testing/development
    */
-  private mockSend(params: {
-    to: string;
-    subject: string;
-    html: string;
-  }): { id: string; from: string; to: string; created_at: string } {
-    const id = `email_${Math.random().toString(36).substr(2, 9)}`;
+  private mockSend(params: { to: string; subject: string; html: string }): {
+    id: string
+    from: string
+    to: string
+    created_at: string
+  } {
+    const id = `email_${Math.random().toString(36).substr(2, 9)}`
     return {
       id,
       from: `${this.fromName} <${this.fromEmail}>`,
       to: params.to,
       created_at: new Date().toISOString(),
-    };
+    }
   }
 }
 
 // Singleton instance
-let resendClient: ResendClient | null = null;
+let resendClient: ResendClient | null = null
 
 export function getResendClient(): ResendClient {
   if (!resendClient) {
-    resendClient = new ResendClient();
+    resendClient = new ResendClient()
   }
-  return resendClient;
+  return resendClient
 }
 
 /**
@@ -102,16 +105,16 @@ export const emailService = {
    * Send welcome email
    */
   sendWelcome: async (email: string, name: string): Promise<{ id: string }> => {
-    const client = getResendClient();
-    const html = generateWelcomeTemplate(name);
+    const client = getResendClient()
+    const html = generateWelcomeTemplate(name)
 
     const response = await client.send({
       to: email,
       subject: 'Welcome to Ori - Your AI Career Companion',
       html,
-    });
+    })
 
-    return { id: response.id };
+    return { id: response.id }
   },
 
   /**
@@ -121,18 +124,18 @@ export const emailService = {
     email: string,
     name: string,
     amount: number,
-    currency: string = 'USD'
+    currency: string = 'USD',
   ): Promise<{ id: string }> => {
-    const client = getResendClient();
-    const html = generatePaymentFailureTemplate(name, amount, currency);
+    const client = getResendClient()
+    const html = generatePaymentFailureTemplate(name, amount, currency)
 
     const response = await client.send({
       to: email,
       subject: 'Payment Failed - Action Required',
       html,
-    });
+    })
 
-    return { id: response.id };
+    return { id: response.id }
   },
 
   /**
@@ -144,18 +147,24 @@ export const emailService = {
     brand: string,
     lastFour: string,
     expiryMonth: number,
-    expiryYear: number
+    expiryYear: number,
   ): Promise<{ id: string }> => {
-    const client = getResendClient();
-    const html = generateCardExpiringTemplate(name, brand, lastFour, expiryMonth, expiryYear);
+    const client = getResendClient()
+    const html = generateCardExpiringTemplate(
+      name,
+      brand,
+      lastFour,
+      expiryMonth,
+      expiryYear,
+    )
 
     const response = await client.send({
       to: email,
       subject: 'Your Payment Method Expires Soon',
       html,
-    });
+    })
 
-    return { id: response.id };
+    return { id: response.id }
   },
 
   /**
@@ -166,18 +175,23 @@ export const emailService = {
     name: string,
     daysRemaining: number,
     planName: string,
-    price: number
+    price: number,
   ): Promise<{ id: string }> => {
-    const client = getResendClient();
-    const html = generateTrialEndingTemplate(name, daysRemaining, planName, price);
+    const client = getResendClient()
+    const html = generateTrialEndingTemplate(
+      name,
+      daysRemaining,
+      planName,
+      price,
+    )
 
     const response = await client.send({
       to: email,
       subject: 'Your Free Trial Ends Soon',
       html,
-    });
+    })
 
-    return { id: response.id };
+    return { id: response.id }
   },
 
   /**
@@ -188,18 +202,23 @@ export const emailService = {
     name: string,
     planName: string,
     price: number,
-    billingCycle: 'monthly' | 'yearly'
+    billingCycle: 'monthly' | 'yearly',
   ): Promise<{ id: string }> => {
-    const client = getResendClient();
-    const html = generateSubscriptionConfirmationTemplate(name, planName, price, billingCycle);
+    const client = getResendClient()
+    const html = generateSubscriptionConfirmationTemplate(
+      name,
+      planName,
+      price,
+      billingCycle,
+    )
 
     const response = await client.send({
       to: email,
       subject: 'Subscription Confirmed',
       html,
-    });
+    })
 
-    return { id: response.id };
+    return { id: response.id }
   },
 
   /**
@@ -209,18 +228,18 @@ export const emailService = {
     email: string,
     name: string,
     jobCount: number,
-    topSkills: string[]
+    topSkills: string[],
   ): Promise<{ id: string }> => {
-    const client = getResendClient();
-    const html = generateRecommendationsTemplate(name, jobCount, topSkills);
+    const client = getResendClient()
+    const html = generateRecommendationsTemplate(name, jobCount, topSkills)
 
     const response = await client.send({
       to: email,
       subject: 'Your Weekly Job Recommendations',
       html,
-    });
+    })
 
-    return { id: response.id };
+    return { id: response.id }
   },
 
   /**
@@ -231,20 +250,25 @@ export const emailService = {
     name: string,
     jobTitle: string,
     company: string,
-    status: 'applied' | 'reviewing' | 'shortlisted' | 'rejected' | 'offer'
+    status: 'applied' | 'reviewing' | 'shortlisted' | 'rejected' | 'offer',
   ): Promise<{ id: string }> => {
-    const client = getResendClient();
-    const html = generateApplicationStatusTemplate(name, jobTitle, company, status);
+    const client = getResendClient()
+    const html = generateApplicationStatusTemplate(
+      name,
+      jobTitle,
+      company,
+      status,
+    )
 
     const response = await client.send({
       to: email,
       subject: 'Job Application Update',
       html,
-    });
+    })
 
-    return { id: response.id };
+    return { id: response.id }
   },
-};
+}
 
 // ============================================================================
 // EMAIL TEMPLATE GENERATORS (Brand-aligned HTML)
@@ -263,7 +287,7 @@ const brandColors = {
   border: '#e5e7eb',
   text: '#111827',
   textLight: '#6b7280',
-};
+}
 
 /**
  * Base email template wrapper
@@ -460,7 +484,7 @@ function baseTemplate(content: string, unsubscribeToken?: string): string {
         </div>
       </body>
     </html>
-  `;
+  `
 }
 
 /**
@@ -491,15 +515,19 @@ export function generateWelcomeTemplate(name: string): string {
     </center>
 
     <p style="margin-top: 20px; font-size: 13px;">Have questions? <a href="mailto:support@getori.app" style="color: ${brandColors.primary};">Reach out to our support team</a></p>
-  `;
+  `
 
-  return baseTemplate(content);
+  return baseTemplate(content)
 }
 
 /**
  * Payment failure template
  */
-export function generatePaymentFailureTemplate(name: string, amount: number, currency: string): string {
+export function generatePaymentFailureTemplate(
+  name: string,
+  amount: number,
+  currency: string,
+): string {
   const content = `
     <h2>Payment Failed ⚠️</h2>
     <p>Hi ${name},</p>
@@ -522,9 +550,9 @@ export function generatePaymentFailureTemplate(name: string, amount: number, cur
     </center>
 
     <p style="margin-top: 20px; font-size: 13px;">We'll retry the payment in a few days. If the issue persists, please contact our support team at <a href="mailto:support@getori.app" style="color: ${brandColors.primary};">support@getori.app</a></p>
-  `;
+  `
 
-  return baseTemplate(content);
+  return baseTemplate(content)
 }
 
 /**
@@ -535,7 +563,7 @@ export function generateCardExpiringTemplate(
   brand: string,
   lastFour: string,
   expiryMonth: number,
-  expiryYear: number
+  expiryYear: number,
 ): string {
   const content = `
     <h2>Your Payment Method Expires Soon 📅</h2>
@@ -552,15 +580,20 @@ export function generateCardExpiringTemplate(
     </center>
 
     <p style="margin-top: 20px; font-size: 13px;">If you have any questions, reach out to us at <a href="mailto:support@getori.app" style="color: ${brandColors.primary};">support@getori.app</a></p>
-  `;
+  `
 
-  return baseTemplate(content);
+  return baseTemplate(content)
 }
 
 /**
  * Trial ending template
  */
-export function generateTrialEndingTemplate(name: string, daysRemaining: number, planName: string, price: number): string {
+export function generateTrialEndingTemplate(
+  name: string,
+  daysRemaining: number,
+  planName: string,
+  price: number,
+): string {
   const content = `
     <h2>Your Free Trial Ends ${daysRemaining === 1 ? 'Tomorrow' : `in ${daysRemaining} Days`} ⏰</h2>
     <p>Hi ${name},</p>
@@ -582,9 +615,9 @@ export function generateTrialEndingTemplate(name: string, daysRemaining: number,
     </center>
 
     <p style="margin-top: 20px; font-size: 13px;">Need help deciding? <a href="mailto:support@getori.app" style="color: ${brandColors.primary};">Contact our team</a> for a personalized recommendation.</p>
-  `;
+  `
 
-  return baseTemplate(content);
+  return baseTemplate(content)
 }
 
 /**
@@ -594,12 +627,13 @@ export function generateSubscriptionConfirmationTemplate(
   name: string,
   planName: string,
   price: number,
-  billingCycle: 'monthly' | 'yearly'
+  billingCycle: 'monthly' | 'yearly',
 ): string {
-  const cycleText = billingCycle === 'monthly' ? 'per month' : 'per year';
-  const nextBillingDate = billingCycle === 'monthly'
-    ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()
-    : new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toLocaleDateString();
+  const cycleText = billingCycle === 'monthly' ? 'per month' : 'per year'
+  const nextBillingDate =
+    billingCycle === 'monthly'
+      ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()
+      : new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toLocaleDateString()
 
   const content = `
     <h2>Subscription Confirmed ✓</h2>
@@ -632,16 +666,20 @@ export function generateSubscriptionConfirmationTemplate(
     </center>
 
     <p style="margin-top: 20px; font-size: 13px;">You can manage your subscription at any time in your <a href="https://app.getori.app/settings/billing" style="color: ${brandColors.primary};">billing settings</a>.</p>
-  `;
+  `
 
-  return baseTemplate(content);
+  return baseTemplate(content)
 }
 
 /**
  * Recommendations template
  */
-export function generateRecommendationsTemplate(name: string, jobCount: number, topSkills: string[]): string {
-  const skillsList = topSkills.slice(0, 5).join(', ');
+export function generateRecommendationsTemplate(
+  name: string,
+  jobCount: number,
+  topSkills: string[],
+): string {
+  const skillsList = topSkills.slice(0, 5).join(', ')
 
   const content = `
     <h2>Your Weekly Job Recommendations 📋</h2>
@@ -667,9 +705,9 @@ export function generateRecommendationsTemplate(name: string, jobCount: number, 
     </ul>
 
     <p style="margin-top: 20px; font-size: 13px;">Not interested in weekly emails? <a href="https://app.getori.app/settings/notifications" style="color: ${brandColors.primary};">Manage your preferences</a></p>
-  `;
+  `
 
-  return baseTemplate(content);
+  return baseTemplate(content)
 }
 
 /**
@@ -679,37 +717,45 @@ export function generateApplicationStatusTemplate(
   name: string,
   jobTitle: string,
   company: string,
-  status: 'applied' | 'reviewing' | 'shortlisted' | 'rejected' | 'offer'
+  status: 'applied' | 'reviewing' | 'shortlisted' | 'rejected' | 'offer',
 ): string {
-  const statusMessages: Record<string, { title: string; message: string; color: string }> = {
+  const statusMessages: Record<
+    string,
+    { title: string; message: string; color: string }
+  > = {
     applied: {
       title: 'Application Submitted',
-      message: "Your application has been sent! We'll notify you when the company reviews it.",
+      message:
+        "Your application has been sent! We'll notify you when the company reviews it.",
       color: '#3b82f6',
     },
     reviewing: {
       title: 'Under Review',
-      message: 'The company is reviewing your application. Good things take time!',
+      message:
+        'The company is reviewing your application. Good things take time!',
       color: '#f59e0b',
     },
     shortlisted: {
-      title: 'Great News! You\'re Shortlisted',
-      message: 'Congratulations! The company would like to move forward with your application.',
+      title: "Great News! You're Shortlisted",
+      message:
+        'Congratulations! The company would like to move forward with your application.',
       color: '#10b981',
     },
     rejected: {
       title: 'Application Status',
-      message: 'While this role wasn\'t a match, don\'t worry! We have many other opportunities for you.',
+      message:
+        "While this role wasn't a match, don't worry! We have many other opportunities for you.",
       color: '#ef4444',
     },
     offer: {
       title: '🎉 Offer Received!',
-      message: 'Congratulations! You\'ve received an offer. This is a major milestone!',
+      message:
+        "Congratulations! You've received an offer. This is a major milestone!",
       color: '#10b981',
     },
-  };
+  }
 
-  const statusInfo = statusMessages[status] || statusMessages.applied;
+  const statusInfo = statusMessages[status] || statusMessages.applied
 
   const content = `
     <h2>${statusInfo.title}</h2>
@@ -720,7 +766,9 @@ export function generateApplicationStatusTemplate(
       <p style="color: ${brandColors.textLight}; margin-top: 8px; margin-bottom: 0;">${statusInfo.message}</p>
     </div>
 
-    ${status === 'shortlisted' ? `
+    ${
+      status === 'shortlisted'
+        ? `
       <p><strong>Next Steps:</strong></p>
       <ul style="margin: 15px 0; margin-left: 20px; color: ${brandColors.textLight}; font-size: 14px;">
         <li>Prepare for interviews with our AI advisor</li>
@@ -731,14 +779,16 @@ export function generateApplicationStatusTemplate(
       <center>
         <a href="https://app.getori.app/applications" class="button">Prepare for Interview</a>
       </center>
-    ` : `
+    `
+        : `
       <center>
         <a href="https://app.getori.app/applications" class="button">View Your Applications</a>
       </center>
-    `}
+    `
+    }
 
     <p style="margin-top: 20px; font-size: 13px;">Keep applying! Every application brings you closer to your dream role. <a href="https://app.getori.app/recommendations" style="color: ${brandColors.primary};">View more opportunities</a></p>
-  `;
+  `
 
-  return baseTemplate(content);
+  return baseTemplate(content)
 }

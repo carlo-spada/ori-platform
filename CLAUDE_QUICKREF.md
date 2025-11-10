@@ -1,7 +1,9 @@
 # CLAUDE QUICK REFERENCE CARD
+
 > Copy-paste commands for immediate action. No reading required.
 
 ## TASK MANAGEMENT
+
 ```bash
 # Claim task (auto-enforces WIP limit)
 ./scripts/task claim feature-x
@@ -19,6 +21,7 @@
 ```
 
 ## ADD API ENDPOINT (5 steps)
+
 ```bash
 # 1. Create handler
 touch services/core-api/src/routes/new-endpoint.js
@@ -36,11 +39,13 @@ touch src/hooks/useNewEndpoint.ts
 ```
 
 ## BEFORE COMMIT
+
 ```bash
 pnpm lint --fix && pnpm build && pnpm test
 ```
 
 ## BEFORE PR
+
 ```bash
 # Run all checks
 pnpm lint && pnpm build && pnpm test
@@ -56,15 +61,17 @@ gh pr create --title "feat: description" --body "## Summary
 ```
 
 ## SPECIALIZED AGENTS (Auto-triggered on PR)
-| File Change | Agent Triggered | Purpose |
-|------------|-----------------|---------|
+
+| File Change             | Agent Triggered          | Purpose                  |
+| ----------------------- | ------------------------ | ------------------------ |
 | `supabase/migrations/*` | schema-contract-sentinel | Prevent breaking changes |
-| `services/*/routes/*` | test-architect | Ensure test coverage |
-| Multi-service changes | flow-orchestrator | Integration safety |
-| Any PR | code-guardian | Code quality review |
-| `*.md` files | docs-dx-curator | Documentation quality |
+| `services/*/routes/*`   | test-architect           | Ensure test coverage     |
+| Multi-service changes   | flow-orchestrator        | Integration safety       |
+| Any PR                  | code-guardian            | Code quality review      |
+| `*.md` files            | docs-dx-curator          | Documentation quality    |
 
 ## GIT WORKFLOW
+
 ```bash
 # Start work
 git checkout dev && git pull
@@ -77,6 +84,7 @@ git checkout -b feat/branch-name
 ```
 
 ## REACT QUERY PATTERN
+
 ```typescript
 // API Client (src/integrations/api/endpoint.ts)
 export async function fetchData(): Promise<DataType> {
@@ -102,6 +110,7 @@ if (error) return <Error />
 ```
 
 ## COMMON PATHS
+
 ```
 Frontend:       src/
 ├── app/                  # Next.js pages (App Router)
@@ -121,6 +130,7 @@ Database:       supabase/migrations/   # Schema changes
 ```
 
 ## ENV FILES
+
 ```bash
 # Frontend (.env.local)
 NEXT_PUBLIC_SUPABASE_URL=https://...
@@ -137,27 +147,30 @@ EMBEDDING_MODEL=all-MiniLM-L6-v2
 ```
 
 ## PORTS
+
 - Frontend: `http://localhost:3000`
 - Core API: `http://localhost:3001`
 - AI Engine: `http://localhost:3002`
 
 ## TEST PATTERNS
+
 ```typescript
 // Frontend Mock (vitest)
 import { vi } from 'vitest'
 vi.mock('@/integrations/api/profile', () => ({
-  fetchProfile: vi.fn().mockResolvedValue({ id: '1', name: 'Test' })
+  fetchProfile: vi.fn().mockResolvedValue({ id: '1', name: 'Test' }),
 }))
 
 // Backend Mock (jest - mock Supabase completely)
 jest.mock('@supabase/supabase-js')
 const mockSupabase = {
   from: jest.fn().mockReturnThis(),
-  select: jest.fn().mockResolvedValue({ data: [], error: null })
+  select: jest.fn().mockResolvedValue({ data: [], error: null }),
 }
 ```
 
 ## CRITICAL RULES (AGENTIC WORKFLOW - 10x SPEED)
+
 1. **WIP Limit**: Max 5 tasks in progress (enforced by CLI)
 2. **Task Velocity**: Complete tasks within 30 hours (stale after 30hr)
 3. **Commit Frequency**: Every 15-30 minutes during active work
@@ -168,15 +181,17 @@ const mockSupabase = {
 8. **Use Agents**: They auto-review PRs for quality
 
 ## QUICK FIXES
-| Problem | Solution |
-|---------|----------|
-| WIP limit exceeded | `./scripts/task list wip` then complete/archive |
-| Type errors | `pnpm tsc --noEmit` to check |
-| Lint errors | `pnpm lint --fix` |
-| Tests fail | Check env vars in `setupFiles` (not `setupFilesAfterEnv`) |
-| Build fails | `pnpm build` locally before push |
+
+| Problem            | Solution                                                  |
+| ------------------ | --------------------------------------------------------- |
+| WIP limit exceeded | `./scripts/task list wip` then complete/archive           |
+| Type errors        | `pnpm tsc --noEmit` to check                              |
+| Lint errors        | `pnpm lint --fix`                                         |
+| Tests fail         | Check env vars in `setupFiles` (not `setupFilesAfterEnv`) |
+| Build fails        | `pnpm build` locally before push                          |
 
 ## TASK WORKFLOW (FAST PATH)
+
 ```bash
 # 1. Check what's available
 ./scripts/task list todo

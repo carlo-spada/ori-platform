@@ -83,10 +83,16 @@ router.get('/', authMiddleware, async (req: AuthRequest, res) => {
         // For now, we'll calculate a simulated count based on profile completeness
         // Full implementation would call: ${aiEngineUrl}/api/v1/match
         const profileScore = calculateProfileCompletion(profile)
-        recommendationsCount = profileScore >= 80 ? 8 :
-                              profileScore >= 60 ? 5 :
-                              profileScore >= 40 ? 3 :
-                              profileScore >= 20 ? 1 : 0
+        recommendationsCount =
+          profileScore >= 80
+            ? 8
+            : profileScore >= 60
+              ? 5
+              : profileScore >= 40
+                ? 3
+                : profileScore >= 20
+                  ? 1
+                  : 0
       } catch (error) {
         console.error('Failed to get job recommendations:', error)
         recommendationsCount = 0

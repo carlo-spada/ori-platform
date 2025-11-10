@@ -192,10 +192,10 @@ export function QualificationsSection({
       {/* Skills */}
       <section>
         <div className="mb-4">
-          <h3 className="text-foreground text-lg font-semibold">
+          <h3 className="text-lg font-semibold text-foreground">
             {labels.skillsHeading}
           </h3>
-          <p className="text-muted-foreground mt-1 text-sm">
+          <p className="mt-1 text-sm text-muted-foreground">
             {labels.skillsHelper}
           </p>
         </div>
@@ -205,7 +205,7 @@ export function QualificationsSection({
             {skills.map((skill) => (
               <span
                 key={skill.id}
-                className="border-accent/20 bg-accent/10 text-accent inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm"
+                className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/10 px-3 py-1.5 text-sm text-accent"
               >
                 {skill.name}
                 {onRemoveSkill && (
@@ -213,7 +213,7 @@ export function QualificationsSection({
                     type="button"
                     onClick={() => onRemoveSkill(skill.id)}
                     aria-label={`${labels.removeLabel} ${skill.name}`}
-                    className="focus-visible:ring-accent rounded-full transition-opacity hover:opacity-70 focus-visible:ring-2 focus-visible:outline-none"
+                    className="rounded-full transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   >
                     <X className="h-3 w-3" aria-hidden="true" />
                   </button>
@@ -222,7 +222,7 @@ export function QualificationsSection({
             ))}
           </div>
         ) : (
-          <p className="text-muted-foreground mb-4 text-sm">
+          <p className="mb-4 text-sm text-muted-foreground">
             {labels.emptySkills}
           </p>
         )}
@@ -233,7 +233,7 @@ export function QualificationsSection({
             value={newSkill}
             onChange={(e) => setNewSkill(e.target.value)}
             placeholder={labels.addSkillPlaceholder}
-            className="border-border bg-background text-foreground placeholder:text-muted-foreground focus:ring-accent flex-1 rounded-xl border px-4 py-2 transition-all focus:ring-2 focus:outline-none"
+            className="flex-1 rounded-xl border border-border bg-background px-4 py-2 text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent"
           />
           <Button type="submit" variant="outline" disabled={!newSkill.trim()}>
             <Plus className="mr-2 h-4 w-4" aria-hidden="true" />
@@ -245,10 +245,10 @@ export function QualificationsSection({
       {/* Work Experience */}
       <section>
         <div className="mb-4">
-          <h3 className="text-foreground text-lg font-semibold">
+          <h3 className="text-lg font-semibold text-foreground">
             {labels.experienceHeading}
           </h3>
-          <p className="text-muted-foreground mt-1 text-sm">
+          <p className="mt-1 text-sm text-muted-foreground">
             {labels.experienceHelper}
           </p>
         </div>
@@ -258,27 +258,27 @@ export function QualificationsSection({
             {experiences.map((exp) => (
               <article
                 key={exp.id}
-                className="border-border bg-card/30 hover:bg-card/50 rounded-xl border p-4 transition-colors"
+                className="rounded-xl border border-border bg-card/30 p-4 transition-colors hover:bg-card/50"
               >
                 <div className="flex items-start gap-3">
-                  <div className="bg-accent/10 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10">
                     <Briefcase
-                      className="text-accent h-5 w-5"
+                      className="h-5 w-5 text-accent"
                       aria-hidden="true"
                     />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h4 className="text-foreground font-semibold">
+                    <h4 className="font-semibold text-foreground">
                       {exp.role}
                     </h4>
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-sm text-muted-foreground">
                       {exp.company}
                     </p>
-                    <p className="text-muted-foreground mt-1 text-xs">
+                    <p className="mt-1 text-xs text-muted-foreground">
                       {formatDateRange(exp.startDate, exp.endDate)}
                     </p>
                     {exp.description && (
-                      <p className="text-muted-foreground mt-2 text-sm">
+                      <p className="mt-2 text-sm text-muted-foreground">
                         {exp.description}
                       </p>
                     )}
@@ -309,7 +309,7 @@ export function QualificationsSection({
             ))}
           </div>
         ) : (
-          <p className="text-muted-foreground mb-4 text-sm">
+          <p className="mb-4 text-sm text-muted-foreground">
             {labels.emptyExperience}
           </p>
         )}
@@ -327,10 +327,10 @@ export function QualificationsSection({
       {/* Education */}
       <section>
         <div className="mb-4">
-          <h3 className="text-foreground text-lg font-semibold">
+          <h3 className="text-lg font-semibold text-foreground">
             {labels.educationHeading}
           </h3>
-          <p className="text-muted-foreground mt-1 text-sm">
+          <p className="mt-1 text-sm text-muted-foreground">
             {labels.educationHelper}
           </p>
         </div>
@@ -340,27 +340,27 @@ export function QualificationsSection({
             {education.map((edu) => (
               <article
                 key={edu.id}
-                className="border-border bg-card/30 hover:bg-card/50 rounded-xl border p-4 transition-colors"
+                className="rounded-xl border border-border bg-card/30 p-4 transition-colors hover:bg-card/50"
               >
                 <div className="flex items-start gap-3">
-                  <div className="bg-accent/10 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10">
                     <GraduationCap
-                      className="text-accent h-5 w-5"
+                      className="h-5 w-5 text-accent"
                       aria-hidden="true"
                     />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h4 className="text-foreground font-semibold">
+                    <h4 className="font-semibold text-foreground">
                       {edu.degree}
                     </h4>
-                    <p className="text-muted-foreground text-sm">
+                    <p className="text-sm text-muted-foreground">
                       {edu.institution}
                     </p>
-                    <p className="text-muted-foreground mt-1 text-xs">
+                    <p className="mt-1 text-xs text-muted-foreground">
                       {formatDateRange(edu.startDate, edu.endDate)}
                     </p>
                     {edu.description && (
-                      <p className="text-muted-foreground mt-2 text-sm">
+                      <p className="mt-2 text-sm text-muted-foreground">
                         {edu.description}
                       </p>
                     )}
@@ -391,7 +391,7 @@ export function QualificationsSection({
             ))}
           </div>
         ) : (
-          <p className="text-muted-foreground mb-4 text-sm">
+          <p className="mb-4 text-sm text-muted-foreground">
             {labels.emptyEducation}
           </p>
         )}

@@ -24,6 +24,7 @@ Phase 3 implements a complete, production-ready email notification system for th
 ### 1. Database Migrations (Phase 3.2)
 
 #### `supabase/migrations/20251109000000_create_notifications_table.sql`
+
 - **Purpose**: Track all sent email notifications with delivery status
 - **Features**:
   - Notification type tracking (7 email types)
@@ -36,6 +37,7 @@ Phase 3 implements a complete, production-ready email notification system for th
   - Auto-updating timestamp triggers
 
 #### `supabase/migrations/20251109000001_create_notification_preferences_table.sql`
+
 - **Purpose**: Store user opt-in preferences for each email type
 - **Features**:
   - 7 email type preferences (boolean toggles)
@@ -49,6 +51,7 @@ Phase 3 implements a complete, production-ready email notification system for th
 ### 2. Type Definitions (Phase 3.2)
 
 Updated `shared/types/src/index.ts` with:
+
 - `NotificationType`: 7 email types (welcome, payment_failure, card_expiring, trial_ending, subscription_confirmation, recommendations, application_status)
 - `NotificationStatus`: 5 states (pending, sent, failed, bounced, complained)
 - `Notification` interface: Complete notification tracking
@@ -57,6 +60,7 @@ Updated `shared/types/src/index.ts` with:
 ### 3. Test Fixtures (Phase 3.2)
 
 `services/core-api/src/routes/__tests__/fixtures/email.fixtures.ts`
+
 - Test data factories for notifications and preferences
 - Complete scenario definitions for all 7 email types
 - Email template variable mappings
@@ -68,18 +72,22 @@ Updated `shared/types/src/index.ts` with:
 `services/core-api/src/lib/resend.ts` (700+ lines)
 
 #### ResendClient Class
+
 - Wrapper around Resend API with mock fallback
 - Handles email sending with error handling
 - Integrates with mock Resend responses for testing
 
 #### Brand-Aligned HTML Email Templates
+
 **Brand Colors**:
+
 - Primary Blue: #3b82f6
 - Secondary Dark Gray: #1f2937
 - Accent Green: #10b981
 - Warning Amber: #f59e0b
 
 **7 Email Templates**:
+
 1. **Welcome Email** - Onboarding for new users
    - Feature highlights list
    - Call-to-action to complete profile
@@ -123,12 +131,19 @@ Updated `shared/types/src/index.ts` with:
    - Application tracking link
 
 #### Email Service API
+
 ```typescript
 emailService.sendWelcome(email, name)
 emailService.sendPaymentFailure(email, name, amount, currency)
 emailService.sendCardExpiring(email, name, brand, lastFour, month, year)
 emailService.sendTrialEnding(email, name, daysRemaining, planName, price)
-emailService.sendSubscriptionConfirmation(email, name, planName, price, billingCycle)
+emailService.sendSubscriptionConfirmation(
+  email,
+  name,
+  planName,
+  price,
+  billingCycle,
+)
 emailService.sendRecommendations(email, name, jobCount, topSkills)
 emailService.sendApplicationStatus(email, name, jobTitle, company, status)
 ```
@@ -136,9 +151,11 @@ emailService.sendApplicationStatus(email, name, jobTitle, company, status)
 ### 5. Test Suites (Phase 3.3)
 
 #### Email Sending Tests (48 tests) ✅
+
 `services/core-api/src/routes/__tests__/emails.sending.test.ts`
 
 **Coverage**:
+
 - Welcome template rendering (5 tests)
 - Payment failure template (4 tests)
 - Card expiring template (3 tests)
@@ -154,6 +171,7 @@ emailService.sendApplicationStatus(email, name, jobTitle, company, status)
 - Complete scenarios (1 test)
 
 **Key Test Areas**:
+
 - Template rendering with correct content
 - Brand colors in HTML styling
 - CTA buttons with correct URLs
@@ -163,9 +181,11 @@ emailService.sendApplicationStatus(email, name, jobTitle, company, status)
 - Preference property mapping
 
 #### Webhook Integration Tests (24 tests) ✅
+
 `services/core-api/src/routes/__tests__/emails.webhooks.test.ts`
 
 **Coverage**:
+
 - Stripe webhook → email triggers (5 tests)
 - Webhook preference checking (3 tests)
 - Idempotency and duplicate prevention (2 tests)
@@ -177,6 +197,7 @@ emailService.sendApplicationStatus(email, name, jobTitle, company, status)
 - Multiple recipients (2 tests)
 
 **Key Test Areas**:
+
 - charge.failed → payment_failure email
 - customer.source.expiring.soon → card_expiring email
 - customer.subscription.trial_will_end → trial_ending email
@@ -190,9 +211,11 @@ emailService.sendApplicationStatus(email, name, jobTitle, company, status)
 - Email throttling within time windows
 
 #### Preference Management Tests (34 tests) ✅
+
 `services/core-api/src/routes/__tests__/emails.preferences.test.ts`
 
 **Coverage**:
+
 - Preference CRUD operations (4 tests)
 - Individual preference flags (7 tests)
 - Global unsubscribe functionality (5 tests)
@@ -204,6 +227,7 @@ emailService.sendApplicationStatus(email, name, jobTitle, company, status)
 - UI/UX scenarios (3 tests)
 
 **Key Test Areas**:
+
 - Create/read/update preference records
 - Unsubscribe token generation and uniqueness
 - Toggle individual email types
@@ -215,9 +239,11 @@ emailService.sendApplicationStatus(email, name, jobTitle, company, status)
 - Unsubscribe link generation per user
 
 #### Integration Tests (28 tests) ✅
+
 `services/core-api/src/routes/__tests__/emails.integration.test.ts`
 
 **Coverage**:
+
 - End-to-end flows (5 tests)
 - Duplicate prevention (2 tests)
 - User journey simulation (4 tests)
@@ -230,6 +256,7 @@ emailService.sendApplicationStatus(email, name, jobTitle, company, status)
 - Resend API integration (2 tests)
 
 **Key Test Areas**:
+
 - Signup → welcome email
 - Trial → trial ending email
 - Trial conversion → subscription confirmation email
@@ -251,6 +278,7 @@ Time:        0.28s
 ```
 
 ### Test Breakdown by Suite
+
 - **emails.sending.test.ts**: 48/48 ✅
 - **emails.webhooks.test.ts**: 24/24 ✅
 - **emails.preferences.test.ts**: 34/34 ✅
@@ -259,6 +287,7 @@ Time:        0.28s
 ## Architecture & Design
 
 ### Email Flow Architecture
+
 ```
 Stripe Webhook Event
     ↓
@@ -281,17 +310,19 @@ Resend Webhook Callbacks
 ```
 
 ### Email Type Routing
-| Stripe Event | Email Type | Preference Field |
-|---|---|---|
-| charge.failed | payment_failure | payment_failure_emails |
-| customer.source.expiring.soon | card_expiring | card_expiring_emails |
-| customer.subscription.trial_will_end | trial_ending | trial_ending_emails |
-| invoice.payment_succeeded | subscription_confirmation | subscription_emails |
-| Manual trigger | recommendations | recommendation_emails |
-| Manual trigger | application_status | application_status_emails |
-| user.created | welcome | (transactional) |
+
+| Stripe Event                         | Email Type                | Preference Field          |
+| ------------------------------------ | ------------------------- | ------------------------- |
+| charge.failed                        | payment_failure           | payment_failure_emails    |
+| customer.source.expiring.soon        | card_expiring             | card_expiring_emails      |
+| customer.subscription.trial_will_end | trial_ending              | trial_ending_emails       |
+| invoice.payment_succeeded            | subscription_confirmation | subscription_emails       |
+| Manual trigger                       | recommendations           | recommendation_emails     |
+| Manual trigger                       | application_status        | application_status_emails |
+| user.created                         | welcome                   | (transactional)           |
 
 ### Notification State Machine
+
 ```
 pending
 ├─→ sent (success)
@@ -305,6 +336,7 @@ failed → pending (retry after backoff)
 ## Key Features Implemented
 
 ### ✅ Brand-Aligned Email Design
+
 - Professional HTML templates with consistent styling
 - Responsive design (mobile-friendly)
 - Brand color palette throughout
@@ -312,6 +344,7 @@ failed → pending (retry after backoff)
 - Clear call-to-action buttons
 
 ### ✅ User Preference Management
+
 - Individual toggle for each email type
 - Global unsubscribe flag
 - Preference-specific unsubscribe tokens
@@ -319,6 +352,7 @@ failed → pending (retry after backoff)
 - Metadata support for future extensions
 
 ### ✅ Webhook Integration
+
 - Automatic email trigger on Stripe events
 - Idempotency key prevention of duplicates
 - Preference checking before sending
@@ -326,6 +360,7 @@ failed → pending (retry after backoff)
 - Error handling and retry logic
 
 ### ✅ Compliance & Security
+
 - Row Level Security on database tables
 - GDPR compliance (unsubscribe tracking)
 - Unique unsubscribe tokens
@@ -333,6 +368,7 @@ failed → pending (retry after backoff)
 - No unauth data exposure
 
 ### ✅ Reliability Features
+
 - Notification status tracking
 - Error message logging
 - Idempotency for webhook retries
@@ -340,6 +376,7 @@ failed → pending (retry after backoff)
 - Exponential backoff for retries
 
 ### ✅ Testing
+
 - 134 comprehensive tests
 - 100% test pass rate
 - Fixture-based test data
@@ -349,6 +386,7 @@ failed → pending (retry after backoff)
 ## Known Limitations & Future Work
 
 ### Phase 3.4 Remaining
+
 - API endpoints for notification management
 - Frontend notification settings UI
 - Webhook endpoint for Resend callbacks
@@ -356,6 +394,7 @@ failed → pending (retry after backoff)
 - A/B testing framework
 
 ### Future Enhancements
+
 - Dynamic email content based on user data
 - Email preview/testing interface
 - Campaign analytics and metrics
@@ -432,11 +471,13 @@ Create: services/core-api/src/routes/__tests__/emails.integration.test.ts (750+ 
 ## Testing the Phase
 
 To run all email tests:
+
 ```bash
 pnpm --filter @ori/core-api test -- emails
 ```
 
 To run individual test suites:
+
 ```bash
 pnpm --filter @ori/core-api test -- emails.sending.test.ts
 pnpm --filter @ori/core-api test -- emails.webhooks.test.ts

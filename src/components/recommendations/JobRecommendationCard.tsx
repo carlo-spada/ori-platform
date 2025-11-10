@@ -25,13 +25,13 @@ export function JobRecommendationCard({
   )
 
   return (
-    <article className="border-border bg-card hover:bg-card/80 flex flex-col gap-3 rounded-2xl border p-4 transition-colors">
+    <article className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:bg-card/80">
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1">
-          <h3 className="text-foreground mb-1 text-lg font-semibold">
+          <h3 className="mb-1 text-lg font-semibold text-foreground">
             {job.title}
           </h3>
-          <div className="text-muted-foreground flex flex-wrap items-center gap-2 text-sm">
+          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
             <span className="font-medium">{job.company}</span>
             {job.location && (
               <>
@@ -51,7 +51,7 @@ export function JobRecommendationCard({
         )}
       </div>
 
-      <p className="text-muted-foreground line-clamp-3 text-sm">
+      <p className="line-clamp-3 text-sm text-muted-foreground">
         {job.summary}
       </p>
 
@@ -64,7 +64,7 @@ export function JobRecommendationCard({
         />
       )}
 
-      <div className="text-muted-foreground flex items-center gap-1 text-xs">
+      <div className="flex items-center gap-1 text-xs text-muted-foreground">
         <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
         <time dateTime={job.datePosted}>{datePostedText}</time>
       </div>

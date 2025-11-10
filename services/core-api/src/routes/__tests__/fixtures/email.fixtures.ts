@@ -5,15 +5,22 @@
  * without relying on Resend API. Uses mock data matching Resend response format.
  */
 
-import { Notification, NotificationPreferences, NotificationType, NotificationStatus } from '@ori/types';
+import {
+  Notification,
+  NotificationPreferences,
+  NotificationType,
+  NotificationStatus,
+} from '@ori/types'
 
 /**
  * Test notification data factory
  * Generates unique notifications for testing email sending
  */
-export function createTestNotification(overrides?: Partial<Notification>): Notification {
-  const timestamp = new Date().toISOString();
-  const randomId = Math.random().toString(36).substr(2, 9);
+export function createTestNotification(
+  overrides?: Partial<Notification>,
+): Notification {
+  const timestamp = new Date().toISOString()
+  const randomId = Math.random().toString(36).substr(2, 9)
 
   return {
     id: `notif_test_${randomId}`,
@@ -28,7 +35,7 @@ export function createTestNotification(overrides?: Partial<Notification>): Notif
     created_at: timestamp,
     updated_at: timestamp,
     ...overrides,
-  };
+  }
 }
 
 /**
@@ -36,9 +43,9 @@ export function createTestNotification(overrides?: Partial<Notification>): Notif
  */
 export function createTestNotificationPreferences(
   userId?: string,
-  overrides?: Partial<NotificationPreferences>
+  overrides?: Partial<NotificationPreferences>,
 ): NotificationPreferences {
-  const timestamp = new Date().toISOString();
+  const timestamp = new Date().toISOString()
 
   return {
     id: `pref_test_${Math.random().toString(36).substr(2, 9)}`,
@@ -57,13 +64,16 @@ export function createTestNotificationPreferences(
     created_at: timestamp,
     updated_at: timestamp,
     ...overrides,
-  };
+  }
 }
 
 /**
  * Notification types and their corresponding email details
  */
-export const notificationEmailMap: Record<NotificationType, { subject: string; template: string }> = {
+export const notificationEmailMap: Record<
+  NotificationType,
+  { subject: string; template: string }
+> = {
   welcome: {
     subject: 'Welcome to Ori - Your AI Career Companion',
     template: 'welcome',
@@ -92,7 +102,7 @@ export const notificationEmailMap: Record<NotificationType, { subject: string; t
     subject: 'Job Application Update',
     template: 'application_status',
   },
-};
+}
 
 /**
  * Mock Resend email response
@@ -108,8 +118,10 @@ export interface MockResendEmailResponse {
 /**
  * Create mock Resend email response
  */
-export function createMockResendResponse(overrides?: Partial<MockResendEmailResponse>): MockResendEmailResponse {
-  const randomId = Math.random().toString(36).substr(2, 9);
+export function createMockResendResponse(
+  overrides?: Partial<MockResendEmailResponse>,
+): MockResendEmailResponse {
+  const randomId = Math.random().toString(36).substr(2, 9)
 
   return {
     id: `email_test_${randomId}`,
@@ -118,7 +130,7 @@ export function createMockResendResponse(overrides?: Partial<MockResendEmailResp
     created_at: new Date().toISOString(),
     subject: 'Test Email',
     ...overrides,
-  };
+  }
 }
 
 /**
@@ -195,7 +207,9 @@ export const notificationScenarios = {
     planName: 'Premium Monthly',
     price: 1000,
     billingCycle: 'monthly',
-    nextBillingDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+    nextBillingDate: new Date(
+      Date.now() + 30 * 24 * 60 * 60 * 1000,
+    ).toISOString(),
     preferences: createTestNotificationPreferences('user_sub_confirm', {
       subscription_emails: true,
     }),
@@ -229,7 +243,7 @@ export const notificationScenarios = {
       application_status_emails: true,
     }),
   },
-};
+}
 
 /**
  * Email template test data
@@ -313,14 +327,14 @@ export const emailTemplates = {
     actionUrl: 'https://app.getori.app/applications',
     actionText: 'View Application',
   },
-};
+}
 
 /**
  * Helper function to generate email HTML (mock)
  */
 export function generateEmailHTML(
   type: NotificationType,
-  variables: Record<string, unknown>
+  variables: Record<string, unknown>,
 ): string {
   const baseHTML = `
     <!DOCTYPE html>
@@ -352,24 +366,24 @@ export function generateEmailHTML(
         </div>
       </body>
     </html>
-  `;
+  `
 
-  return baseHTML;
+  return baseHTML
 }
 
 /**
  * Helper to generate unsubscribe link
  */
 export function generateUnsubscribeLink(token: string): string {
-  return `https://app.getori.app/unsubscribe?token=${token}`;
+  return `https://app.getori.app/unsubscribe?token=${token}`
 }
 
 /**
  * Validate email format
  */
 export function isValidEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
 }
 
 /**
@@ -382,41 +396,46 @@ export const notificationDatabaseFixtures = {
   createNotificationRecord: (
     userId: string,
     type: NotificationType,
-    status: NotificationStatus = 'sent'
+    status: NotificationStatus = 'sent',
   ): Notification => {
     return createTestNotification({
       user_id: userId,
       type,
       status,
-    });
+    })
   },
 
   /**
    * Create test preference record
    */
   createPreferenceRecord: (userId: string): NotificationPreferences => {
-    return createTestNotificationPreferences(userId);
+    return createTestNotificationPreferences(userId)
   },
 
   /**
    * Simulate notification history
    */
-  createNotificationHistory: (userId: string, count: number = 5): Notification[] => {
+  createNotificationHistory: (
+    userId: string,
+    count: number = 5,
+  ): Notification[] => {
     const types: NotificationType[] = [
       'welcome',
       'payment_failure',
       'card_expiring',
       'trial_ending',
       'subscription_confirmation',
-    ];
+    ]
 
     return Array.from({ length: count }, (_, index) =>
       createTestNotification({
         user_id: userId,
         type: types[index % types.length],
         status: 'sent',
-        created_at: new Date(Date.now() - (count - index) * 24 * 60 * 60 * 1000).toISOString(),
-      })
-    );
+        created_at: new Date(
+          Date.now() - (count - index) * 24 * 60 * 60 * 1000,
+        ).toISOString(),
+      }),
+    )
   },
-};
+}

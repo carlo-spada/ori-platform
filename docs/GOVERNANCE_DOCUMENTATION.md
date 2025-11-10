@@ -16,7 +16,7 @@
    - No gatekeeper role
 
 2. **No Naming Convention**
-   - Multiple docs with similar names (5+ MCP_INTEGRATION_* files)
+   - Multiple docs with similar names (5+ MCP*INTEGRATION*\* files)
    - No way to distinguish purpose from filename
    - Led to duplication
 
@@ -80,6 +80,7 @@ docs/
 ```
 
 **Rules**:
+
 - Only ONE canonical doc per topic
 - Cross-reference instead of duplicating
 - Clear folder = clear purpose
@@ -110,9 +111,10 @@ EXAMPLES (BAD - Don't do this):
 ```
 
 **Benefits**:
+
 - Filename tells you document type
 - Easier to find related docs
-- Prevents similar naming (can't have 5 MCP_* files)
+- Prevents similar naming (can't have 5 MCP\_\* files)
 - Single source obvious (only one CORE_MCP_ARCHITECTURE.md)
 
 ### 3. Documentation Quality Gate (Before Creating)
@@ -186,25 +188,31 @@ RIGHT (Single Source):
 # Document Title
 
 ## Quick Overview (5 min read)
+
 [Summary of key points]
 
 ## Table of Contents
+
 - [Section 1](#section-1)
 - [Section 2](#section-2)
 
 ## Section 1: Details
+
 [Detailed content]
 
 ## Section 2: More Details
+
 [More detailed content]
 
 ## Related Documents
+
 - See X for [topic]
 - See Y for [topic]
 - See archive/Z for [historical context]
 ```
 
 **Benefits**:
+
 - No duplication
 - Easy to update (one place to change)
 - Readers know where to go (single source)
@@ -225,25 +233,30 @@ RIGHT (Single Source):
 **Updated**: [DATE]
 
 ## Quick Start (5 minutes)
+
 - Read: [Link to quick overview]
 
 ## For Decision Makers (15 minutes)
+
 - Read: [Link 1]
 - Read: [Link 2]
 
 ## For Engineers (Implementation)
+
 - Before: [Setup/prerequisites]
 - During: [Step-by-step guide]
 - After: [Validation/testing]
 
 ## Reference & Learning
+
 - Architecture: [Link]
 - Deep Dive: [Link]
 - Archive: [Old docs]
 
 ## Document Descriptions
-| Name | Purpose | Time |
-|------|---------|------|
+
+| Name  | Purpose       | Time   |
+| ----- | ------------- | ------ |
 | Doc A | What it's for | 10 min |
 | Doc B | What it's for | 20 min |
 ```
@@ -326,6 +339,7 @@ find docs -name "*.md" -not -path "*/archive/*" -mtime +90 -exec ls -lh {} \;
 **When starting a new context, follow this:**
 
 1. **First Action**: Read the documentation index
+
    ```bash
    # Find and read the main documentation index
    cat docs/*INDEX*.md
@@ -334,6 +348,7 @@ find docs -name "*.md" -not -path "*/archive/*" -mtime +90 -exec ls -lh {} \;
    ```
 
 2. **Second Action**: Check what exists before creating
+
    ```bash
    # List all existing documentation
    ls -la docs/*.md
@@ -378,13 +393,13 @@ git commit -m "docs: consolidate stripe docs into single source of truth
 
 **Who decides about documentation:**
 
-| Question | Owner | Process |
-|----------|-------|---------|
-| Should we create a new doc? | Tech Lead | Review existing docs, check index |
-| Where should this doc go? | Tech Lead | Reference folder structure |
-| Is this a duplicate? | Reviewer | Check during PR review |
-| Should we consolidate? | Tech Lead | Monthly review |
-| Is this orphaned? | Any dev | Move to archive or add to index |
+| Question                    | Owner     | Process                               |
+| --------------------------- | --------- | ------------------------------------- |
+| Should we create a new doc? | Tech Lead | Review existing docs, check index     |
+| Where should this doc go?   | Tech Lead | Reference folder structure            |
+| Is this a duplicate?        | Reviewer  | Check during PR review                |
+| Should we consolidate?      | Tech Lead | Monthly review                        |
+| Is this orphaned?           | Any dev   | Move to archive or add to index       |
 | What's the standard format? | Tech Lead | Reference DOCUMENTATION_GOVERNANCE.md |
 
 ---
@@ -401,6 +416,7 @@ git commit -m "docs: consolidate stripe docs into single source of truth
 ### Long-term Prevention
 
 1. **PR Review Checklist** (add to GitHub)
+
    ```markdown
    - [ ] Does documentation exist for this feature?
    - [ ] Are you creating new docs or updating existing?
@@ -410,12 +426,14 @@ git commit -m "docs: consolidate stripe docs into single source of truth
    ```
 
 2. **CLAUDE.md Update** (add section)
+
    ```markdown
    ## Documentation Governance
 
    Before creating a new documentation file, see docs/DOCUMENTATION_GOVERNANCE.md
 
    Quick checklist:
+
    - Does this doc already exist?
    - Is it single source of truth for this topic?
    - Is it indexed/discoverable?
@@ -447,6 +465,7 @@ Monthly Documentation Health:
 ### Scenario: Need to document email system (like Phase 3)
 
 **WRONG APPROACH** (leads to explosion):
+
 ```
 ❌ Create EMAIL_NOTIFICATION_INFRASTRUCTURE_AUDIT.md
 ❌ Create EMAIL_INFRASTRUCTURE_QUICK_REFERENCE.md
@@ -462,6 +481,7 @@ Monthly Documentation Health:
    - Is there a phase documentation standard? YES (see PHASE2)
 
 2. **Create one consolidated doc**:
+
    ```
    STATUS_PHASE3_EMAIL_IMPLEMENTATION.md
    ├─ Overview (5 min)
@@ -483,12 +503,14 @@ Monthly Documentation Health:
 ## Conclusion: Prevention is Easier Than Cleanup
 
 **Cost of explosion** (what happened):
+
 - 50+ files created
 - 12 deleted, 13 archived
 - 3 new files to organize them
 - Hours spent on cleanup
 
 **Cost of prevention**:
+
 - 5 minutes: Check if doc exists
 - 5 minutes: Add to index
 - 5 minutes: Follow naming convention

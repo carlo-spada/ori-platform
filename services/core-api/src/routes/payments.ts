@@ -186,7 +186,9 @@ paymentWebhookRoutes.post('/', async (req, res, next) => {
           })
           .eq('stripe_customer_id', customerId)
 
-        console.log(`✅ Updated subscription for customer ${customerId}: ${subscriptionStatus}`)
+        console.log(
+          `✅ Updated subscription for customer ${customerId}: ${subscriptionStatus}`,
+        )
         break
       }
 
@@ -206,7 +208,9 @@ paymentWebhookRoutes.post('/', async (req, res, next) => {
           })
           .eq('stripe_customer_id', customerId)
 
-        console.log(`✅ Subscription created for customer ${customerId}: ${subscriptionStatus}`)
+        console.log(
+          `✅ Subscription created for customer ${customerId}: ${subscriptionStatus}`,
+        )
         break
       }
 
@@ -220,7 +224,10 @@ paymentWebhookRoutes.post('/', async (req, res, next) => {
         // Handle subscription status changes
         if (subscription.status === 'past_due') {
           subscriptionStatus = 'past_due'
-        } else if (subscription.status === 'canceled' || subscription.status === 'unpaid') {
+        } else if (
+          subscription.status === 'canceled' ||
+          subscription.status === 'unpaid'
+        ) {
           subscriptionStatus = 'cancelled'
         }
 
@@ -231,7 +238,9 @@ paymentWebhookRoutes.post('/', async (req, res, next) => {
           })
           .eq('stripe_customer_id', customerId)
 
-        console.log(`✅ Subscription updated for customer ${customerId}: ${subscriptionStatus}`)
+        console.log(
+          `✅ Subscription updated for customer ${customerId}: ${subscriptionStatus}`,
+        )
         break
       }
 
@@ -275,7 +284,9 @@ paymentWebhookRoutes.post('/', async (req, res, next) => {
           })
           .eq('stripe_customer_id', customerId)
 
-        console.log(`⚠️  Payment failed for customer ${customerId} - marked as past_due`)
+        console.log(
+          `⚠️  Payment failed for customer ${customerId} - marked as past_due`,
+        )
 
         // Send notification to user to update payment method
         await sendPaymentFailureNotification(supabase, customerId)
@@ -287,7 +298,9 @@ paymentWebhookRoutes.post('/', async (req, res, next) => {
         const source = event.data.object as { customer: string }
         const customerId = source.customer
 
-        console.log(`⚠️  Payment method expiring soon for customer ${customerId}`)
+        console.log(
+          `⚠️  Payment method expiring soon for customer ${customerId}`,
+        )
 
         // Send notification to user to update payment method
         await sendPaymentMethodExpiringNotification(supabase, customerId)

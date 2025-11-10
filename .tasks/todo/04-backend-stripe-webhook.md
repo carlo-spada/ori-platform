@@ -35,4 +35,5 @@ Implement a secure webhook endpoint in `services/core-api` to listen for Stripe 
 - New unit tests are added to verify the programmatic webhook configuration.
 
 ---
+
 **Note to Claude:** This task has been updated to include programmatic configuration of the Stripe webhook endpoint via the Stripe API, in addition to implementing the webhook listener. This ensures a higher level of automation and quality.

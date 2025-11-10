@@ -39,10 +39,10 @@ export function ValuePropositionSection() {
   return (
     <Section data-testid="values" className="bg-surface/50">
       <div className="mb-12 text-center">
-        <h2 className="text-foreground mb-4 text-3xl font-semibold sm:text-4xl">
+        <h2 className="mb-4 text-3xl font-semibold text-foreground sm:text-4xl">
           {t('landing.whyOri.title')}
         </h2>
-        <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
+        <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
           {t('landing.whyOri.subtitle')}
         </p>
       </div>
@@ -53,20 +53,20 @@ export function ValuePropositionSection() {
           return (
             <Card
               key={value.title}
-              className="border-border bg-card hover:border-accent/50 p-6 transition-colors duration-200"
+              className="border-border bg-card p-6 transition-colors duration-200 hover:border-accent/50"
             >
               {Icon && (
                 <div
-                  className="bg-accent/10 mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl"
+                  className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10"
                   aria-hidden="true"
                 >
-                  <Icon className="text-accent h-6 w-6" />
+                  <Icon className="h-6 w-6 text-accent" />
                 </div>
               )}
-              <h3 className="text-foreground mb-2 text-lg font-semibold">
+              <h3 className="mb-2 text-lg font-semibold text-foreground">
                 {value.title}
               </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
+              <p className="text-sm leading-relaxed text-muted-foreground">
                 {value.description}
               </p>
             </Card>

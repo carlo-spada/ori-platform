@@ -19,7 +19,7 @@ export function PostLayout({ post }: PostLayoutProps) {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
-      <Button asChild variant="ghost" size="sm" className="mb-8 -ml-2">
+      <Button asChild variant="ghost" size="sm" className="-ml-2 mb-8">
         <Link href="/blog" className="flex items-center gap-2">
           <ArrowLeft className="h-4 w-4" />
           {t('blogPage.post.backToBlogLabel')}
@@ -31,19 +31,19 @@ export function PostLayout({ post }: PostLayoutProps) {
         <header className="mb-8">
           {post.category && (
             <div className="mb-4">
-              <span className="text-primary inline-block text-sm font-medium tracking-wide uppercase">
+              <span className="inline-block text-sm font-medium uppercase tracking-wide text-primary">
                 {post.category}
               </span>
             </div>
           )}
 
-          <h1 className="text-foreground mb-6 text-4xl font-bold sm:text-5xl lg:text-6xl">
+          <h1 className="mb-6 text-4xl font-bold text-foreground sm:text-5xl lg:text-6xl">
             {post.title}
           </h1>
 
           {/* Metadata */}
-          <div className="text-muted-foreground flex flex-wrap items-center gap-4 text-sm">
-            <span className="text-foreground font-medium">{post.author}</span>
+          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+            <span className="font-medium text-foreground">{post.author}</span>
             <span aria-hidden="true">•</span>
             <time dateTime={post.date}>{formattedDate}</time>
             <span aria-hidden="true">•</span>
@@ -59,7 +59,7 @@ export function PostLayout({ post }: PostLayoutProps) {
               {post.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="bg-muted text-muted-foreground inline-block rounded-full px-3 py-1 text-xs font-medium"
+                  className="inline-block rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground"
                 >
                   {tag}
                 </span>
@@ -70,7 +70,7 @@ export function PostLayout({ post }: PostLayoutProps) {
 
         {/* Feature Image */}
         {post.featureImageUrl && (
-          <div className="bg-muted relative mb-8 aspect-[16/9] overflow-hidden rounded-xl">
+          <div className="relative mb-8 aspect-[16/9] overflow-hidden rounded-xl bg-muted">
             <Image
               src={post.featureImageUrl}
               alt={post.title}
@@ -89,7 +89,7 @@ export function PostLayout({ post }: PostLayoutProps) {
       </article>
 
       {/* Post Footer */}
-      <footer className="border-border mt-16 border-t pt-8">
+      <footer className="mt-16 border-t border-border pt-8">
         <Button asChild variant="outline" size="lg">
           <Link href="/blog" className="flex items-center gap-2">
             <ArrowLeft className="h-4 w-4" />

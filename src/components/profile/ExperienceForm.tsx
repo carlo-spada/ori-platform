@@ -100,7 +100,7 @@ export function ExperienceForm({
           aria-describedby={errors.company ? 'company-error' : undefined}
         />
         {errors.company && (
-          <p id="company-error" className="text-destructive text-sm">
+          <p id="company-error" className="text-sm text-destructive">
             {errors.company}
           </p>
         )}
@@ -119,7 +119,7 @@ export function ExperienceForm({
           aria-describedby={errors.role ? 'role-error' : undefined}
         />
         {errors.role && (
-          <p id="role-error" className="text-destructive text-sm">
+          <p id="role-error" className="text-sm text-destructive">
             {errors.role}
           </p>
         )}
@@ -137,7 +137,7 @@ export function ExperienceForm({
           aria-describedby={errors.startDate ? 'startDate-error' : undefined}
         />
         {errors.startDate && (
-          <p id="startDate-error" className="text-destructive text-sm">
+          <p id="startDate-error" className="text-sm text-destructive">
             {errors.startDate}
           </p>
         )}

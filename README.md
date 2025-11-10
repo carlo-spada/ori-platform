@@ -33,6 +33,7 @@ The platform uses subdomain-based routing for clean separation of concerns:
 - **`app.getori.app`** - Application (dashboard, profile, applications, login, signup)
 
 This architecture provides:
+
 - Clear mental model for users (marketing vs. app)
 - Clean URLs on app subdomain (`/dashboard` instead of `/app/dashboard`)
 - PWA that opens directly to the app subdomain
@@ -117,6 +118,7 @@ You will need to run three separate services in different terminal windows.
 We're currently refactoring Phases 2 and 3 to use **MCP (Model Context Protocol)** servers instead of direct API integrations for better security, maintainability, and architecture consistency.
 
 **Quick Links**:
+
 - **[`docs/NEXT_STEPS.md`](./docs/NEXT_STEPS.md)** - What's happening and what's next (start here!)
 - **[`docs/MCP_REFACTORING_PLAN.md`](./docs/MCP_REFACTORING_PLAN.md)** - Detailed implementation strategy
 - **[`docs/MCP_DOCUMENTATION_INDEX.md`](./docs/MCP_DOCUMENTATION_INDEX.md)** - Complete guide to all MCP documentation

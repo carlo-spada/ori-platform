@@ -53,7 +53,7 @@ export function GoalsStep({ value, copy, onChange }: GoalsStepProps) {
     <div className="flex flex-col gap-6 py-4">
       <div className="space-y-2">
         <h2 className="text-xl font-semibold sm:text-2xl">{copy.headline}</h2>
-        <p className="text-muted-foreground text-sm">{copy.description}</p>
+        <p className="text-sm text-muted-foreground">{copy.description}</p>
       </div>
 
       <div className="space-y-5">
@@ -86,7 +86,7 @@ export function GoalsStep({ value, copy, onChange }: GoalsStepProps) {
               Add
             </Button>
           </div>
-          <p className="text-muted-foreground text-xs">{copy.helper}</p>
+          <p className="text-xs text-muted-foreground">{copy.helper}</p>
 
           {value.targetRoles.length > 0 && (
             <div className="flex min-h-[60px] flex-wrap gap-2 rounded-lg border border-white/10 bg-white/[0.02] p-3">

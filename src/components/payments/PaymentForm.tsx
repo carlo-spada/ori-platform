@@ -1,13 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import {
-  PaymentElement,
-  useStripe,
-  useElements,
-} from '@stripe/react-stripe-js'
+import { PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { Button } from '@/components/ui/button'
-import { createSetupIntent, createSubscription } from '@/integrations/api/payments'
+import {
+  createSetupIntent,
+  createSubscription,
+} from '@/integrations/api/payments'
 import { toast } from 'sonner'
 
 interface PaymentFormProps {
@@ -32,7 +31,10 @@ export function PaymentForm({ planId, onSuccess, onCancel }: PaymentFormProps) {
         setClientSecret(clientSecret)
       } catch (error: unknown) {
         console.error('Error creating setup intent:', error)
-        const message = error instanceof Error ? error.message : 'Failed to initialize payment'
+        const message =
+          error instanceof Error
+            ? error.message
+            : 'Failed to initialize payment'
         toast.error(message)
         onCancel()
       } finally {
@@ -54,11 +56,10 @@ export function PaymentForm({ planId, onSuccess, onCancel }: PaymentFormProps) {
 
     try {
       // Confirm the Setup Intent
-      const { error: confirmError, setupIntent } =
-        await stripe.confirmSetup({
-          elements,
-          redirect: 'if_required',
-        })
+      const { error: confirmError, setupIntent } = await stripe.confirmSetup({
+        elements,
+        redirect: 'if_required',
+      })
 
       if (confirmError) {
         toast.error(confirmError.message || 'Payment failed')
@@ -73,16 +74,14 @@ export function PaymentForm({ planId, onSuccess, onCancel }: PaymentFormProps) {
       }
 
       // Create subscription with the payment method
-      await createSubscription(
-        planId,
-        setupIntent.payment_method as string,
-      )
+      await createSubscription(planId, setupIntent.payment_method as string)
 
       toast.success('Subscription created successfully!')
       onSuccess()
     } catch (error: unknown) {
       console.error('Error processing payment:', error)
-      const message = error instanceof Error ? error.message : 'Failed to create subscription'
+      const message =
+        error instanceof Error ? error.message : 'Failed to create subscription'
       toast.error(message)
       setIsProcessing(false)
     }
@@ -92,9 +91,9 @@ export function PaymentForm({ planId, onSuccess, onCancel }: PaymentFormProps) {
     return (
       <div className="flex items-center justify-center py-12">
         <div className="flex items-center gap-2">
-          <div className="bg-accent h-2 w-2 animate-pulse rounded-full" />
-          <div className="bg-accent h-2 w-2 animate-pulse rounded-full [animation-delay:150ms]" />
-          <div className="bg-accent h-2 w-2 animate-pulse rounded-full [animation-delay:300ms]" />
+          <div className="h-2 w-2 animate-pulse rounded-full bg-accent" />
+          <div className="h-2 w-2 animate-pulse rounded-full bg-accent [animation-delay:150ms]" />
+          <div className="h-2 w-2 animate-pulse rounded-full bg-accent [animation-delay:300ms]" />
         </div>
       </div>
     )

@@ -68,7 +68,9 @@ export async function sendPaymentFailureNotification(
   }
 
   // Get user email from auth
-  const { data: { user } } = await supabase.auth.admin.getUserById(profile.user_id)
+  const {
+    data: { user },
+  } = await supabase.auth.admin.getUserById(profile.user_id)
 
   if (!user?.email) {
     console.error(`User email not found for user ${profile.user_id}`)
@@ -103,7 +105,9 @@ export async function sendPaymentMethodExpiringNotification(
   }
 
   // Get user email from auth
-  const { data: { user } } = await supabase.auth.admin.getUserById(profile.user_id)
+  const {
+    data: { user },
+  } = await supabase.auth.admin.getUserById(profile.user_id)
 
   if (!user?.email) {
     console.error(`User email not found for user ${profile.user_id}`)

@@ -15,7 +15,7 @@
  * - Subscription state transition errors
  */
 
-import { describe, it, expect, beforeEach } from '@jest/globals';
+import { describe, it, expect, beforeEach } from '@jest/globals'
 import {
   createTestCustomer,
   createTestSubscription,
@@ -24,17 +24,17 @@ import {
   testPlans,
   testScenarios,
   generateTestEmail,
-} from './fixtures/stripe.fixtures';
+} from './fixtures/stripe.fixtures'
 import {
   createMockSupabaseClient,
   generateTestUserId,
   createTestWebhookSignature,
   verifyWebhookSignature,
-} from './fixtures/test-setup';
+} from './fixtures/test-setup'
 
 describe('Payment Error Handling - Webhook Security', () => {
-  let webhookPayload: string;
-  let secret: string;
+  let webhookPayload: string
+  let secret: string
 
   beforeEach(() => {
     webhookPayload = JSON.stringify({
@@ -47,61 +47,77 @@ describe('Payment Error Handling - Webhook Security', () => {
           payment_status: 'paid',
         },
       },
-    });
-    secret = 'whsec_test_secret_key';
-  });
+    })
+    secret = 'whsec_test_secret_key'
+  })
 
   describe('Webhook signature validation', () => {
     it('should reject webhook with invalid signature', () => {
       // Arrange
-      const validSignature = createTestWebhookSignature(webhookPayload, secret);
-      const invalidSignature = 'invalid_signature_format';
+      const validSignature = createTestWebhookSignature(webhookPayload, secret)
+      const invalidSignature = 'invalid_signature_format'
 
       // Act
-      const isValid = verifyWebhookSignature(webhookPayload, invalidSignature, secret);
+      const isValid = verifyWebhookSignature(
+        webhookPayload,
+        invalidSignature,
+        secret,
+      )
 
       // Assert
-      expect(isValid).toBe(false);
-    });
+      expect(isValid).toBe(false)
+    })
 
     it('should reject webhook with missing timestamp in signature', () => {
       // Arrange
-      const invalidSignature = 'v1=invalid_without_timestamp';
+      const invalidSignature = 'v1=invalid_without_timestamp'
 
       // Act
-      const isValid = verifyWebhookSignature(webhookPayload, invalidSignature, secret);
+      const isValid = verifyWebhookSignature(
+        webhookPayload,
+        invalidSignature,
+        secret,
+      )
 
       // Assert
-      expect(isValid).toBe(false);
-    });
+      expect(isValid).toBe(false)
+    })
 
     it('should reject webhook with missing version prefix in signature', () => {
       // Arrange
-      const timestamp = Math.floor(Date.now() / 1000);
-      const invalidSignature = `t=${timestamp},invalid_no_version`;
+      const timestamp = Math.floor(Date.now() / 1000)
+      const invalidSignature = `t=${timestamp},invalid_no_version`
 
       // Act
-      const isValid = verifyWebhookSignature(webhookPayload, invalidSignature, secret);
+      const isValid = verifyWebhookSignature(
+        webhookPayload,
+        invalidSignature,
+        secret,
+      )
 
       // Assert
-      expect(isValid).toBe(false);
-    });
+      expect(isValid).toBe(false)
+    })
 
     it('should accept valid webhook signature format', () => {
       // Arrange
-      const validSignature = createTestWebhookSignature(webhookPayload, secret);
+      const validSignature = createTestWebhookSignature(webhookPayload, secret)
 
       // Act
-      const isValid = verifyWebhookSignature(webhookPayload, validSignature, secret);
+      const isValid = verifyWebhookSignature(
+        webhookPayload,
+        validSignature,
+        secret,
+      )
 
       // Assert
-      expect(isValid).toBe(true);
-    });
+      expect(isValid).toBe(true)
+    })
 
     it('should reject webhook with expired timestamp', () => {
       // Arrange
-      const expiredTimestamp = Math.floor(Date.now() / 1000) - 400; // 400 seconds old
-      const expiredSignature = `t=${expiredTimestamp},v1=test_signature`;
+      const expiredTimestamp = Math.floor(Date.now() / 1000) - 400 // 400 seconds old
+      const expiredSignature = `t=${expiredTimestamp},v1=test_signature`
 
       // Act & Assert
       /**
@@ -112,9 +128,9 @@ describe('Payment Error Handling - Webhook Security', () => {
        *   throw new Error('Webhook timestamp too old');
        * }
        */
-      expect(expiredSignature).toBeDefined();
-    });
-  });
+      expect(expiredSignature).toBeDefined()
+    })
+  })
 
   describe('Webhook signature tampering detection', () => {
     it('should document tampering detection requirement', () => {
@@ -147,8 +163,8 @@ describe('Payment Error Handling - Webhook Security', () => {
        *   );
        * }
        */
-      expect(true).toBe(true);
-    });
+      expect(true).toBe(true)
+    })
 
     it('should document wrong secret detection requirement', () => {
       /**
@@ -170,10 +186,10 @@ describe('Payment Error Handling - Webhook Security', () => {
        * - Rotate secret periodically
        * - Use constant-time comparison (prevents timing attacks)
        */
-      expect(true).toBe(true);
-    });
-  });
-});
+      expect(true).toBe(true)
+    })
+  })
+})
 
 describe('Payment Error Handling - Webhook Data Validation', () => {
   describe('Missing or invalid webhook data', () => {
@@ -187,11 +203,11 @@ describe('Payment Error Handling - Webhook Data Validation', () => {
             id: 'cs_test_123',
           },
         },
-      };
+      }
 
       // Act & Assert
-      expect(invalidEvent.type).toBeUndefined();
-    });
+      expect(invalidEvent.type).toBeUndefined()
+    })
 
     it('should handle webhook with missing data object', () => {
       // Arrange
@@ -199,11 +215,11 @@ describe('Payment Error Handling - Webhook Data Validation', () => {
         id: 'evt_test_123',
         type: 'checkout.session.completed',
         // data is missing
-      };
+      }
 
       // Act & Assert
-      expect((invalidEvent as any).data).toBeUndefined();
-    });
+      expect((invalidEvent as any).data).toBeUndefined()
+    })
 
     it('should handle webhook with null data object', () => {
       // Arrange
@@ -211,11 +227,11 @@ describe('Payment Error Handling - Webhook Data Validation', () => {
         id: 'evt_test_123',
         type: 'checkout.session.completed',
         data: null,
-      };
+      }
 
       // Act & Assert
-      expect(invalidEvent.data).toBeNull();
-    });
+      expect(invalidEvent.data).toBeNull()
+    })
 
     it('should handle webhook with missing object in data', () => {
       // Arrange
@@ -225,11 +241,11 @@ describe('Payment Error Handling - Webhook Data Validation', () => {
         data: {
           // object is missing
         },
-      };
+      }
 
       // Act & Assert
-      expect((invalidEvent.data as any).object).toBeUndefined();
-    });
+      expect((invalidEvent.data as any).object).toBeUndefined()
+    })
 
     it('should validate required fields in checkout.session.completed', () => {
       // Act
@@ -240,14 +256,14 @@ describe('Payment Error Handling - Webhook Data Validation', () => {
             // Missing required: id, customer, subscription, payment_status
           },
         },
-      };
+      }
 
       // Assert
-      expect((invalidEvent.data.object as any).id).toBeUndefined();
-      expect((invalidEvent.data.object as any).customer).toBeUndefined();
-      expect((invalidEvent.data.object as any).subscription).toBeUndefined();
-      expect((invalidEvent.data.object as any).payment_status).toBeUndefined();
-    });
+      expect((invalidEvent.data.object as any).id).toBeUndefined()
+      expect((invalidEvent.data.object as any).customer).toBeUndefined()
+      expect((invalidEvent.data.object as any).subscription).toBeUndefined()
+      expect((invalidEvent.data.object as any).payment_status).toBeUndefined()
+    })
 
     it('should validate required fields in customer.subscription.created', () => {
       // Act
@@ -258,14 +274,14 @@ describe('Payment Error Handling - Webhook Data Validation', () => {
             // Missing required: id, customer, status
           },
         },
-      };
+      }
 
       // Assert
-      expect((invalidEvent.data.object as any).id).toBeUndefined();
-      expect((invalidEvent.data.object as any).customer).toBeUndefined();
-      expect((invalidEvent.data.object as any).status).toBeUndefined();
-    });
-  });
+      expect((invalidEvent.data.object as any).id).toBeUndefined()
+      expect((invalidEvent.data.object as any).customer).toBeUndefined()
+      expect((invalidEvent.data.object as any).status).toBeUndefined()
+    })
+  })
 
   describe('Webhook event type validation', () => {
     it('should identify supported webhook event types', () => {
@@ -278,21 +294,21 @@ describe('Payment Error Handling - Webhook Data Validation', () => {
         'invoice.payment_succeeded',
         'invoice.payment_failed',
         'customer.source.expiring',
-      ];
+      ]
 
       // Act & Assert
-      supportedTypes.forEach(type => {
-        expect(type).toBeDefined();
-        expect(type).toMatch(/^\w+\.\w+(\.\w+)?$/); // Stripe event format
-      });
-    });
+      supportedTypes.forEach((type) => {
+        expect(type).toBeDefined()
+        expect(type).toMatch(/^\w+\.\w+(\.\w+)?$/) // Stripe event format
+      })
+    })
 
     it('should reject unknown webhook event types', () => {
       // Arrange
       const unknownEvent = {
         type: 'unknown.event.type',
         data: { object: {} },
-      };
+      }
 
       // Act & Assert
       const supportedTypes = [
@@ -303,11 +319,11 @@ describe('Payment Error Handling - Webhook Data Validation', () => {
         'invoice.payment_succeeded',
         'invoice.payment_failed',
         'customer.source.expiring',
-      ];
-      expect(supportedTypes).not.toContain(unknownEvent.type);
-    });
-  });
-});
+      ]
+      expect(supportedTypes).not.toContain(unknownEvent.type)
+    })
+  })
+})
 
 describe('Payment Error Handling - Duplicate Event Processing', () => {
   describe('Webhook idempotency', () => {
@@ -347,48 +363,52 @@ describe('Payment Error Handling - Duplicate Event Processing', () => {
        *   created_at TIMESTAMP DEFAULT NOW()
        * );
        */
-      expect(true).toBe(true);
-    });
+      expect(true).toBe(true)
+    })
 
     it('should track processed webhook events to prevent duplicates', () => {
       // Arrange
-      const eventId = 'evt_test_' + Math.random().toString(36).substr(2, 9);
-      const processedEvents = new Set<string>();
+      const eventId = 'evt_test_' + Math.random().toString(36).substr(2, 9)
+      const processedEvents = new Set<string>()
 
       // Act
-      processedEvents.add(eventId);
-      const isDuplicate = processedEvents.has(eventId);
+      processedEvents.add(eventId)
+      const isDuplicate = processedEvents.has(eventId)
 
       // Assert
-      expect(isDuplicate).toBe(true);
-    });
+      expect(isDuplicate).toBe(true)
+    })
 
     it('should handle receiving same event twice', () => {
       // Arrange
-      const eventId = 'evt_test_duplicate';
-      const eventLog: Array<{ eventId: string; timestamp: number }> = [];
+      const eventId = 'evt_test_duplicate'
+      const eventLog: Array<{ eventId: string; timestamp: number }> = []
 
       // Act - First receipt
-      eventLog.push({ eventId, timestamp: Date.now() });
-      const firstProcessing = eventLog.filter(e => e.eventId === eventId).length;
+      eventLog.push({ eventId, timestamp: Date.now() })
+      const firstProcessing = eventLog.filter(
+        (e) => e.eventId === eventId,
+      ).length
 
       // Act - Duplicate receipt (1 second later)
-      eventLog.push({ eventId, timestamp: Date.now() + 1000 });
-      const secondProcessing = eventLog.filter(e => e.eventId === eventId).length;
+      eventLog.push({ eventId, timestamp: Date.now() + 1000 })
+      const secondProcessing = eventLog.filter(
+        (e) => e.eventId === eventId,
+      ).length
 
       // Assert
-      expect(firstProcessing).toBe(1);
-      expect(secondProcessing).toBe(2); // Would be recorded, but processing should be skipped
-    });
-  });
-});
+      expect(firstProcessing).toBe(1)
+      expect(secondProcessing).toBe(2) // Would be recorded, but processing should be skipped
+    })
+  })
+})
 
 describe('Payment Error Handling - Card and Payment Method Errors', () => {
-  let customer: ReturnType<typeof createTestCustomer>;
+  let customer: ReturnType<typeof createTestCustomer>
 
   beforeEach(() => {
-    customer = createTestCustomer(generateTestEmail());
-  });
+    customer = createTestCustomer(generateTestEmail())
+  })
 
   describe('Card decline scenarios', () => {
     it('should handle card declined error', () => {
@@ -421,8 +441,8 @@ describe('Payment Error Handling - Card and Payment Method Errors', () => {
        * - Trigger payment retry notification after 3 days
        * - Don't immediately cancel subscription (give user 7 days)
        */
-      expect(true).toBe(true);
-    });
+      expect(true).toBe(true)
+    })
 
     it('should track card decline reasons', () => {
       // Arrange
@@ -461,27 +481,27 @@ describe('Payment Error Handling - Card and Payment Method Errors', () => {
         'transaction_already_in_progress', // Already processing
         'try_again_later', // Temporarily unavailable
         'withdrawal_count_limit_exceeded', // Too many withdrawals
-      ];
+      ]
 
       // Act & Assert
-      expect(declineCodes.length).toBeGreaterThan(20);
-      declineCodes.forEach(code => {
-        expect(code).toMatch(/^[a-z_]+$/);
-      });
-    });
+      expect(declineCodes.length).toBeGreaterThan(20)
+      declineCodes.forEach((code) => {
+        expect(code).toMatch(/^[a-z_]+$/)
+      })
+    })
 
     it('should handle test card declined (ch_chargeDeclined)', () => {
       // Arrange
-      const testCardDeclined = '4000000000000002'; // Stripe test card that declines
+      const testCardDeclined = '4000000000000002' // Stripe test card that declines
 
       // Act
-      const charge = createTestCharge(customer.id, 5000, 'failed');
+      const charge = createTestCharge(customer.id, 5000, 'failed')
 
       // Assert
-      expect(charge.status).toBe('failed');
-      expect(charge.id).toMatch(/^ch_test_/);
-    });
-  });
+      expect(charge.status).toBe('failed')
+      expect(charge.id).toMatch(/^ch_test_/)
+    })
+  })
 
   describe('Payment method errors', () => {
     it('should handle expired card error', () => {
@@ -497,8 +517,8 @@ describe('Payment Error Handling - Card and Payment Method Errors', () => {
        * - Attach new payment method to customer
        * - Retry payment
        */
-      expect(true).toBe(true);
-    });
+      expect(true).toBe(true)
+    })
 
     it('should handle incorrect CVC error', () => {
       /**
@@ -512,8 +532,8 @@ describe('Payment Error Handling - Card and Payment Method Errors', () => {
        * - Ask user to verify CVC
        * - Allow retry immediately
        */
-      expect(true).toBe(true);
-    });
+      expect(true).toBe(true)
+    })
 
     it('should handle invalid card number error', () => {
       /**
@@ -528,9 +548,9 @@ describe('Payment Error Handling - Card and Payment Method Errors', () => {
        * - Show user: "Please enter a valid card number"
        * - Use Stripe Elements for client-side validation
        */
-      expect(true).toBe(true);
-    });
-  });
+      expect(true).toBe(true)
+    })
+  })
 
   describe('Insufficient funds scenarios', () => {
     it('should handle insufficient funds error', () => {
@@ -556,22 +576,29 @@ describe('Payment Error Handling - Card and Payment Method Errors', () => {
        * - Retry after 3, 5, 7 days
        * - Cancel subscription after 7 failed attempts or max 35 days
        */
-      expect(true).toBe(true);
-    });
+      expect(true).toBe(true)
+    })
 
     it('should handle subscription with insufficient funds charge', () => {
       // Arrange
-      const subscription = createTestSubscription(customer.id, testPlans.plusMonthly.priceId);
+      const subscription = createTestSubscription(
+        customer.id,
+        testPlans.plusMonthly.priceId,
+      )
 
       // Act
-      const failedCharge = createTestCharge(customer.id, testPlans.plusMonthly.amount, 'failed');
+      const failedCharge = createTestCharge(
+        customer.id,
+        testPlans.plusMonthly.amount,
+        'failed',
+      )
 
       // Assert
-      expect(failedCharge.status).toBe('failed');
-      expect(subscription.customer).toBe(customer.id);
-    });
-  });
-});
+      expect(failedCharge.status).toBe('failed')
+      expect(subscription.customer).toBe(customer.id)
+    })
+  })
+})
 
 describe('Payment Error Handling - Rate Limiting and Timeouts', () => {
   describe('Rate limiting errors', () => {
@@ -599,22 +626,23 @@ describe('Payment Error Handling - Rate Limiting and Timeouts', () => {
        * - Max retries: 5-10 attempts
        * - Log rate limit incidents for monitoring
        */
-      expect(true).toBe(true);
-    });
+      expect(true).toBe(true)
+    })
 
     it('should implement exponential backoff for retries', () => {
       // Arrange
-      const maxRetries = 5;
-      const backoffStrategy = (attempt: number) => Math.min(1000 * Math.pow(2, attempt), 30000);
+      const maxRetries = 5
+      const backoffStrategy = (attempt: number) =>
+        Math.min(1000 * Math.pow(2, attempt), 30000)
 
       // Act & Assert
       for (let attempt = 0; attempt < maxRetries; attempt++) {
-        const waitTime = backoffStrategy(attempt);
-        expect(waitTime).toBeGreaterThan(0);
-        expect(waitTime).toBeLessThanOrEqual(30000);
+        const waitTime = backoffStrategy(attempt)
+        expect(waitTime).toBeGreaterThan(0)
+        expect(waitTime).toBeLessThanOrEqual(30000)
       }
-    });
-  });
+    })
+  })
 
   describe('Timeout scenarios', () => {
     it('should handle request timeout (>60 seconds)', () => {
@@ -637,8 +665,8 @@ describe('Payment Error Handling - Rate Limiting and Timeouts', () => {
        *   processWebhookAsync(req.body).catch(logError);
        * });
        */
-      expect(true).toBe(true);
-    });
+      expect(true).toBe(true)
+    })
 
     it('should handle async webhook processing with queue', () => {
       /**
@@ -662,30 +690,33 @@ describe('Payment Error Handling - Rate Limiting and Timeouts', () => {
        * - Failures don't block other webhooks
        * - Can implement sophisticated retry logic
        */
-      expect(true).toBe(true);
-    });
-  });
-});
+      expect(true).toBe(true)
+    })
+  })
+})
 
 describe('Payment Error Handling - Invalid Parameters', () => {
   describe('Customer parameter validation', () => {
     it('should reject charge with invalid customer ID format', () => {
       // Arrange
-      const invalidCustomerId = 'invalid_customer_id'; // Should start with cus_
+      const invalidCustomerId = 'invalid_customer_id' // Should start with cus_
 
       // Act
-      const isValid = invalidCustomerId.match(/^cus_/);
+      const isValid = invalidCustomerId.match(/^cus_/)
 
       // Assert
-      expect(isValid).toBeNull();
-    });
+      expect(isValid).toBeNull()
+    })
 
     it('should reject subscription with non-existent customer', () => {
       // Arrange
-      const nonExistentCustomerId = 'cus_test_nonexistent';
+      const nonExistentCustomerId = 'cus_test_nonexistent'
 
       // Act
-      const subscription = createTestSubscription(nonExistentCustomerId, testPlans.plusMonthly.priceId);
+      const subscription = createTestSubscription(
+        nonExistentCustomerId,
+        testPlans.plusMonthly.priceId,
+      )
 
       // Assert
       /**
@@ -698,15 +729,15 @@ describe('Payment Error Handling - Invalid Parameters', () => {
        *   }
        * }
        */
-      expect(subscription.customer).toBe(nonExistentCustomerId);
-    });
-  });
+      expect(subscription.customer).toBe(nonExistentCustomerId)
+    })
+  })
 
   describe('Amount validation', () => {
     it('should reject charge with negative amount', () => {
       // Arrange
-      const customer = createTestCustomer(generateTestEmail());
-      const negativeAmount = -5000;
+      const customer = createTestCustomer(generateTestEmail())
+      const negativeAmount = -5000
 
       // Act & Assert
       /**
@@ -717,16 +748,16 @@ describe('Payment Error Handling - Invalid Parameters', () => {
        * - Minimum: 0.50 USD = 50 cents
        * - Maximum: varies by payment method
        */
-      expect(negativeAmount).toBeLessThan(0);
-    });
+      expect(negativeAmount).toBeLessThan(0)
+    })
 
     it('should reject charge with non-integer amount', () => {
       // Arrange
-      const floatAmount = 5000.99;
+      const floatAmount = 5000.99
 
       // Act & Assert
-      expect(floatAmount % 1).not.toBe(0);
-    });
+      expect(floatAmount % 1).not.toBe(0)
+    })
 
     it('should reject subscription with zero amount plans', () => {
       /**
@@ -736,16 +767,16 @@ describe('Payment Error Handling - Invalid Parameters', () => {
        *
        * But standard pricing must be > 0
        */
-      expect(testPlans.plusMonthly.amount).toBeGreaterThan(0);
-      expect(testPlans.premiumMonthly.amount).toBeGreaterThan(0);
-    });
-  });
+      expect(testPlans.plusMonthly.amount).toBeGreaterThan(0)
+      expect(testPlans.premiumMonthly.amount).toBeGreaterThan(0)
+    })
+  })
 
   describe('Price/Plan validation', () => {
     it('should reject subscription with invalid price ID', () => {
       // Arrange
-      const customer = createTestCustomer(generateTestEmail());
-      const invalidPriceId = 'invalid_price_id'; // Should be price_xxx
+      const customer = createTestCustomer(generateTestEmail())
+      const invalidPriceId = 'invalid_price_id' // Should be price_xxx
 
       // Act & Assert
       /**
@@ -759,8 +790,8 @@ describe('Payment Error Handling - Invalid Parameters', () => {
        *   }
        * }
        */
-      expect(invalidPriceId).not.toMatch(/^price_/);
-    });
+      expect(invalidPriceId).not.toMatch(/^price_/)
+    })
 
     it('should reject subscription with non-recurring price', () => {
       /**
@@ -774,10 +805,10 @@ describe('Payment Error Handling - Invalid Parameters', () => {
        *   }
        * }
        */
-      expect(testPlans.plusMonthly.priceId).toMatch(/price_/);
-    });
-  });
-});
+      expect(testPlans.plusMonthly.priceId).toMatch(/price_/)
+    })
+  })
+})
 
 describe('Payment Error Handling - Subscription State Errors', () => {
   describe('Invalid subscription state transitions', () => {
@@ -815,17 +846,17 @@ describe('Payment Error Handling - Subscription State Errors', () => {
        * - unpaid → active (impossible - create new subscription)
        * - trialing → trialing (trial already started)
        */
-      expect(true).toBe(true);
-    });
+      expect(true).toBe(true)
+    })
 
     it('should reject subscription cancellation on already canceled subscription', () => {
       // Arrange
-      const customer = createTestCustomer(generateTestEmail());
+      const customer = createTestCustomer(generateTestEmail())
       const subscription = createTestSubscription(
         customer.id,
         testPlans.plusMonthly.priceId,
-        'canceled'
-      );
+        'canceled',
+      )
 
       // Act & Assert
       /**
@@ -837,8 +868,8 @@ describe('Payment Error Handling - Subscription State Errors', () => {
        *   }
        * }
        */
-      expect(subscription.status).toBe('canceled');
-    });
+      expect(subscription.status).toBe('canceled')
+    })
 
     it('should reject plan change on unpaid subscription', () => {
       /**
@@ -853,26 +884,26 @@ describe('Payment Error Handling - Subscription State Errors', () => {
        *   }
        * }
        */
-      expect(true).toBe(true);
-    });
-  });
+      expect(true).toBe(true)
+    })
+  })
 
   describe('Subscription conflict errors', () => {
     it('should handle creating subscription when customer already has active subscription', () => {
       // Arrange
-      const customer = createTestCustomer(generateTestEmail());
+      const customer = createTestCustomer(generateTestEmail())
       const firstSubscription = createTestSubscription(
         customer.id,
         testPlans.plusMonthly.priceId,
-        'active'
-      );
+        'active',
+      )
 
       // Act
       const secondSubscription = createTestSubscription(
         customer.id,
         testPlans.premiumMonthly.priceId,
-        'active'
-      );
+        'active',
+      )
 
       // Assert
       /**
@@ -887,11 +918,11 @@ describe('Payment Error Handling - Subscription State Errors', () => {
        *   throw new Error('Customer already has an active subscription');
        * }
        */
-      expect(firstSubscription.id).not.toBe(secondSubscription.id);
-      expect(firstSubscription.customer).toBe(secondSubscription.customer);
-    });
-  });
-});
+      expect(firstSubscription.id).not.toBe(secondSubscription.id)
+      expect(firstSubscription.customer).toBe(secondSubscription.customer)
+    })
+  })
+})
 
 describe('Payment Error Handling - Database Errors', () => {
   describe('Constraint violations', () => {
@@ -918,8 +949,8 @@ describe('Payment Error Handling - Database Errors', () => {
        * - Send alert to ops
        * - Manual investigation required
        */
-      expect(true).toBe(true);
-    });
+      expect(true).toBe(true)
+    })
 
     it('should handle null value violation on NOT NULL columns', () => {
       /**
@@ -939,9 +970,9 @@ describe('Payment Error Handling - Database Errors', () => {
        *   subscription_status: z.enum(['free', 'plus', 'premium']),
        * });
        */
-      expect(true).toBe(true);
-    });
-  });
+      expect(true).toBe(true)
+    })
+  })
 
   describe('Transaction rollback scenarios', () => {
     it('should handle rollback when webhook processing fails mid-transaction', () => {
@@ -966,10 +997,10 @@ describe('Payment Error Handling - Database Errors', () => {
        *
        * Better: Process webhook async with idempotency checks
        */
-      expect(true).toBe(true);
-    });
-  });
-});
+      expect(true).toBe(true)
+    })
+  })
+})
 
 describe('Payment Error Handling - Error Recovery Patterns', () => {
   describe('Graceful degradation', () => {
@@ -997,8 +1028,8 @@ describe('Payment Error Handling - Error Recovery Patterns', () => {
        * - Can retry notifications separately
        * - Stripe webhook retry doesn't cause double-processing
        */
-      expect(true).toBe(true);
-    });
+      expect(true).toBe(true)
+    })
 
     it('should handle when AI engine is unavailable', () => {
       /**
@@ -1020,9 +1051,9 @@ describe('Payment Error Handling - Error Recovery Patterns', () => {
        * Documentation in CLAUDE.md:
        * "Core-api gracefully falls back if AI engine unavailable"
        */
-      expect(true).toBe(true);
-    });
-  });
+      expect(true).toBe(true)
+    })
+  })
 
   describe('Error logging and monitoring', () => {
     it('should log payment errors with context', () => {
@@ -1050,8 +1081,8 @@ describe('Payment Error Handling - Error Recovery Patterns', () => {
        * - PagerDuty for critical errors
        * - Slack #payments-alerts for immediate notification
        */
-      expect(true).toBe(true);
-    });
+      expect(true).toBe(true)
+    })
 
     it('should alert on critical payment failures', () => {
       /**
@@ -1068,7 +1099,7 @@ describe('Payment Error Handling - Error Recovery Patterns', () => {
        * 3. Email to ops@getori.app
        * 4. Sentry error dashboard
        */
-      expect(true).toBe(true);
-    });
-  });
-});
+      expect(true).toBe(true)
+    })
+  })
+})

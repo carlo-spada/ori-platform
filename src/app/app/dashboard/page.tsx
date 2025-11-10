@@ -162,7 +162,7 @@ export default function Dashboard() {
         className="flex h-full items-center justify-center"
         data-testid="dashboard-loading"
       >
-        <div className="text-muted-foreground text-center">
+        <div className="text-center text-muted-foreground">
           <div className="mb-4 h-8 w-8 animate-spin rounded-full border-4 border-accent border-t-transparent" />
           <p>Loading your dashboard...</p>
         </div>

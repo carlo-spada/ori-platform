@@ -3,11 +3,11 @@ name: Task Health Monitor
 on:
   schedule:
     # AGENTIC WORKFLOW: Run every 4 hours for rapid development cycles
-    - cron: '0 */4 * * *'  # Every 4 hours
-  workflow_dispatch:  # Allow manual trigger
+    - cron: '0 */4 * * *' # Every 4 hours
+  workflow_dispatch: # Allow manual trigger
   push:
     paths:
-      - '.tasks/**'  # Also run when tasks change
+      - '.tasks/**' # Also run when tasks change
 
 jobs:
   health-check:

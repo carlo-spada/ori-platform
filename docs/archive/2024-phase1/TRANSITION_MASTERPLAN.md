@@ -1,10 +1,12 @@
 # TRANSITION MASTERPLAN: Ori Platform Workflow Optimization
+
 > **ONE-TIME FAST IMPLEMENTATION GUIDE**
 > Transform your workflow from manual operations to high-velocity automation
 
 ## Executive Summary
 
 This masterplan transforms the Ori Platform from **manual task management** to **automated high-velocity AGENTIC workflows**. Expected outcomes:
+
 - **80% reduction** in task management friction
 - **90% reduction** in documentation reading time
 - **10x increase** in development velocity (agentic speed)
@@ -17,6 +19,7 @@ This masterplan transforms the Ori Platform from **manual task management** to *
 ## ⚡ AGENTIC WORKFLOW ADAPTATIONS (10x Speed)
 
 **Time Scale Conversions**:
+
 - Stale tasks: **30 hours** (was 14 days)
 - Health checks: **Every 4 hours** (was Mon/Wed/Fri)
 - PR reviews: **Within 4 hours** (was 24 hours)
@@ -28,11 +31,13 @@ This masterplan transforms the Ori Platform from **manual task management** to *
 ---
 
 ## PHASE 1: CRITICAL PATH (Hours 1-6)
+
 **Goal**: Fix immediate bottlenecks, reduce WIP, automate task management
 **Time**: 6 hours (agentic pace)
 **Impact**: Immediate 80% friction reduction
 
 ### Step 1.1: Emergency WIP Reduction (2 hours)
+
 **Problem**: 21 tasks in-progress (target: 2-5)
 
 ```bash
@@ -46,6 +51,7 @@ git push
 ```
 
 **Actions**:
+
 1. Review all 21 in-progress tasks
 2. Archive tasks older than 14 days
 3. Prioritize top 5, move rest to backlog
@@ -214,6 +220,7 @@ esac
 ```
 
 Make executable:
+
 ```bash
 chmod +x scripts/task
 ```
@@ -222,11 +229,13 @@ chmod +x scripts/task
 
 Create `CLAUDE_QUICKREF.md`:
 
-```markdown
+````markdown
 # CLAUDE QUICK REFERENCE CARD
+
 > Copy-paste commands for immediate action. No reading required.
 
 ## TASK MANAGEMENT
+
 ```bash
 # Claim task (auto-enforces WIP limit)
 ./scripts/task claim feature-x
@@ -240,8 +249,10 @@ Create `CLAUDE_QUICKREF.md`:
 # List tasks
 ./scripts/task list wip
 ```
+````
 
 ## ADD API ENDPOINT (5 steps)
+
 ```bash
 # 1. Create handler
 touch services/core-api/src/routes/new-endpoint.js
@@ -259,11 +270,13 @@ touch src/hooks/useNewEndpoint.ts
 ```
 
 ## BEFORE COMMIT
+
 ```bash
 pnpm lint --fix && pnpm build && pnpm test
 ```
 
 ## BEFORE PR
+
 ```bash
 # Run all checks
 pnpm lint && pnpm build && pnpm test
@@ -273,6 +286,7 @@ gh pr create --title "feat: description" --body "## Summary\n- Change 1\n- Chang
 ```
 
 ## SPECIALIZED AGENTS
+
 ```bash
 # Trigger when needed:
 # - schema changes → schema-contract-sentinel
@@ -283,6 +297,7 @@ gh pr create --title "feat: description" --body "## Summary\n- Change 1\n- Chang
 ```
 
 ## GIT WORKFLOW
+
 ```bash
 # Start work
 git checkout dev && git pull
@@ -295,6 +310,7 @@ git checkout -b feat/branch-name
 ```
 
 ## COMMON PATHS
+
 - Frontend components: `src/components/`
 - API routes: `services/core-api/src/routes/`
 - Shared types: `shared/types/src/`
@@ -303,26 +319,30 @@ git checkout -b feat/branch-name
 - Database: `supabase/migrations/`
 
 ## ENV FILES
+
 - Frontend: `.env.local`
 - Core API: `services/core-api/.env`
 - AI Engine: `services/ai-engine/.env`
 
 ## PORTS
+
 - Frontend: 3000
 - Core API: 3001
 - AI Engine: 3002
 
 ## TEST PATTERNS
+
 ```typescript
 // Frontend test
 vi.mock('@/integrations/api/profile', () => ({
-  fetchProfile: vi.fn().mockResolvedValue({ id: '1' })
+  fetchProfile: vi.fn().mockResolvedValue({ id: '1' }),
 }))
 
 // Backend test (mock Supabase)
 jest.mock('@supabase/supabase-js')
 ```
-```
+
+````
 
 Create `GEMINI_QUICKREF.md`:
 
@@ -340,9 +360,10 @@ find . -name "*auth*" -type f | head -20
 
 # Check imports/dependencies
 grep -r "import.*from.*@" src/ | grep -v node_modules
-```
+````
 
 ## PLANNING CHECKLIST
+
 - [ ] Read task requirements
 - [ ] Search existing implementations
 - [ ] Check for similar completed tasks
@@ -352,6 +373,7 @@ grep -r "import.*from.*@" src/ | grep -v node_modules
 - [ ] Identify risks/blockers
 
 ## CODEBASE MAP
+
 ```
 src/                    # Frontend (Next.js)
 ├── app/                # Pages (App Router)
@@ -374,6 +396,7 @@ supabase/migrations/   # Database schema
 ```
 
 ## INVESTIGATION COMMANDS
+
 ```bash
 # Find route handlers
 ls -la services/core-api/src/routes/
@@ -389,12 +412,14 @@ grep -r "process.env" services/ src/
 ```
 
 ## COMMON QUESTIONS
+
 - **Where's auth?** → `src/contexts/AuthProvider.tsx`
 - **API base URL?** → `src/integrations/api/client.ts`
 - **Database types?** → `shared/types/src/database.ts`
 - **Stripe integration?** → `services/core-api/src/routes/stripe.js`
 - **Test examples?** → `*/__tests__/` or `*.test.tsx`
-```
+
+````
 
 ### Step 1.4: Update AGENTS.md (1 hour)
 
@@ -420,7 +445,7 @@ These agents automatically review specific changes:
 "Please run the schema-contract-sentinel agent to review these migration changes"
 
 # Agent will analyze and provide feedback
-```
+````
 
 ## QUICK TASK WORKFLOW
 
@@ -440,7 +465,8 @@ git add . && git commit -m "feat: implement X" && git push
 # 5. Create PR
 gh pr create --title "feat: X" --body "..."
 ```
-```
+
+````
 
 ### Step 1.5: Task Health Check Script (2 hours)
 
@@ -522,11 +548,12 @@ jobs:
               body: 'Task health check failed. See [workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.',
               labels: ['task-health', 'priority-high']
             });
-```
+````
 
 ---
 
 ## PHASE 2: AUTOMATION LAYER (Day 4-7)
+
 **Goal**: Automate specialized agents, create GitHub Actions triggers
 **Time**: 16 hours
 **Impact**: Automatic quality gates, no manual agent invocation
@@ -553,7 +580,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Full history for comparison
+          fetch-depth: 0 # Full history for comparison
 
       - name: Detect Schema Changes
         id: changes
@@ -1080,13 +1107,13 @@ Update `AGENTS.md`:
 
 The following specialized agents are **automatically triggered** by GitHub Actions:
 
-| Agent | Auto-Trigger | Manual Trigger | GitHub Action |
-|-------|--------------|----------------|---------------|
-| `schema-contract-sentinel` | PR with DB/API changes | "Run schema sentinel" | `.github/workflows/schema-sentinel.yml` |
-| `test-architect` | PR with new features | "Run test architect" | `.github/workflows/test-architect.yml` |
-| `code-guardian` | Every PR | "Run code guardian" | `.github/workflows/code-guardian.yml` |
-| `flow-orchestrator` | Multi-service PR | "Run flow orchestrator" | `.github/workflows/flow-orchestrator.yml` |
-| `docs-dx-curator` | Documentation PR | "Run docs curator" | `.github/workflows/docs-curator.yml` |
+| Agent                      | Auto-Trigger           | Manual Trigger          | GitHub Action                             |
+| -------------------------- | ---------------------- | ----------------------- | ----------------------------------------- |
+| `schema-contract-sentinel` | PR with DB/API changes | "Run schema sentinel"   | `.github/workflows/schema-sentinel.yml`   |
+| `test-architect`           | PR with new features   | "Run test architect"    | `.github/workflows/test-architect.yml`    |
+| `code-guardian`            | Every PR               | "Run code guardian"     | `.github/workflows/code-guardian.yml`     |
+| `flow-orchestrator`        | Multi-service PR       | "Run flow orchestrator" | `.github/workflows/flow-orchestrator.yml` |
+| `docs-dx-curator`          | Documentation PR       | "Run docs curator"      | `.github/workflows/docs-curator.yml`      |
 
 ### How It Works
 
@@ -1098,10 +1125,11 @@ The following specialized agents are **automatically triggered** by GitHub Actio
 ### Manual Agent Invocation
 
 When working locally, request agent review:
+```
 
-```
 "Please run the [agent-name] to review these changes"
-```
+
+````
 
 ### Agent Workflow Integration
 
@@ -1122,8 +1150,9 @@ graph LR
     I --> J[Developer Reviews]
     J --> K[Fix Issues]
     K --> A
-```
-```
+````
+
+````
 
 ---
 
@@ -1154,7 +1183,7 @@ npx @modelcontextprotocol/server-resend list-emails
 
 # Test PostgreSQL MCP
 npx @modelcontextprotocol/server-postgres list-tables
-```
+````
 
 ## Configuration
 
@@ -1176,6 +1205,7 @@ Location: `.claude/mcp.json`
 ## Environment Variables
 
 Required in `.env`:
+
 - `STRIPE_SECRET_KEY`
 - `RESEND_API_KEY`
 - `DATABASE_URL`
@@ -1183,16 +1213,19 @@ Required in `.env`:
 ## Implementation Phases
 
 ### Phase 1: Foundation (COMPLETE)
+
 - ✅ Infrastructure audit
 - ✅ MCP server setup
 - ✅ Documentation
 
 ### Phase 2: Integration (IN PROGRESS)
+
 - [ ] Stripe workflows
 - [ ] Email automation
 - [ ] Database operations
 
 ### Phase 3: Advanced (TODO)
+
 - [ ] Custom MCP servers
 - [ ] Agent integration
 - [ ] Monitoring
@@ -1200,38 +1233,41 @@ Required in `.env`:
 ## Common Operations
 
 ### Stripe
+
 ```javascript
 // List customers
-await mcp.stripe.listCustomers({ limit: 10 });
+await mcp.stripe.listCustomers({ limit: 10 })
 
 // Create subscription
-await mcp.stripe.createSubscription({ customerId, priceId });
+await mcp.stripe.createSubscription({ customerId, priceId })
 ```
 
 ### Resend
+
 ```javascript
 // Send email
-await mcp.resend.sendEmail({ to, subject, html });
+await mcp.resend.sendEmail({ to, subject, html })
 
 // List emails
-await mcp.resend.listEmails({ limit: 20 });
+await mcp.resend.listEmails({ limit: 20 })
 ```
 
 ### PostgreSQL
+
 ```javascript
 // Query database
-await mcp.postgres.query('SELECT * FROM users LIMIT 10');
+await mcp.postgres.query('SELECT * FROM users LIMIT 10')
 
 // List tables
-await mcp.postgres.listTables();
+await mcp.postgres.listTables()
 ```
 
 ## Troubleshooting
 
-| Issue | Solution |
-|-------|----------|
-| "Command not found" | Run `pnpm install` |
-| "API key invalid" | Check `.env` file |
+| Issue                | Solution                 |
+| -------------------- | ------------------------ |
+| "Command not found"  | Run `pnpm install`       |
+| "API key invalid"    | Check `.env` file        |
 | "Connection refused" | Check service is running |
 
 ## Resources
@@ -1239,7 +1275,8 @@ await mcp.postgres.listTables();
 - [MCP Specification](https://modelcontextprotocol.io)
 - [Stripe MCP Docs](https://github.com/modelcontextprotocol/server-stripe)
 - [Internal Setup](.claude/mcp-setup-guide.md)
-```
+
+````
 
 Archive old MCP docs:
 ```bash
@@ -1247,7 +1284,7 @@ mkdir -p docs/archive/mcp
 git mv docs/MCP_*.md docs/archive/mcp/
 git commit -m "docs: consolidate MCP documentation"
 git push
-```
+````
 
 ### Step 3.2: Create Documentation Index (3 hours)
 
@@ -1255,63 +1292,69 @@ Create `docs/README.md`:
 
 ```markdown
 # Documentation Index
+
 > Find what you need in 2 clicks or less
 
 ## 🚀 I Want To...
 
 ### Start Working
+
 - [Claim a task](../CLAUDE_QUICKREF.md#task-management) → `./scripts/task claim X`
 - [Check task health](../CLAUDE_QUICKREF.md#task-management) → `./scripts/task health`
 - [Setup environment](.env.example) → Copy `.env.example` to `.env`
 
 ### Build Features
+
 - [Add API endpoint](../CLAUDE_QUICKREF.md#add-api-endpoint) → 5-step process
 - [Create React component](../CLAUDE_QUICKREF.md#common-paths) → `src/components/`
 - [Add database table](DATABASE_SCHEMA.md#migrations) → `supabase/migrations/`
 - [Setup authentication](../src/contexts/AuthProvider.tsx) → Use `useAuth()` hook
 
 ### Use MCP Servers
+
 - [MCP quick start](MCP_IMPLEMENTATION_GUIDE.md#quick-start) → Test in 2 minutes
 - [Stripe operations](MCP_IMPLEMENTATION_GUIDE.md#stripe) → Payments & subscriptions
 - [Email operations](MCP_IMPLEMENTATION_GUIDE.md#resend) → Transactional emails
 - [Database operations](MCP_IMPLEMENTATION_GUIDE.md#postgresql) → Direct SQL
 
 ### Review & Deploy
+
 - [Run quality checks](../CLAUDE_QUICKREF.md#before-pr) → `pnpm lint && pnpm build && pnpm test`
 - [Create PR](.github/pull_request_template.md) → `gh pr create`
 - [Trigger specialized agents](../AGENTS.md#specialized-quality-agents) → Automatic on PR
 - [Deploy to production](.github/workflows/deploy-production.yml) → Merge to main
 
 ## 📂 Documentation Structure
-
 ```
+
 docs/
-├── README.md                 # You are here
-├── API_ENDPOINTS.md          # All API routes
-├── DATABASE_SCHEMA.md        # Supabase schema
+├── README.md # You are here
+├── API_ENDPOINTS.md # All API routes
+├── DATABASE_SCHEMA.md # Supabase schema
 ├── MCP_IMPLEMENTATION_GUIDE.md # MCP integration
 ├── INTERNAL_WORKFLOW_OPTIMIZATION.md # Workflow improvements
-└── archive/                  # Deprecated docs
+└── archive/ # Deprecated docs
 
 .claude/
-├── CLAUDE.md                 # Claude agent instructions
-├── GEMINI.md                 # Gemini agent instructions
-├── AGENTS.md                 # All agents & workflows
-├── agents/                   # Specialized agent configs
-│   ├── schema-contract-sentinel.md
-│   ├── test-architect.md
-│   ├── flow-orchestrator.md
-│   ├── code-guardian.md
-│   └── docs-dx-curator.md
-├── mcp.json                  # MCP configuration
-└── settings.local.json       # Local settings
+├── CLAUDE.md # Claude agent instructions
+├── GEMINI.md # Gemini agent instructions
+├── AGENTS.md # All agents & workflows
+├── agents/ # Specialized agent configs
+│ ├── schema-contract-sentinel.md
+│ ├── test-architect.md
+│ ├── flow-orchestrator.md
+│ ├── code-guardian.md
+│ └── docs-dx-curator.md
+├── mcp.json # MCP configuration
+└── settings.local.json # Local settings
 
 .tasks/
-├── TASK_GOVERNANCE.md        # Task management rules
-├── todo/                     # Available tasks
-├── in-progress/             # Current work (max 5)
-├── done/                    # Awaiting review
-└── backlog/                 # Archived tasks
+├── TASK_GOVERNANCE.md # Task management rules
+├── todo/ # Available tasks
+├── in-progress/ # Current work (max 5)
+├── done/ # Awaiting review
+└── backlog/ # Archived tasks
+
 ```
 
 ## 🔍 Quick Searches
@@ -1362,7 +1405,7 @@ docs/
 
 Update `CLAUDE.md`:
 
-```markdown
+````markdown
 # Claude: Fast Implementation Guide
 
 ## Quick Commands
@@ -1380,10 +1423,12 @@ gh pr create --title "feat: X"                    # Create PR
 # Quality Checks
 pnpm lint --fix && pnpm build && pnpm test       # Before PR
 ```
+````
 
 ## Implementation Patterns
 
 ### Add API Endpoint
+
 ```bash
 1. services/core-api/src/routes/endpoint.js  # Handler
 2. shared/types/src/index.ts                 # Types
@@ -1393,6 +1438,7 @@ pnpm lint --fix && pnpm build && pnpm test       # Before PR
 ```
 
 ### React Query Pattern
+
 ```typescript
 // API Client (src/integrations/api/)
 export async function fetchData() {
@@ -1406,7 +1452,7 @@ export function useData() {
   return useQuery({
     queryKey: ['data'],
     queryFn: fetchData,
-    staleTime: 5 * 60 * 1000
+    staleTime: 5 * 60 * 1000,
   })
 }
 
@@ -1430,13 +1476,13 @@ shared/types/            supabase/migrations/
 
 ## Specialized Agents (Auto-Triggered)
 
-| Change Type | Agent Triggered | Purpose |
-|------------|-----------------|---------|
-| DB migration | schema-sentinel | Prevent breaks |
-| New feature | test-architect | Ensure coverage |
+| Change Type   | Agent Triggered   | Purpose            |
+| ------------- | ----------------- | ------------------ |
+| DB migration  | schema-sentinel   | Prevent breaks     |
+| New feature   | test-architect    | Ensure coverage    |
 | Multi-service | flow-orchestrator | Integration safety |
-| Any PR | code-guardian | Code quality |
-| Docs | docs-curator | Doc quality |
+| Any PR        | code-guardian     | Code quality       |
+| Docs          | docs-curator      | Doc quality        |
 
 ## Environment Variables
 
@@ -1455,13 +1501,13 @@ EMBEDDING_MODEL=all-MiniLM-L6-v2
 
 ## Common Issues & Solutions
 
-| Issue | Solution |
-|-------|----------|
-| WIP limit exceeded | Complete or archive tasks |
-| Tests fail | Check env vars in setupFiles |
-| Type errors | Run `pnpm tsc --noEmit` |
-| Lint errors | Run `pnpm lint --fix` |
-| Build fails | Check all imports resolved |
+| Issue              | Solution                     |
+| ------------------ | ---------------------------- |
+| WIP limit exceeded | Complete or archive tasks    |
+| Tests fail         | Check env vars in setupFiles |
+| Type errors        | Run `pnpm tsc --noEmit`      |
+| Lint errors        | Run `pnpm lint --fix`        |
+| Build fails        | Check all imports resolved   |
 
 ## Task Workflow
 
@@ -1474,7 +1520,8 @@ graph LR
     E --> F[Auto Agents Review]
     F --> G[Merge to main]
 ```
-```
+
+````
 
 ### Step 3.4: Create Agent Memory System Spec (2 hours)
 
@@ -1490,18 +1537,21 @@ Create MCP server that caches project context, eliminating the 10-15 minute read
 
 ## Architecture
 
-```
+````
+
 .claude/mcp-servers/ori-memory/
-├── index.js           # MCP server
-├── memory.db          # SQLite cache
-└── embeddings/        # Vector store
+├── index.js # MCP server
+├── memory.db # SQLite cache
+└── embeddings/ # Vector store
 
 Cache Structure:
+
 - Project context (refreshed daily)
 - Recent decisions (last 20)
 - Common commands (indexed)
 - Task-specific context
-```
+
+````
 
 ## Implementation Plan
 
@@ -1523,9 +1573,10 @@ class OriMemoryServer {
     }
   }
 }
-```
+````
 
 ### Phase 2: Vector Search (6 hours)
+
 ```javascript
 // Add semantic search
 async searchDocs(query) {
@@ -1535,6 +1586,7 @@ async searchDocs(query) {
 ```
 
 ### Phase 3: Auto-Update (4 hours)
+
 ```javascript
 // Watch for changes
 fs.watch('./', (event, filename) => {
@@ -1564,7 +1616,8 @@ fs.watch('./', (event, filename) => {
 - Consistent context across sessions
 - Learn from past decisions
 - No repeated reading
-```
+
+````
 
 ---
 
@@ -1750,7 +1803,7 @@ class OriDocsRAG {
 
 // Start MCP server
 const server = new OriDocsRAG()
-```
+````
 
 Create `package.json`:
 
@@ -1833,6 +1886,7 @@ rag.query('$QUESTION').then(console.log);
 ```
 
 Usage examples:
+
 ```bash
 ./scripts/ask "how do I claim a task"
 # Returns: Direct command + context
@@ -1847,6 +1901,7 @@ Usage examples:
 ---
 
 ## PHASE 5: MONITORING & DASHBOARDS (Day 15-20)
+
 **Goal**: Visual task management and health monitoring
 **Time**: 20 hours
 **Impact**: Real-time visibility, one-click operations
@@ -2069,7 +2124,7 @@ export default async function handler(req, res) {
                 name: file.replace('.md', ''),
                 status,
                 created: stat.birthtime,
-                modified: stat.mtime
+                modified: stat.mtime,
               })
             }
           }
@@ -2086,7 +2141,7 @@ export default async function handler(req, res) {
 
       try {
         const { stdout } = await execAsync(
-          `cd ${rootDir} && ./scripts/task ${action} ${task}`
+          `cd ${rootDir} && ./scripts/task ${action} ${task}`,
         )
         return res.json({ success: true, output: stdout })
       } catch (error) {
@@ -2121,14 +2176,17 @@ Create `tools/task-dashboard/vercel.json`:
 ## IMPLEMENTATION SCHEDULE (AGENTIC PACE - 10x Speed)
 
 ### Day 1: Foundation (12 hours continuous work)
+
 - **Hours 1-6**: Phase 1 - Critical Path
 - **Hours 7-12**: Phase 2 - Automation Layer
 
 ### Day 2: Optimization (12 hours continuous work)
+
 - **Hours 1-6**: Phase 3 - Documentation
 - **Hours 7-12**: Phase 4 - RAG Pipeline setup
 
 ### Day 3: Advanced Features (12 hours continuous work)
+
 - **Hours 1-8**: Phase 5 - Dashboard
 - **Hours 9-12**: Testing & refinement
 
@@ -2140,18 +2198,18 @@ Create `tools/task-dashboard/vercel.json`:
 
 Track these metrics before and after implementation:
 
-| Metric | Before | Target (Agentic) | How to Measure |
-|--------|--------|-----------------|----------------|
-| WIP Tasks | 21 | ≤5 | `./scripts/task health` |
-| Time to claim task | 5 min | 10 sec | Time the command |
-| Doc reading time | 15 min | 30 sec | Time to find info |
-| Stale task threshold | 14 days | 30 hours | Auto-detection |
-| Health check frequency | Weekly | Every 4 hours | GitHub Actions |
-| PR review time | 24 hours | 4 hours | Agent comments |
-| Context load time | 15 min | 30 sec | With RAG/memory |
-| Task velocity | ~3/week | 5-10/day | Completed tasks |
-| Commit frequency | Hourly | Every 15-30 min | Git log |
-| Sprint cycle | 2 weeks | 2-3 days | Task throughput |
+| Metric                 | Before   | Target (Agentic) | How to Measure          |
+| ---------------------- | -------- | ---------------- | ----------------------- |
+| WIP Tasks              | 21       | ≤5               | `./scripts/task health` |
+| Time to claim task     | 5 min    | 10 sec           | Time the command        |
+| Doc reading time       | 15 min   | 30 sec           | Time to find info       |
+| Stale task threshold   | 14 days  | 30 hours         | Auto-detection          |
+| Health check frequency | Weekly   | Every 4 hours    | GitHub Actions          |
+| PR review time         | 24 hours | 4 hours          | Agent comments          |
+| Context load time      | 15 min   | 30 sec           | With RAG/memory         |
+| Task velocity          | ~3/week  | 5-10/day         | Completed tasks         |
+| Commit frequency       | Hourly   | Every 15-30 min  | Git log                 |
+| Sprint cycle           | 2 weeks  | 2-3 days         | Task throughput         |
 
 ---
 
@@ -2169,16 +2227,19 @@ If any phase causes issues:
 ## MAINTENANCE PLAN
 
 ### Daily (Automated)
+
 - Task health checks run via GitHub Action
 - Agent memory cache updates
 - RAG index updates for new docs
 
 ### Weekly (Automated)
+
 - Task health report (Mon/Wed/Fri)
 - Metrics dashboard update
 - Stale task alerts
 
 ### Monthly (Manual)
+
 - Review agent performance
 - Update quick reference cards
 - Archive completed work
@@ -2191,6 +2252,7 @@ If any phase causes issues:
 After implementing this masterplan:
 
 ### For Claude/Gemini Agents
+
 ```bash
 # Start work
 ./scripts/task claim feature-x    # Auto-enforces WIP
@@ -2204,6 +2266,7 @@ cat CLAUDE_QUICKREF.md             # Quick commands
 ```
 
 ### For Human Developers
+
 ```bash
 # Check status
 ./scripts/task health              # See bottlenecks
@@ -2216,6 +2279,7 @@ open http://localhost:3000/dashboard # Visual board
 ```
 
 ### For Managers
+
 - Dashboard: Real-time task status
 - Metrics: Velocity, WIP, bottlenecks
 - Alerts: Stale tasks, limit breaches
@@ -2233,6 +2297,7 @@ This masterplan transforms the Ori Platform from a manual, friction-heavy workfl
 4. **Sustainable**: Automation reduces ongoing maintenance
 
 **Expected Outcome**:
+
 - 80% reduction in manual operations
 - 90% faster information retrieval
 - 4x increase in development velocity

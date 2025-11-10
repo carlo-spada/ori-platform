@@ -1,7 +1,9 @@
 # GEMINI QUICK REFERENCE CARD
+
 > Research and planning commands. Fast lookups only.
 
 ## TASK MANAGEMENT (Same as Claude)
+
 ```bash
 ./scripts/task health         # Overview
 ./scripts/task list todo      # What's available
@@ -10,6 +12,7 @@
 ```
 
 ## RESEARCH PATTERNS
+
 ```bash
 # Find all implementations of pattern
 grep -r "pattern" --include="*.ts" --include="*.tsx" src/
@@ -28,7 +31,9 @@ cat supabase/migrations/*.sql | grep "CREATE TABLE"
 ```
 
 ## PLANNING CHECKLIST
+
 Before starting any task:
+
 - [ ] Read task file in `.tasks/todo/[task-name].md`
 - [ ] Search for existing similar implementations
 - [ ] Check for related completed tasks in `.tasks/done/`
@@ -38,6 +43,7 @@ Before starting any task:
 - [ ] Identify potential risks/blockers
 
 ## CODEBASE MAP
+
 ```
 ori-platform/
 ├── src/                    # Frontend (Next.js 16, port 3000)
@@ -82,6 +88,7 @@ ori-platform/
 ```
 
 ## INVESTIGATION COMMANDS
+
 ```bash
 # Find route handlers
 ls -la services/core-api/src/routes/
@@ -109,28 +116,31 @@ ls -lah .next/static/chunks/*.js 2>/dev/null | sort -k5 -h
 ```
 
 ## COMMON QUESTIONS & ANSWERS
-| Question | Answer | File/Location |
-|----------|--------|---------------|
-| Where's authentication? | AuthProvider context | `src/contexts/AuthProvider.tsx` |
-| API base URL? | Environment variable | `src/integrations/api/client.ts` |
-| Database types? | Generated from Supabase | `shared/types/src/database.ts` |
-| Stripe webhooks? | Express route | `services/core-api/src/routes/stripe-webhook.js` |
-| User profile hook? | React Query | `src/hooks/useProfile.ts` |
-| Supabase client? | Singleton pattern | `src/integrations/supabase/client.ts` |
-| Test examples? | In __tests__ folders | `*/__tests__/*.test.*` |
-| Environment configs? | Multiple .env files | `.env.local`, `services/*/.env` |
+
+| Question                | Answer                  | File/Location                                    |
+| ----------------------- | ----------------------- | ------------------------------------------------ |
+| Where's authentication? | AuthProvider context    | `src/contexts/AuthProvider.tsx`                  |
+| API base URL?           | Environment variable    | `src/integrations/api/client.ts`                 |
+| Database types?         | Generated from Supabase | `shared/types/src/database.ts`                   |
+| Stripe webhooks?        | Express route           | `services/core-api/src/routes/stripe-webhook.js` |
+| User profile hook?      | React Query             | `src/hooks/useProfile.ts`                        |
+| Supabase client?        | Singleton pattern       | `src/integrations/supabase/client.ts`            |
+| Test examples?          | In **tests** folders    | `*/__tests__/*.test.*`                           |
+| Environment configs?    | Multiple .env files     | `.env.local`, `services/*/.env`                  |
 
 ## ARCHITECTURE DECISIONS
-| Decision | Reasoning | Impact |
-|----------|-----------|--------|
+
+| Decision           | Reasoning                    | Impact                 |
+| ------------------ | ---------------------------- | ---------------------- |
 | Monorepo with pnpm | Shared types, atomic deploys | Single source of truth |
-| React Query | Server state management | No Redux needed |
-| Supabase Auth | Built-in RLS, real-time | Simplified auth flow |
-| Express + FastAPI | Node for API, Python for AI | Best tool for each job |
-| App Router | Next.js 16 latest | Better performance |
-| Tailwind CSS | Utility-first styling | Consistent design |
+| React Query        | Server state management      | No Redux needed        |
+| Supabase Auth      | Built-in RLS, real-time      | Simplified auth flow   |
+| Express + FastAPI  | Node for API, Python for AI  | Best tool for each job |
+| App Router         | Next.js 16 latest            | Better performance     |
+| Tailwind CSS       | Utility-first styling        | Consistent design      |
 
 ## TASK RESEARCH WORKFLOW
+
 ```bash
 # 1. Understand the task
 cat .tasks/todo/feature-x.md
@@ -158,6 +168,7 @@ grep -r "TODO\|FIXME\|XXX" src/ | grep -i "related"
 ```
 
 ## VALIDATION BEFORE IMPLEMENTATION
+
 ```bash
 # Check if similar code exists
 grep -r "className\|function\|interface" --include="*.ts*" | grep -i "feature"
@@ -176,6 +187,7 @@ cat supabase/migrations/*.sql | grep -i "table_name"
 ```
 
 ## QUICK DECISION TREE
+
 ```
 Need to add a feature?
 ├── Is it UI only?
@@ -192,6 +204,7 @@ Need to add a feature?
 ```
 
 ## RESEARCH CHECKLIST
+
 - [ ] Task requirements clear
 - [ ] Similar code found/reviewed
 - [ ] API endpoints identified
