@@ -39,6 +39,7 @@ To achieve a unified frontend and API deployment, we must move away from a long-
         // e.g., if (req.method === 'GET') { ... }
       }
       ```
+
 3.  **Remove Express Server**:
     - The main `services/core-api/src/index.ts` file that starts the Express server (`app.listen(...)`) is no longer needed for production. You can either delete it or modify it to only run for local development.
 4.  **Update `vercel.json` (if needed)**:

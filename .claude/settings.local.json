@@ -120,12 +120,15 @@
       "Bash(vercel ls:*)",
       "mcp__postgres__query",
       "Bash(bash:*)",
-      "Bash(gh run watch:*)"
+      "Bash(gh run watch:*)",
+      "Bash(npx prettier:*)"
     ],
     "deny": [],
     "ask": []
   },
   "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": ["MCP_DOCKER"],
+  "enabledMcpjsonServers": [
+    "MCP_DOCKER"
+  ],
   "outputStyle": "default"
 }

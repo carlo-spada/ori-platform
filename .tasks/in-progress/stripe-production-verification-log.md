@@ -78,7 +78,7 @@ vercel env ls
 **Expected**:
 
 - Webhook URL: `https://<production-url>/api/payments/webhook`
-- Events: checkout.session.completed, customer.subscription._, invoice.payment\__
+- Events: checkout.session.completed, customer.subscription.\_, invoice.payment\_\_
 
 ### Step 3: Test Payment Flow (Test Mode)
 
