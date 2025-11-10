@@ -58,3 +58,17 @@ gha-creds-*.json
 # Python
 **/__pycache__
 *.pyc
+.pytest_cache/
+
+# IDE files
+.idea/
+*.swp
+*.swo
+
+# Backup and duplicate files
+*.backup
+*.old
+*" 2"*
+
+# Shared packages build output
+shared/*/dist
