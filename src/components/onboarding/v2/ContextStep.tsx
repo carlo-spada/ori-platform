@@ -1,7 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { MapPin, Home, Briefcase, GraduationCap, Shuffle, Search } from 'lucide-react'
+import {
+  MapPin,
+  Home,
+  Briefcase,
+  GraduationCap,
+  Shuffle,
+  Search,
+} from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
@@ -41,16 +48,20 @@ const STATUS_OPTIONS: Array<{
   },
 ]
 
-export function ContextStep({ data, onChange, errors = {} }: StepComponentProps) {
+export function ContextStep({
+  data,
+  onChange,
+  errors = {},
+}: StepComponentProps) {
   const [currentStatus, setCurrentStatus] = useState<UserStatus | ''>(
-    data.context?.currentStatus || ''
+    data.context?.currentStatus || '',
   )
   const [yearsExperience, setYearsExperience] = useState(
-    data.context?.yearsExperience ?? 0
+    data.context?.yearsExperience ?? 0,
   )
   const [location, setLocation] = useState(data.context?.location || '')
   const [isRemoteOpen, setIsRemoteOpen] = useState(
-    data.context?.isRemoteOpen ?? true
+    data.context?.isRemoteOpen ?? true,
   )
 
   // Update parent on changes
@@ -88,13 +99,15 @@ export function ContextStep({ data, onChange, errors = {} }: StepComponentProps)
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold mb-3">Where are you in your journey?</h2>
-        <p className="text-muted-foreground text-lg">
+        <h2 className="mb-3 text-3xl font-bold">
+          Where are you in your journey?
+        </h2>
+        <p className="text-lg text-muted-foreground">
           This helps us tailor opportunities to your situation
         </p>
       </div>
 
-      <div className="max-w-2xl mx-auto space-y-8">
+      <div className="mx-auto max-w-2xl space-y-8">
         {/* Current Status */}
         <div className="space-y-3">
           <Label className="text-base">Current status *</Label>
@@ -102,36 +115,26 @@ export function ContextStep({ data, onChange, errors = {} }: StepComponentProps)
             value={currentStatus}
             onValueChange={(value) => setCurrentStatus(value as UserStatus)}
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {STATUS_OPTIONS.map((option) => (
                 <label
                   key={option.value}
-                  className={`
-                    relative flex cursor-pointer rounded-lg border p-4
-                    transition-all hover:border-primary/50
-                    ${
-                      currentStatus === option.value
-                        ? 'border-primary bg-primary/5'
-                        : 'border-border'
-                    }
-                  `}
+                  className={`relative flex cursor-pointer rounded-lg border p-4 transition-all hover:border-primary/50 ${
+                    currentStatus === option.value
+                      ? 'border-primary bg-primary/5'
+                      : 'border-border'
+                  } `}
                 >
-                  <RadioGroupItem
-                    value={option.value}
-                    className="sr-only"
-                  />
+                  <RadioGroupItem value={option.value} className="sr-only" />
                   <div className="flex items-start space-x-3">
                     <div
-                      className={`
-                        mt-0.5 text-muted-foreground
-                        ${currentStatus === option.value ? 'text-primary' : ''}
-                      `}
+                      className={`mt-0.5 text-muted-foreground ${currentStatus === option.value ? 'text-primary' : ''} `}
                     >
                       {option.icon}
                     </div>
                     <div className="flex-1">
                       <p className="font-medium">{option.label}</p>
-                      <p className="text-sm text-muted-foreground mt-0.5">
+                      <p className="mt-0.5 text-sm text-muted-foreground">
                         {option.description}
                       </p>
                     </div>
@@ -147,10 +150,10 @@ export function ContextStep({ data, onChange, errors = {} }: StepComponentProps)
 
         {/* Years of Experience - Show only if not a student */}
         {currentStatus && currentStatus !== 'student' && (
-          <div className="space-y-3 animate-in slide-in-from-bottom-2 duration-300">
+          <div className="space-y-3 duration-300 animate-in slide-in-from-bottom-2">
             <Label className="text-base">
               Years of experience *
-              <span className="text-sm text-muted-foreground ml-2">
+              <span className="ml-2 text-sm text-muted-foreground">
                 ({getExperienceLabel()})
               </span>
             </Label>
@@ -169,7 +172,9 @@ export function ContextStep({ data, onChange, errors = {} }: StepComponentProps)
               </div>
             </div>
             {errors.yearsExperience && (
-              <p className="text-sm text-destructive">{errors.yearsExperience}</p>
+              <p className="text-sm text-destructive">
+                {errors.yearsExperience}
+              </p>
             )}
           </div>
         )}
@@ -178,19 +183,19 @@ export function ContextStep({ data, onChange, errors = {} }: StepComponentProps)
         <div className="space-y-3">
           <Label htmlFor="location" className="text-base">
             Location *
-            <span className="text-sm text-muted-foreground ml-2">
+            <span className="ml-2 text-sm text-muted-foreground">
               (City, State/Country)
             </span>
           </Label>
           <div className="relative">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               id="location"
               type="text"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               placeholder="San Francisco, CA"
-              className={`h-12 text-base pl-10 ${errors.location ? 'border-destructive' : ''}`}
+              className={`h-12 pl-10 text-base ${errors.location ? 'border-destructive' : ''}`}
               autoComplete="locality"
             />
           </div>
@@ -200,9 +205,12 @@ export function ContextStep({ data, onChange, errors = {} }: StepComponentProps)
         </div>
 
         {/* Remote Preference */}
-        <div className="flex items-center justify-between p-4 rounded-lg border bg-card">
+        <div className="flex items-center justify-between rounded-lg border bg-card p-4">
           <div className="space-y-0.5">
-            <Label htmlFor="remote" className="text-base font-normal cursor-pointer">
+            <Label
+              htmlFor="remote"
+              className="cursor-pointer text-base font-normal"
+            >
               Open to remote opportunities
             </Label>
             <p className="text-sm text-muted-foreground">
@@ -218,19 +226,20 @@ export function ContextStep({ data, onChange, errors = {} }: StepComponentProps)
 
         {/* Context-aware hint */}
         {currentStatus === 'student' && (
-          <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
+          <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
             <p className="text-sm text-primary">
-              <strong>Pro tip:</strong> We'll focus on internships, entry-level roles,
-              and learning opportunities that match your academic journey.
+              <strong>Pro tip:</strong> We'll focus on internships, entry-level
+              roles, and learning opportunities that match your academic
+              journey.
             </p>
           </div>
         )}
 
         {currentStatus === 'transitioning' && (
-          <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
+          <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
             <p className="text-sm text-primary">
-              <strong>Career change?</strong> We'll highlight transferable skills and
-              opportunities that value diverse backgrounds.
+              <strong>Career change?</strong> We'll highlight transferable
+              skills and opportunities that value diverse backgrounds.
             </p>
           </div>
         )}

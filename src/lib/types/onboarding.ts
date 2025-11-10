@@ -4,7 +4,11 @@
  */
 
 // User status types
-export type UserStatus = 'student' | 'professional' | 'transitioning' | 'exploring'
+export type UserStatus =
+  | 'student'
+  | 'professional'
+  | 'transitioning'
+  | 'exploring'
 
 // Timeline options in months
 export type TimelineMonths = 6 | 12 | 24 | 36 | 60
@@ -105,7 +109,14 @@ export interface OnboardingAnalyticsEvent {
   id: string
   sessionId: string
   userId: string
-  eventType: 'step_started' | 'step_completed' | 'field_changed' | 'abandoned' | 'resumed' | 'imported_cv' | 'imported_linkedin'
+  eventType:
+    | 'step_started'
+    | 'step_completed'
+    | 'field_changed'
+    | 'abandoned'
+    | 'resumed'
+    | 'imported_cv'
+    | 'imported_linkedin'
   stepName?: string
   fieldName?: string
   timeOnStep?: number
@@ -196,7 +207,15 @@ export interface OnboardingStepConfig {
 // Field configuration for dynamic forms
 export interface OnboardingFieldConfig {
   name: string
-  type: 'text' | 'number' | 'select' | 'multiselect' | 'slider' | 'tags' | 'upload' | 'import'
+  type:
+    | 'text'
+    | 'number'
+    | 'select'
+    | 'multiselect'
+    | 'slider'
+    | 'tags'
+    | 'upload'
+    | 'import'
   label: string
   placeholder?: string
   helpText?: string
@@ -268,4 +287,4 @@ export const ONBOARDING_STEPS = [
   'activation',
 ] as const
 
-export type OnboardingStepKey = typeof ONBOARDING_STEPS[number]
+export type OnboardingStepKey = (typeof ONBOARDING_STEPS)[number]

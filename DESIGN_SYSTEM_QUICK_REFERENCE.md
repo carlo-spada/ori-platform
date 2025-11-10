@@ -23,11 +23,7 @@ export default function YourPage() {
     })
   }, [t])
 
-  return (
-    <PublicLayout>
-      {/* Your sections here */}
-    </PublicLayout>
-  )
+  return <PublicLayout>{/* Your sections here */}</PublicLayout>
 }
 ```
 
@@ -47,7 +43,7 @@ export default function YourPage() {
     <p className="mx-auto mb-8 max-w-3xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
       Subheadline goes here with details about your offering.
     </p>
-    
+
     <div className="mb-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
       <Button size="lg" className="w-full sm:w-auto">
         Primary Action
@@ -57,9 +53,7 @@ export default function YourPage() {
       </Button>
     </div>
 
-    <p className="text-sm text-muted-foreground">
-      Reassurance or trust signal
-    </p>
+    <p className="text-sm text-muted-foreground">Reassurance or trust signal</p>
   </div>
 </Section>
 ```
@@ -91,12 +85,13 @@ export default function YourPage() {
 
 ```tsx
 <Card className="border-border bg-card p-6 transition-colors duration-200 hover:border-accent/50">
-  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10" aria-hidden="true">
+  <div
+    className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10"
+    aria-hidden="true"
+  >
     <IconComponent className="h-6 w-6 text-accent" />
   </div>
-  <h3 className="mb-2 text-lg font-semibold text-foreground">
-    Card Title
-  </h3>
+  <h3 className="mb-2 text-lg font-semibold text-foreground">Card Title</h3>
   <p className="text-sm leading-relaxed text-muted-foreground">
     Card description
   </p>
@@ -109,7 +104,7 @@ export default function YourPage() {
 
 ```tsx
 <Section>
-  <div className="grid items-center gap-12 lg:gap-16 grid-cols-1 xl:grid-cols-2">
+  <div className="grid grid-cols-1 items-center gap-12 lg:gap-16 xl:grid-cols-2">
     {/* Text Column */}
     <div className="space-y-6">
       <p className="text-sm font-medium uppercase tracking-wider text-accent">
@@ -123,18 +118,27 @@ export default function YourPage() {
       </p>
       <ul className="space-y-3">
         <li className="flex items-start gap-3 text-muted-foreground">
-          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-accent" aria-hidden="true" />
+          <CheckCircle2
+            className="mt-0.5 h-5 w-5 shrink-0 text-accent"
+            aria-hidden="true"
+          />
           <span>Benefit point 1</span>
         </li>
         <li className="flex items-start gap-3 text-muted-foreground">
-          <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-accent" aria-hidden="true" />
+          <CheckCircle2
+            className="mt-0.5 h-5 w-5 shrink-0 text-accent"
+            aria-hidden="true"
+          />
           <span>Benefit point 2</span>
         </li>
       </ul>
     </div>
 
     {/* Image Column */}
-    <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-border bg-muted/5 shadow-md" aria-hidden="true">
+    <div
+      className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-border bg-muted/5 shadow-md"
+      aria-hidden="true"
+    >
       {/* Image or visual placeholder */}
     </div>
   </div>
@@ -149,7 +153,8 @@ export default function YourPage() {
 <Card className="border-border bg-card p-6 transition-colors duration-200 hover:border-accent/50">
   <Quote className="mb-4 h-8 w-8 text-accent/30" aria-hidden="true" />
   <blockquote className="mb-4 text-base leading-relaxed text-foreground">
-    &quot;This is the testimonial quote that shows social proof and builds trust.&quot;
+    &quot;This is the testimonial quote that shows social proof and builds
+    trust.&quot;
   </blockquote>
   <div className="mt-4 border-t border-border pt-4">
     <cite className="not-italic">
@@ -166,9 +171,7 @@ export default function YourPage() {
 
 ```tsx
 <div className="rounded-xl border border-border bg-card/50 p-6 transition-all duration-200 hover:border-accent/50 hover:shadow-md">
-  <h3 className="mb-3 text-xl font-semibold text-foreground">
-    Value Title
-  </h3>
+  <h3 className="mb-3 text-xl font-semibold text-foreground">Value Title</h3>
   <p className="leading-relaxed text-muted-foreground">
     Brief description of the value proposition
   </p>
@@ -195,11 +198,17 @@ export default function YourPage() {
       <div key={step} className="relative text-center">
         {/* Connector line (hidden on mobile) */}
         {index < 2 && (
-          <div className="absolute left-[60%] top-12 hidden h-px w-[80%] bg-border md:block" aria-hidden="true" />
+          <div
+            className="absolute left-[60%] top-12 hidden h-px w-[80%] bg-border md:block"
+            aria-hidden="true"
+          />
         )}
 
         {/* Step circle */}
-        <div className="mb-6 inline-flex h-24 w-24 items-center justify-center rounded-full border-2 border-accent/20 bg-accent/10" aria-hidden="true">
+        <div
+          className="mb-6 inline-flex h-24 w-24 items-center justify-center rounded-full border-2 border-accent/20 bg-accent/10"
+          aria-hidden="true"
+        >
           <StepIcon className="h-10 w-10 text-accent" />
         </div>
 
@@ -227,7 +236,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 
-<Section>
+;<Section>
   <div className="mb-12 text-center">
     <h2 className="mb-4 text-3xl font-semibold text-foreground sm:text-4xl">
       Frequently Asked Questions
@@ -290,38 +299,38 @@ import {
 
 ```tsx
 // Primary action (fill button)
-className="bg-primary text-primary-foreground"
+className = 'bg-primary text-primary-foreground'
 
 // Secondary/outline button
-className="border border-input bg-background hover:bg-accent"
+className = 'border border-input bg-background hover:bg-accent'
 
 // Ghost button (text only)
-className="hover:bg-accent hover:text-accent-foreground"
+className = 'hover:bg-accent hover:text-accent-foreground'
 
 // Accent icon container
-className="bg-accent/10"
-className="text-accent"
+className = 'bg-accent/10'
+className = 'text-accent'
 
 // Card hover effect
-className="border-border hover:border-accent/50"
+className = 'border-border hover:border-accent/50'
 
 // Section background (subtle)
-className="bg-surface/50"
+className = 'bg-surface/50'
 
 // Main text
-className="text-foreground"
+className = 'text-foreground'
 
 // Secondary text
-className="text-muted-foreground"
+className = 'text-muted-foreground'
 
 // Borders
-className="border-border"
+className = 'border-border'
 
 // Subtle text (metadata)
-className="text-sm text-muted-foreground"
+className = 'text-sm text-muted-foreground'
 
 // Gradient button (special)
-className="gradient-primary"
+className = 'gradient-primary'
 ```
 
 ---
@@ -330,34 +339,34 @@ className="gradient-primary"
 
 ```tsx
 // Headings scale
-className="text-4xl sm:text-5xl lg:text-6xl"  // h1 variant
+className = 'text-4xl sm:text-5xl lg:text-6xl' // h1 variant
 
 // Section padding scales
-className="py-12 sm:py-16 lg:py-20"
+className = 'py-12 sm:py-16 lg:py-20'
 
 // Grid responsive
-className="grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4"
+className = 'grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4'
 
 // Button width mobile to desktop
-className="w-full sm:w-auto"
+className = 'w-full sm:w-auto'
 
 // Flex direction
-className="flex flex-col items-center gap-4 sm:flex-row"
+className = 'flex flex-col items-center gap-4 sm:flex-row'
 
 // Hidden/shown responsive
-className="hidden lg:flex"  // Hidden mobile, shown lg+
-className="lg:hidden"       // Shown mobile, hidden lg+
+className = 'hidden lg:flex' // Hidden mobile, shown lg+
+className = 'lg:hidden' // Shown mobile, hidden lg+
 
 // Text sizing
-className="text-sm"          // Small text (metadata)
-className="text-base"        // Normal body text
-className="text-lg"          // Larger body text
-className="text-xl"          // Large text
+className = 'text-sm' // Small text (metadata)
+className = 'text-base' // Normal body text
+className = 'text-lg' // Larger body text
+className = 'text-xl' // Large text
 
 // Max widths (for content)
-className="mx-auto max-w-2xl"  // Narrow (672px)
-className="mx-auto max-w-3xl"  // Comfortable (768px)
-className="mx-auto max-w-6xl"  // Wide grid (1152px)
+className = 'mx-auto max-w-2xl' // Narrow (672px)
+className = 'mx-auto max-w-3xl' // Comfortable (768px)
+className = 'mx-auto max-w-6xl' // Wide grid (1152px)
 ```
 
 ---
@@ -365,6 +374,7 @@ className="mx-auto max-w-6xl"  // Wide grid (1152px)
 ## 13. i18n TRANSLATION PATTERN
 
 In your page component:
+
 ```tsx
 const { t } = useTranslation()
 
@@ -383,6 +393,7 @@ const safeArray = <T,>(value: unknown): T[] => {
 ```
 
 In `/public/locales/en/translation.json`:
+
 ```json
 {
   "yourPage": {
@@ -458,15 +469,15 @@ h-10 w-10 // xl (40px)
 
 ## Quick File Reference
 
-| What | Where | Import |
-|------|-------|--------|
-| Colors | `src/app/globals.css` | CSS variables |
-| Button | `src/components/ui/button.tsx` | `import { Button }` |
-| Card | `src/components/ui/card.tsx` | `import { Card }` |
-| Section | `src/components/ui/Section.tsx` | `import { Section }` |
-| Layout | `src/components/layout/PublicLayout.tsx` | `import { PublicLayout }` |
-| SEO | `src/lib/seo.ts` | `import { setDocumentMeta }` |
-| i18n | `react-i18next` | `import { useTranslation }` |
-| Translations | `public/locales/en/translation.json` | Edit for copy |
+| What         | Where                                    | Import                       |
+| ------------ | ---------------------------------------- | ---------------------------- |
+| Colors       | `src/app/globals.css`                    | CSS variables                |
+| Button       | `src/components/ui/button.tsx`           | `import { Button }`          |
+| Card         | `src/components/ui/card.tsx`             | `import { Card }`            |
+| Section      | `src/components/ui/Section.tsx`          | `import { Section }`         |
+| Layout       | `src/components/layout/PublicLayout.tsx` | `import { PublicLayout }`    |
+| SEO          | `src/lib/seo.ts`                         | `import { setDocumentMeta }` |
+| i18n         | `react-i18next`                          | `import { useTranslation }`  |
+| Translations | `public/locales/en/translation.json`     | Edit for copy                |
 
 Ready to build! 🚀

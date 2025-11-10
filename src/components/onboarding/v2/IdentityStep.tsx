@@ -7,10 +7,18 @@ import { Label } from '@/components/ui/label'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import type { StepComponentProps } from '@/lib/types/onboarding'
 
-export function IdentityStep({ data, onChange, errors = {} }: StepComponentProps) {
+export function IdentityStep({
+  data,
+  onChange,
+  errors = {},
+}: StepComponentProps) {
   const [fullName, setFullName] = useState(data.identity?.fullName || '')
-  const [preferredName, setPreferredName] = useState(data.identity?.preferredName || '')
-  const [profilePhotoUrl, setProfilePhotoUrl] = useState(data.identity?.profilePhotoUrl || '')
+  const [preferredName, setPreferredName] = useState(
+    data.identity?.preferredName || '',
+  )
+  const [profilePhotoUrl, setProfilePhotoUrl] = useState(
+    data.identity?.profilePhotoUrl || '',
+  )
   const [isUploading, setIsUploading] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -84,8 +92,8 @@ export function IdentityStep({ data, onChange, errors = {} }: StepComponentProps
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold mb-3">Let's start with you</h2>
-        <p className="text-muted-foreground text-lg">
+        <h2 className="mb-3 text-3xl font-bold">Let's start with you</h2>
+        <p className="text-lg text-muted-foreground">
           Tell us how you'd like to be addressed
         </p>
       </div>
@@ -98,14 +106,16 @@ export function IdentityStep({ data, onChange, errors = {} }: StepComponentProps
               <AvatarImage src={profilePhotoUrl} alt={fullName} />
             ) : (
               <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-2xl">
-                {getInitials() || <User className="h-10 w-10 text-muted-foreground" />}
+                {getInitials() || (
+                  <User className="h-10 w-10 text-muted-foreground" />
+                )}
               </AvatarFallback>
             )}
           </Avatar>
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="absolute bottom-0 right-0 p-1.5 bg-primary text-primary-foreground rounded-full border-2 border-background hover:bg-primary/90 transition-colors"
+            className="absolute bottom-0 right-0 rounded-full border-2 border-background bg-primary p-1.5 text-primary-foreground transition-colors hover:bg-primary/90"
             disabled={isUploading}
           >
             <Camera className="h-4 w-4" />
@@ -124,7 +134,7 @@ export function IdentityStep({ data, onChange, errors = {} }: StepComponentProps
       </div>
 
       {/* Name Fields */}
-      <div className="space-y-6 max-w-md mx-auto">
+      <div className="mx-auto max-w-md space-y-6">
         {/* Full Name */}
         <div className="space-y-2">
           <Label htmlFor="fullName" className="text-base">
@@ -149,7 +159,7 @@ export function IdentityStep({ data, onChange, errors = {} }: StepComponentProps
         <div className="space-y-2">
           <Label htmlFor="preferredName" className="text-base">
             Preferred name *
-            <span className="text-sm text-muted-foreground ml-2">
+            <span className="ml-2 text-sm text-muted-foreground">
               (How should we address you?)
             </span>
           </Label>

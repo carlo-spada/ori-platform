@@ -54,9 +54,7 @@ export default function Login() {
       // Auth provider will redirect to dashboard automatically
     } catch (error: any) {
       console.error('Login error:', error)
-      toast.error(
-        error.message || t('auth.login.errors.failed'),
-      )
+      toast.error(error.message || t('auth.login.errors.failed'))
     } finally {
       setIsLoading(false)
     }
@@ -65,7 +63,10 @@ export default function Login() {
   return (
     <>
       <SharedHeader />
-      <main id="main" className="flex min-h-screen w-full items-center justify-center bg-background px-4 py-16">
+      <main
+        id="main"
+        className="flex min-h-screen w-full items-center justify-center bg-background px-4 py-16"
+      >
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
             <Link

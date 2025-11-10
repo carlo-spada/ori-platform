@@ -3,6 +3,7 @@
 ## Executive Summary
 
 The Ori platform uses a modern, clean design language built on:
+
 - **shadcn/ui** component library
 - **Tailwind CSS** with custom HSL color tokens
 - **Dark mode first** (with light mode fallback)
@@ -17,59 +18,62 @@ This document provides the complete patterns needed to create two new public pag
 ## 1. COLOR SYSTEM
 
 ### CSS Variables (HSL Format)
+
 All colors are defined in `/src/app/globals.css` using HSL for maximum flexibility:
 
 **Light Mode (Root):**
+
 ```css
---bg: 0 0% 100%;              /* Pure white */
---surface: 0 0% 98%;          /* Off-white for surfaces */
---muted: 214 20% 70%;         /* Neutral gray */
---text: 215 27% 6%;           /* Almost black */
---accent: 203 100% 74%;       /* Bright cyan-blue (PRIMARY) */
---accent-2: 248 100% 74%;     /* Purple-blue (SECONDARY) */
---border: 214 20% 85%;        /* Light gray for borders */
+--bg: 0 0% 100%; /* Pure white */
+--surface: 0 0% 98%; /* Off-white for surfaces */
+--muted: 214 20% 70%; /* Neutral gray */
+--text: 215 27% 6%; /* Almost black */
+--accent: 203 100% 74%; /* Bright cyan-blue (PRIMARY) */
+--accent-2: 248 100% 74%; /* Purple-blue (SECONDARY) */
+--border: 214 20% 85%; /* Light gray for borders */
 ```
 
 **Dark Mode (.dark class):**
+
 ```css
---bg: 215 27% 6%;             /* Very dark blue-gray */
---surface: 215 22% 8%;        /* Slightly lighter dark */
---text: 214 40% 95%;          /* Near white */
---accent: 203 100% 74%;       /* Same bright cyan-blue */
---accent-2: 248 100% 74%;     /* Same purple-blue */
---border: 214 20% 15%;        /* Dark gray for borders */
+--bg: 215 27% 6%; /* Very dark blue-gray */
+--surface: 215 22% 8%; /* Slightly lighter dark */
+--text: 214 40% 95%; /* Near white */
+--accent: 203 100% 74%; /* Same bright cyan-blue */
+--accent-2: 248 100% 74%; /* Same purple-blue */
+--border: 214 20% 15%; /* Dark gray for borders */
 ```
 
 ### Tailwind Color Palette
 
-| Color | Usage | Tailwind Classes |
-|-------|-------|------------------|
-| **Primary** | Buttons, highlights, accents | `bg-primary text-primary-foreground` |
-| **Accent** | Icons, highlights, hover states | `text-accent bg-accent/10` |
-| **Foreground** | Main text, headings | `text-foreground` |
-| **Muted Foreground** | Secondary text, descriptions | `text-muted-foreground` |
-| **Card** | Backgrounds for card components | `bg-card` |
-| **Surface** | Section backgrounds | `bg-surface/50` |
-| **Border** | Dividers, edges | `border-border` |
+| Color                | Usage                           | Tailwind Classes                     |
+| -------------------- | ------------------------------- | ------------------------------------ |
+| **Primary**          | Buttons, highlights, accents    | `bg-primary text-primary-foreground` |
+| **Accent**           | Icons, highlights, hover states | `text-accent bg-accent/10`           |
+| **Foreground**       | Main text, headings             | `text-foreground`                    |
+| **Muted Foreground** | Secondary text, descriptions    | `text-muted-foreground`              |
+| **Card**             | Backgrounds for card components | `bg-card`                            |
+| **Surface**          | Section backgrounds             | `bg-surface/50`                      |
+| **Border**           | Dividers, edges                 | `border-border`                      |
 
 ### Color Applications
 
 ```tsx
 // Bright primary accent (CTA buttons, headers)
-className="bg-primary text-primary-foreground"
+className = 'bg-primary text-primary-foreground'
 
 // Light accent background with accent text (icons, badges)
-className="bg-accent/10"
-className="text-accent"
+className = 'bg-accent/10'
+className = 'text-accent'
 
 // Cards with subtle hover
-className="border-border bg-card hover:border-accent/50"
+className = 'border-border bg-card hover:border-accent/50'
 
 // Sections with subtle background
-className="bg-surface/50"
+className = 'bg-surface/50'
 
 // Muted/secondary text
-className="text-muted-foreground"
+className = 'text-muted-foreground'
 ```
 
 ---
@@ -77,20 +81,22 @@ className="text-muted-foreground"
 ## 2. TYPOGRAPHY HIERARCHY
 
 ### Font Family
+
 **Inter** (system fonts fallback)
+
 - All sizes use `font-smooth` for consistency
 - No custom fonts needed
 
 ### Heading Scale
 
-| Element | Classes | Use Case |
-|---------|---------|----------|
-| **H1** | `text-4xl sm:text-5xl lg:text-6xl font-semibold` | Page heroes, main titles |
-| **H2** | `text-3xl sm:text-4xl font-semibold` | Section titles |
-| **H3** | `text-xl font-semibold` | Card titles, subsections |
-| **Body** | `text-base leading-relaxed` | Paragraph text |
-| **Small** | `text-sm` | Metadata, labels, descriptions |
-| **Tiny** | `text-xs` | Badges, overlines |
+| Element   | Classes                                          | Use Case                       |
+| --------- | ------------------------------------------------ | ------------------------------ |
+| **H1**    | `text-4xl sm:text-5xl lg:text-6xl font-semibold` | Page heroes, main titles       |
+| **H2**    | `text-3xl sm:text-4xl font-semibold`             | Section titles                 |
+| **H3**    | `text-xl font-semibold`                          | Card titles, subsections       |
+| **Body**  | `text-base leading-relaxed`                      | Paragraph text                 |
+| **Small** | `text-sm`                                        | Metadata, labels, descriptions |
+| **Tiny**  | `text-xs`                                        | Badges, overlines              |
 
 ### Typography Patterns
 
@@ -125,15 +131,15 @@ className="text-muted-foreground"
 ## 3. SPACING & LAYOUT PATTERNS
 
 ### Section Component
+
 The base container for all public page sections (defined in `/src/components/ui/Section.tsx`):
 
 ```tsx
-<Section className="...optional classes">
-  {/* Content goes here */}
-</Section>
+<Section className="...optional classes">{/* Content goes here */}</Section>
 ```
 
 **Default spacing:**
+
 - Padding: `px-4 sm:px-6 lg:px-8` + `py-12 sm:py-16 lg:py-20`
 - Max width: `max-w-7xl`
 - Margin: `mx-auto w-full`
@@ -141,6 +147,7 @@ The base container for all public page sections (defined in `/src/components/ui/
 ### Grid Patterns
 
 **4-column grid (features, values):**
+
 ```tsx
 <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
   {/* Cards */}
@@ -148,6 +155,7 @@ The base container for all public page sections (defined in `/src/components/ui/
 ```
 
 **3-column grid (pricing, testimonials, features):**
+
 ```tsx
 <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-3">
   {/* Cards */}
@@ -155,15 +163,15 @@ The base container for all public page sections (defined in `/src/components/ui/
 ```
 
 **2-column grid (values):**
+
 ```tsx
-<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-  {/* Cards */}
-</div>
+<div className="grid grid-cols-1 gap-6 md:grid-cols-2">{/* Cards */}</div>
 ```
 
 **2-column split (text + image):**
+
 ```tsx
-<div className="grid items-center gap-12 lg:gap-16 grid-cols-1 xl:grid-cols-2">
+<div className="grid grid-cols-1 items-center gap-12 lg:gap-16 xl:grid-cols-2">
   {/* Content column */}
   {/* Image/Visual column */}
 </div>
@@ -198,6 +206,7 @@ max-w-4xl, max-w-6xl  // Wider containers (grids)
 ### Card Component
 
 **Basic Card:**
+
 ```tsx
 <Card className="border-border bg-card p-6 transition-colors duration-200 hover:border-accent/50">
   {/* Content */}
@@ -205,6 +214,7 @@ max-w-4xl, max-w-6xl  // Wider containers (grids)
 ```
 
 **Features:**
+
 - Default border: `border-border` (light gray)
 - Background: `bg-card`
 - Hover effect: Border becomes lighter, slightly transparent accent color
@@ -213,6 +223,7 @@ max-w-4xl, max-w-6xl  // Wider containers (grids)
 ### Button Component
 
 **Variants:**
+
 ```tsx
 // Primary (filled background)
 <Button size="lg" className="w-full sm:w-auto">
@@ -236,6 +247,7 @@ max-w-4xl, max-w-6xl  // Wider containers (grids)
 ```
 
 **Sizes:**
+
 ```
 size="lg"  // Height: 11px, Padding: 8px horizontal
 size="default"  // Height: 10px, Padding: 4px horizontal
@@ -244,15 +256,23 @@ size="default"  // Height: 10px, Padding: 4px horizontal
 ### Icon Patterns
 
 **Icon Container (from ValuePropositionSection):**
+
 ```tsx
-<div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10" aria-hidden="true">
+<div
+  className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10"
+  aria-hidden="true"
+>
   <Icon className="h-6 w-6 text-accent" />
 </div>
 ```
 
 **Larger Icon Container (from HowItWorksSection):**
+
 ```tsx
-<div className="mb-6 inline-flex h-24 w-24 items-center justify-center rounded-full border-2 border-accent/20 bg-accent/10" aria-hidden="true">
+<div
+  className="mb-6 inline-flex h-24 w-24 items-center justify-center rounded-full border-2 border-accent/20 bg-accent/10"
+  aria-hidden="true"
+>
   <Icon className="h-10 w-10 text-accent" />
 </div>
 ```
@@ -262,6 +282,7 @@ size="default"  // Height: 10px, Padding: 4px horizontal
 ## 5. SECTION PATTERNS (Public Pages)
 
 ### Pattern: Hero Section
+
 Used in landing page (`HeroSection.tsx`)
 
 ```tsx
@@ -298,6 +319,7 @@ Used in landing page (`HeroSection.tsx`)
 ```
 
 ### Pattern: Value Cards Section
+
 Used in landing, about, and features pages
 
 ```tsx
@@ -315,8 +337,14 @@ Used in landing, about, and features pages
   {/* Grid */}
   <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
     {values.map((value) => (
-      <Card key={value.title} className="border-border bg-card p-6 transition-colors duration-200 hover:border-accent/50">
-        <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10" aria-hidden="true">
+      <Card
+        key={value.title}
+        className="border-border bg-card p-6 transition-colors duration-200 hover:border-accent/50"
+      >
+        <div
+          className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10"
+          aria-hidden="true"
+        >
           <Icon className="h-6 w-6 text-accent" />
         </div>
         <h3 className="mb-2 text-lg font-semibold text-foreground">
@@ -332,11 +360,12 @@ Used in landing, about, and features pages
 ```
 
 ### Pattern: Feature Section (Left/Right Layout)
+
 Used in features page (`FeatureSection.tsx`)
 
 ```tsx
 <Section id={id}>
-  <div className="grid items-center gap-12 lg:gap-16 grid-cols-1 xl:grid-cols-2">
+  <div className="grid grid-cols-1 items-center gap-12 lg:gap-16 xl:grid-cols-2">
     {/* Content */}
     <div className={cn('space-y-6', align === 'right' && 'xl:order-2')}>
       {eyebrow && (
@@ -353,8 +382,14 @@ Used in features page (`FeatureSection.tsx`)
       {points && (
         <ul className="space-y-3">
           {points.map((point, index) => (
-            <li key={index} className="flex items-start gap-3 text-muted-foreground">
-              <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-accent" aria-hidden="true" />
+            <li
+              key={index}
+              className="flex items-start gap-3 text-muted-foreground"
+            >
+              <CheckCircle2
+                className="mt-0.5 h-5 w-5 shrink-0 text-accent"
+                aria-hidden="true"
+              />
               <span className="leading-relaxed">{point}</span>
             </li>
           ))}
@@ -363,7 +398,13 @@ Used in features page (`FeatureSection.tsx`)
     </div>
 
     {/* Visual */}
-    <div className={cn('relative aspect-[16/10] overflow-hidden rounded-2xl border border-border bg-muted/5 shadow-md', align === 'right' && 'xl:order-1')} aria-hidden="true">
+    <div
+      className={cn(
+        'relative aspect-[16/10] overflow-hidden rounded-2xl border border-border bg-muted/5 shadow-md',
+        align === 'right' && 'xl:order-1',
+      )}
+      aria-hidden="true"
+    >
       {visual || <div>{/* placeholder */}</div>}
     </div>
   </div>
@@ -371,6 +412,7 @@ Used in features page (`FeatureSection.tsx`)
 ```
 
 ### Pattern: Testimonial/Social Proof Section
+
 Used in landing page (`SocialProofSection.tsx`)
 
 ```tsx
@@ -388,7 +430,10 @@ Used in landing page (`SocialProofSection.tsx`)
   {/* Grid */}
   <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-3">
     {testimonials.map((testimonial, index) => (
-      <Card key={index} className="border-border bg-card p-6 transition-colors duration-200 hover:border-accent/50">
+      <Card
+        key={index}
+        className="border-border bg-card p-6 transition-colors duration-200 hover:border-accent/50"
+      >
         <Quote className="mb-4 h-8 w-8 text-accent/30" aria-hidden="true" />
         <blockquote className="mb-4 text-base leading-relaxed text-foreground">
           &quot;{testimonial.quote}&quot;
@@ -406,6 +451,7 @@ Used in landing page (`SocialProofSection.tsx`)
 ```
 
 ### Pattern: FAQ/Accordion Section
+
 Used in pricing and landing pages (`FAQSection.tsx`)
 
 ```tsx
@@ -439,6 +485,7 @@ Used in pricing and landing pages (`FAQSection.tsx`)
 ```
 
 ### Pattern: Bottom CTA Section
+
 Used to transition between pages (`BottomCTASection.tsx`)
 
 ```tsx
@@ -447,9 +494,7 @@ Used to transition between pages (`BottomCTASection.tsx`)
     <h2 className="mb-4 text-3xl font-semibold text-foreground sm:text-4xl">
       {headline}
     </h2>
-    <p className="mb-8 text-lg text-muted-foreground">
-      {description}
-    </p>
+    <p className="mb-8 text-lg text-muted-foreground">{description}</p>
 
     {/* CTAs */}
     <div className="mb-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -474,11 +519,13 @@ Used to transition between pages (`BottomCTASection.tsx`)
 ### Glassmorphism
 
 **Header backdrop blur:**
+
 ```tsx
-className="backdrop-blur-header sticky top-0 z-50"
+className = 'backdrop-blur-header sticky top-0 z-50'
 ```
 
 **CSS definition in globals.css:**
+
 ```css
 @supports (backdrop-filter: blur(12px)) {
   .backdrop-blur-header {
@@ -489,11 +536,14 @@ className="backdrop-blur-header sticky top-0 z-50"
 ```
 
 ### Gradient Button
+
 ```tsx
-className="gradient-primary rounded-xl shadow-sm transition-opacity hover:opacity-95"
+className =
+  'gradient-primary rounded-xl shadow-sm transition-opacity hover:opacity-95'
 ```
 
 **CSS definition:**
+
 ```css
 .gradient-primary {
   background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-2)));
@@ -501,6 +551,7 @@ className="gradient-primary rounded-xl shadow-sm transition-opacity hover:opacit
 ```
 
 ### Glow Effects
+
 ```css
 .glow {
   box-shadow: 0 0 20px hsl(var(--accent) / 0.5);
@@ -512,18 +563,19 @@ className="gradient-primary rounded-xl shadow-sm transition-opacity hover:opacit
 ```
 
 ### Smooth Transitions
+
 ```tsx
 // Standard transition
-className="transition-all duration-200"
+className = 'transition-all duration-200'
 
 // Specific transitions
-className="transition-colors duration-200"
-className="transition-opacity duration-200"
+className = 'transition-colors duration-200'
+className = 'transition-opacity duration-200'
 
 // Hover effects
-className="hover:border-accent/50"
-className="hover:text-foreground"
-className="hover:opacity-95"
+className = 'hover:border-accent/50'
+className = 'hover:text-foreground'
+className = 'hover:opacity-95'
 ```
 
 ---
@@ -531,31 +583,34 @@ className="hover:opacity-95"
 ## 7. RESPONSIVE DESIGN PATTERNS
 
 ### Breakpoints (Tailwind Standard)
+
 - `sm`: 640px (tablets)
 - `md`: 768px (small desktops)
 - `lg`: 1024px (desktops)
 - `xl`: 1280px (large desktops)
 
 ### Mobile-First Approach
+
 ```tsx
 // Text sizing - starts small, grows
-className="text-4xl sm:text-5xl lg:text-6xl"
+className = 'text-4xl sm:text-5xl lg:text-6xl'
 
 // Padding - starts tight, grows
-className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20"
+className = 'px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20'
 
 // Grid - stacks on mobile, spreads on desktop
-className="grid grid-cols-1 gap-6 md:grid-cols-3"
+className = 'grid grid-cols-1 gap-6 md:grid-cols-3'
 
 // Flex direction
-className="flex flex-col items-center justify-center gap-4 sm:flex-row"
+className = 'flex flex-col items-center justify-center gap-4 sm:flex-row'
 
 // Display
-className="hidden lg:flex"  // Hidden on mobile, shown on lg+
-className="lg:hidden"       // Shown on mobile, hidden on lg+
+className = 'hidden lg:flex' // Hidden on mobile, shown on lg+
+className = 'lg:hidden' // Shown on mobile, hidden on lg+
 ```
 
 ### Content Max-Widths
+
 ```tsx
 max-w-2xl  // ~672px - narrower content
 max-w-3xl  // ~768px - comfortable text width
@@ -572,9 +627,11 @@ max-w-7xl  // ~1280px - section default (from Section.tsx)
 All public pages use **react-i18next** for translations.
 
 ### Translation File Location
+
 `/public/locales/en/translation.json` (English example)
 
 ### Usage Pattern
+
 ```tsx
 import { useTranslation } from 'react-i18next'
 
@@ -589,6 +646,7 @@ export function MyComponent() {
 ```
 
 ### Translation Namespace Structure
+
 ```json
 {
   "nav": { "items": { "features": "...", "pricing": "..." } },
@@ -602,6 +660,7 @@ export function MyComponent() {
 ```
 
 ### Safe Array Extraction Pattern
+
 Used when fetching array data from translations:
 
 ```tsx
@@ -610,7 +669,7 @@ const safeArray = <T,>(value: unknown): T[] => {
 }
 
 const items = safeArray<{ id: string; name: string }>(
-  t('section.items', { returnObjects: true })
+  t('section.items', { returnObjects: true }),
 )
 ```
 
@@ -619,7 +678,9 @@ const items = safeArray<{ id: string; name: string }>(
 ## 9. EXISTING PUBLIC PAGES REFERENCE
 
 ### Landing Page (`src/app/page.tsx`)
+
 Composition:
+
 1. HeroSection (headline + 2 CTAs)
 2. ValuePropositionSection (4-column value cards)
 3. HowItWorksSection (3-step flow with icons)
@@ -628,14 +689,18 @@ Composition:
 6. BottomCTASection (call-to-action footer)
 
 ### Pricing Page (`src/app/pricing/page.tsx`)
+
 Composition:
+
 1. Header (title + billing toggle)
 2. PricingCard grid (3 plans)
 3. FeatureComparisonTable (detailed comparison)
 4. FAQSection (pricing FAQs)
 
 ### Features Page (`src/app/features/page.tsx`)
+
 Composition:
+
 1. PageHeader (eyebrow + title + reassurance)
 2. FeatureToc (table of contents)
 3. Multiple FeatureSection components (alternating left/right)
@@ -643,7 +708,9 @@ Composition:
 5. BottomCTASection
 
 ### About Page (`src/app/about/page.tsx`)
+
 Composition:
+
 1. Header section (eyebrow + title + subtitle)
 2. Problem section (narrative text)
 3. Vision section (narrative text)
@@ -651,9 +718,11 @@ Composition:
 5. Final CTA section (headline + 2 buttons)
 
 ### Blog Page (`src/app/blog/page.tsx`)
+
 Uses BlogPostCard components in a grid
 
 ### Legal Pages (`src/app/legal/*/page.tsx`)
+
 Uses LegalPageLayout and LegalDocument components
 
 ---
@@ -683,14 +752,26 @@ When creating a new public page:
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Section } from '@/components/ui/Section'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 
 // Layout
 import { PublicLayout } from '@/components/layout/PublicLayout'
 import { BottomCTASection } from '@/components/landing/BottomCTASection'
 
 // Icons (Lucide React)
-import { Target, TrendingUp, FileText, Activity, CheckCircle2, Quote } from 'lucide-react'
+import {
+  Target,
+  TrendingUp,
+  FileText,
+  Activity,
+  CheckCircle2,
+  Quote,
+} from 'lucide-react'
 
 // i18n & Navigation
 import { useTranslation } from 'react-i18next'
@@ -745,6 +826,7 @@ public/
 You now have the complete design system. Use this document as a reference while creating your two new public pages. The patterns are battle-tested across landing, pricing, features, and about pages—replicate them for consistency.
 
 **Key files to reference:**
+
 - `/src/components/ui/Section.tsx` - Base container
 - `/src/app/globals.css` - All color tokens & effects
 - `/src/components/landing/` - Section component patterns

@@ -38,9 +38,7 @@ export default function OnboardingPage() {
 
   // Get user's name from user metadata or email
   const userName =
-    user?.user_metadata?.full_name ||
-    user?.email?.split('@')[0] ||
-    'there'
+    user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'there'
 
   const { mutate: submitOnboarding, isPending: isSubmitting } =
     useCompleteOnboarding()

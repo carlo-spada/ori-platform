@@ -85,9 +85,7 @@ export default function Signup() {
       }
     } catch (error: any) {
       console.error('Signup error:', error)
-      toast.error(
-        error.message || t('auth.signup.errors.failed'),
-      )
+      toast.error(error.message || t('auth.signup.errors.failed'))
     } finally {
       setIsLoading(false)
     }
@@ -97,7 +95,10 @@ export default function Signup() {
     return (
       <>
         <SharedHeader />
-        <main id="main" className="flex min-h-screen w-full items-center justify-center bg-background px-4 py-16">
+        <main
+          id="main"
+          className="flex min-h-screen w-full items-center justify-center bg-background px-4 py-16"
+        >
           <div className="w-full max-w-md">
             <div className="mb-8 text-center">
               <Link
@@ -149,7 +150,10 @@ export default function Signup() {
   return (
     <>
       <SharedHeader />
-      <main id="main" className="flex min-h-screen w-full items-center justify-center bg-background px-4 py-16">
+      <main
+        id="main"
+        className="flex min-h-screen w-full items-center justify-center bg-background px-4 py-16"
+      >
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
             <Link

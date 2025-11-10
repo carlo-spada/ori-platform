@@ -37,8 +37,9 @@ export function OnboardingGuard({ children }: { children: React.ReactNode }) {
   // Routes that are part of the onboarding flow (allow access even if onboarding not complete)
   const onboardingRoutes = ['/select-plan', '/onboarding']
 
-  const isPublicRoute = publicRoutes.some((route) =>
-    pathname === route || (route !== '/' && pathname?.startsWith(route)),
+  const isPublicRoute = publicRoutes.some(
+    (route) =>
+      pathname === route || (route !== '/' && pathname?.startsWith(route)),
   )
   const isOnboardingRoute = onboardingRoutes.some((route) =>
     pathname?.startsWith(route),
@@ -57,7 +58,9 @@ export function OnboardingGuard({ children }: { children: React.ReactNode }) {
     // If user is authenticated but profile hasn't loaded, they might need to complete onboarding
     if (!profile) {
       // Profile should exist (created by trigger), but if it doesn't, send to onboarding
-      console.warn('User authenticated but no profile found, redirecting to onboarding')
+      console.warn(
+        'User authenticated but no profile found, redirecting to onboarding',
+      )
       router.push('/onboarding')
       return
     }
@@ -67,7 +70,15 @@ export function OnboardingGuard({ children }: { children: React.ReactNode }) {
       console.log('Onboarding not completed, redirecting to select-plan')
       router.push('/select-plan')
     }
-  }, [user, profile, isProfileLoading, pathname, isPublicRoute, isOnboardingRoute, router])
+  }, [
+    user,
+    profile,
+    isProfileLoading,
+    pathname,
+    isPublicRoute,
+    isOnboardingRoute,
+    router,
+  ])
 
   // Show loading state while checking auth/profile
   if (!isPublicRoute && !isOnboardingRoute && user && isProfileLoading) {
