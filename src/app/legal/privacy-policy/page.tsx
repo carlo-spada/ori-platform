@@ -1,8 +1,7 @@
 'use client'
 
-import { LegalDocument } from '@/components/legal/LegalDocument'
+import { EnhancedLegalDocument } from '@/components/legal/EnhancedLegalDocument'
 
-// Privacy Policy will be loaded from legal-privacy.json translations
 export default function PrivacyPolicyPage() {
-  return <LegalDocument namespace="legal-privacy" fallbackContent="" />
+  return <EnhancedLegalDocument namespace="legal-privacy" />
 }

@@ -1,8 +1,7 @@
 'use client'
 
-import { LegalDocument } from '@/components/legal/LegalDocument'
+import { EnhancedLegalDocument } from '@/components/legal/EnhancedLegalDocument'
 
-// Cookie Policy will be loaded from legal-cookies.json translations
 export default function CookiePolicyPage() {
-  return <LegalDocument namespace="legal-cookies" fallbackContent="" />
+  return <EnhancedLegalDocument namespace="legal-cookies" />
 }
