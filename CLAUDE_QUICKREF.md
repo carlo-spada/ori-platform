@@ -157,12 +157,15 @@ const mockSupabase = {
 }
 ```
 
-## CRITICAL RULES
+## CRITICAL RULES (AGENTIC WORKFLOW - 10x SPEED)
 1. **WIP Limit**: Max 5 tasks in progress (enforced by CLI)
-2. **No Mock Data**: Always use React Query hooks in components
-3. **Test First**: Write tests before implementation
-4. **Commit Often**: Push after each logical unit
-5. **Use Agents**: They auto-review PRs for quality
+2. **Task Velocity**: Complete tasks within 30 hours (stale after 30hr)
+3. **Commit Frequency**: Every 15-30 minutes during active work
+4. **Review Cycle**: PRs should be reviewed within 4 hours
+5. **Health Checks**: Run every 4 hours automatically
+6. **No Mock Data**: Always use React Query hooks in components
+7. **Test First**: Write tests before implementation
+8. **Use Agents**: They auto-review PRs for quality
 
 ## QUICK FIXES
 | Problem | Solution |

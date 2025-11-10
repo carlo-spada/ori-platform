@@ -4,20 +4,32 @@
 
 ## Executive Summary
 
-This masterplan transforms the Ori Platform from **manual task management** to **automated high-velocity workflows**. Expected outcomes:
+This masterplan transforms the Ori Platform from **manual task management** to **automated high-velocity AGENTIC workflows**. Expected outcomes:
 - **80% reduction** in task management friction
 - **90% reduction** in documentation reading time
-- **4x increase** in development velocity
+- **10x increase** in development velocity (agentic speed)
 - **Zero manual task operations** (fully automated)
+- **30-hour task completion** cycles (vs 14-day human cycles)
 
-**Total Implementation Time**: 40-60 hours across 2-4 weeks
-**Immediate ROI**: 10-15 hours saved per week after Phase 1
+**Total Implementation Time**: 40-60 hours across 3-5 days (agentic pace)
+**Immediate ROI**: 50+ hours saved per week after Phase 1
+
+## ⚡ AGENTIC WORKFLOW ADAPTATIONS (10x Speed)
+
+**Time Scale Conversions**:
+- Stale tasks: **30 hours** (was 14 days)
+- Health checks: **Every 4 hours** (was Mon/Wed/Fri)
+- PR reviews: **Within 4 hours** (was 24 hours)
+- Task velocity: **5-10 tasks/day** (was 3/week)
+- Commit frequency: **Every 15-30 min** (was hourly)
+- Sprint cycles: **2-3 days** (was 2 weeks)
+- Full implementation: **3-5 days** (was 2-4 weeks)
 
 ---
 
-## PHASE 1: CRITICAL PATH (Day 1-3)
+## PHASE 1: CRITICAL PATH (Hours 1-6)
 **Goal**: Fix immediate bottlenecks, reduce WIP, automate task management
-**Time**: 14 hours
+**Time**: 6 hours (agentic pace)
 **Impact**: Immediate 80% friction reduction
 
 ### Step 1.1: Emergency WIP Reduction (2 hours)
@@ -2106,21 +2118,21 @@ Create `tools/task-dashboard/vercel.json`:
 
 ---
 
-## IMPLEMENTATION SCHEDULE
+## IMPLEMENTATION SCHEDULE (AGENTIC PACE - 10x Speed)
 
-### Week 1: Foundation (40 hours)
-- **Day 1-3**: Phase 1 - Critical Path (14 hours)
-- **Day 4-7**: Phase 2 - Automation Layer (16 hours)
-- **Buffer**: 10 hours for testing/debugging
+### Day 1: Foundation (12 hours continuous work)
+- **Hours 1-6**: Phase 1 - Critical Path
+- **Hours 7-12**: Phase 2 - Automation Layer
 
-### Week 2: Optimization (30 hours)
-- **Day 8-10**: Phase 3 - Documentation (12 hours)
-- **Day 11-14**: Phase 4 - RAG Pipeline (16 hours)
-- **Buffer**: 2 hours for integration
+### Day 2: Optimization (12 hours continuous work)
+- **Hours 1-6**: Phase 3 - Documentation
+- **Hours 7-12**: Phase 4 - RAG Pipeline setup
 
-### Week 3-4: Advanced (20 hours)
-- **Day 15-18**: Phase 5 - Dashboard (20 hours)
-- **Day 19-20**: Testing & refinement
+### Day 3: Advanced Features (12 hours continuous work)
+- **Hours 1-8**: Phase 5 - Dashboard
+- **Hours 9-12**: Testing & refinement
+
+### Total: 36 hours across 3 days (vs 2-4 weeks human pace)
 
 ---
 
@@ -2128,15 +2140,18 @@ Create `tools/task-dashboard/vercel.json`:
 
 Track these metrics before and after implementation:
 
-| Metric | Before | Target | How to Measure |
-|--------|--------|--------|----------------|
+| Metric | Before | Target (Agentic) | How to Measure |
+|--------|--------|-----------------|----------------|
 | WIP Tasks | 21 | ≤5 | `./scripts/task health` |
 | Time to claim task | 5 min | 10 sec | Time the command |
-| Doc reading time | 15 min | 2 min | Time to find info |
-| Stale tasks | Unknown | 0 | Weekly health check |
-| PR review time | Manual | Automated | Agent comments |
-| Context load time | 15 min | 1 min | With RAG/memory |
-| Task velocity | ~3/week | 12/week | Completed tasks |
+| Doc reading time | 15 min | 30 sec | Time to find info |
+| Stale task threshold | 14 days | 30 hours | Auto-detection |
+| Health check frequency | Weekly | Every 4 hours | GitHub Actions |
+| PR review time | 24 hours | 4 hours | Agent comments |
+| Context load time | 15 min | 30 sec | With RAG/memory |
+| Task velocity | ~3/week | 5-10/day | Completed tasks |
+| Commit frequency | Hourly | Every 15-30 min | Git log |
+| Sprint cycle | 2 weeks | 2-3 days | Task throughput |
 
 ---
 

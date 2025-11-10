@@ -78,7 +78,8 @@
       "Bash(git mv:*)",
       "Bash(npx jest:*)",
       "Bash(git -C /Users/carlo/Desktop/Projects/ori-platform log --oneline --all -20)",
-      "Bash(git -C /Users/carlo/Desktop/Projects/ori-platform log --all --grep=\"schema-contract-sentinel\\|test-architect\\|flow-orchestrator\\|code-guardian\\|docs-dx-curator\" --oneline)"
+      "Bash(git -C /Users/carlo/Desktop/Projects/ori-platform log --all --grep=\"schema-contract-sentinel\\|test-architect\\|flow-orchestrator\\|code-guardian\\|docs-dx-curator\" --oneline)",
+      "Bash(./scripts/task:*)"
     ],
     "deny": [],
     "ask": []

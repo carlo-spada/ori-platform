@@ -8,14 +8,21 @@
 
 **Workflow**: `dev` → implement → commit/push → PR `dev` → `main` → Vercel deploy
 
-**Task Management** (NEW - Use the CLI!):
+**Task Management** (AGENTIC WORKFLOW - 10x Speed):
 ```bash
-./scripts/task health         # Check WIP and bottlenecks
+./scripts/task health         # Check WIP and bottlenecks (stale = >30hr)
 ./scripts/task claim X        # Claim task (enforces WIP limit)
-./scripts/task complete X     # Mark task done
-./scripts/task list wip       # Show current work
-./scripts/task archive X      # Move to backlog
+./scripts/task complete X     # Mark task done (target: <30hr)
+./scripts/task list wip       # Show current work with hours tracking
+./scripts/task archive X      # Move to backlog if blocked
 ```
+
+**⚡ AGENTIC EXPECTATIONS**:
+- Tasks stale after **30 hours** (not 14 days)
+- Health checks run **every 4 hours** (not weekly)
+- Commit every **15-30 minutes** during work
+- PRs reviewed within **4 hours**
+- Daily velocity: **5-10 tasks/day** (not 3/week)
 
 **Task Governance**: See `.tasks/TASK_GOVERNANCE.md` (single source of truth for all agents)
 

@@ -2,8 +2,8 @@ name: Task Health Monitor
 
 on:
   schedule:
-    # Run Monday, Wednesday, Friday at 9am UTC
-    - cron: '0 9 * * MON,WED,FRI'
+    # AGENTIC WORKFLOW: Run every 4 hours for rapid development cycles
+    - cron: '0 */4 * * *'  # Every 4 hours
   workflow_dispatch:  # Allow manual trigger
   push:
     paths:
@@ -24,11 +24,12 @@ jobs:
       - name: Analyze Task Distribution
         id: health
         run: |
-          # Configuration
+          # Configuration for AGENTIC WORKFLOWS (10x faster)
           WIP_LIMIT=5
-          DONE_THRESHOLD=15
-          STALE_THRESHOLD=3
-          STALE_DAYS=14
+          DONE_THRESHOLD=20      # Increased for rapid completion
+          STALE_THRESHOLD=2      # Lower threshold for faster cycles
+          STALE_HOURS=30         # 30 hours instead of 14 days
+          STALE_DAYS=2           # Using 2 days as proxy for 30+ hours in find command
 
           # Count tasks in each state
           TODO_COUNT=$(find .tasks/todo -name "*.md" 2>/dev/null | wc -l || echo 0)
@@ -38,11 +39,12 @@ jobs:
           REVIEWED_COUNT=$(find .tasks/reviewed -name "*.md" 2>/dev/null | wc -l || echo 0)
           BACKLOG_COUNT=$(find .tasks/backlog -name "*.md" 2>/dev/null | wc -l || echo 0)
 
-          # Find stale tasks
+          # Find stale tasks (using 2 days as proxy for 30+ hours)
           STALE_COUNT=$(find .tasks/in-progress -name "*.md" -mtime +$STALE_DAYS 2>/dev/null | wc -l || echo 0)
 
-          # Calculate velocity (tasks completed in last 7 days)
-          VELOCITY=$(find .tasks/done -name "*.md" -mtime -7 2>/dev/null | wc -l || echo 0)
+          # Calculate velocity (tasks completed in last 24 hours for agentic workflows)
+          VELOCITY_DAILY=$(find .tasks/done -name "*.md" -mtime -1 2>/dev/null | wc -l || echo 0)
+          VELOCITY_WEEKLY=$(find .tasks/done -name "*.md" -mtime -7 2>/dev/null | wc -l || echo 0)
 
           # Set health status
           HEALTH_STATUS="healthy"
@@ -92,23 +94,24 @@ jobs:
 
           # Check stale tasks
           if [ $STALE_COUNT -gt $STALE_THRESHOLD ]; then
-            echo "| **STALE** (>$STALE_DAYS days) | **$STALE_COUNT** | 🔴 **ACTION NEEDED** | ≤ $STALE_THRESHOLD |" >> $GITHUB_STEP_SUMMARY
-            echo "::error::Stale tasks detected: $STALE_COUNT tasks over $STALE_DAYS days old"
+            echo "| **STALE** (>$STALE_HOURS hours) | **$STALE_COUNT** | 🔴 **ACTION NEEDED** | ≤ $STALE_THRESHOLD |" >> $GITHUB_STEP_SUMMARY
+            echo "::error::Stale tasks detected: $STALE_COUNT tasks over $STALE_HOURS hours old"
             HEALTH_STATUS="unhealthy"
             ALERT_LEVEL="error"
           elif [ $STALE_COUNT -gt 0 ]; then
-            echo "| **STALE** (>$STALE_DAYS days) | $STALE_COUNT | ⚠️ | 0 |" >> $GITHUB_STEP_SUMMARY
+            echo "| **STALE** (>$STALE_HOURS hours) | $STALE_COUNT | ⚠️ | 0 |" >> $GITHUB_STEP_SUMMARY
           else
             echo "| **STALE** | 0 | ✅ | 0 |" >> $GITHUB_STEP_SUMMARY
           fi
 
-          # Show velocity
-          echo "| **VELOCITY** (7-day) | $VELOCITY tasks/week | 📈 | - |" >> $GITHUB_STEP_SUMMARY
+          # Show velocity (agentic metrics)
+          echo "| **VELOCITY** (24-hour) | $VELOCITY_DAILY tasks/day | 🚀 | - |" >> $GITHUB_STEP_SUMMARY
+          echo "| **VELOCITY** (7-day) | $VELOCITY_WEEKLY tasks/week | 📈 | - |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
           # List stale tasks if any
           if [ $STALE_COUNT -gt 0 ]; then
-            echo "## ⚠️ Stale Tasks (>$STALE_DAYS days in progress)" >> $GITHUB_STEP_SUMMARY
+            echo "## ⚠️ Stale Tasks (>$STALE_HOURS hours in progress)" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             find .tasks/in-progress -name "*.md" -mtime +$STALE_DAYS -exec basename {} .md \; 2>/dev/null | while read task; do
               echo "- \`$task\`" >> $GITHUB_STEP_SUMMARY

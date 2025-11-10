@@ -112,12 +112,13 @@ function health() {
     echo "📦 BACKLOG:     $backlog_count tasks"
     echo ""
 
-    # Find stale tasks (older than 14 days)
+    # Find stale tasks (older than 30 hours for agentic workflows)
     if [ $wip_count -gt 0 ]; then
-        stale_tasks=$(find $TASK_DIR/in-progress -name "*.md" -mtime +14 2>/dev/null)
+        # Using 2 days as proxy for 30+ hours in find command
+        stale_tasks=$(find $TASK_DIR/in-progress -name "*.md" -mtime +1 2>/dev/null)
         if [ ! -z "$stale_tasks" ]; then
             stale_count=$(echo "$stale_tasks" | wc -l | tr -d ' ')
-            echo -e "${YELLOW}⚠️  STALE TASKS (>14 days in progress): $stale_count${NC}"
+            echo -e "${YELLOW}⚠️  STALE TASKS (>30 hours in progress): $stale_count${NC}"
             echo "$stale_tasks" | xargs -I {} basename {} .md | head -5 | sed 's/^/    • /'
             echo ""
         fi
@@ -150,13 +151,13 @@ function list() {
             echo -e "${YELLOW}=== In Progress Tasks ===${NC}"
             find $TASK_DIR/in-progress -name "*.md" 2>/dev/null | while read file; do
                 task=$(basename "$file" .md)
-                days_old=$(( ($(date +%s) - $(stat -f %m "$file" 2>/dev/null || stat -c %Y "$file" 2>/dev/null)) / 86400 ))
-                if [ $days_old -gt 14 ]; then
-                    echo -e "  • ${RED}$task (${days_old} days old - STALE)${NC}"
-                elif [ $days_old -gt 7 ]; then
-                    echo -e "  • ${YELLOW}$task (${days_old} days old)${NC}"
+                hours_old=$(( ($(date +%s) - $(stat -f %m "$file" 2>/dev/null || stat -c %Y "$file" 2>/dev/null)) / 3600 ))
+                if [ $hours_old -gt 30 ]; then
+                    echo -e "  • ${RED}$task (${hours_old} hours old - STALE)${NC}"
+                elif [ $hours_old -gt 15 ]; then
+                    echo -e "  • ${YELLOW}$task (${hours_old} hours old - WARNING)${NC}"
                 else
-                    echo -e "  • $task (${days_old} days old)"
+                    echo -e "  • $task (${hours_old} hours old)"
                 fi
             done
             ;;
