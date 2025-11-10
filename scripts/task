@@ -62,8 +62,10 @@ function complete() {
 
     # Check if task exists in in-progress
     if [ -f "$TASK_DIR/in-progress/$task.md" ]; then
+        mkdir -p "$TASK_DIR/in-review"
         git mv "$TASK_DIR/in-progress/$task.md" "$TASK_DIR/in-review/$task.md"
     elif [ -d "$TASK_DIR/in-progress/$task" ]; then
+        mkdir -p "$TASK_DIR/in-review"
         git mv "$TASK_DIR/in-progress/$task" "$TASK_DIR/in-review/$task"
     else
         echo -e "${RED}❌ Task not found in progress: $task${NC}"
@@ -77,7 +79,7 @@ function complete() {
     git push origin dev
 
     current_wip=$(find $TASK_DIR/in-progress -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
-    echo -e "${GREEN}✅ Completed task: $task (moved to review)${NC}"
+    echo -e "${GREEN}✅ Implementation completed: $task (moved to review)${NC}"
     echo -e "WIP: $current_wip/$WIP_LIMIT"
 }
 
@@ -105,7 +107,7 @@ function health() {
     fi
 
     echo "🔍 IN REVIEW:   $review_count tasks"
-    echo "✅ DONE:        $done_count tasks (approved, ready for merge)"
+    echo "✅ DONE:        $done_count tasks (approved, ready for merge to main)"
     echo ""
 
     # Find stale tasks (older than 30 hours for agentic workflows)
@@ -162,7 +164,7 @@ function list() {
             find $TASK_DIR/in-review -name "*.md" -exec basename {} .md \; 2>/dev/null | sort | sed 's/^/  • /'
             ;;
         "done")
-            echo -e "${GREEN}=== Done Tasks (Approved, Ready for Merge) ===${NC}"
+            echo -e "${GREEN}=== Done Tasks (Approved, Ready for Merge to Main) ===${NC}"
             find $TASK_DIR/done -name "*.md" -exec basename {} .md \; 2>/dev/null | sort | sed 's/^/  • /'
             ;;
         *)
@@ -186,7 +188,7 @@ function archive() {
 
     # Find and move task from any state
     task_found=false
-    for dir in in-progress todo done in-review reviewed; do
+    for dir in in-progress todo in-review done; do
         if [ -f "$TASK_DIR/$dir/$task.md" ]; then
             git mv "$TASK_DIR/$dir/$task.md" "$TASK_DIR/backlog/$task.md"
             task_found=true
@@ -222,7 +224,7 @@ function approve() {
         exit 1
     fi
 
-    # Move from in-review to done (approved)
+    # Move from in-review to done (approved and ready for merge to main)
     if [ -f "$TASK_DIR/in-review/$task.md" ]; then
         mkdir -p "$TASK_DIR/done"
         git mv "$TASK_DIR/in-review/$task.md" "$TASK_DIR/done/$task.md"
@@ -236,10 +238,10 @@ function approve() {
         exit 1
     fi
 
-    git commit -m "chore(tasks): approve $task - ready for merge"
+    git commit -m "chore(tasks): approve $task - ready for merge to main"
     git push origin dev
 
-    echo -e "${GREEN}✅ Approved task: $task (ready for merge)${NC}"
+    echo -e "${GREEN}✅ Review approved: $task (ready for merge to main)${NC}"
 }
 
 function help() {
@@ -249,22 +251,25 @@ function help() {
     echo ""
     echo "Usage: $0 <command> [arguments]"
     echo ""
+    echo "Workflow: todo → in-progress → in-review → done → main"
+    echo ""
     echo "Commands:"
     echo "  claim <task>      - Claim a task from todo (enforces WIP limit)"
-    echo "  complete <task>   - Complete task, move to review"
-    echo "  approve <task>    - Approve reviewed task (ready for merge)"
-    echo "  archive <task>    - Delete/archive a task (removes completely)"
+    echo "  complete <task>   - Complete implementation, move to review"
+    echo "  approve <task>    - Approve reviewed task (ready for merge to main)"
+    echo "  archive <task>    - Archive task to backlog (with reason)"
     echo "  health            - Show comprehensive task health report"
     echo "  list [status]     - List tasks by status:"
     echo "                      • todo     - Available tasks"
     echo "                      • wip      - In-progress tasks"
     echo "                      • review   - Tasks in review"
-    echo "                      • done     - Approved tasks"
+    echo "                      • done     - Approved, ready for merge"
     echo "                      • all      - Full health report (default)"
     echo ""
     echo "Examples:"
     echo "  $0 claim feature-auth"
-    echo "  $0 complete feature-auth"
+    echo "  $0 complete feature-auth     # Implementer: done coding"
+    echo "  $0 approve feature-auth      # Reviewer: approved after review"
     echo "  $0 health"
     echo "  $0 list wip"
     echo "  $0 archive old-task \"deprioritized\""
