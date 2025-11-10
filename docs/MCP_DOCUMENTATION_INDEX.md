@@ -4,6 +4,8 @@
 **Purpose**: Single source of truth for all MCP-related documentation
 **Audience**: All team members
 
+**Related**: See [`DOCUMENTATION_AUDIT_AND_CLEANUP.md`](DOCUMENTATION_AUDIT_AND_CLEANUP.md) for how we resolved the documentation explosion issue
+
 ---
 
 ## 🚀 Quick Start (15 minutes total)

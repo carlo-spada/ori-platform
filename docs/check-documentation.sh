@@ -61,6 +61,10 @@ echo ""
 ORPHANED_COUNT=0
 while IFS= read -r file; do
     filename=$(basename "$file" .md)
+    # Skip self-reference check for documentation indices
+    if [[ "$filename" == *"INDEX"* ]] || [[ "$filename" == *"GOVERNANCE"* ]]; then
+        continue
+    fi
     # Check if filename appears in any index file
     if ! grep -l "$filename" docs/*INDEX*.md 2>/dev/null | grep -q .; then
         if ! grep -l "$filename" docs/MCP_DOCUMENTATION_INDEX.md 2>/dev/null | grep -q .; then
