@@ -6,12 +6,15 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { setDocumentMeta } from '@/lib/seo'
 import { useAuth } from '@/contexts/AuthProvider'
-import { EarlyAccessModal } from '@/components/EarlyAccessModal'
+import { Loader2 } from 'lucide-react'
+import { toast } from '@/components/ui/sonner'
 
 export default function Login() {
   const router = useRouter()
-  const { user } = useAuth()
-  const [showEarlyAccessModal, setShowEarlyAccessModal] = useState(false)
+  const { user, signInWithPassword } = useAuth()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     setDocumentMeta({
@@ -28,21 +31,32 @@ export default function Login() {
     }
   }, [user, router])
 
-  // Auto-show early access modal on page load
-  useEffect(() => {
-    const hasJoinedEarlyAccess = localStorage.getItem('ori-early-access')
-    if (!hasJoinedEarlyAccess) {
-      // Small delay to ensure smooth page render
-      const timer = setTimeout(() => {
-        setShowEarlyAccessModal(true)
-      }, 500)
-      return () => clearTimeout(timer)
-    }
-  }, [])
+  const handleLoginClick = async (e: React.FormEvent) => {
+    e.preventDefault()
 
-  const handleLoginClick = () => {
-    // Show early access modal immediately on button click
-    setShowEarlyAccessModal(true)
+    // Validate inputs
+    if (!email || !password) {
+      toast.error('Please fill in all fields')
+      return
+    }
+
+    setIsLoading(true)
+
+    try {
+      const { error } = await signInWithPassword({ email, password })
+
+      if (error) throw error
+
+      toast.success('Welcome back!')
+      // Auth provider will redirect to dashboard automatically
+    } catch (error: any) {
+      console.error('Login error:', error)
+      toast.error(
+        error.message || 'Failed to log in. Please check your credentials.',
+      )
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -63,7 +77,7 @@ export default function Login() {
           </p>
         </div>
 
-        <div className="space-y-6">
+        <form onSubmit={handleLoginClick} className="space-y-6">
           <div className="space-y-4 rounded-xl border border-border bg-card p-8">
             <div>
               <label
@@ -76,8 +90,12 @@ export default function Login() {
                 type="email"
                 id="email"
                 name="email"
-                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isLoading}
+                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-accent disabled:cursor-not-allowed disabled:opacity-50"
                 placeholder="you@example.com"
+                required
               />
             </div>
 
@@ -92,13 +110,24 @@ export default function Login() {
                 type="password"
                 id="password"
                 name="password"
-                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={isLoading}
+                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-accent disabled:cursor-not-allowed disabled:opacity-50"
                 placeholder="••••••••"
+                required
               />
             </div>
 
-            <Button type="button" onClick={handleLoginClick} className="w-full">
-              Log in
+            <Button type="submit" disabled={isLoading} className="w-full">
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Logging in...
+                </>
+              ) : (
+                'Log in'
+              )}
             </Button>
           </div>
 
@@ -120,15 +149,8 @@ export default function Login() {
               ← Back to home
             </Link>
           </p>
-        </div>
+        </form>
       </div>
-
-      {/* Early Access Modal */}
-      <EarlyAccessModal
-        isOpen={showEarlyAccessModal}
-        onClose={() => setShowEarlyAccessModal(false)}
-        trigger="login"
-      />
     </div>
   )
 }
