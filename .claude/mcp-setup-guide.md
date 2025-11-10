@@ -1,549 +1,259 @@
-# MCP Servers Setup Guide for Ori Platform
+# MCP Servers Setup Guide
 
 **Version**: 1.0
-**Last Updated**: November 2025
 **Status**: Phase 1 Implementation
+**Time**: ~15-30 min for experienced developers
 
 ---
 
 ## Quick Start (5 minutes)
 
-### For Experienced Developers
-
-1. **Get API Keys** (from Stripe, Resend, Supabase dashboards)
-2. **Set Environment Variables** (`.env.local` or `.env`)
+1. **Get API Keys** from Stripe, Resend, Supabase dashboards
+2. **Set Environment Variables** (`.env.local` or shell):
    ```bash
    export STRIPE_API_KEY="sk_test_..."
    export STRIPE_WEBHOOK_SECRET="whsec_test_..."
    export RESEND_API_KEY="re_test_..."
    export DATABASE_URL="postgresql://..."
    ```
-3. **MCPs are ready!** (`.claude/mcp.json` is pre-configured)
-4. **Verify**: Each MCP should initialize when you start Claude Code
+3. **MCPs Ready**: `.claude/mcp.json` is pre-configured
+4. **Verify**: Each MCP initializes when Claude Code starts
 
-### Environment Variables Quick Reference
+---
+
+## Environment Variables Reference
 
 | Variable | Source | Mode | Required |
 |----------|--------|------|----------|
-| `STRIPE_API_KEY` | Stripe Dashboard → Developers | Test/Sandbox | ✅ Yes |
-| `STRIPE_WEBHOOK_SECRET` | Stripe Dashboard → Developers | Test/Sandbox | ✅ Yes |
-| `RESEND_API_KEY` | Resend Dashboard → API Keys | Test | ✅ Yes |
-| `DATABASE_URL` | Supabase Project → Settings | Dev | ✅ Yes |
+| `STRIPE_API_KEY` | Stripe Dashboard → Developers | Test | ✅ |
+| `STRIPE_WEBHOOK_SECRET` | Stripe Dashboard → Webhooks | Test | ✅ |
+| `RESEND_API_KEY` | Resend Dashboard → API Keys | Test | ✅ |
+| `DATABASE_URL` | Supabase → Settings | Dev | ✅ |
 
 ---
 
-## Detailed Setup Guide
+## Setup Details
 
-### Step 1: Stripe MCP Setup
+### Stripe MCP
 
-**What You Need**:
-- Stripe account (create at stripe.com if needed)
-- Stripe test mode API keys
-
-**How to Get Stripe Keys**:
-
+**Get Keys**:
 1. Go to [Stripe Dashboard](https://dashboard.stripe.com)
-2. Make sure you're in **Test Mode** (toggle in top right)
-3. Navigate to **Developers** → **API Keys**
-4. You'll see:
-   - **Publishable Key**: `pk_test_...` (for frontend)
-   - **Secret Key**: `sk_test_...` (for backend/MCP)
-5. Copy the **Secret Key** (starts with `sk_test_`)
-6. Also get **Webhook Signing Secret**:
-   - In **Developers** → **Webhooks**
-   - Create endpoint: `http://localhost:3001/api/v1/payments/webhook`
-   - Copy the signing secret (`whsec_test_...`)
+2. **Test Mode** (toggle top right)
+3. **Developers** → **API Keys** → Copy **Secret Key** (`sk_test_...`)
+4. **Developers** → **Webhooks** → Create endpoint: `http://localhost:3001/api/v1/payments/webhook`
+5. Copy webhook signing secret (`whsec_test_...`)
 
-**Set Environment Variables**:
-
+**Set Variables**:
 ```bash
-# Add to ~/.bashrc, ~/.zshrc, or .env file
-export STRIPE_API_KEY="sk_test_XXXXXXXXXXXXXXXXXXXXX"
-export STRIPE_WEBHOOK_SECRET="whsec_test_XXXXXXXXXXXXXXXXXXXXX"
-
-# Or add to .env.local for Claude Code
-STRIPE_API_KEY=sk_test_XXXXXXXXXXXXXXXXXXXXX
-STRIPE_WEBHOOK_SECRET=whsec_test_XXXXXXXXXXXXXXXXXXXXX
+export STRIPE_API_KEY="sk_test_XXXXX"
+export STRIPE_WEBHOOK_SECRET="whsec_test_XXXXX"
 ```
 
-**Verify Stripe MCP Works**:
-
-When Claude Code starts, try these prompts:
+**Verify**:
 - "List test customers in Stripe"
-- "Create a test customer in Stripe for test@example.com"
-- "Show recent charges in Stripe"
-
-✅ **Success**: MCP returns Stripe data without errors
+- "Create test customer for test@example.com"
 
 ---
 
-### Step 2: Resend MCP Setup
+### Resend MCP
 
-**What You Need**:
-- Resend account (create at resend.com if needed)
-- Resend test API key
-
-**How to Get Resend API Key**:
-
+**Get Key**:
 1. Go to [Resend Dashboard](https://resend.com/home)
-2. Click **API Keys** in left sidebar
-3. Copy the **Test API Key** (starts with `re_test_`)
-4. Do NOT use production key in development
+2. **API Keys** → Copy **Test API Key** (`re_test_...`)
 
-**Set Environment Variable**:
-
+**Set Variable**:
 ```bash
-# Add to ~/.bashrc, ~/.zshrc, or .env file
-export RESEND_API_KEY="re_test_XXXXXXXXXXXXXXXXXXXXX"
-
-# Or add to .env.local for Claude Code
-RESEND_API_KEY=re_test_XXXXXXXXXXXXXXXXXXXXX
+export RESEND_API_KEY="re_test_XXXXX"
 ```
 
-**Verify Resend MCP Works**:
-
-When Claude Code starts, try these prompts:
-- "Preview the welcome email template"
-- "Show available email templates in Resend"
-- "Test sending an email with Resend"
-
-✅ **Success**: MCP returns email data/previews without errors
+**Verify**:
+- "Preview welcome email"
+- "Show available email templates"
 
 ---
 
-### Step 3: PostgreSQL MCP Setup
+### PostgreSQL MCP
 
-**What You Need**:
-- Supabase project connection string
-- PostgreSQL database accessible (local or cloud)
+**Get Connection String**:
+1. [Supabase Dashboard](https://supabase.com/dashboard)
+2. Select project → **Settings** → **Database** → **Connection string**
+3. Copy **Full connection string** (URI style): `postgresql://[user]:[password]@[host]:[port]/[database]`
+4. **Note**: URL-encode special chars: `@` → `%40`, `:` → `%3A`
 
-**How to Get Supabase Connection String**:
-
-1. Go to [Supabase Dashboard](https://supabase.com/dashboard)
-2. Select your project (`ori-platform` project)
-3. Go to **Settings** → **Database** → **Connection string**
-4. Copy the **Full connection string** (URI style):
-   ```
-   postgresql://[user]:[password]@[host]:[port]/[database]
-   ```
-5. If needed, use the **Replacement string** with actual values
-
-**Common Issues with Connection String**:
-
-- **Password contains special characters?** URL-encode them: `%40` for `@`, `%3A` for `:`, etc.
-- **Still won't connect?** Try the **Pooling connection string** instead (under Database → Connection pooling)
-
-**Set Environment Variable**:
-
+**Set Variable**:
 ```bash
-# Add to ~/.bashrc, ~/.zshrc, or .env file
 export DATABASE_URL="postgresql://user:password@host:5432/database"
-
-# Or add to .env.local for Claude Code
-DATABASE_URL=postgresql://user:password@host:5432/database
-
-# Example (do NOT use these values):
-# DATABASE_URL=postgresql://postgres:mypassword@db.supabase.co:5432/postgres
 ```
 
-**Verify PostgreSQL MCP Works**:
-
-When Claude Code starts, try these prompts:
-- "Show all tables in the database"
-- "Describe the user_profiles table"
-- "List RLS policies on the applications table"
-- "Show row counts for all tables"
-
-✅ **Success**: MCP returns database schema/data without errors
+**Verify**:
+- "Show all tables"
+- "Describe user_profiles table"
+- "List RLS policies"
 
 ---
 
 ## Configuration File Reference
 
-**Location**: `.claude/mcp.json`
+**Location**: `.claude/mcp.json` (committed to git)
 
-This file is **committed to git** and contains the MCP server configurations:
-
-```json
-{
-  "mcpServers": {
-    "stripe": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-stripe"],
-      "env": {
-        "STRIPE_API_KEY": "${STRIPE_API_KEY}",
-        "STRIPE_WEBHOOK_SECRET": "${STRIPE_WEBHOOK_SECRET}"
-      },
-      "disabled": false,
-      "description": "Stripe payment processing..."
-    },
-    "resend": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-resend"],
-      "env": {
-        "RESEND_API_KEY": "${RESEND_API_KEY}"
-      },
-      "disabled": false,
-      "description": "Resend email service..."
-    },
-    "postgres": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-postgres"],
-      "env": {
-        "DATABASE_URL": "${DATABASE_URL}",
-        "READ_ONLY": "false"
-      },
-      "disabled": false,
-      "description": "PostgreSQL database access..."
-    }
-  }
-}
-```
-
-**How It Works**:
-- `${VARIABLE_NAME}` = Replaced with environment variable at runtime
-- MCPs are **automatically loaded** when Claude Code starts
-- If environment variable is missing, MCP will show error when initialized
+MCPs are **automatically loaded** when Claude Code starts. Environment variables are replaced at runtime. If missing, MCP shows error on init.
 
 ---
 
 ## Environment Variable Management
 
-### Option 1: Shell Environment (Recommended for Daily Use)
-
-Add to your shell configuration file (`~/.bashrc`, `~/.zshrc`, `~/.fish/config.fish`):
-
+### Option 1: Shell (Recommended)
+Add to `~/.bashrc`, `~/.zshrc`, or `~/.fish/config.fish`:
 ```bash
-# Stripe
 export STRIPE_API_KEY="sk_test_..."
 export STRIPE_WEBHOOK_SECRET="whsec_test_..."
-
-# Resend
 export RESEND_API_KEY="re_test_..."
-
-# PostgreSQL
 export DATABASE_URL="postgresql://..."
 ```
+Then: `source ~/.bashrc` or restart terminal
 
-Then reload: `source ~/.bashrc` (or restart terminal)
-
-**Pros**:
-- Available to all applications
-- Persists across sessions
-- Safe (shell history may contain values)
-
-**Cons**:
-- Less convenient for project-specific values
-
-### Option 2: .env.local File (Best for Project Setup)
-
+### Option 2: .env.local (Project-Specific)
 Create `.env.local` in project root (never commit):
-
 ```env
 STRIPE_API_KEY=sk_test_...
 STRIPE_WEBHOOK_SECRET=whsec_test_...
 RESEND_API_KEY=re_test_...
 DATABASE_URL=postgresql://...
 ```
+Claude Code reads automatically.
 
-Then Claude Code reads from this file automatically.
-
-**Pros**:
-- Project-specific
-- Easy to manage per project
-- Can be .gitignored
-
-**Cons**:
-- Need to create per project
-
-### Option 3: Direct in Claude Code (For Testing)
-
-If you want to test without environment setup:
-
-1. Tell Claude Code: "I'll set the STRIPE_API_KEY to sk_test_..."
-2. Claude Code can use provided values temporarily
-
-**Pros**:
-- No setup required
-- Quick testing
-
-**Cons**:
-- Not persistent
-- Security risk
-- Don't do this for production keys
+### Option 3: Direct in Claude Code (Testing Only)
+Temporary, not persistent. Don't use for production keys.
 
 ---
 
 ## Security Best Practices
 
 ### ✅ DO
-
-- ✅ Use **test/sandbox keys** in development (keys starting with `test_`)
-- ✅ Use **unique passwords** for database connections
-- ✅ Rotate API keys regularly
-- ✅ Store production keys securely (not in code)
-- ✅ Use environment-specific secrets management for production
-- ✅ Review what MCPs can access (read-only mode for PostgreSQL in most cases)
+- Use **test/sandbox keys** in development (keys starting with `test_`)
+- Use **unique passwords** for database connections
+- Rotate API keys regularly
+- Store production keys securely (not in code)
 
 ### ❌ DON'T
-
-- ❌ Commit `.env.local` or secrets to git
-- ❌ Use production API keys in development
-- ❌ Share API keys in chat/email/slack
-- ❌ Put secrets in code comments
-- ❌ Use generic/shared database credentials
-- ❌ Log or print API keys
+- Commit `.env.local` to git
+- Use production keys in development
+- Share API keys in chat/email/slack
+- Put secrets in code comments
+- Log or print API keys
 
 ---
 
 ## Troubleshooting
 
-### Stripe MCP Not Working
+### Stripe MCP Errors
 
-**Error**: "Invalid API Key" or "Unauthorized"
+**"Invalid API Key"**:
+- Key must start with `sk_test_` (not `pk_test_`)
+- Check you're in **Test Mode** in Stripe dashboard
+- Try creating new API key
 
-**Solutions**:
-1. ✅ Verify key starts with `sk_test_` (not `pk_test_`)
-2. ✅ Check you're in **Test Mode** in Stripe dashboard
-3. ✅ Make sure key is recent (old keys may not work)
-4. ✅ Try creating new API key in Stripe dashboard
-5. ✅ Check environment variable is set: `echo $STRIPE_API_KEY`
+**"Webhook secret invalid"**:
+- Get from **Developers** → **Webhooks** (different from API key)
+- Must start with `whsec_test_`
+- Copy exact string (no extra spaces)
 
-**Error**: "Webhook secret invalid"
+### Resend MCP Errors
 
-**Solutions**:
-1. ✅ Get correct webhook secret (different from API key)
-2. ✅ Must start with `whsec_test_`
-3. ✅ Create webhook endpoint in Stripe dashboard if missing
-4. ✅ Copy exact string (no extra spaces)
+**"Invalid API Key"**:
+- Key starts with `re_test_` or `re_`
+- Check key hasn't expired
+- Generate new key if stuck
 
----
+### PostgreSQL MCP Errors
 
-### Resend MCP Not Working
+**"Connection refused"**:
+- Database running? (`psql` connects?)
+- Connection string format: `postgresql://user:password@host:port/database`
+- Username/password correct?
+- For Supabase: use `[project].supabase.co` as host
+- URL-encode special chars: `@` → `%40`, `:` → `%3A`, `#` → `%23`
 
-**Error**: "Invalid API Key"
+**"Permission denied"**:
+- User has read access to database?
+- RLS policies blocking queries?
+- Use service role/admin credentials for testing
 
-**Solutions**:
-1. ✅ Verify key starts with `re_test_` (or `re_` for production)
-2. ✅ Check key hasn't expired (rotate periodically)
-3. ✅ Make sure you copied full key (no truncation)
-4. ✅ Generate new key in Resend dashboard if stuck
-
-**Error**: "Email validation failed"
-
-**Solutions**:
-1. ✅ Use valid email format (test@example.com)
-2. ✅ For test environment, most emails work
-3. ✅ Check template variables are correct
-
----
-
-### PostgreSQL MCP Not Working
-
-**Error**: "Connection refused" or "Cannot connect"
-
-**Solutions**:
-1. ✅ Check database is running (`psql` connects?)
-2. ✅ Verify connection string format:
-   - Should be: `postgresql://user:password@host:port/database`
-   - NOT: `postgresql://user@password@host` (wrong @ placement)
-3. ✅ Check username/password are correct
-4. ✅ For Supabase, use `[project].supabase.co` as host
-5. ✅ If special chars in password, URL-encode them:
-   - `@` → `%40`
-   - `:` → `%3A`
-   - `#` → `%23`
-
-**Error**: "Permission denied"
-
-**Solutions**:
-1. ✅ Make sure user has read access to database
-2. ✅ Check RLS policies don't block queries
-3. ✅ For testing, use service role or admin credentials
-4. ✅ If using RLS-enforced user, may get permission errors
-
-**Error**: "Database does not exist"
-
-**Solutions**:
-1. ✅ Check database name in connection string
-2. ✅ Make sure you connected to right Supabase project
-3. ✅ Create database if it doesn't exist
+**"Database does not exist"**:
+- Check database name in connection string
+- Connected to correct Supabase project?
 
 ---
 
-## MCP Server Commands Reference
+## MCP Commands Reference
 
-Once setup is complete, you can use these MCPs in Claude Code.
-
-### Stripe MCP Commands
-
+### Stripe
 ```
 "List test customers"
 "Create customer with email john@example.com"
 "Show recent charges"
 "Simulate payment failure webhook"
-"Get subscription for customer [ID]"
-"Create test invoice"
 ```
 
-### Resend MCP Commands
-
+### Resend
 ```
-"Show available email templates"
-"Preview welcome email template"
+"Show available templates"
+"Preview welcome email"
 "Test sending email to test@example.com"
-"List recent emails sent"
-"Get delivery status for email [ID]"
 ```
 
-### PostgreSQL MCP Commands
-
+### PostgreSQL
 ```
-"Show all tables in database"
-"Describe the user_profiles table"
-"List RLS policies on applications table"
+"Show all tables"
+"Describe user_profiles table"
+"List RLS policies on applications"
 "Show row count for all tables"
-"Query: SELECT * FROM user_profiles LIMIT 5"
-"Show indexes on experiences table"
-"List database triggers"
 ```
 
 ---
 
 ## Verification Checklist
 
-Use this checklist to verify all MCPs are working:
-
-### Stripe MCP ✓
-
-- [ ] `STRIPE_API_KEY` environment variable set
-- [ ] `STRIPE_WEBHOOK_SECRET` environment variable set
-- [ ] Can list test customers
-- [ ] Can create test customer
-- [ ] MCP initializes without errors
-
-### Resend MCP ✓
-
-- [ ] `RESEND_API_KEY` environment variable set
-- [ ] Can list email templates
-- [ ] Can preview email
-- [ ] MCP initializes without errors
-
-### PostgreSQL MCP ✓
-
-- [ ] `DATABASE_URL` environment variable set
-- [ ] Connection successful
-- [ ] Can list tables
-- [ ] Can describe specific table
-- [ ] MCP initializes without errors
-
-### All MCPs ✓
-
-- [ ] All three MCPs initialize when Claude Code starts
-- [ ] No errors in MCP initialization logs
+- [ ] `STRIPE_API_KEY` set
+- [ ] `STRIPE_WEBHOOK_SECRET` set
+- [ ] `RESEND_API_KEY` set
+- [ ] `DATABASE_URL` set
+- [ ] All three MCPs initialize without errors
 - [ ] Can query each system from Claude Code
-- [ ] No data loss or corruption
 - [ ] Team members can replicate setup
 
 ---
 
-## File Locations Reference
+## File Locations
 
 | File | Location | Purpose |
 |------|----------|---------|
-| **MCP Config** | `.claude/mcp.json` | Server configurations (committed) |
-| **This Guide** | `.claude/mcp-setup-guide.md` | Setup instructions (this file) |
-| **Environment** | `.env.local` or shell | Secret credentials (NOT committed) |
-| **Stripe Audit** | `docs/STRIPE_QUICK_REFERENCE.md` | Stripe implementation details |
-| **Resend Audit** | `docs/RESEND_MCP_READINESS.md` | Email system details |
-| **Database Audit** | `docs/DATABASE_QUICK_REFERENCE.md` | Database implementation details |
+| **MCP Config** | `.claude/mcp.json` | Configurations (committed) |
+| **This Guide** | `.claude/mcp-setup-guide.md` | Setup instructions |
+| **Secrets** | `.env.local` or shell | Credentials (NOT committed) |
 
 ---
 
 ## Common Workflows
 
-### Testing Stripe Integration
+**Testing Stripe**: "List test customers" → Claude Code uses Stripe MCP → No dashboard needed
 
-1. **Tell Claude Code**: "List test customers"
-2. Claude Code uses Stripe MCP to fetch data
-3. No need to open Stripe dashboard
-4. Can create test data directly from IDE
+**Testing Email**: "Preview welcome email" → Claude Code uses Resend MCP → Iterate inline
 
-### Testing Email System
-
-1. **Tell Claude Code**: "Preview welcome email"
-2. Claude Code uses Resend MCP to show preview
-3. Can iterate on email design without leaving IDE
-4. Test variables and rendering inline
-
-### Debugging Database Issues
-
-1. **Tell Claude Code**: "Show schema for user_profiles"
-2. Claude Code uses PostgreSQL MCP to introspect
-3. Can see columns, types, RLS policies
-4. Debug queries without external database tools
+**Debugging DB**: "Show schema for user_profiles" → Claude Code uses PostgreSQL MCP → No external tools
 
 ---
 
 ## Next Steps
 
-### After Setup Complete
-
-1. ✅ Verify all three MCPs working (see checklist above)
-2. ✅ Run some test commands (see reference section)
-3. ✅ Tell team setup is complete
-4. ✅ Point team to this guide for their setup
-5. ✅ Ready for Phase 1.3: Team Training
-
-### If Issues Arise
-
-1. Check troubleshooting section above
-2. Verify environment variables: `echo $VARIABLE_NAME`
-3. Check `.claude/mcp.json` configuration
-4. Review error messages from MCP initialization
-5. Consult Phase 1.1 audit documents for system details
-
-### For Phase 2-4 Development
-
-- **Phase 2**: Stripe MCP will be used for payment testing
-- **Phase 3**: Resend MCP will be used for email implementation
-- **Phase 4**: PostgreSQL MCP will be used for database exploration
+1. ✅ Complete setup (see Quick Start)
+2. ✅ Verify all MCPs working (see Verification Checklist)
+3. ✅ Run test commands (see MCP Commands Reference)
+4. ✅ Tell team setup complete
+5. ✅ Ready for Phase 1.2
 
 ---
 
-## Support & Questions
-
-### Where to Find Help
-
-1. **For Stripe issues**: `docs/STRIPE_QUICK_REFERENCE.md`
-2. **For Resend issues**: `docs/RESEND_MCP_READINESS.md`
-3. **For Database issues**: `docs/DATABASE_QUICK_REFERENCE.md`
-4. **For MCP info**: `.claude/mcp.json` configuration
-5. **For implementation details**: Phase 1.1 audit documents
-
-### FAQ
-
-**Q: Do I need to set up MCPs for local development?**
-A: Yes, MCPs are used during development (Phase 2+) and testing
-
-**Q: Can I use production API keys?**
-A: NO - Only use test/sandbox keys. Production keys are for deployment only
-
-**Q: What if I don't want to use an MCP?**
-A: You can disable it in `.claude/mcp.json` by setting `"disabled": true`
-
-**Q: Are API keys stored securely?**
-A: Keys are in environment variables (not in code), but still be careful. Never commit `.env.local`
-
-**Q: What happens if API key is wrong?**
-A: MCP will error when you try to use it. Fix environment variable and try again
-
-**Q: Can multiple people use same API keys?**
-A: Yes, but recommended to have separate test accounts per developer for better logging
-
----
-
-**Setup Time**: ~15-30 minutes for experienced developers
-**Status**: Ready for Phase 1.2 completion
-**Document Version**: 1.0
+**Setup Complete**: ~15-30 min
+**Status**: Ready for Phase 1.2 development
 **Last Updated**: November 2025
