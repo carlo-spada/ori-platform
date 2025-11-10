@@ -22,31 +22,22 @@ The `.tasks/` folder is the **single source of truth** for project status. Witho
 
 ## Task Board Architecture
 
-### Directory Structure (Immutable)
+### Directory Structure (Simplified Workflow)
 
 ```
 .tasks/
 ├── TASK_GOVERNANCE.md          # This file - rules and standards
-├── CHECK_TASKS.sh              # Health check script (when implemented)
 ├── todo/                        # New tasks, waiting to be claimed
 │   ├── feature-name/           # Large features (epics) as folders
 │   │   ├── A.md                # First work unit
 │   │   ├── B.md                # Second work unit
 │   │   └── C.md                # Third work unit
 │   └── single-task.md          # Small tasks as single files
-├── in-progress/                # Actively being worked on (claimed)
-│   ├── feature-name/           # Feature folders
-│   │   ├── A.md
-│   │   ├── B.md
-│   │   └── C.md
-│   └── single-task.md
-├── done/                        # Implemented, awaiting review
+├── in-progress/                # Actively being worked on (WIP limit: 5)
 │   └── (same structure)
-├── in-review/                   # Under review/debugging
+├── in-review/                   # Completed, under review
 │   └── (same structure)
-├── reviewed/                    # Review complete, ready for main
-│   └── (same structure)
-└── archived/                    # Abandoned or superseded tasks
+└── done/                        # Reviewed and approved, ready for merge
     └── (same structure)
 ```
 
@@ -54,13 +45,13 @@ The `.tasks/` folder is the **single source of truth** for project status. Witho
 
 ---
 
-## Task Lifecycle
+## Task Lifecycle (Simplified Claude-Primary)
 
-### Phase 1: Creation (Gemini → `.tasks/todo/`)
+### Phase 1: Creation → `.tasks/todo/`
 
-**Who**: Gemini (Planner)
-**When**: Formulating strategic plans
-**What**: Create feature folders or task files
+**Who**: Claude (or anyone identifying work)
+**When**: New work identified
+**What**: Create task files or folders
 
 **Rules**:
 ```

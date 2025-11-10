@@ -62,9 +62,9 @@ function complete() {
 
     # Check if task exists in in-progress
     if [ -f "$TASK_DIR/in-progress/$task.md" ]; then
-        git mv "$TASK_DIR/in-progress/$task.md" "$TASK_DIR/done/$task.md"
+        git mv "$TASK_DIR/in-progress/$task.md" "$TASK_DIR/in-review/$task.md"
     elif [ -d "$TASK_DIR/in-progress/$task" ]; then
-        git mv "$TASK_DIR/in-progress/$task" "$TASK_DIR/done/$task"
+        git mv "$TASK_DIR/in-progress/$task" "$TASK_DIR/in-review/$task"
     else
         echo -e "${RED}❌ Task not found in progress: $task${NC}"
         echo "Current in-progress tasks:"
@@ -73,11 +73,11 @@ function complete() {
     fi
 
     # Commit and push
-    git commit -m "chore(tasks): complete $task"
+    git commit -m "chore(tasks): complete $task - moved to review"
     git push origin dev
 
     current_wip=$(find $TASK_DIR/in-progress -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
-    echo -e "${GREEN}✅ Completed task: $task${NC}"
+    echo -e "${GREEN}✅ Completed task: $task (moved to review)${NC}"
     echo -e "WIP: $current_wip/$WIP_LIMIT"
 }
 
@@ -90,10 +90,8 @@ function health() {
     # Count tasks in each state
     todo_count=$(find $TASK_DIR/todo -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
     wip_count=$(find $TASK_DIR/in-progress -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
-    done_count=$(find $TASK_DIR/done -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
     review_count=$(find $TASK_DIR/in-review -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
-    reviewed_count=$(find $TASK_DIR/reviewed -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
-    backlog_count=$(find $TASK_DIR/backlog -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
+    done_count=$(find $TASK_DIR/done -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
 
     echo "📋 TODO:        $todo_count tasks"
 
@@ -106,10 +104,8 @@ function health() {
         echo -e "🚀 IN PROGRESS: ${GREEN}$wip_count tasks (target: 2-5)${NC}"
     fi
 
-    echo "✅ DONE:        $done_count tasks awaiting review"
     echo "🔍 IN REVIEW:   $review_count tasks"
-    echo "✨ REVIEWED:    $reviewed_count tasks ready for main"
-    echo "📦 BACKLOG:     $backlog_count tasks"
+    echo "✅ DONE:        $done_count tasks (approved, ready for merge)"
     echo ""
 
     # Find stale tasks (older than 30 hours for agentic workflows)
@@ -161,13 +157,13 @@ function list() {
                 fi
             done
             ;;
-        "done")
-            echo -e "${GREEN}=== Done Tasks (Awaiting Review) ===${NC}"
-            find $TASK_DIR/done -name "*.md" -exec basename {} .md \; 2>/dev/null | sort | sed 's/^/  • /'
+        "review"|"in-review")
+            echo -e "${YELLOW}=== Tasks In Review ===${NC}"
+            find $TASK_DIR/in-review -name "*.md" -exec basename {} .md \; 2>/dev/null | sort | sed 's/^/  • /'
             ;;
-        "backlog")
-            echo "=== Backlog Tasks ==="
-            find $TASK_DIR/backlog -name "*.md" -exec basename {} .md \; 2>/dev/null | sort | sed 's/^/  • /'
+        "done")
+            echo -e "${GREEN}=== Done Tasks (Approved, Ready for Merge) ===${NC}"
+            find $TASK_DIR/done -name "*.md" -exec basename {} .md \; 2>/dev/null | sort | sed 's/^/  • /'
             ;;
         *)
             health
@@ -217,33 +213,33 @@ function archive() {
     echo -e "   Reason: $reason"
 }
 
-function review() {
+function approve() {
     local task=$1
 
     if [ -z "$task" ]; then
         echo -e "${RED}❌ Error: Task name required${NC}"
-        echo "Usage: $0 review <task-name>"
+        echo "Usage: $0 approve <task-name>"
         exit 1
     fi
 
-    # Move from done to in-review
-    if [ -f "$TASK_DIR/done/$task.md" ]; then
-        mkdir -p "$TASK_DIR/in-review"
-        git mv "$TASK_DIR/done/$task.md" "$TASK_DIR/in-review/$task.md"
-    elif [ -d "$TASK_DIR/done/$task" ]; then
-        mkdir -p "$TASK_DIR/in-review"
-        git mv "$TASK_DIR/done/$task" "$TASK_DIR/in-review/$task"
+    # Move from in-review to done (approved)
+    if [ -f "$TASK_DIR/in-review/$task.md" ]; then
+        mkdir -p "$TASK_DIR/done"
+        git mv "$TASK_DIR/in-review/$task.md" "$TASK_DIR/done/$task.md"
+    elif [ -d "$TASK_DIR/in-review/$task" ]; then
+        mkdir -p "$TASK_DIR/done"
+        git mv "$TASK_DIR/in-review/$task" "$TASK_DIR/done/$task"
     else
-        echo -e "${RED}❌ Task not found in done: $task${NC}"
-        echo "Available tasks to review:"
-        find $TASK_DIR/done -name "*.md" -exec basename {} .md \; 2>/dev/null | head -10 | sed 's/^/  - /'
+        echo -e "${RED}❌ Task not found in review: $task${NC}"
+        echo "Available tasks in review:"
+        find $TASK_DIR/in-review -name "*.md" -exec basename {} .md \; 2>/dev/null | head -10 | sed 's/^/  - /'
         exit 1
     fi
 
-    git commit -m "chore(tasks): move $task to review"
+    git commit -m "chore(tasks): approve $task - ready for merge"
     git push origin dev
 
-    echo -e "${GREEN}✅ Moved task to review: $task${NC}"
+    echo -e "${GREEN}✅ Approved task: $task (ready for merge)${NC}"
 }
 
 function help() {
@@ -255,15 +251,15 @@ function help() {
     echo ""
     echo "Commands:"
     echo "  claim <task>      - Claim a task from todo (enforces WIP limit)"
-    echo "  complete <task>   - Mark task as done"
-    echo "  review <task>     - Move task from done to in-review"
-    echo "  archive <task>    - Archive a task to backlog"
+    echo "  complete <task>   - Complete task, move to review"
+    echo "  approve <task>    - Approve reviewed task (ready for merge)"
+    echo "  archive <task>    - Delete/archive a task (removes completely)"
     echo "  health            - Show comprehensive task health report"
     echo "  list [status]     - List tasks by status:"
     echo "                      • todo     - Available tasks"
     echo "                      • wip      - In-progress tasks"
-    echo "                      • done     - Completed tasks"
-    echo "                      • backlog  - Archived tasks"
+    echo "                      • review   - Tasks in review"
+    echo "                      • done     - Approved tasks"
     echo "                      • all      - Full health report (default)"
     echo ""
     echo "Examples:"
@@ -281,11 +277,11 @@ case "$1" in
     "claim")
         claim "$2"
         ;;
-    "complete"|"done")
+    "complete")
         complete "$2"
         ;;
-    "review")
-        review "$2"
+    "approve")
+        approve "$2"
         ;;
     "archive")
         archive "$2" "$3"
