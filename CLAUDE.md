@@ -473,3 +473,135 @@ Review task file in `.tasks/todo/`
 - **Form validation**: React Hook Form + Zod resolvers
 - **Date handling**: date-fns library
 - **Toast notifications**: sonner via `toast()` function
+
+## MCP-First Development (Phase 1+)
+
+As of November 2025, Ori Platform uses MCP (Model Context Protocol) servers to modernize three critical workflows. This section documents MCP integration patterns and when to use them.
+
+### When to Use Each MCP
+
+#### Stripe MCP - Payment Testing
+**Use When**: Testing payment flows, subscription changes, webhook handling
+
+```typescript
+// Instead of:
+// 1. Open Stripe dashboard
+// 2. Navigate to test customers
+// 3. Copy webhook manually
+// 4. Paste into test
+
+// Do This:
+import { createTestCustomer, simulateWebhook } from './__tests__/stripe-helpers'
+
+const customer = await createTestCustomer({
+  email: 'test@example.com',
+  planId: 'plus_monthly'
+})
+
+const webhook = await simulateWebhook('customer.subscription.updated', {
+  customerId: customer.id
+})
+```
+
+**Why**: 80%+ faster testing, zero context-switching, test data integrated in code
+
+#### Resend MCP - Email Development
+**Use When**: Creating or testing email templates, debugging email workflows
+
+```typescript
+// Instead of:
+// 1. Copy template to Resend dashboard
+// 2. Fill in sample data
+// 3. Preview email
+// 4. Go back to code
+
+// Do This:
+import { emailService } from '../services/email'
+
+// Preview email with sample data
+const preview = await emailService.preview('welcome', {
+  name: 'John Doe'
+})
+
+// Test sending
+await emailService.sendWelcome('test@example.com', 'John Doe')
+```
+
+**Why**: Templates versioned in git, testing from IDE, no manual copy/paste
+
+#### PostgreSQL MCP - Database Development
+**Use When**: Inspecting schema, testing RLS policies, validating migrations
+
+```typescript
+// Instead of:
+// 1. Open psql/DBeaver
+// 2. Write schema query
+// 3. Review results
+// 4. Go back to code
+
+// Do This:
+import { inspectSchema, testRLSPolicy } from './__tests__/database-helpers'
+
+const schema = await inspectSchema('user_profiles')
+const rlsValid = await testRLSPolicy({
+  table: 'applications',
+  userId: 'user-123',
+  expectedAccess: 'read_own'
+})
+```
+
+**Why**: Schema queries from IDE, RLS testing automated, zero external tools
+
+### MCP Integration Checklist
+
+When adding a new feature that involves payment, email, or database:
+
+- [ ] **Payment Flow?** → Use Stripe MCP for testing (see `services/core-api/src/__tests__/stripe-helpers.ts`)
+- [ ] **Email Trigger?** → Use `emailService` and test with Resend MCP (see `services/core-api/src/services/email.ts`)
+- [ ] **Database Schema Change?** → Validate with PostgreSQL MCP (see docs/POSTGRES_MCP_WORKFLOWS.md)
+- [ ] **New RLS Policy?** → Test with RLS helpers (see docs/POSTGRES_MCP_WORKFLOWS.md)
+- [ ] **Migration?** → Validate before applying (use `migrationValidator`)
+
+### MCP Environment Setup
+
+All three MCP servers require environment variables. Never commit credentials:
+
+```env
+# .env.local or services/core-api/.env
+STRIPE_API_KEY=sk_test_xxxxx           # Sandbox only
+RESEND_API_KEY=re_xxxxx                # Test API
+DATABASE_URL=postgresql://...          # Dev DB only
+```
+
+Configuration is in `.claude/mcp.json` (committed, no secrets):
+
+```json
+{
+  "mcpServers": {
+    "stripe": { "command": "npx", "args": ["@modelcontextprotocol/server-stripe"] },
+    "resend": { "command": "npx", "args": ["@modelcontextprotocol/server-resend"] },
+    "postgres": { "command": "npx", "args": ["@modelcontextprotocol/server-postgres"] }
+  }
+}
+```
+
+### Deprecations (MCP Phase 1)
+
+The following workflows are deprecated as of Week 6, 2025:
+
+| Old Workflow | New Workflow | Sunset Date |
+|--------------|--------------|-------------|
+| Manual Stripe dashboard testing | Stripe MCP helpers | Week 6 |
+| Manual email setup | EmailService + Resend MCP | Week 8 |
+| External database tools (psql, DBeaver) | PostgreSQL MCP queries | Week 10 |
+
+See `docs/MCP_MIGRATION_STRATEGIES.md` for detailed migration guides.
+
+### Documentation References
+
+- **Master Plan**: `docs/MCP_INTEGRATION_MASTER_PLAN.md`
+- **Architecture**: `docs/MCP_PHASE1_ARCHITECTURE.md`
+- **Migration**: `docs/MCP_MIGRATION_STRATEGIES.md`
+- **Stripe Workflows**: `docs/STRIPE_MCP_WORKFLOWS.md`
+- **Email Workflows**: `docs/RESEND_MCP_WORKFLOWS.md`
+- **Database Workflows**: `docs/POSTGRES_MCP_WORKFLOWS.md`
