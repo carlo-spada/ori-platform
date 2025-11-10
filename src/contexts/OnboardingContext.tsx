@@ -1,6 +1,13 @@
 'use client'
 
-import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthProvider'
 import { toast } from 'sonner'
@@ -67,7 +74,11 @@ const ONBOARDING_STEPS_ARRAY: OnboardingStepKey[] = [
 const AUTOSAVE_DELAY = 2000 // 2 seconds
 const SESSION_KEY = 'onboarding_session'
 
-export function OnboardingProvider({ children }: { children: React.ReactNode }) {
+export function OnboardingProvider({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const { user } = useAuth()
   const router = useRouter()
 
@@ -92,7 +103,9 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
     currentStep: currentStepIndex,
     totalSteps: ONBOARDING_STEPS_ARRAY.length,
     completedSteps,
-    percentComplete: Math.round((completedSteps.length / (ONBOARDING_STEPS_ARRAY.length - 1)) * 100), // -1 because activation doesn't count
+    percentComplete: Math.round(
+      (completedSteps.length / (ONBOARDING_STEPS_ARRAY.length - 1)) * 100,
+    ), // -1 because activation doesn't count
     canProceed: true, // Will be updated by validation
     canGoBack: currentStepIndex > 0,
     isLastStep: currentStepIndex === ONBOARDING_STEPS_ARRAY.length - 1,
@@ -132,16 +145,16 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
 
   // Update data
   const updateData = useCallback((updates: Partial<OnboardingData>) => {
-    setData(prev => ({
+    setData((prev) => ({
       ...prev,
       ...updates,
     }))
 
     // Clear errors for updated fields
     const updatedFields = Object.keys(updates)
-    setErrors(prev => {
+    setErrors((prev) => {
       const newErrors = { ...prev }
-      updatedFields.forEach(field => {
+      updatedFields.forEach((field) => {
         delete newErrors[field]
       })
       return newErrors
@@ -226,7 +239,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${await user.getIdToken()}`,
+          Authorization: `Bearer ${await user.getIdToken()}`,
         },
         body: JSON.stringify(sessionData),
       })
@@ -263,14 +276,23 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
 
           // Calculate welcome back state
           const lastSaved = new Date(parsed.lastSavedAt)
-          const hoursAgo = Math.floor((Date.now() - lastSaved.getTime()) / (1000 * 60 * 60))
+          const hoursAgo = Math.floor(
+            (Date.now() - lastSaved.getTime()) / (1000 * 60 * 60),
+          )
 
           if (hoursAgo < 24 && parsed.currentStep > 0) {
             setWelcomeBack({
               lastStepName: ONBOARDING_STEPS_ARRAY[parsed.currentStep],
-              percentComplete: Math.round((parsed.completedSteps?.length || 0) / (ONBOARDING_STEPS_ARRAY.length - 1) * 100),
-              timeAway: hoursAgo < 1 ? 'a few moments ago' : `${hoursAgo} hour${hoursAgo > 1 ? 's' : ''} ago`,
-              message: `Welcome back! You were ${Math.round((parsed.completedSteps?.length || 0) / (ONBOARDING_STEPS_ARRAY.length - 1) * 100)}% through the setup.`,
+              percentComplete: Math.round(
+                ((parsed.completedSteps?.length || 0) /
+                  (ONBOARDING_STEPS_ARRAY.length - 1)) *
+                  100,
+              ),
+              timeAway:
+                hoursAgo < 1
+                  ? 'a few moments ago'
+                  : `${hoursAgo} hour${hoursAgo > 1 ? 's' : ''} ago`,
+              message: `Welcome back! You were ${Math.round(((parsed.completedSteps?.length || 0) / (ONBOARDING_STEPS_ARRAY.length - 1)) * 100)}% through the setup.`,
             })
           }
         }
@@ -280,7 +302,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
       if (!localData) {
         const response = await fetch('/api/v1/onboarding/session', {
           headers: {
-            'Authorization': `Bearer ${await user.getIdToken()}`,
+            Authorization: `Bearer ${await user.getIdToken()}`,
           },
         })
 
@@ -315,7 +337,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
         await fetch('/api/v1/onboarding/session', {
           method: 'DELETE',
           headers: {
-            'Authorization': `Bearer ${await user.getIdToken()}`,
+            Authorization: `Bearer ${await user.getIdToken()}`,
           },
         })
       } catch (error) {
@@ -335,7 +357,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
 
     // Mark current step as completed
     if (!completedSteps.includes(currentStepIndex)) {
-      setCompletedSteps(prev => [...prev, currentStepIndex])
+      setCompletedSteps((prev) => [...prev, currentStepIndex])
     }
 
     // If on the last real step (preferences), submit and go to activation
@@ -384,7 +406,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${await user?.getIdToken()}`,
+            Authorization: `Bearer ${await user?.getIdToken()}`,
           },
           body: JSON.stringify(profileData),
         })
@@ -397,7 +419,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
         await clearSession()
 
         // Move to activation step
-        setCurrentStepIndex(prev => prev + 1)
+        setCurrentStepIndex((prev) => prev + 1)
 
         // Redirect after showing activation
         setTimeout(() => {
@@ -412,23 +434,37 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
       }
     } else {
       // Just move to next step
-      setCurrentStepIndex(prev => Math.min(prev + 1, ONBOARDING_STEPS_ARRAY.length - 1))
+      setCurrentStepIndex((prev) =>
+        Math.min(prev + 1, ONBOARDING_STEPS_ARRAY.length - 1),
+      )
     }
 
     // Save session after navigation
     await saveSession()
-  }, [currentStep, currentStepIndex, completedSteps, data, user, router, validateCurrentStep, saveSession, clearSession])
+  }, [
+    currentStep,
+    currentStepIndex,
+    completedSteps,
+    data,
+    user,
+    router,
+    validateCurrentStep,
+    saveSession,
+    clearSession,
+  ])
 
   const previousStep = useCallback(() => {
-    setCurrentStepIndex(prev => Math.max(prev - 1, 0))
+    setCurrentStepIndex((prev) => Math.max(prev - 1, 0))
   }, [])
 
   const skipStep = useCallback(() => {
     // Mark as completed even though skipped
     if (!completedSteps.includes(currentStepIndex)) {
-      setCompletedSteps(prev => [...prev, currentStepIndex])
+      setCompletedSteps((prev) => [...prev, currentStepIndex])
     }
-    setCurrentStepIndex(prev => Math.min(prev + 1, ONBOARDING_STEPS_ARRAY.length - 1))
+    setCurrentStepIndex((prev) =>
+      Math.min(prev + 1, ONBOARDING_STEPS_ARRAY.length - 1),
+    )
   }, [currentStepIndex, completedSteps])
 
   const goToStep = useCallback((step: OnboardingStepKey) => {

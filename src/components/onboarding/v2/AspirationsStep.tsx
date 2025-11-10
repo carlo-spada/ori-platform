@@ -10,7 +10,11 @@ import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
 import type { StepComponentProps, TimelineMonths } from '@/lib/types/onboarding'
 
-const TIMELINE_OPTIONS: Array<{ value: TimelineMonths; label: string; description: string }> = [
+const TIMELINE_OPTIONS: Array<{
+  value: TimelineMonths
+  label: string
+  description: string
+}> = [
   { value: 6, label: '6 months', description: 'Short-term focus' },
   { value: 12, label: '1 year', description: 'Near-term goals' },
   { value: 24, label: '2 years', description: 'Medium-term vision' },
@@ -18,16 +22,20 @@ const TIMELINE_OPTIONS: Array<{ value: TimelineMonths; label: string; descriptio
   { value: 60, label: '5 years', description: 'Long-term ambition' },
 ]
 
-export function AspirationsStep({ data, onChange, onSkip }: StepComponentProps) {
+export function AspirationsStep({
+  data,
+  onChange,
+  onSkip,
+}: StepComponentProps) {
   const [dreamRole, setDreamRole] = useState(data.aspirations?.dreamRole || '')
   const [timelineMonths, setTimelineMonths] = useState<TimelineMonths>(
-    data.aspirations?.timelineMonths || 24
+    data.aspirations?.timelineMonths || 24,
   )
   const [longTermVision, setLongTermVision] = useState(
-    data.aspirations?.longTermVision || ''
+    data.aspirations?.longTermVision || '',
   )
   const [targetRoles, setTargetRoles] = useState<string[]>(
-    data.aspirations?.targetRoles || []
+    data.aspirations?.targetRoles || [],
   )
   const [currentRole, setCurrentRole] = useState('')
 
@@ -47,26 +55,29 @@ export function AspirationsStep({ data, onChange, onSkip }: StepComponentProps) 
   // Add target role
   const addTargetRole = (role: string) => {
     const trimmed = role.trim()
-    if (trimmed && !targetRoles.some(r => r.toLowerCase() === trimmed.toLowerCase())) {
-      setTargetRoles(prev => [...prev, trimmed])
+    if (
+      trimmed &&
+      !targetRoles.some((r) => r.toLowerCase() === trimmed.toLowerCase())
+    ) {
+      setTargetRoles((prev) => [...prev, trimmed])
       setCurrentRole('')
     }
   }
 
   // Remove target role
   const removeTargetRole = (index: number) => {
-    setTargetRoles(prev => prev.filter((_, i) => i !== index))
+    setTargetRoles((prev) => prev.filter((_, i) => i !== index))
   }
 
   // Get timeline label
   const getTimelineLabel = () => {
-    const option = TIMELINE_OPTIONS.find(o => o.value === timelineMonths)
+    const option = TIMELINE_OPTIONS.find((o) => o.value === timelineMonths)
     return option ? `${option.label} - ${option.description}` : ''
   }
 
   // Calculate progress position for visual timeline
   const getProgressPosition = () => {
-    const index = TIMELINE_OPTIONS.findIndex(o => o.value === timelineMonths)
+    const index = TIMELINE_OPTIONS.findIndex((o) => o.value === timelineMonths)
     return (index / (TIMELINE_OPTIONS.length - 1)) * 100
   }
 
@@ -74,16 +85,19 @@ export function AspirationsStep({ data, onChange, onSkip }: StepComponentProps) 
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold mb-3">Where do you want to be?</h2>
-        <p className="text-muted-foreground text-lg">
+        <h2 className="mb-3 text-3xl font-bold">Where do you want to be?</h2>
+        <p className="text-lg text-muted-foreground">
           Share your career aspirations (optional but valuable)
         </p>
       </div>
 
-      <div className="max-w-2xl mx-auto space-y-8">
+      <div className="mx-auto max-w-2xl space-y-8">
         {/* Dream Role */}
         <div className="space-y-3">
-          <Label htmlFor="dreamRole" className="text-base flex items-center gap-2">
+          <Label
+            htmlFor="dreamRole"
+            className="flex items-center gap-2 text-base"
+          >
             <Target className="h-4 w-4 text-primary" />
             Dream role
             <span className="text-sm text-muted-foreground">
@@ -102,10 +116,10 @@ export function AspirationsStep({ data, onChange, onSkip }: StepComponentProps) 
 
         {/* Visual Timeline */}
         <div className="space-y-4">
-          <Label className="text-base flex items-center gap-2">
+          <Label className="flex items-center gap-2 text-base">
             <Calendar className="h-4 w-4 text-primary" />
             Timeline to get there
-            <span className="text-sm text-muted-foreground ml-auto">
+            <span className="ml-auto text-sm text-muted-foreground">
               {getTimelineLabel()}
             </span>
           </Label>
@@ -113,14 +127,14 @@ export function AspirationsStep({ data, onChange, onSkip }: StepComponentProps) 
           {/* Custom Timeline Visualization */}
           <div className="relative py-8">
             {/* Track */}
-            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-2 bg-border rounded-full" />
+            <div className="absolute inset-x-0 top-1/2 h-2 -translate-y-1/2 rounded-full bg-border" />
 
             {/* Progress */}
             <div
-              className="absolute top-1/2 -translate-y-1/2 h-2 bg-primary rounded-full transition-all duration-300"
+              className="absolute top-1/2 h-2 -translate-y-1/2 rounded-full bg-primary transition-all duration-300"
               style={{
                 left: 0,
-                width: `${getProgressPosition()}%`
+                width: `${getProgressPosition()}%`,
               }}
             />
 
@@ -134,22 +148,16 @@ export function AspirationsStep({ data, onChange, onSkip }: StepComponentProps) 
                   className="group relative flex flex-col items-center"
                 >
                   <div
-                    className={`
-                      h-4 w-4 rounded-full border-2 transition-all
-                      ${
-                        timelineMonths === option.value
-                          ? 'bg-primary border-primary scale-125'
-                          : timelineMonths > option.value
-                          ? 'bg-primary border-primary'
-                          : 'bg-background border-border group-hover:border-primary/50'
-                      }
-                    `}
+                    className={`h-4 w-4 rounded-full border-2 transition-all ${
+                      timelineMonths === option.value
+                        ? 'scale-125 border-primary bg-primary'
+                        : timelineMonths > option.value
+                          ? 'border-primary bg-primary'
+                          : 'border-border bg-background group-hover:border-primary/50'
+                    } `}
                   />
                   <span
-                    className={`
-                      absolute top-6 text-xs whitespace-nowrap transition-opacity
-                      ${timelineMonths === option.value ? 'opacity-100 font-medium' : 'opacity-60'}
-                    `}
+                    className={`absolute top-6 whitespace-nowrap text-xs transition-opacity ${timelineMonths === option.value ? 'font-medium opacity-100' : 'opacity-60'} `}
                   >
                     {option.label}
                   </span>
@@ -163,7 +171,7 @@ export function AspirationsStep({ data, onChange, onSkip }: StepComponentProps) 
         <div className="space-y-3">
           <Label className="text-base">
             Target roles along the way
-            <span className="text-sm text-muted-foreground ml-2">
+            <span className="ml-2 text-sm text-muted-foreground">
               (Stepping stones to your dream role)
             </span>
           </Label>
@@ -189,7 +197,7 @@ export function AspirationsStep({ data, onChange, onSkip }: StepComponentProps) 
               variant="outline"
               size="default"
             >
-              <Plus className="h-4 w-4 mr-1" />
+              <Plus className="mr-1 h-4 w-4" />
               Add
             </Button>
           </div>
@@ -200,13 +208,13 @@ export function AspirationsStep({ data, onChange, onSkip }: StepComponentProps) 
                 <Badge
                   key={index}
                   variant="secondary"
-                  className="pl-3 pr-1 py-1.5 text-sm"
+                  className="py-1.5 pl-3 pr-1 text-sm"
                 >
                   {role}
                   <button
                     type="button"
                     onClick={() => removeTargetRole(index)}
-                    className="ml-2 p-0.5 hover:bg-destructive/20 rounded transition-colors"
+                    className="ml-2 rounded p-0.5 transition-colors hover:bg-destructive/20"
                   >
                     <X className="h-3 w-3" />
                   </button>
@@ -218,12 +226,10 @@ export function AspirationsStep({ data, onChange, onSkip }: StepComponentProps) 
 
         {/* Long-term Vision */}
         <div className="space-y-3">
-          <Label htmlFor="vision" className="text-base flex items-center gap-2">
+          <Label htmlFor="vision" className="flex items-center gap-2 text-base">
             <TrendingUp className="h-4 w-4 text-primary" />
             Long-term vision
-            <span className="text-sm text-muted-foreground">
-              (Optional)
-            </span>
+            <span className="text-sm text-muted-foreground">(Optional)</span>
           </Label>
           <Textarea
             id="vision"
@@ -239,17 +245,17 @@ export function AspirationsStep({ data, onChange, onSkip }: StepComponentProps) 
         </div>
 
         {/* Skip reminder */}
-        <div className="text-center pt-4">
+        <div className="pt-4 text-center">
           <p className="text-sm text-muted-foreground">
-            This step is optional. You can {' '}
+            This step is optional. You can{' '}
             <button
               type="button"
               onClick={onSkip}
               className="text-primary hover:underline"
             >
               skip it
-            </button>
-            {' '} and add these details later.
+            </button>{' '}
+            and add these details later.
           </p>
         </div>
       </div>

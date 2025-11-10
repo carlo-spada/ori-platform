@@ -20,7 +20,9 @@ const ProfileDataSchema = z.object({
   profile_photo_url: z.string().url().optional(),
 
   // Context
-  current_status: z.enum(['student', 'professional', 'transitioning', 'exploring']).optional(),
+  current_status: z
+    .enum(['student', 'professional', 'transitioning', 'exploring'])
+    .optional(),
   years_experience: z.number().min(0).max(50).optional(),
   location: z.string().optional(),
   is_remote_open: z.boolean().optional(),
@@ -95,7 +97,9 @@ router.post('/session', authenticateToken, async (req, res) => {
           current_step: validatedData.currentStep,
           completed_steps: validatedData.completedSteps,
           form_data: validatedData.formData,
-          device_info: req.headers['user-agent'] ? { userAgent: req.headers['user-agent'] } : null,
+          device_info: req.headers['user-agent']
+            ? { userAgent: req.headers['user-agent'] }
+            : null,
         })
         .select()
         .single()
@@ -234,10 +238,13 @@ router.put('/complete', authenticateToken, async (req, res) => {
       await ensureStripeCustomer(
         userId,
         req.user.email,
-        validatedData.full_name || validatedData.preferred_name
+        validatedData.full_name || validatedData.preferred_name,
       )
     } catch (stripeError) {
-      console.error('Stripe customer creation failed (non-blocking):', stripeError)
+      console.error(
+        'Stripe customer creation failed (non-blocking):',
+        stripeError,
+      )
       // Don't fail onboarding if Stripe fails
     }
 
@@ -257,7 +264,8 @@ router.put('/complete', authenticateToken, async (req, res) => {
 // Track analytics events
 router.post('/analytics', authenticateToken, async (req, res) => {
   try {
-    const { eventType, stepName, fieldName, timeOnStep, oldValue, newValue } = req.body
+    const { eventType, stepName, fieldName, timeOnStep, oldValue, newValue } =
+      req.body
     const supabase = getSupabaseClient()
 
     // Get active session
@@ -338,7 +346,8 @@ function calculateProfileCompleteness(profile) {
 
   // Nice to have (10 points)
   if (profile.work_styles) completeness += 5
-  if (profile.culture_values && profile.culture_values.length > 0) completeness += 5
+  if (profile.culture_values && profile.culture_values.length > 0)
+    completeness += 5
 
   return Math.min(completeness, 100)
 }

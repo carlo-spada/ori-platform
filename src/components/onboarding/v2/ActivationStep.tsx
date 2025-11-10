@@ -14,7 +14,11 @@ interface ActivationStepProps {
   isLoading?: boolean
 }
 
-export function ActivationStep({ data, profileCompleteness = 0, isLoading }: ActivationStepProps) {
+export function ActivationStep({
+  data,
+  profileCompleteness = 0,
+  isLoading,
+}: ActivationStepProps) {
   const [showSuccess, setShowSuccess] = useState(false)
   const [animationStep, setAnimationStep] = useState(0)
 
@@ -28,7 +32,7 @@ export function ActivationStep({ data, profileCompleteness = 0, isLoading }: Act
   useEffect(() => {
     if (showSuccess) {
       const timers = [1, 2, 3].map((step, index) =>
-        setTimeout(() => setAnimationStep(step), 200 * (index + 1))
+        setTimeout(() => setAnimationStep(step), 200 * (index + 1)),
       )
       return () => timers.forEach(clearTimeout)
     }
@@ -58,10 +62,10 @@ export function ActivationStep({ data, profileCompleteness = 0, isLoading }: Act
     return (
       <div className="flex flex-col items-center justify-center space-y-6 py-12">
         <div className="relative">
-          <div className="h-20 w-20 rounded-full border-4 border-primary/20 border-t-primary animate-spin" />
-          <Sparkles className="absolute inset-0 m-auto h-8 w-8 text-primary animate-pulse" />
+          <div className="h-20 w-20 animate-spin rounded-full border-4 border-primary/20 border-t-primary" />
+          <Sparkles className="absolute inset-0 m-auto h-8 w-8 animate-pulse text-primary" />
         </div>
-        <div className="text-center space-y-2">
+        <div className="space-y-2 text-center">
           <h2 className="text-2xl font-bold">Calibrating your Ori...</h2>
           <p className="text-muted-foreground">
             We're setting up your personalized experience
@@ -75,34 +79,33 @@ export function ActivationStep({ data, profileCompleteness = 0, isLoading }: Act
     <div className="space-y-8">
       {/* Success Animation */}
       {showSuccess && (
-        <div className="flex justify-center animate-in zoom-in-50 duration-500">
+        <div className="flex justify-center duration-500 animate-in zoom-in-50">
           <div className="relative">
             <CheckCircle2 className="h-20 w-20 text-green-500" />
-            <div className="absolute inset-0 h-20 w-20 rounded-full bg-green-500/20 animate-ping" />
+            <div className="absolute inset-0 h-20 w-20 animate-ping rounded-full bg-green-500/20" />
           </div>
         </div>
       )}
 
       {/* Header */}
-      <div className="text-center space-y-3">
+      <div className="space-y-3 text-center">
         <h2 className="text-3xl font-bold">Your Ori is ready!</h2>
-        <p className="text-muted-foreground text-lg">
+        <p className="text-lg text-muted-foreground">
           Here's your personalized profile
         </p>
       </div>
 
       {/* Profile Preview Card */}
       <div
-        className={`
-          max-w-2xl mx-auto p-6 rounded-xl border bg-card
-          transition-all duration-500
-          ${animationStep >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-        `}
+        className={`mx-auto max-w-2xl rounded-xl border bg-card p-6 transition-all duration-500 ${animationStep >= 1 ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} `}
       >
-        <div className="flex items-start gap-4 mb-6">
+        <div className="mb-6 flex items-start gap-4">
           <Avatar className="h-16 w-16 border-2 border-border">
             {data.identity?.profilePhotoUrl ? (
-              <AvatarImage src={data.identity.profilePhotoUrl} alt={data.identity.fullName} />
+              <AvatarImage
+                src={data.identity.profilePhotoUrl}
+                alt={data.identity.fullName}
+              />
             ) : (
               <AvatarFallback className="bg-gradient-to-br from-primary/20 to-primary/10 text-xl">
                 {getInitials() || <User className="h-8 w-8" />}
@@ -116,12 +119,14 @@ export function ActivationStep({ data, profileCompleteness = 0, isLoading }: Act
             <p className="text-muted-foreground">
               {data.context?.currentStatus === 'student' && 'Student'}
               {data.context?.currentStatus === 'professional' && 'Professional'}
-              {data.context?.currentStatus === 'transitioning' && 'Career Changer'}
+              {data.context?.currentStatus === 'transitioning' &&
+                'Career Changer'}
               {data.context?.currentStatus === 'exploring' && 'Explorer'}
-              {data.context?.yearsExperience && data.context.yearsExperience > 0 &&
+              {data.context?.yearsExperience &&
+                data.context.yearsExperience > 0 &&
                 ` • ${data.context.yearsExperience} years experience`}
             </p>
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="mt-1 text-sm text-muted-foreground">
               {data.context?.location}
               {data.context?.isRemoteOpen && ' • Open to remote'}
             </p>
@@ -131,12 +136,9 @@ export function ActivationStep({ data, profileCompleteness = 0, isLoading }: Act
         {/* Skills */}
         {data.expertise?.skills && data.expertise.skills.length > 0 && (
           <div
-            className={`
-              mb-6 transition-all duration-500 delay-100
-              ${animationStep >= 2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-            `}
+            className={`mb-6 transition-all delay-100 duration-500 ${animationStep >= 2 ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} `}
           >
-            <p className="text-sm font-medium mb-2">Skills</p>
+            <p className="mb-2 text-sm font-medium">Skills</p>
             <div className="flex flex-wrap gap-2">
               {data.expertise.skills.slice(0, 6).map((skill, index) => (
                 <Badge key={index} variant="secondary">
@@ -144,7 +146,9 @@ export function ActivationStep({ data, profileCompleteness = 0, isLoading }: Act
                 </Badge>
               ))}
               {data.expertise.skills.length > 6 && (
-                <Badge variant="outline">+{data.expertise.skills.length - 6} more</Badge>
+                <Badge variant="outline">
+                  +{data.expertise.skills.length - 6} more
+                </Badge>
               )}
             </div>
           </div>
@@ -153,22 +157,20 @@ export function ActivationStep({ data, profileCompleteness = 0, isLoading }: Act
         {/* Aspirations */}
         {(data.aspirations?.dreamRole || data.aspirations?.targetRoles) && (
           <div
-            className={`
-              mb-6 transition-all duration-500 delay-200
-              ${animationStep >= 3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-            `}
+            className={`mb-6 transition-all delay-200 duration-500 ${animationStep >= 3 ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} `}
           >
-            <p className="text-sm font-medium mb-2">Career Goals</p>
+            <p className="mb-2 text-sm font-medium">Career Goals</p>
             {data.aspirations.dreamRole && (
               <p className="text-sm text-muted-foreground">
                 Dream role: {data.aspirations.dreamRole}
               </p>
             )}
-            {data.aspirations.targetRoles && data.aspirations.targetRoles.length > 0 && (
-              <p className="text-sm text-muted-foreground">
-                Target: {data.aspirations.targetRoles.join(', ')}
-              </p>
-            )}
+            {data.aspirations.targetRoles &&
+              data.aspirations.targetRoles.length > 0 && (
+                <p className="text-sm text-muted-foreground">
+                  Target: {data.aspirations.targetRoles.join(', ')}
+                </p>
+              )}
           </div>
         )}
 
@@ -176,7 +178,9 @@ export function ActivationStep({ data, profileCompleteness = 0, isLoading }: Act
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
             <span className="font-medium">Profile completeness</span>
-            <span className="text-muted-foreground">{profileCompleteness}%</span>
+            <span className="text-muted-foreground">
+              {profileCompleteness}%
+            </span>
           </div>
           <Progress value={profileCompleteness} className="h-2" />
         </div>
@@ -184,11 +188,11 @@ export function ActivationStep({ data, profileCompleteness = 0, isLoading }: Act
 
       {/* Unlocked Features */}
       {getUnlockedFeatures().length > 0 && (
-        <div className="max-w-2xl mx-auto p-4 rounded-lg bg-primary/5 border border-primary/20">
-          <p className="text-sm font-medium text-primary mb-2">
+        <div className="mx-auto max-w-2xl rounded-lg border border-primary/20 bg-primary/5 p-4">
+          <p className="mb-2 text-sm font-medium text-primary">
             Features unlocked:
           </p>
-          <ul className="text-sm text-muted-foreground space-y-1">
+          <ul className="space-y-1 text-sm text-muted-foreground">
             {getUnlockedFeatures().map((feature, index) => (
               <li key={index} className="flex items-center gap-2">
                 <CheckCircle2 className="h-3 w-3 text-green-500" />
@@ -200,38 +204,38 @@ export function ActivationStep({ data, profileCompleteness = 0, isLoading }: Act
       )}
 
       {/* Action Buttons */}
-      <div className="max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className="mx-auto grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
         <Button
           variant="default"
           size="lg"
           className="group"
-          onClick={() => window.location.href = '/dashboard'}
+          onClick={() => (window.location.href = '/dashboard')}
         >
-          <Briefcase className="h-4 w-4 mr-2" />
+          <Briefcase className="mr-2 h-4 w-4" />
           See Matches
         </Button>
         <Button
           variant="outline"
           size="lg"
           className="group"
-          onClick={() => window.location.href = '/learning'}
+          onClick={() => (window.location.href = '/learning')}
         >
-          <BookOpen className="h-4 w-4 mr-2" />
+          <BookOpen className="mr-2 h-4 w-4" />
           Explore Learning
         </Button>
         <Button
           variant="outline"
           size="lg"
           className="group"
-          onClick={() => window.location.href = '/profile'}
+          onClick={() => (window.location.href = '/profile')}
         >
-          <User className="h-4 w-4 mr-2" />
+          <User className="mr-2 h-4 w-4" />
           Complete Profile
         </Button>
       </div>
 
       {/* Footer Message */}
-      <div className="text-center pt-4">
+      <div className="pt-4 text-center">
         <p className="text-sm text-muted-foreground">
           You'll be redirected to your dashboard in a moment...
         </p>

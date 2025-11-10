@@ -1,7 +1,17 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Home, Users, Zap, Target, Heart, Shield, Plus, X, GripVertical } from 'lucide-react'
+import {
+  Home,
+  Users,
+  Zap,
+  Target,
+  Heart,
+  Shield,
+  Plus,
+  X,
+  GripVertical,
+} from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -9,27 +19,60 @@ import { Input } from '@/components/ui/input'
 import type { StepComponentProps, WorkStyles } from '@/lib/types/onboarding'
 
 const WORK_STYLE_OPTIONS = [
-  { key: 'remote', label: 'Remote First', icon: Home, description: 'Work from anywhere' },
-  { key: 'collaborative', label: 'Collaborative', icon: Users, description: 'Team-oriented' },
-  { key: 'async', label: 'Async Communication', icon: Zap, description: 'Flexible hours' },
-  { key: 'structured', label: 'Structured', icon: Target, description: 'Clear processes' },
+  {
+    key: 'remote',
+    label: 'Remote First',
+    icon: Home,
+    description: 'Work from anywhere',
+  },
+  {
+    key: 'collaborative',
+    label: 'Collaborative',
+    icon: Users,
+    description: 'Team-oriented',
+  },
+  {
+    key: 'async',
+    label: 'Async Communication',
+    icon: Zap,
+    description: 'Flexible hours',
+  },
+  {
+    key: 'structured',
+    label: 'Structured',
+    icon: Target,
+    description: 'Clear processes',
+  },
 ]
 
 const CULTURE_VALUES = [
-  'Innovation', 'Work-Life Balance', 'Growth Opportunities', 'Diversity & Inclusion',
-  'Transparency', 'Impact-Driven', 'Learning Culture', 'Autonomy',
-  'Sustainability', 'Fast-Paced', 'Mission-Driven', 'Collaborative',
+  'Innovation',
+  'Work-Life Balance',
+  'Growth Opportunities',
+  'Diversity & Inclusion',
+  'Transparency',
+  'Impact-Driven',
+  'Learning Culture',
+  'Autonomy',
+  'Sustainability',
+  'Fast-Paced',
+  'Mission-Driven',
+  'Collaborative',
 ]
 
-export function PreferencesStep({ data, onChange, onSkip }: StepComponentProps) {
+export function PreferencesStep({
+  data,
+  onChange,
+  onSkip,
+}: StepComponentProps) {
   const [workStyles, setWorkStyles] = useState<WorkStyles>(
-    data.preferences?.workStyles || {}
+    data.preferences?.workStyles || {},
   )
   const [cultureValues, setCultureValues] = useState<string[]>(
-    data.preferences?.cultureValues || []
+    data.preferences?.cultureValues || [],
   )
   const [dealBreakers, setDealBreakers] = useState<string[]>(
-    data.preferences?.dealBreakers || []
+    data.preferences?.dealBreakers || [],
   )
   const [currentDealBreaker, setCurrentDealBreaker] = useState('')
 
@@ -47,7 +90,7 @@ export function PreferencesStep({ data, onChange, onSkip }: StepComponentProps) 
 
   // Toggle work style preference
   const toggleWorkStyle = (key: string) => {
-    setWorkStyles(prev => {
+    setWorkStyles((prev) => {
       const updated = { ...prev }
       if (updated[key as keyof WorkStyles]) {
         delete updated[key as keyof WorkStyles]
@@ -60,11 +103,12 @@ export function PreferencesStep({ data, onChange, onSkip }: StepComponentProps) 
 
   // Toggle culture value
   const toggleCultureValue = (value: string) => {
-    setCultureValues(prev => {
+    setCultureValues((prev) => {
       if (prev.includes(value)) {
-        return prev.filter(v => v !== value)
+        return prev.filter((v) => v !== value)
       }
-      if (prev.length < 5) { // Limit to 5 values
+      if (prev.length < 5) {
+        // Limit to 5 values
         return [...prev, value]
       }
       return prev
@@ -75,37 +119,37 @@ export function PreferencesStep({ data, onChange, onSkip }: StepComponentProps) 
   const addDealBreaker = (dealBreaker: string) => {
     const trimmed = dealBreaker.trim()
     if (trimmed && !dealBreakers.includes(trimmed)) {
-      setDealBreakers(prev => [...prev, trimmed])
+      setDealBreakers((prev) => [...prev, trimmed])
       setCurrentDealBreaker('')
     }
   }
 
   // Remove deal breaker
   const removeDealBreaker = (index: number) => {
-    setDealBreakers(prev => prev.filter((_, i) => i !== index))
+    setDealBreakers((prev) => prev.filter((_, i) => i !== index))
   }
 
   return (
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold mb-3">What matters most to you?</h2>
-        <p className="text-muted-foreground text-lg">
+        <h2 className="mb-3 text-3xl font-bold">What matters most to you?</h2>
+        <p className="text-lg text-muted-foreground">
           Help us understand your ideal work environment (optional)
         </p>
       </div>
 
-      <div className="max-w-2xl mx-auto space-y-8">
+      <div className="mx-auto max-w-2xl space-y-8">
         {/* Work Style Preferences */}
         <div className="space-y-4">
           <Label className="text-base">
             Work style preferences
-            <span className="text-sm text-muted-foreground ml-2">
+            <span className="ml-2 text-sm text-muted-foreground">
               (Select what resonates)
             </span>
           </Label>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {WORK_STYLE_OPTIONS.map((option) => {
               const Icon = option.icon
               const isSelected = !!workStyles[option.key as keyof WorkStyles]
@@ -115,29 +159,23 @@ export function PreferencesStep({ data, onChange, onSkip }: StepComponentProps) 
                   key={option.key}
                   type="button"
                   onClick={() => toggleWorkStyle(option.key)}
-                  className={`
-                    relative flex items-start p-4 rounded-lg border transition-all
-                    ${
-                      isSelected
-                        ? 'border-primary bg-primary/5'
-                        : 'border-border hover:border-primary/50'
-                    }
-                  `}
+                  className={`relative flex items-start rounded-lg border p-4 transition-all ${
+                    isSelected
+                      ? 'border-primary bg-primary/5'
+                      : 'border-border hover:border-primary/50'
+                  } `}
                 >
                   <Icon
-                    className={`
-                      h-5 w-5 mr-3 mt-0.5
-                      ${isSelected ? 'text-primary' : 'text-muted-foreground'}
-                    `}
+                    className={`mr-3 mt-0.5 h-5 w-5 ${isSelected ? 'text-primary' : 'text-muted-foreground'} `}
                   />
                   <div className="flex-1 text-left">
                     <p className="font-medium">{option.label}</p>
-                    <p className="text-sm text-muted-foreground mt-0.5">
+                    <p className="mt-0.5 text-sm text-muted-foreground">
                       {option.description}
                     </p>
                   </div>
                   {isSelected && (
-                    <div className="absolute top-2 right-2">
+                    <div className="absolute right-2 top-2">
                       <div className="h-2 w-2 rounded-full bg-primary" />
                     </div>
                   )}
@@ -151,7 +189,7 @@ export function PreferencesStep({ data, onChange, onSkip }: StepComponentProps) 
         <div className="space-y-4">
           <Label className="text-base">
             Company culture & values
-            <span className="text-sm text-muted-foreground ml-2">
+            <span className="ml-2 text-sm text-muted-foreground">
               (Choose up to 5)
             </span>
           </Label>
@@ -167,16 +205,13 @@ export function PreferencesStep({ data, onChange, onSkip }: StepComponentProps) 
                   type="button"
                   onClick={() => toggleCultureValue(value)}
                   disabled={isDisabled}
-                  className={`
-                    px-3 py-1.5 rounded-full border text-sm transition-all
-                    ${
-                      isSelected
-                        ? 'border-primary bg-primary text-primary-foreground'
-                        : isDisabled
-                        ? 'border-border text-muted-foreground opacity-50 cursor-not-allowed'
+                  className={`rounded-full border px-3 py-1.5 text-sm transition-all ${
+                    isSelected
+                      ? 'border-primary bg-primary text-primary-foreground'
+                      : isDisabled
+                        ? 'cursor-not-allowed border-border text-muted-foreground opacity-50'
                         : 'border-border hover:border-primary/50'
-                    }
-                  `}
+                  } `}
                 >
                   {value}
                 </button>
@@ -185,7 +220,7 @@ export function PreferencesStep({ data, onChange, onSkip }: StepComponentProps) 
           </div>
 
           {cultureValues.length > 0 && (
-            <div className="p-3 rounded-lg bg-muted/50 text-sm">
+            <div className="rounded-lg bg-muted/50 p-3 text-sm">
               <p className="text-muted-foreground">
                 Your priorities:{' '}
                 <span className="font-medium text-foreground">
@@ -198,7 +233,7 @@ export function PreferencesStep({ data, onChange, onSkip }: StepComponentProps) 
 
         {/* Deal Breakers */}
         <div className="space-y-3">
-          <Label className="text-base flex items-center gap-2">
+          <Label className="flex items-center gap-2 text-base">
             <Shield className="h-4 w-4 text-destructive" />
             Deal breakers
             <span className="text-sm text-muted-foreground">
@@ -227,7 +262,7 @@ export function PreferencesStep({ data, onChange, onSkip }: StepComponentProps) 
               variant="outline"
               size="default"
             >
-              <Plus className="h-4 w-4 mr-1" />
+              <Plus className="mr-1 h-4 w-4" />
               Add
             </Button>
           </div>
@@ -238,13 +273,13 @@ export function PreferencesStep({ data, onChange, onSkip }: StepComponentProps) 
                 <Badge
                   key={index}
                   variant="destructive"
-                  className="pl-3 pr-1 py-1.5 text-sm"
+                  className="py-1.5 pl-3 pr-1 text-sm"
                 >
                   {dealBreaker}
                   <button
                     type="button"
                     onClick={() => removeDealBreaker(index)}
-                    className="ml-2 p-0.5 hover:bg-background/20 rounded transition-colors"
+                    className="ml-2 rounded p-0.5 transition-colors hover:bg-background/20"
                   >
                     <X className="h-3 w-3" />
                   </button>
@@ -255,17 +290,17 @@ export function PreferencesStep({ data, onChange, onSkip }: StepComponentProps) 
         </div>
 
         {/* Skip reminder */}
-        <div className="text-center pt-4">
+        <div className="pt-4 text-center">
           <p className="text-sm text-muted-foreground">
-            This step is optional. You can {' '}
+            This step is optional. You can{' '}
             <button
               type="button"
               onClick={onSkip}
               className="text-primary hover:underline"
             >
               skip it
-            </button>
-            {' '} or complete your profile later.
+            </button>{' '}
+            or complete your profile later.
           </p>
         </div>
       </div>

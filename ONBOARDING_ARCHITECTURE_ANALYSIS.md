@@ -11,6 +11,7 @@
 The onboarding implementation follows a **5-step multi-page flow** with state management through React hooks, API integration via React Query, and backend persistence in Supabase. The system captures professional profile data (headline, location, skills, career goals) to complete user profiles and enable job matching.
 
 **Key Files**:
+
 - Frontend: `/src/app/onboarding/page.tsx` (main orchestrator)
 - Components: `/src/components/onboarding/*.tsx` (5 step components)
 - API Client: `/src/integrations/api/profile.ts`
@@ -29,15 +30,16 @@ The onboarding implementation follows a **5-step multi-page flow** with state ma
 
 ```typescript
 const STEPS: OnboardingStepKey[] = [
-  'welcome',      // Step 0: Introduction with user's name
-  'basicInfo',    // Step 1: Professional headline + location
-  'skills',       // Step 2: Add 3+ skills
-  'goals',        // Step 3: Long-term vision + target roles
-  'finalizing',   // Step 4: Loading state (auto-submits)
+  'welcome', // Step 0: Introduction with user's name
+  'basicInfo', // Step 1: Professional headline + location
+  'skills', // Step 2: Add 3+ skills
+  'goals', // Step 3: Long-term vision + target roles
+  'finalizing', // Step 4: Loading state (auto-submits)
 ]
 ```
 
 **Progress Display**:
+
 - Only shows for steps 1-3 (not welcome/finalizing)
 - Progress = `(currentStepIndex / 4) * 100`
 - Uses simple progress bar with percentage label
@@ -50,23 +52,24 @@ const STEPS: OnboardingStepKey[] = [
 // Frontend state structure (src/lib/types.ts)
 export interface OnboardingData {
   basicInfo: {
-    headline: string    // "Software Engineer | AI Enthusiast"
-    location: string    // "San Francisco, CA"
+    headline: string // "Software Engineer | AI Enthusiast"
+    location: string // "San Francisco, CA"
   }
-  skills: string[]      // ["Python", "React", "AWS"]
+  skills: string[] // ["Python", "React", "AWS"]
   goals: {
-    longTermVision: string      // Multi-line text field
-    targetRoles: string[]       // ["Senior Engineer", "Tech Lead"]
+    longTermVision: string // Multi-line text field
+    targetRoles: string[] // ["Senior Engineer", "Tech Lead"]
   }
 }
 ```
 
 **Default Values**:
+
 ```typescript
 const DEFAULT_BASIC_INFO = { headline: '', location: '' }
-const DEFAULT_GOALS = { 
-  longTermVision: '', 
-  targetRoles: [] 
+const DEFAULT_GOALS = {
+  longTermVision: '',
+  targetRoles: [],
 }
 ```
 
@@ -74,15 +77,16 @@ const DEFAULT_GOALS = {
 
 ### 1.3 Validation Rules
 
-| Step | Validation Logic |
-|------|------------------|
-| `welcome` | Always valid (no form input) |
-| `basicInfo` | `headline.trim().length > 0` AND `location.trim().length > 0` |
-| `skills` | `skills.length >= 3` |
-| `goals` | `longTermVision.trim().length > 0` OR `targetRoles.length > 0` |
+| Step         | Validation Logic                                                   |
+| ------------ | ------------------------------------------------------------------ |
+| `welcome`    | Always valid (no form input)                                       |
+| `basicInfo`  | `headline.trim().length > 0` AND `location.trim().length > 0`      |
+| `skills`     | `skills.length >= 3`                                               |
+| `goals`      | `longTermVision.trim().length > 0` OR `targetRoles.length > 0`     |
 | `finalizing` | Always invalid (disables next button, prevents further navigation) |
 
 **Implementation**:
+
 ```typescript
 const isStepValid = (): boolean => {
   switch (currentStep) {
@@ -103,6 +107,7 @@ const isStepValid = (): boolean => {
 ### 2.1 Main Page: `/src/app/onboarding/page.tsx`
 
 **Responsibilities**:
+
 - State management (current step, form data)
 - Step progression logic
 - Data transformation for API submission
@@ -111,6 +116,7 @@ const isStepValid = (): boolean => {
 - Submit trigger on goals step completion
 
 **Key State Variables**:
+
 ```typescript
 const [currentStepIndex, setCurrentStepIndex] = useState(0)
 const [data, setData] = useState<OnboardingData>({
@@ -121,14 +127,14 @@ const [data, setData] = useState<OnboardingData>({
 ```
 
 **User Injection**:
+
 ```typescript
 const userName =
-  user?.user_metadata?.full_name ||
-  user?.email?.split('@')[0] ||
-  'there'
+  user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'there'
 ```
 
 **Auth Guards**:
+
 1. Redirects to `/login` if not authenticated
 2. Redirects to `/dashboard` if `profile.onboarding_completed === true`
 
@@ -137,6 +143,7 @@ const userName =
 ### 2.2 Step Components
 
 #### **WelcomeStep** (`/src/components/onboarding/WelcomeStep.tsx`)
+
 - **Input**: Copy object with interpolated username
 - **Output**: Single "Let's begin" button
 - **Interaction**: Click to advance to basicInfo
@@ -144,7 +151,7 @@ const userName =
 ```typescript
 interface WelcomeStepProps {
   copy: {
-    headline: string  // "Welcome to Ori, {{name}}."
+    headline: string // "Welcome to Ori, {{name}}."
     body: string
     primaryButton: string
   }
@@ -153,7 +160,8 @@ interface WelcomeStepProps {
 ```
 
 #### **BasicInfoStep** (`/src/components/onboarding/BasicInfoStep.tsx`)
-- **Inputs**: 
+
+- **Inputs**:
   - `headline` (Text input) - max 200 chars
   - `location` (Text input) - max 100 chars
 - **Labels**: "Professional headline" / "Location"
@@ -169,6 +177,7 @@ interface BasicInfoStepProps {
 ```
 
 #### **SkillsStep** (`/src/components/onboarding/SkillsStep.tsx`)
+
 - **Input**: Text field + Add button (or Enter key)
 - **Storage**: Badge display, X button to remove
 - **Validation**: Requires 3+ skills
@@ -186,6 +195,7 @@ const handleAdd = () => {
 ```
 
 **Badge Display**:
+
 ```tsx
 <Badge variant="secondary" className="flex items-center gap-1.5">
   {skill}
@@ -196,6 +206,7 @@ const handleAdd = () => {
 ```
 
 #### **GoalsStep** (`/src/components/onboarding/GoalsStep.tsx`)
+
 - **Inputs**:
   - `longTermVision` (Textarea, 4 rows)
   - `targetRoles` (Text + Add button, like skills)
@@ -212,6 +223,7 @@ interface GoalsStepProps {
 ```
 
 #### **FinalizingStep** (`/src/components/onboarding/FinalizingStep.tsx`)
+
 - **Display**: Loading animation with 3 pulsing dots
 - **Copy**: "Calibrating your Ori…" / "We're aligning your profile…"
 - **No Inputs**: Pure display component
@@ -221,12 +233,14 @@ interface GoalsStepProps {
 ### 2.3 Navigation
 
 **Visible On**:
+
 - Progress bar: Steps 1-3 only (not welcome/finalizing)
 - Back button: Steps 1-3 only (not welcome/finalizing)
 - Next button: Always visible except finalizing
 - Finish button: On goals step (Next label changes to "Finish")
 
 **Button States**:
+
 - Back: `onClick={handleBack}` (decrement index)
 - Next/Finish: `disabled={!isStepValid() || isSubmitting}`
 
@@ -237,29 +251,32 @@ interface GoalsStepProps {
 ### 3.1 API Client (`/src/integrations/api/profile.ts`)
 
 **Primary Endpoint**:
+
 ```
 PUT /api/v1/profile/onboarding
 ```
 
 **Request Body Transformation**:
+
 ```typescript
 // Frontend data structure → Backend field names
 const profileData = {
-  headline: data.basicInfo.headline,           // string
-  location: data.basicInfo.location,           // string
-  skills: data.skills,                        // string[]
+  headline: data.basicInfo.headline, // string
+  location: data.basicInfo.location, // string
+  skills: data.skills, // string[]
   long_term_vision: data.goals.longTermVision, // string
-  target_roles: data.goals.targetRoles,        // string[]
+  target_roles: data.goals.targetRoles, // string[]
 }
 ```
 
 **Function Definition**:
+
 ```typescript
 export async function completeOnboarding(
   data: Partial<UserProfile>,
 ): Promise<UserProfile> {
   const headers = await getAuthHeaders()
-  
+
   const response = await fetch(
     `${API_URL}/api/v1/profile/onboarding`,
     {
@@ -268,13 +285,14 @@ export async function completeOnboarding(
       body: JSON.stringify(data),
     }
   )
-  
+
   if (!response.ok) throw new Error(...)
   return response.json()
 }
 ```
 
 **Auth**:
+
 - JWT token from Supabase session in Authorization header
 - Managed by `getAuthHeaders()` utility
 
@@ -287,8 +305,7 @@ export function useCompleteOnboarding() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (data: Partial<UserProfile>) => 
-      completeOnboarding(data),
+    mutationFn: (data: Partial<UserProfile>) => completeOnboarding(data),
     onSuccess: (updatedProfile) => {
       // Update cache
       queryClient.setQueryData(['profile'], updatedProfile)
@@ -298,6 +315,7 @@ export function useCompleteOnboarding() {
 ```
 
 **Usage in Page**:
+
 ```typescript
 const { mutate: submitOnboarding, isPending: isSubmitting } =
   useCompleteOnboarding()
@@ -326,6 +344,7 @@ submitOnboarding(profileData, {
 **Location**: `/services/core-api/src/routes/profile.ts`
 
 **Handler Logic**:
+
 1. Validates JWT (authMiddleware)
 2. Validates `work_style` enum (if provided)
 3. Validates string length limits:
@@ -337,12 +356,14 @@ submitOnboarding(profileData, {
    - `goal`: max 1000 chars
 
 4. **Creates Stripe Customer** (new feature):
+
    ```typescript
    const userEmail = await getUserEmail(req.user.id)
    await ensureStripeCustomer(req.user.id, userEmail, full_name)
    ```
 
 5. **Updates user_profiles table**:
+
    ```typescript
    const updateData = {
      onboarding_completed: true,
@@ -354,7 +375,7 @@ submitOnboarding(profileData, {
      // ... other fields
      updated_at: new Date().toISOString(),
    }
-   
+
    const { data: profile, error } = await supabase
      .from('user_profiles')
      .update(updateData)
@@ -372,17 +393,19 @@ submitOnboarding(profileData, {
 **Table**: `public.user_profiles`
 
 **Onboarding-Related Columns** (from migration `20251108020018_*.sql`):
+
 ```sql
 ALTER TABLE public.user_profiles
 ADD COLUMN headline TEXT,
 ADD COLUMN location TEXT,
 ADD COLUMN target_roles TEXT[] DEFAULT '{}';
 
-CREATE INDEX idx_user_profiles_target_roles 
+CREATE INDEX idx_user_profiles_target_roles
   ON public.user_profiles USING GIN (target_roles);
 ```
 
 **Existing Related Columns** (other migrations):
+
 - `skills` - text array (used for matching)
 - `long_term_vision` - text (captured during onboarding)
 - `onboarding_completed` - boolean (set to true on completion)
@@ -421,12 +444,12 @@ export interface UserProfile {
   id: string
   user_id: string
   full_name?: string
-  headline?: string              // Professional headline
-  location?: string              // Location
-  skills?: string[]              // List of skills
-  target_roles?: string[]         // Career targets
-  long_term_vision?: string       // Career vision
-  onboarding_completed?: boolean  // Flag
+  headline?: string // Professional headline
+  location?: string // Location
+  skills?: string[] // List of skills
+  target_roles?: string[] // Career targets
+  long_term_vision?: string // Career vision
+  onboarding_completed?: boolean // Flag
   // ... other fields
 }
 
@@ -448,11 +471,18 @@ export interface OnboardingData {
 **Purpose**: Enforce onboarding flow before dashboard access
 
 **Redirect Logic**:
+
 ```typescript
 // Public routes (no check needed)
 const publicRoutes = [
-  '/', '/login', '/signup', '/about', '/pricing', 
-  '/blog', '/features', '/legal',
+  '/',
+  '/login',
+  '/signup',
+  '/about',
+  '/pricing',
+  '/blog',
+  '/features',
+  '/legal',
 ]
 
 // Onboarding routes (allowed even if incomplete)
@@ -463,6 +493,7 @@ const onboardingRoutes = ['/select-plan', '/onboarding']
 ```
 
 **Behavior**:
+
 1. If authenticated + onboarding NOT complete → redirect to `/select-plan`
 2. If authenticated + onboarding complete → allow access
 3. If not authenticated + not on public/onboarding route → redirect to `/login`
@@ -496,6 +527,7 @@ useEffect(() => {
 **Path**: `/public/locales/en/translation.json`
 
 **Onboarding Section**:
+
 ```json
 {
   "onboardingPage": {
@@ -633,6 +665,7 @@ Redirected to /onboarding (OnboardingGuard)
 ### 9.1 Frontend
 
 **Submission Error**:
+
 ```typescript
 submitOnboarding(profileData, {
   onError: (error) => {
@@ -645,20 +678,24 @@ submitOnboarding(profileData, {
 ```
 
 **Auth Error**:
+
 - API client throws if no session
 - Page redirects to `/login`
 
 ### 9.2 Backend
 
 **Validation Errors**:
+
 - Returns 400 with error message for validation failures
 - Validates work_style enum, string lengths
 
 **Auth Errors**:
+
 - Returns 401 if user not authenticated
 - Returns 401 if no active session
 
 **Server Errors**:
+
 - Returns 500 for database errors, Stripe errors, etc.
 - Logs error to console for debugging
 
@@ -669,22 +706,26 @@ submitOnboarding(profileData, {
 ### 10.1 Frontend State
 
 **Local Component State** (in `/src/app/onboarding/page.tsx`):
+
 ```typescript
 const [currentStepIndex, setCurrentStepIndex] = useState(0)
 const [data, setData] = useState<OnboardingData>({...})
 ```
 
 **React Query Cache** (in `useCompleteOnboarding`):
+
 ```typescript
 queryClient.setQueryData(['profile'], updatedProfile)
 ```
 
 **Auth Context** (global):
+
 ```typescript
-const { user } = useAuth()  // Supabase user object
+const { user } = useAuth() // Supabase user object
 ```
 
 **Profile Hook** (global):
+
 ```typescript
 const { data: profile, isLoading } = useProfile()
 ```
@@ -695,25 +736,24 @@ const { data: profile, isLoading } = useProfile()
 
 ### 11.1 Edge Cases
 
-| Case | Behavior |
-|------|----------|
-| User already onboarded | Redirect to `/dashboard` before page loads |
-| User not authenticated | Redirect to `/login` before page loads |
-| Network error on submit | Show toast, return to goals step, preserve data |
-| Skills field - duplicate | Ignored (input.includes check) |
-| Skills field - whitespace trim | Trimmed before adding |
-| Target roles - order | Preserved as added |
-| Going back then forward | Data preserved from previous entries |
-| Leaving page mid-onboarding | Data lost (stored only in component state) |
+| Case                           | Behavior                                        |
+| ------------------------------ | ----------------------------------------------- |
+| User already onboarded         | Redirect to `/dashboard` before page loads      |
+| User not authenticated         | Redirect to `/login` before page loads          |
+| Network error on submit        | Show toast, return to goals step, preserve data |
+| Skills field - duplicate       | Ignored (input.includes check)                  |
+| Skills field - whitespace trim | Trimmed before adding                           |
+| Target roles - order           | Preserved as added                              |
+| Going back then forward        | Data preserved from previous entries            |
+| Leaving page mid-onboarding    | Data lost (stored only in component state)      |
 
 ### 11.2 Special Behaviors
 
 **Username Interpolation**:
+
 ```typescript
 const userName =
-  user?.user_metadata?.full_name ||
-  user?.email?.split('@')[0] ||
-  'there'
+  user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'there'
 
 // Passed to WelcomeStep as pre-formatted copy
 ```
@@ -723,6 +763,7 @@ const userName =
 **Progress Text**: Shows "Step 1 of 4", "Step 2 of 4", etc. (not counting finalizing)
 
 **Toast Messages**:
+
 - Success: "Welcome to Ori! Your profile has been created."
 - Error: "Failed to save your profile. Please try again."
 
@@ -733,6 +774,7 @@ const userName =
 ### Frontend Tests
 
 **What to test**:
+
 - Step progression (next/back buttons)
 - Validation logic per step
 - Data transformation before API call
@@ -742,6 +784,7 @@ const userName =
 - Keyboard input (Enter to add skill/role)
 
 **Mocking needed**:
+
 - `useAuth()` hook
 - `useProfile()` hook
 - `completeOnboarding()` API call
@@ -750,6 +793,7 @@ const userName =
 ### Backend Tests
 
 **What to test**:
+
 - 400 errors for invalid work_style
 - 400 errors for string length violations
 - 401 errors for missing auth
@@ -775,38 +819,45 @@ const userName =
 ### 13.2 Potential Issues & Gaps
 
 #### Issue #1: Missing "Full Name" Capture
+
 - **Current**: Only captures `headline` and `location` in basicInfo
 - **Expected**: `full_name` is a profile field but NOT captured in onboarding
 - **Impact**: Profile is missing user's full name
 - **Fix**: Add `fullName` field to basicInfo step
 
 #### Issue #2: Data Persistence on Navigation
+
 - **Current**: Form data only in component state
 - **Risk**: If user closes browser, all data is lost (no auto-save)
 - **Impact**: User must restart onboarding
 - **Consideration**: Could add localStorage or backend auto-save
 
 #### Issue #3: Profile.full_name Never Set
+
 - **Current**: Backend can accept `full_name` in request, but onboarding doesn't send it
 - **Implementation**: `full_name` field added to BasicInfoStep needed
 - **Location**: Transform in `handleNext()` for goals → finalizing
 
 #### Issue #4: Translation Key Structure
+
 - **Current**: Keys like `onboardingPage.basicInfo.headlineLabel`
 - **Works**: Yes, i18n correctly interpolates
 - **Note**: Some keys have variations (e.g., profileForm.headlineLabel differs from onboardingPage.basicInfo.headlineLabel)
 
 #### Issue #5: Error on Return to Goals Step
+
 - **Current**: On submission error, code does: `setCurrentStepIndex(currentStepIndex)`
 - **Issue**: `currentStepIndex` is 4 (finalizing), so this sets it to 4 again (no change)
 - **Fix**: Should be `setCurrentStepIndex(currentStepIndex - 1)`
 
 #### Issue #6: Skills Array Handling
+
 - **Current**: Skills stored as string array in database
 - **Query**: How are skills indexed/searched? (GIN index on target_roles, but not skills)
 - **Consideration**: Performance for large datasets
 
 #### Issue #7: Stripe Customer Creation Timing
+
 - **Current**: Created during onboarding completion
 - **Not visible to frontend**: User doesn't see confirmation
 - **Risk**: If Stripe call fails, onboarding fails (no fallback)
@@ -819,16 +870,19 @@ const userName =
 ### 14.1 Post-Onboarding Pages
 
 **Profile Page** (`/src/app/app/profile/page.tsx`):
+
 - Uses same fields (`headline`, `location`, `skills`, `long_term_vision`, `target_roles`)
 - Can edit after onboarding
 - Additional fields: `about`, `experience`, `education`
 
 **Dashboard** (`/src/app/app/dashboard/page.tsx`):
+
 - Checks if `onboarding_completed === true`
 - Uses `headline` in greeting
 - Displays recommendations based on skills/goals
 
 **Settings** (`/src/app/app/settings/page.tsx`):
+
 - Can delete account (which cascades to profile deletion)
 - Subscription management
 
@@ -843,11 +897,13 @@ const userName =
 ### 15.1 Environment Variables Needed
 
 **Frontend** (`.env.local`):
+
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:3001  # or production API
 ```
 
 **Backend** (`services/core-api/.env`):
+
 ```env
 SUPABASE_URL=...
 SUPABASE_SERVICE_ROLE_KEY=...
@@ -857,6 +913,7 @@ STRIPE_SECRET_KEY=sk_test_...
 ### 15.2 Database Migrations
 
 Must be applied before onboarding works:
+
 1. `20251108020018_add_onboarding_fields_to_user_profiles.sql`
    - Adds `headline`, `location`, `target_roles` columns
    - Creates GIN index on `target_roles`
@@ -865,21 +922,21 @@ Must be applied before onboarding works:
 
 ## SUMMARY TABLE
 
-| Component | File | Responsibility |
-|-----------|------|-----------------|
-| **Page** | `/src/app/onboarding/page.tsx` | Orchestration, state, navigation, submission |
-| **Welcome** | `/src/components/onboarding/WelcomeStep.tsx` | Greeting + "begin" button |
-| **BasicInfo** | `/src/components/onboarding/BasicInfoStep.tsx` | Headline + location inputs |
-| **Skills** | `/src/components/onboarding/SkillsStep.tsx` | Add skills via tag input |
-| **Goals** | `/src/components/onboarding/GoalsStep.tsx` | Vision + target roles |
-| **Finalizing** | `/src/components/onboarding/FinalizingStep.tsx` | Loading state |
-| **Hook** | `/src/hooks/useProfile.ts` | React Query mutation for submission |
-| **API Client** | `/src/integrations/api/profile.ts` | HTTP PUT to `/api/v1/profile/onboarding` |
-| **Backend** | `/services/core-api/src/routes/profile.ts` | PUT handler, validation, Stripe setup, DB update |
-| **Guard** | `/src/components/auth/OnboardingGuard.tsx` | Enforce onboarding completion before dashboard |
-| **Types** | `/src/lib/types.ts` | Frontend types (OnboardingData, OnboardingStepKey) |
-| **DB Schema** | `/supabase/migrations/...sql` | user_profiles columns & indexes |
-| **Translations** | `/public/locales/en/translation.json` | All copy & labels |
+| Component        | File                                            | Responsibility                                     |
+| ---------------- | ----------------------------------------------- | -------------------------------------------------- |
+| **Page**         | `/src/app/onboarding/page.tsx`                  | Orchestration, state, navigation, submission       |
+| **Welcome**      | `/src/components/onboarding/WelcomeStep.tsx`    | Greeting + "begin" button                          |
+| **BasicInfo**    | `/src/components/onboarding/BasicInfoStep.tsx`  | Headline + location inputs                         |
+| **Skills**       | `/src/components/onboarding/SkillsStep.tsx`     | Add skills via tag input                           |
+| **Goals**        | `/src/components/onboarding/GoalsStep.tsx`      | Vision + target roles                              |
+| **Finalizing**   | `/src/components/onboarding/FinalizingStep.tsx` | Loading state                                      |
+| **Hook**         | `/src/hooks/useProfile.ts`                      | React Query mutation for submission                |
+| **API Client**   | `/src/integrations/api/profile.ts`              | HTTP PUT to `/api/v1/profile/onboarding`           |
+| **Backend**      | `/services/core-api/src/routes/profile.ts`      | PUT handler, validation, Stripe setup, DB update   |
+| **Guard**        | `/src/components/auth/OnboardingGuard.tsx`      | Enforce onboarding completion before dashboard     |
+| **Types**        | `/src/lib/types.ts`                             | Frontend types (OnboardingData, OnboardingStepKey) |
+| **DB Schema**    | `/supabase/migrations/...sql`                   | user_profiles columns & indexes                    |
+| **Translations** | `/public/locales/en/translation.json`           | All copy & labels                                  |
 
 ---
 

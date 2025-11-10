@@ -72,10 +72,10 @@ export function BetaWarningModal({
               <Rocket className="h-6 w-6 text-amber-600 dark:text-amber-500" />
             </div>
             <div>
-              <DialogTitle className="text-xl">{t('betaWarning.title')}</DialogTitle>
-              <DialogDescription>
-                {t('betaWarning.subtitle')}
-              </DialogDescription>
+              <DialogTitle className="text-xl">
+                {t('betaWarning.title')}
+              </DialogTitle>
+              <DialogDescription>{t('betaWarning.subtitle')}</DialogDescription>
             </div>
           </div>
         </DialogHeader>
@@ -96,7 +96,9 @@ export function BetaWarningModal({
           </div>
 
           <div className="space-y-3">
-            <p className="text-sm font-medium">{t('betaWarning.expectations.title')}</p>
+            <p className="text-sm font-medium">
+              {t('betaWarning.expectations.title')}
+            </p>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex gap-2">
                 <Bug className="mt-0.5 h-4 w-4 flex-shrink-0" />
@@ -174,7 +176,9 @@ export function BetaWarningModal({
             disabled={isPending || !email}
             className="w-full sm:w-auto"
           >
-            {isPending ? t('betaWarning.actions.joining') : t('betaWarning.actions.proceed')}
+            {isPending
+              ? t('betaWarning.actions.joining')
+              : t('betaWarning.actions.proceed')}
           </Button>
         </DialogFooter>
       </DialogContent>

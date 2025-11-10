@@ -30,51 +30,63 @@ See `.tasks/TASK_GOVERNANCE.md` for complete rules. Quick version:
 **I have these MCP servers configured. ALWAYS use them instead of manual commands.**
 
 ### 🗄️ Database (Postgres MCP)
+
 **Status**: ⚠️ Needs configuration
 **Tool**: `mcp__postgres__query`
 **Use for**: Read-only SQL queries
+
 ```typescript
 // Example usage:
-mcp__postgres__query({ sql: "SELECT * FROM auth.users LIMIT 5;" })
+mcp__postgres__query({ sql: 'SELECT * FROM auth.users LIMIT 5;' })
 ```
+
 **Setup Required**: Update `claude_desktop_config.json` with actual connection string
 
 ### 📂 Filesystem (Filesystem MCP)
+
 **Status**: ✅ Active
 **Tools**: `Read`, `Write`, `Edit`, `Glob`, `Grep`
 **Use for**: All file operations (NEVER use `cat`, `grep`, `find` in bash)
 **Scope**: `/Users/carlo/Desktop/Projects/ori-platform`
 
 ### 🐙 GitHub (GitHub MCP)
+
 **Status**: ⚠️ Needs token
 **Use for**: PR management, issues, repo operations
 **Setup Required**: Add GITHUB_PERSONAL_ACCESS_TOKEN
 
 ### 🎭 Playwright (Playwright MCP)
+
 **Status**: ✅ Active (after restart)
 **Use for**: Browser automation, visual testing, screenshots
 **When**: Testing UI, taking screenshots, navigating pages
+
 ```typescript
 // I can now browse localhost:3000 and inspect the UI!
 ```
 
 ### 📧 Email (Resend MCP via Docker)
+
 **Status**: ✅ Active via MCP Docker
 **Tool**: `mcp__MCP_DOCKER__send-email`
 **Use for**: Sending emails (onboarding, notifications)
+
 ```typescript
-mcp__MCP_DOCKER__send-email({
-  from: "sender@example.com",
-  to: "user@example.com",
-  subject: "Welcome!",
-  text: "Plain text",
-  html: "<p>HTML content</p>"
-})
+mcp__MCP_DOCKER__send -
+  email({
+    from: 'sender@example.com',
+    to: 'user@example.com',
+    subject: 'Welcome!',
+    text: 'Plain text',
+    html: '<p>HTML content</p>',
+  })
 ```
 
 ### 💳 Stripe (Stripe MCP via Docker)
+
 **Status**: ✅ Active via MCP Docker
 **Tools**:
+
 - `mcp__MCP_DOCKER__list_customers` - List Stripe customers
 - `mcp__MCP_DOCKER__create_customer` - Create customer
 - `mcp__MCP_DOCKER__list_subscriptions` - List subscriptions
@@ -82,33 +94,40 @@ mcp__MCP_DOCKER__send-email({
 - `mcp__MCP_DOCKER__create_product` - Create product
 - `mcp__MCP_DOCKER__search_stripe_resources` - Search by query
 - `mcp__MCP_DOCKER__fetch_stripe_resources` - Get by ID
-**Use for**: All Stripe operations (customers, subscriptions, payments)
+  **Use for**: All Stripe operations (customers, subscriptions, payments)
 
 ### 🌐 Web Fetch (Web MCP via Docker)
+
 **Status**: ✅ Active via MCP Docker
 **Tool**: `mcp__MCP_DOCKER__fetch`
 **Use for**: Fetching web content, API calls
+
 ```typescript
 mcp__MCP_DOCKER__fetch({
-  url: "https://example.com",
-  max_length: 5000
+  url: 'https://example.com',
+  max_length: 5000,
 })
 ```
 
 ### 📚 Context7 (Documentation MCP via Docker)
+
 **Status**: ✅ Active via MCP Docker
 **Tools**:
+
 - `mcp__MCP_DOCKER__resolve-library-id` - Find library ID first!
 - `mcp__MCP_DOCKER__get-library-docs` - Get docs after resolving
-**Use for**: Getting up-to-date library documentation
+  **Use for**: Getting up-to-date library documentation
+
 ```typescript
 // ALWAYS resolve library ID first:
-mcp__MCP_DOCKER__resolve-library-id({ libraryName: "next.js" })
+mcp__MCP_DOCKER__resolve - library - id({ libraryName: 'next.js' })
 // Then use the returned ID:
-mcp__MCP_DOCKER__get-library-docs({
-  context7CompatibleLibraryID: "/vercel/next.js",
-  topic: "routing"
-})
+mcp__MCP_DOCKER__get -
+  library -
+  docs({
+    context7CompatibleLibraryID: '/vercel/next.js',
+    topic: 'routing',
+  })
 ```
 
 ---

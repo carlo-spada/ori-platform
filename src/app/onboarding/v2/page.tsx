@@ -113,10 +113,10 @@ function OnboardingContent() {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
       <div className="container mx-auto px-4 py-8">
         {/* Header with progress */}
-        <div className="max-w-4xl mx-auto mb-8">
+        <div className="mx-auto mb-8 max-w-4xl">
           {/* Welcome back message */}
           {welcomeBack && progress.currentStep > 0 && (
-            <div className="mb-6 p-4 rounded-lg bg-primary/10 border border-primary/20 animate-in slide-in-from-top">
+            <div className="mb-6 rounded-lg border border-primary/20 bg-primary/10 p-4 animate-in slide-in-from-top">
               <p className="text-sm font-medium">
                 Welcome back! {welcomeBack.message}
               </p>
@@ -126,12 +126,12 @@ function OnboardingContent() {
           {/* Progress bar */}
           {currentStep !== 'activation' && (
             <div className="space-y-4">
-              <div className="flex justify-between items-center">
+              <div className="flex items-center justify-between">
                 <h1 className="text-sm font-medium text-muted-foreground">
                   Step {progress.currentStep + 1} of {progress.totalSteps - 1}
                 </h1>
                 {isSaving && (
-                  <p className="text-xs text-muted-foreground flex items-center gap-1">
+                  <p className="flex items-center gap-1 text-xs text-muted-foreground">
                     <Loader2 className="h-3 w-3 animate-spin" />
                     Saving...
                   </p>
@@ -150,11 +150,11 @@ function OnboardingContent() {
         </div>
 
         {/* Main content card */}
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-card rounded-2xl border shadow-lg p-8 md:p-12">
+        <div className="mx-auto max-w-4xl">
+          <div className="rounded-2xl border bg-card p-8 shadow-lg md:p-12">
             {/* Optional: Import profile button */}
             {currentStep === 'context' && (
-              <div className="absolute top-4 right-4">
+              <div className="absolute right-4 top-4">
                 <ImportProfileDialog onImport={updateData} />
               </div>
             )}
@@ -162,14 +162,14 @@ function OnboardingContent() {
             {/* Step content with animation */}
             <div
               key={currentStep}
-              className="animate-in fade-in slide-in-from-right-4 duration-300"
+              className="duration-300 animate-in fade-in slide-in-from-right-4"
             >
               {renderStep()}
             </div>
 
             {/* Navigation buttons */}
             {currentStep !== 'activation' && (
-              <div className="flex justify-between items-center mt-12 pt-8 border-t">
+              <div className="mt-12 flex items-center justify-between border-t pt-8">
                 {/* Back button */}
                 <Button
                   variant="ghost"
@@ -186,7 +186,7 @@ function OnboardingContent() {
                   {isOptionalStep() && (
                     <button
                       onClick={skipStep}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      className="text-sm text-muted-foreground transition-colors hover:text-primary"
                     >
                       Skip this step
                     </button>
@@ -208,7 +208,7 @@ function OnboardingContent() {
 
           {/* Help text */}
           {currentStep !== 'activation' && (
-            <p className="text-center text-sm text-muted-foreground mt-6">
+            <p className="mt-6 text-center text-sm text-muted-foreground">
               Your progress is saved automatically. You can come back anytime.
             </p>
           )}

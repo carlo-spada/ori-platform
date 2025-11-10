@@ -12,31 +12,71 @@ import type { StepComponentProps } from '@/lib/types/onboarding'
 const getSkillSuggestions = (
   currentStatus?: string,
   yearsExperience?: number,
-  existingSkills?: string[]
+  existingSkills?: string[],
 ): string[] => {
-  const existing = existingSkills?.map(s => s.toLowerCase()) || []
+  const existing = existingSkills?.map((s) => s.toLowerCase()) || []
 
   let suggestions: string[] = []
 
   if (currentStatus === 'student') {
-    suggestions = ['Python', 'JavaScript', 'Git', 'Problem Solving', 'Team Collaboration', 'SQL', 'React', 'Communication']
+    suggestions = [
+      'Python',
+      'JavaScript',
+      'Git',
+      'Problem Solving',
+      'Team Collaboration',
+      'SQL',
+      'React',
+      'Communication',
+    ]
   } else if (yearsExperience && yearsExperience < 3) {
-    suggestions = ['HTML/CSS', 'JavaScript', 'React', 'Node.js', 'Git', 'Agile', 'REST APIs', 'TypeScript']
+    suggestions = [
+      'HTML/CSS',
+      'JavaScript',
+      'React',
+      'Node.js',
+      'Git',
+      'Agile',
+      'REST APIs',
+      'TypeScript',
+    ]
   } else if (yearsExperience && yearsExperience < 7) {
-    suggestions = ['TypeScript', 'System Design', 'Docker', 'AWS', 'Testing', 'CI/CD', 'Leadership', 'Microservices']
+    suggestions = [
+      'TypeScript',
+      'System Design',
+      'Docker',
+      'AWS',
+      'Testing',
+      'CI/CD',
+      'Leadership',
+      'Microservices',
+    ]
   } else {
-    suggestions = ['Architecture', 'Strategic Planning', 'Team Leadership', 'Mentoring', 'Cloud Architecture', 'DevOps', 'Product Strategy', 'Stakeholder Management']
+    suggestions = [
+      'Architecture',
+      'Strategic Planning',
+      'Team Leadership',
+      'Mentoring',
+      'Cloud Architecture',
+      'DevOps',
+      'Product Strategy',
+      'Stakeholder Management',
+    ]
   }
 
   // Filter out already added skills
-  return suggestions.filter(s => !existing.includes(s.toLowerCase()))
+  return suggestions.filter((s) => !existing.includes(s.toLowerCase()))
 }
 
-export function ExpertiseStep({ data, onChange, errors = {} }: StepComponentProps) {
+export function ExpertiseStep({
+  data,
+  onChange,
+  errors = {},
+}: StepComponentProps) {
   const [skills, setSkills] = useState<string[]>(data.expertise?.skills || [])
   const [currentSkill, setCurrentSkill] = useState('')
   const [hiddenTalents, setHiddenTalents] = useState<string[]>(
-    data.expertise?.hiddenTalents || []
+    data.expertise?.hiddenTalents || [],
   )
   const [currentTalent, setCurrentTalent] = useState('')
   const [showSuggestions, setShowSuggestions] = useState(true)
@@ -45,7 +85,7 @@ export function ExpertiseStep({ data, onChange, errors = {} }: StepComponentProp
   const suggestions = getSkillSuggestions(
     data.context?.currentStatus,
     data.context?.yearsExperience,
-    skills
+    skills,
   )
 
   // Update parent on changes
@@ -60,50 +100,62 @@ export function ExpertiseStep({ data, onChange, errors = {} }: StepComponentProp
   }, [skills, hiddenTalents, onChange])
 
   // Add skill
-  const addSkill = useCallback((skill: string) => {
-    const trimmed = skill.trim()
-    if (trimmed && !skills.some(s => s.toLowerCase() === trimmed.toLowerCase())) {
-      setSkills(prev => [...prev, trimmed])
-      setCurrentSkill('')
-    }
-  }, [skills])
+  const addSkill = useCallback(
+    (skill: string) => {
+      const trimmed = skill.trim()
+      if (
+        trimmed &&
+        !skills.some((s) => s.toLowerCase() === trimmed.toLowerCase())
+      ) {
+        setSkills((prev) => [...prev, trimmed])
+        setCurrentSkill('')
+      }
+    },
+    [skills],
+  )
 
   // Remove skill
   const removeSkill = useCallback((index: number) => {
-    setSkills(prev => prev.filter((_, i) => i !== index))
+    setSkills((prev) => prev.filter((_, i) => i !== index))
   }, [])
 
   // Add hidden talent
-  const addTalent = useCallback((talent: string) => {
-    const trimmed = talent.trim()
-    if (trimmed && !hiddenTalents.some(t => t.toLowerCase() === trimmed.toLowerCase())) {
-      setHiddenTalents(prev => [...prev, trimmed])
-      setCurrentTalent('')
-    }
-  }, [hiddenTalents])
+  const addTalent = useCallback(
+    (talent: string) => {
+      const trimmed = talent.trim()
+      if (
+        trimmed &&
+        !hiddenTalents.some((t) => t.toLowerCase() === trimmed.toLowerCase())
+      ) {
+        setHiddenTalents((prev) => [...prev, trimmed])
+        setCurrentTalent('')
+      }
+    },
+    [hiddenTalents],
+  )
 
   // Remove talent
   const removeTalent = useCallback((index: number) => {
-    setHiddenTalents(prev => prev.filter((_, i) => i !== index))
+    setHiddenTalents((prev) => prev.filter((_, i) => i !== index))
   }, [])
 
   return (
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-3xl font-bold mb-3">What makes you exceptional?</h2>
-        <p className="text-muted-foreground text-lg">
+        <h2 className="mb-3 text-3xl font-bold">What makes you exceptional?</h2>
+        <p className="text-lg text-muted-foreground">
           Your skills help us match you with the right opportunities
         </p>
       </div>
 
-      <div className="max-w-2xl mx-auto space-y-8">
+      <div className="mx-auto max-w-2xl space-y-8">
         {/* Core Skills */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <Label className="text-base">
               Core skills *
-              <span className="text-sm text-muted-foreground ml-2">
+              <span className="ml-2 text-sm text-muted-foreground">
                 (Add at least 3)
               </span>
             </Label>
@@ -136,7 +188,7 @@ export function ExpertiseStep({ data, onChange, errors = {} }: StepComponentProp
               size="default"
               className="px-6"
             >
-              <Plus className="h-4 w-4 mr-1" />
+              <Plus className="mr-1 h-4 w-4" />
               Add
             </Button>
           </div>
@@ -148,13 +200,13 @@ export function ExpertiseStep({ data, onChange, errors = {} }: StepComponentProp
                 <Badge
                   key={index}
                   variant="secondary"
-                  className="pl-3 pr-1 py-1.5 text-sm"
+                  className="py-1.5 pl-3 pr-1 text-sm"
                 >
                   {skill}
                   <button
                     type="button"
                     onClick={() => removeSkill(index)}
-                    className="ml-2 p-0.5 hover:bg-destructive/20 rounded transition-colors"
+                    className="ml-2 rounded p-0.5 transition-colors hover:bg-destructive/20"
                   >
                     <X className="h-3 w-3" />
                   </button>
@@ -165,7 +217,7 @@ export function ExpertiseStep({ data, onChange, errors = {} }: StepComponentProp
 
           {/* AI Suggestions */}
           {showSuggestions && suggestions.length > 0 && (
-            <div className="p-4 rounded-lg bg-primary/5 border border-primary/20 space-y-3">
+            <div className="space-y-3 rounded-lg border border-primary/20 bg-primary/5 p-4">
               <div className="flex items-center gap-2 text-sm font-medium text-primary">
                 <Sparkles className="h-4 w-4" />
                 Suggested skills based on your profile
@@ -176,10 +228,10 @@ export function ExpertiseStep({ data, onChange, errors = {} }: StepComponentProp
                     key={suggestion}
                     type="button"
                     onClick={() => addSkill(suggestion)}
-                    className="px-3 py-1.5 text-sm rounded-full border border-primary/30 hover:bg-primary/10 transition-colors"
+                    className="rounded-full border border-primary/30 px-3 py-1.5 text-sm transition-colors hover:bg-primary/10"
                   >
                     {suggestion}
-                    <ChevronRight className="inline-block h-3 w-3 ml-1" />
+                    <ChevronRight className="ml-1 inline-block h-3 w-3" />
                   </button>
                 ))}
               </div>
@@ -192,21 +244,22 @@ export function ExpertiseStep({ data, onChange, errors = {} }: StepComponentProp
 
           {skills.length > 0 && skills.length < 3 && (
             <p className="text-sm text-amber-600">
-              Add {3 - skills.length} more skill{3 - skills.length > 1 ? 's' : ''} to continue
+              Add {3 - skills.length} more skill
+              {3 - skills.length > 1 ? 's' : ''} to continue
             </p>
           )}
         </div>
 
         {/* Hidden Talents (Optional) */}
-        <div className="space-y-4 pt-4 border-t">
+        <div className="space-y-4 border-t pt-4">
           <div>
             <Label className="text-base">
               Hidden talents
-              <span className="text-sm text-muted-foreground ml-2">
+              <span className="ml-2 text-sm text-muted-foreground">
                 (Optional - what else makes you unique?)
               </span>
             </Label>
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="mt-1 text-sm text-muted-foreground">
               Photography, public speaking, writing, languages, etc.
             </p>
           </div>
@@ -233,7 +286,7 @@ export function ExpertiseStep({ data, onChange, errors = {} }: StepComponentProp
               size="default"
               className="px-6"
             >
-              <Plus className="h-4 w-4 mr-1" />
+              <Plus className="mr-1 h-4 w-4" />
               Add
             </Button>
           </div>
@@ -245,13 +298,13 @@ export function ExpertiseStep({ data, onChange, errors = {} }: StepComponentProp
                 <Badge
                   key={index}
                   variant="outline"
-                  className="pl-3 pr-1 py-1.5 text-sm"
+                  className="py-1.5 pl-3 pr-1 text-sm"
                 >
                   {talent}
                   <button
                     type="button"
                     onClick={() => removeTalent(index)}
-                    className="ml-2 p-0.5 hover:bg-destructive/20 rounded transition-colors"
+                    className="ml-2 rounded p-0.5 transition-colors hover:bg-destructive/20"
                   >
                     <X className="h-3 w-3" />
                   </button>
@@ -262,7 +315,7 @@ export function ExpertiseStep({ data, onChange, errors = {} }: StepComponentProp
         </div>
 
         {/* Progress hint */}
-        <div className="text-center pt-4">
+        <div className="pt-4 text-center">
           <p className="text-sm text-muted-foreground">
             Great! Your skills help us understand your expertise level
           </p>

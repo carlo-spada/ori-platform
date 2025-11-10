@@ -32,7 +32,11 @@ export function ImportProfileDialog({ onImport }: ImportProfileDialogProps) {
     if (!file) return
 
     // Validate file type
-    const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
+    const validTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    ]
     if (!validTypes.includes(file.type)) {
       toast.error('Please upload a PDF or Word document')
       return
@@ -59,7 +63,7 @@ export function ImportProfileDialog({ onImport }: ImportProfileDialogProps) {
       // const parsed = await response.json()
 
       // Simulate parsing (replace with actual API call)
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      await new Promise((resolve) => setTimeout(resolve, 2000))
 
       // Mock parsed data
       const mockParsedData: Partial<OnboardingData> = {
@@ -113,7 +117,7 @@ export function ImportProfileDialog({ onImport }: ImportProfileDialogProps) {
       // const parsed = await response.json()
 
       // Simulate parsing
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      await new Promise((resolve) => setTimeout(resolve, 2000))
 
       // Mock parsed data
       const mockParsedData: Partial<OnboardingData> = {
@@ -128,7 +132,13 @@ export function ImportProfileDialog({ onImport }: ImportProfileDialogProps) {
           isRemoteOpen: true,
         },
         expertise: {
-          skills: ['Product Management', 'Agile', 'Data Analysis', 'Strategy', 'Leadership'],
+          skills: [
+            'Product Management',
+            'Agile',
+            'Data Analysis',
+            'Strategy',
+            'Leadership',
+          ],
         },
         aspirations: {
           dreamRole: 'VP of Product',
@@ -146,7 +156,9 @@ export function ImportProfileDialog({ onImport }: ImportProfileDialogProps) {
       setIsOpen(false)
     } catch (error) {
       console.error('Failed to import LinkedIn:', error)
-      toast.error('Failed to import LinkedIn profile. Please fill in the details manually.')
+      toast.error(
+        'Failed to import LinkedIn profile. Please fill in the details manually.',
+      )
     } finally {
       setIsUploading(false)
     }
@@ -174,7 +186,7 @@ export function ImportProfileDialog({ onImport }: ImportProfileDialogProps) {
             <Label>Upload CV/Resume</Label>
             <div
               onClick={() => fileInputRef.current?.click()}
-              className="relative border-2 border-dashed rounded-lg p-6 hover:border-primary/50 cursor-pointer transition-colors"
+              className="relative cursor-pointer rounded-lg border-2 border-dashed p-6 transition-colors hover:border-primary/50"
             >
               <input
                 ref={fileInputRef}
@@ -183,11 +195,13 @@ export function ImportProfileDialog({ onImport }: ImportProfileDialogProps) {
                 onChange={handleCVUpload}
                 className="hidden"
               />
-              <div className="flex flex-col items-center text-center space-y-2">
+              <div className="flex flex-col items-center space-y-2 text-center">
                 <FileText className="h-10 w-10 text-muted-foreground" />
                 <div>
                   <p className="text-sm font-medium">Click to upload CV</p>
-                  <p className="text-xs text-muted-foreground">PDF or Word (max 10MB)</p>
+                  <p className="text-xs text-muted-foreground">
+                    PDF or Word (max 10MB)
+                  </p>
                 </div>
               </div>
             </div>
@@ -199,7 +213,9 @@ export function ImportProfileDialog({ onImport }: ImportProfileDialogProps) {
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">Or</span>
+              <span className="bg-background px-2 text-muted-foreground">
+                Or
+              </span>
             </div>
           </div>
 
@@ -208,7 +224,7 @@ export function ImportProfileDialog({ onImport }: ImportProfileDialogProps) {
             <Label htmlFor="linkedin">Import from LinkedIn</Label>
             <div className="flex gap-2">
               <div className="relative flex-1">
-                <Linkedin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Linkedin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   id="linkedin"
                   type="url"
@@ -230,17 +246,17 @@ export function ImportProfileDialog({ onImport }: ImportProfileDialogProps) {
 
           {/* Loading state */}
           {isUploading && (
-            <div className="flex items-center justify-center p-4 rounded-lg bg-muted/50">
-              <Loader2 className="h-5 w-5 animate-spin mr-2" />
+            <div className="flex items-center justify-center rounded-lg bg-muted/50 p-4">
+              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
               <p className="text-sm">Parsing your profile...</p>
             </div>
           )}
 
           {/* Privacy note */}
-          <div className="p-3 rounded-lg bg-muted/50 text-xs text-muted-foreground">
+          <div className="rounded-lg bg-muted/50 p-3 text-xs text-muted-foreground">
             <p>
-              <strong>Privacy:</strong> Your data is processed securely and never shared
-              without your permission.
+              <strong>Privacy:</strong> Your data is processed securely and
+              never shared without your permission.
             </p>
           </div>
         </div>
