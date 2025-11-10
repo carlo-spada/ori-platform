@@ -7,12 +7,12 @@
  * - Handle unsubscribe via token
  */
 
-import { Router } from 'express'
+import express, { Router } from 'express'
 import { z } from 'zod'
 import { authMiddleware, type AuthRequest } from '../middleware/auth.js'
 import { supabase } from '../lib/supabase.js'
 
-const router = Router()
+const router: express.Router = Router()
 
 // Validation schemas
 const updatePreferencesSchema = z.object({
