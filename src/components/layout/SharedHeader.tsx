@@ -213,7 +213,7 @@ export function SharedHeader() {
         >
           <div
             ref={mobileMenuRef}
-            className="bg-surface fixed right-0 top-16 z-[60] h-[calc(100vh-4rem)] w-full max-w-sm overflow-hidden border-l border-white/10 shadow-2xl lg:hidden"
+            className="fixed right-0 top-16 z-[60] h-[calc(100vh-4rem)] w-full max-w-sm overflow-hidden border-l border-white/10 bg-background shadow-2xl lg:hidden"
             role="dialog"
             aria-modal="true"
             aria-label="Main navigation"
