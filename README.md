@@ -112,6 +112,15 @@ You will need to run three separate services in different terminal windows.
 
     - The AI service will be available at `http://localhost:3002`.
 
+## 🔄 Current Phase: MCP Refactoring
+
+We're currently refactoring Phases 2 and 3 to use **MCP (Model Context Protocol)** servers instead of direct API integrations for better security, maintainability, and architecture consistency.
+
+**Quick Links**:
+- **[`docs/NEXT_STEPS.md`](./docs/NEXT_STEPS.md)** - What's happening and what's next (start here!)
+- **[`docs/MCP_REFACTORING_PLAN.md`](./docs/MCP_REFACTORING_PLAN.md)** - Detailed implementation strategy
+- **[`docs/MCP_DOCUMENTATION_INDEX.md`](./docs/MCP_DOCUMENTATION_INDEX.md)** - Complete guide to all MCP documentation
+
 ## 🏗️ Project Management
 
 This project is managed using a **"Task-as-File"** system. All work is tracked in the `.tasks/` directory, which is organized by status (`todo`, `in-progress`, `done`, etc.). This system is the single source of truth for our development roadmap.
