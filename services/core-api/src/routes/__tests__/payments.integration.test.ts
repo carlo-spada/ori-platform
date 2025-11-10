@@ -22,10 +22,10 @@ import {
   createTestCharge,
   testPlans,
   testScenarios,
-} from './fixtures/stripe.fixtures';
-import {
   generateTestUserId,
   generateTestEmail,
+} from './fixtures/stripe.fixtures';
+import {
   testDatabaseFixtures,
   paymentTestHelpers,
 } from './fixtures/test-setup';
