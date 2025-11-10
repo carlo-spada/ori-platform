@@ -19,11 +19,12 @@ export function SharedHeader() {
   const hamburgerButtonRef = useRef<HTMLButtonElement>(null)
 
   const NAV_ITEMS = [
-    { slug: 'features', href: '/features', label: t('nav.items.features') },
-    { slug: 'pricing', href: '/pricing', label: t('nav.items.pricing') },
     { slug: 'about', href: '/about', label: t('nav.items.about') },
     { slug: 'journey', href: '/journey', label: t('nav.items.journey') },
+    { slug: 'features', href: '/features', label: t('nav.items.features') },
+    { slug: 'pricing', href: '/pricing', label: t('nav.items.pricing') },
     { slug: 'blog', href: '/blog', label: t('nav.items.blog') },
+    { slug: 'contact', href: '/contact', label: t('nav.items.contact') },
   ]
 
   // Close mobile menu on route change
