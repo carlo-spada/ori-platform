@@ -105,7 +105,9 @@
       "Bash(if [ -f \"$file\" ])",
       "Bash(then)",
       "Bash(if [ -f \"AI_ENGINE_QUICKSTART.md\" ])",
-      "Bash(else)"
+      "Bash(else)",
+      "Bash(./scripts/setup-mcp-servers.sh:*)",
+      "Bash(git check-ignore:*)"
     ],
     "deny": [],
     "ask": []
