@@ -785,8 +785,8 @@
     "basicInfo": {
       "headline": "Ci parli un po' di lei.",
       "description": "Ori utilizza queste informazioni per contestualizzare meglio le vostre opportunità.",
-      "headlineLabel": "Titolo professionale",
-      "headlinePlaceholder": "Ingegnere software | Appassionato di AI",
+      "headlineLabel": "Ruolo attuale",
+      "headlinePlaceholder": "ad es., Ingegnere Software Senior",
       "locationLabel": "Posizione",
       "locationPlaceholder": "San Francisco, CA"
     },
@@ -799,10 +799,10 @@
     },
     "goals": {
       "headline": "A cosa mira?",
-      "description": "Condividete la direzione che vorreste dare alla vostra carriera.",
-      "longTermVisionLabel": "Visione a lungo termine",
+      "description": "Condividete la direzione che vorreste dare alla vostra carriera. È possibile compilare una o entrambe le sezioni riportate di seguito.",
+      "longTermVisionLabel": "Visione a lungo termine (opzionale)",
       "longTermVisionPlaceholder": "Descrivi brevemente il tipo di lavoro e l'impatto che vorresti avere in futuro..",
-      "targetRolesLabel": "Ruoli target",
+      "targetRolesLabel": "Ruoli target (opzionale)",
       "targetRolesPlaceholder": "Aggiungere un ruolo (ad esempio, Senior Data Scientist, Head of Product)",
       "helper": "Aggiungete 1-3 ruoli in cui sareste entusiasti di crescere."
     },

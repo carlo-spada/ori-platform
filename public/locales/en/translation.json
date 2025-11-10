@@ -777,8 +777,8 @@
     "basicInfo": {
       "headline": "Tell us a bit about yourself.",
       "description": "Ori uses this information to better contextualize your opportunities.",
-      "headlineLabel": "Professional headline",
-      "headlinePlaceholder": "Software Engineer | AI Enthusiast",
+      "headlineLabel": "Current role",
+      "headlinePlaceholder": "e.g., Senior Software Engineer",
       "locationLabel": "Location",
       "locationPlaceholder": "San Francisco, CA"
     },
@@ -791,10 +791,10 @@
     },
     "goals": {
       "headline": "What are you aiming for?",
-      "description": "Share the direction you'd like your career to move in.",
-      "longTermVisionLabel": "Long-term vision",
+      "description": "Share the direction you'd like your career to move in. You can fill out either or both sections below.",
+      "longTermVisionLabel": "Long-term vision (optional)",
       "longTermVisionPlaceholder": "Briefly describe the kind of work and impact you'd like to have in the future…",
-      "targetRolesLabel": "Target roles",
+      "targetRolesLabel": "Target roles (optional)",
       "targetRolesPlaceholder": "Add a role (e.g., Senior Data Scientist, Head of Product)",
       "helper": "Add 1–3 roles you'd be excited to grow into."
     },

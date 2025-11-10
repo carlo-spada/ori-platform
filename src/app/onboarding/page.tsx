@@ -111,8 +111,8 @@ export default function OnboardingPage() {
         onError: (error) => {
           console.error('Onboarding submission failed:', error)
           toast.error('Failed to save your profile. Please try again.')
-          // Return user to previous step (goals) and preserve data
-          setCurrentStepIndex(currentStepIndex)
+          // Return user to previous step (goals) so they can retry
+          setCurrentStepIndex(currentStepIndex - 1)
         },
       })
     } else {
