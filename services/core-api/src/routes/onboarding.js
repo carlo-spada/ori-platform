@@ -1,7 +1,7 @@
 import express from 'express'
 import { z } from 'zod'
-import { authenticateToken } from '../middleware/auth.js'
-import { getSupabaseClient } from '../services/supabase.js'
+import { authMiddleware } from '../middleware/auth.js'
+import { getSupabaseClient } from '../lib/supabase.js'
 
 const router = express.Router()
 
@@ -52,7 +52,7 @@ const ProfileDataSchema = z.object({
 })
 
 // Save or update onboarding session
-router.post('/session', authenticateToken, async (req, res) => {
+router.post('/session', authMiddleware, async (req, res) => {
   try {
     const validatedData = OnboardingSessionSchema.parse(req.body)
     const supabase = getSupabaseClient()
@@ -126,7 +126,7 @@ router.post('/session', authenticateToken, async (req, res) => {
 })
 
 // Get current onboarding session
-router.get('/session', authenticateToken, async (req, res) => {
+router.get('/session', authMiddleware, async (req, res) => {
   try {
     const supabase = getSupabaseClient()
 
@@ -154,7 +154,7 @@ router.get('/session', authenticateToken, async (req, res) => {
 })
 
 // Delete/abandon onboarding session
-router.delete('/session', authenticateToken, async (req, res) => {
+router.delete('/session', authMiddleware, async (req, res) => {
   try {
     const supabase = getSupabaseClient()
 
@@ -178,7 +178,7 @@ router.delete('/session', authenticateToken, async (req, res) => {
 })
 
 // Complete onboarding and update profile
-router.put('/complete', authenticateToken, async (req, res) => {
+router.put('/complete', authMiddleware, async (req, res) => {
   try {
     const validatedData = ProfileDataSchema.parse(req.body)
     const supabase = getSupabaseClient()
@@ -262,7 +262,7 @@ router.put('/complete', authenticateToken, async (req, res) => {
 })
 
 // Track analytics events
-router.post('/analytics', authenticateToken, async (req, res) => {
+router.post('/analytics', authMiddleware, async (req, res) => {
   try {
     const { eventType, stepName, fieldName, timeOnStep, oldValue, newValue } =
       req.body
@@ -298,7 +298,7 @@ router.post('/analytics', authenticateToken, async (req, res) => {
 })
 
 // Get skill suggestions based on role
-router.get('/skill-suggestions', authenticateToken, async (req, res) => {
+router.get('/skill-suggestions', authMiddleware, async (req, res) => {
   try {
     const { role, experience } = req.query
     const supabase = getSupabaseClient()
