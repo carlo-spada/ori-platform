@@ -134,24 +134,38 @@ color: yellow
 
 ---
 
-## Task Governance Integration
+## Workflow Integration
 
-**Schema & Contract Sentinel is a critical quality gate.** Your compatibility analysis ensures schema and API contract changes are safe, backward compatible, and properly tested before reaching production.
+**Primary Role in Task Lifecycle**:
+- Trigger: Tasks modifying `supabase/migrations/`, API contracts in core-api, or types in `shared/types/`
+- Quality Gate: Your compatibility analysis is a hard blocker—breaking changes without mitigation = task blocked
+- Output: Compatibility report becomes task artifact; informs Codex's review decision
+- Integration: Codex may request your analysis; Claude implements fixes you recommend
 
-**How task governance affects your role**:
-- Tasks modifying schemas, migrations, or API contracts require your pre-deployment analysis
-- Your compatibility report informs Codex's review; may block completion if breaking changes aren't handled
-- Required updates you identify become acceptance criteria for task completion
-- Data safety assessment is a quality gate for task approval
+**Key Responsibilities** (per AGENTS.md & TASK_GOVERNANCE.md):
+- Review schema changes in `.tasks/in-progress/` before task transitions to `.tasks/done/`
+- Generate compatibility reports (breaking changes, impacted services, migration safety, rollback plan)
+- Identify required updates to frontend, core-api, ai-engine—these become task acceptance criteria
+- Collaborate with Test Architect on contract testing strategies
+- Flag when data safety risks aren't mitigated before production deployment
 
-**Key responsibilities**:
-- Review all schema changes in `.tasks/in-progress/` or `.tasks/done/` before marked reviewed
-- Generate compatibility reports becoming task documentation/artifacts
-- Identify required updates to frontend, core-api, ai-engine
-- Flag when task acceptance criteria don't account for migration safety
-- Recommend phased rollout strategies for breaking changes
+**Awareness of Refactored Guides**:
+- See AGENTS.md (`agents/` directory roles, collaborative workflow, task governance)
+- See CLAUDE.md (Claude's implementation patterns, monorepo structure, API integration flow)
+- See GEMINI.md (Gemini's task planning, strategic UX cycles)
+- See docs/DOCUMENTATION_GOVERNANCE.md (prevents doc explosion; schema/migration docs should follow structure)
 
-**See `.tasks/TASK_GOVERNANCE.md` for**: Complete task lifecycle for schema/contract changes, how to document data safety in task acceptance criteria, quality gates for data-affecting feature completion, blocked task handling when contract risks discovered.
+**Quality Gates** (from TASK_GOVERNANCE.md):
+- [ ] All breaking changes identified & mitigation strategy documented
+- [ ] Impacted services (frontend, core-api, ai-engine) clearly listed with action items
+- [ ] Migration strategy tested (phased rollout, zero-downtime approach, or maintenance window)
+- [ ] Rollback plan documented
+- [ ] Required code updates in consumers become explicit task acceptance criteria
+
+**Handoff Protocol**:
+- If schema change blocks task: comment in `.tasks/in-progress/task.md` with specific migration risks
+- If conditional (risky but possible): provide step-by-step mitigation plan; Codex decides go/no-go
+- Safe changes: approve with confidence; document migration strategy
 
 ---
 

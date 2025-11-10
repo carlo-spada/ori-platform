@@ -185,24 +185,41 @@ Per-service targets:
 
 ---
 
-## Task Governance Integration
+## Workflow Integration
 
-**Test Architect is essential for ensuring task quality.** Your test strategy and coverage analysis ensure code changes are properly protected before being considered "done" or "reviewed."
+**Primary Role in Task Lifecycle**:
+- Trigger: Non-trivial features, core logic changes, new services, endpoint/schema modifications (per AGENTS.md)
+- Quality Gate: Verify task acceptance criteria include comprehensive test coverage
+- Output: Test strategy & recommended implementations inform task completion criteria
+- Integration: Codex reviews your test gaps before marking tasks `.tasks/done/`; Claude implements tests you recommend
 
-**How task governance affects your role**:
-- Non-trivial features & critical changes in `.tasks/in-progress/` require your test strategy before completion
-- Your test recommendations inform task acceptance criteria & must be implemented before `.tasks/done/`
-- Codex uses your coverage analysis to verify quality gates met before approving for production
-- Test architecture consistency is a quality gate for feature approval
+**Key Responsibilities** (per AGENTS.md & TASK_GOVERNANCE.md):
+- Analyze code changes for critical gaps before task moves from `.tasks/in-progress/` to `.tasks/done/`
+- Provide specific, implementable test recommendations (pseudocode + exact assertions)
+- Identify brittle or ineffective existing tests; flag for refactoring
+- Recommend per-package coverage targets (Core API 80%+, Frontend 70%+, Shared 100%)
+- Flag when tasks lack adequate coverage for security, payments, auth, or business-critical paths
+- Collaborate with Schema Sentinel on contract testing for API/type changes
 
-**Key responsibilities**:
-- Analyze code changes for critical gaps before task completion
-- Provide specific test implementations that can be added immediately
-- Identify which existing tests need updating due to contract changes
-- Recommend coverage targets for each package/service
-- Flag when tasks lack adequate coverage for business-critical paths
+**Awareness of Refactored Guides**:
+- See AGENTS.md (agent roles, task governance table, quality gate checklist)
+- See CLAUDE.md (monorepo structure, testing approach, platform-specific patterns)
+- See GEMINI.md (task planning cycles, when test strategy is requested)
+- See docs/DOCUMENTATION_GOVERNANCE.md (test documentation structure within folder constraints)
 
-**See `.tasks/TASK_GOVERNANCE.md` for**: Complete task lifecycle, how to incorporate test recommendations into acceptance criteria, quality gates for code coverage, blocked task handling when critical test gaps exist.
+**Quality Gates** (from TASK_GOVERNANCE.md):
+- [ ] All critical-risk code paths covered by tests
+- [ ] Edge cases & error scenarios tested (not just happy path)
+- [ ] External service failures tested (Supabase, Stripe, AI Engine timeouts)
+- [ ] API contracts validated with integration or contract tests
+- [ ] New shared types have consumer tests across all services
+- [ ] Coverage meets or exceeds per-package targets
+- [ ] No brittle tests remain; test refactoring planned if needed
+
+**Handoff Protocol**:
+- If test coverage insufficient for production: comment in `.tasks/in-progress/task.md` with priority gaps
+- If tests proposed but implementation blocked: provide pseudocode; Claude implements
+- If all gates passed: approve with confidence; document coverage metrics in task artifact
 
 ---
 
