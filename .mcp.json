@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "MCP_DOCKER": {
+      "command": "docker",
+      "args": ["mcp", "gateway", "run"],
+      "type": "stdio"
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
+    },
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp"
+    },
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://postgres:fyrruC-cyvwed-cyhmu6@db.zvngsecxzcgxafbzjewh.supabase.co:5432/postgres"]
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/carlo/Desktop/Projects/ori-platform"]
+    }
+  }
+}

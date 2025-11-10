@@ -1,308 +1,299 @@
 # Repository Guidelines
 
-**Always remember to treat this repository as a living, evolving system, not just a codebase. Every file —including internal AI guides— must contribute to a continuous, compounding loop of learning and improvement. Treat every change as an act of careful architecture: favor clarity, safety, and long-term adaptability. Collaborate in ways that deepen collective understanding: even if it means doing a little more now to unlock much more later in the future.**
+**Repository State**: Living, evolving system. Every change is an act of careful architecture. Favor clarity, safety, and long-term adaptability.
 
-## Collaborative Workflow & Branching Strategy
+---
 
-To ensure the `main` branch remains stable and deployable at all times, we will adhere to the following Git workflow. This process is enforced automatically by GitHub branch protection rules.
+## Quick Reference
 
-### Branching Model
+**Workflow**: Claude (research → implement → review) → PR → `main` → Deploy
 
-The repository uses a **simplified two-branch workflow**:
+**Mode Switching** (within same Claude session):
+- Research: `"Research: [what to find]"`
+- Implement: `"Implement: [feature]"` (default)
+- Review: `"Review: [what to check]"`
+- Consult: `"Consult [Gemini/Codex]: [question]"` (rare)
 
-- **`main`**: Production branch that is automatically deployed to Vercel. It must always be stable and ready for deployment. **Direct pushes to `main` are strictly prohibited** and enforced by GitHub branch protection rules.
-- **`dev`**: The working branch where all development happens. All features, fixes, and changes are made here before being merged to `main` via Pull Request.
-
-### Core Development Workflow
-
-All development follows this streamlined sequence:
-
-1.  **Start on Dev**: Always work on the `dev` branch:
-
-    ```bash
-    git checkout dev
-    git pull origin dev
-    ```
-
-2.  **Develop**: Make your changes on the `dev` branch. Commit regularly with clear, conventional commit messages following the format:
-
-    ```bash
-    git add .
-    git commit -m "feat: add new feature"  # or fix:, chore:, docs:, etc.
-    ```
-
-3.  **Push to Dev**: Push your changes to the remote `dev` branch:
-
-    ```bash
-    git push origin dev
-    ```
-
-4.  **Test Locally**: Before creating a PR, run all essential checks:
-
-    ```bash
-    pnpm install
-    pnpm lint
-    pnpm build
-    # pnpm test (when applicable)
-    ```
-
-5.  **Create a Pull Request**: When ready to deploy to production, create a PR from `dev` → `main`:
-    - The PR description should clearly explain the changes
-    - Link related issues with `Closes #123`
-    - All automated checks will run (linting, build, tests, CodeQL)
-    - Copilot will automatically review the code
-    - At least 1 approval is required
-    - All conversations must be resolved
-
-6.  **Merge to Main**: Once approved and all checks pass:
-    - The PR can be merged (squash merge recommended)
-    - Vercel will automatically deploy to production
-    - The deployment must succeed before merge is complete
-
-### Enforcement & Automation
-
-This workflow is strictly enforced by GitHub branch protection rules:
-
-- **Pull Requests Required**: All code must enter `main` through a PR from `dev`
-- **No Direct Pushes**: Direct pushes to `main` are blocked for everyone
-- **Automated CI Checks**: GitHub Actions automatically runs `lint`, `build`, and `test` on every PR
-- **Required Approvals**: At least 1 approving review is required
-- **Code Owners Review**: Changes to files with designated owners require their approval
-- **Conversation Resolution**: All PR conversations must be resolved before merging
-- **Signed Commits**: All commits must have verified signatures
-- **Linear History**: Merge commits are prevented; use squash or rebase merging
-- **CodeQL Scanning**: Code must pass security analysis
-- **Copilot Review**: Automatically requests code review on new PRs and pushes
-- **Successful Deployment**: Vercel deployment must succeed before PR can merge
-- **No Force Pushes**: Force pushes are blocked on `main`
-- **No Deletions**: Branch deletion is restricted
-
-## GitHub Considerations
-
-All code changes must be integrated into `main` via Pull Requests from `dev`. Direct pushes to `main` are strictly prohibited and enforced by branch protection rules. Before creating a PR, ensure all local checks pass (`pnpm lint`, `pnpm build`). This workflow preserves version integrity, prevents integration errors, and ensures `main` is always production-ready.
-
-## Project Management Workflow
-
-To ensure clarity, prevent redundant work, and leverage distinct agent strengths, we use a file-based task management system coupled with specialized AI roles. This is the single source of truth for what needs to be done, what is in progress, and what is complete.
-
-### Task Board Integrity
-
-**The file-based task board is the single source of truth for the project's status.** The accuracy of this system is critical for our collaborative workflow. All agents are required to meticulously follow the process of moving task files between their respective stages (`todo`, `in-progress`, `done`, `in-review`, `reviewed`). Failure to do so results in an inaccurate project status, hindering our ability to plan and execute effectively.
-
-### Directory Structure
-
-All tasks are managed within the `.tasks/` directory, which is organized into stage-based subdirectories. **Big tasks/features deserve their own folder and should always be broken down into smaller, more manageable tasks. Features (task folders) should always be moved and treated as one unit when moving them between directories.**
-
-- **`.tasks/todo/`**: New tasks and features are always created here. Large features ('epics') are represented as subfolders (e.g., `.tasks/todo/feature-name/`), with individual work units as Markdown files inside (e.g., `A.md`).
-- **`.tasks/in-progress/`**: Tasks actively being worked on by an agent.
-- **`.tasks/done/`**: Tasks that have been implemented by Claude and are awaiting review.
-- **`.tasks/in-review/`**: Tasks currently under review, debugging, and refactoring by Codex.
-- **`.tasks/reviewed/`**: Tasks that have been successfully reviewed by Codex and are ready for final integration.
-
-### Agent Roles & Workflow
-
-1.  **Gemini (Planner & Researcher / UI/UX Guardian)**:
-    - **Role**: Conducts big-picture research, defines the project vision, and breaks it down into a cohesive, step-by-step plan. Audits project status and formulates strategic plans for UX improvements.
-    - **Workflow**:
-        1.  **Strategic Planning**: Every 2 hours, Gemini audits the state of affairs, considers the best plan forward, and formulates strategically sound plans to improve the app's UX.
-        2.  **Task Definition**: Creates feature folders and task files (`.md`) in the `.tasks/todo/` directory for new plans. While most implementation tasks are assigned to Claude, Gemini can assign tasks directly to Codex if the work is primarily refactoring, debugging, or cleanup, playing to each agent's strengths from the start.
-        3.  **Commit Plan**: Immediately after creating new tasks/features, Gemini commits all changes to the `dev` branch.
-
-2.  **Claude (Implementer & Builder)**:
-    - **Role**: Materializes the plans defined by Gemini, focusing on implementation.
-    - **Workflow**:
-        1.  **Claim Task**: Claims a task by immediately moving its corresponding file or folder from `.tasks/todo/` to `.tasks/in-progress/`.
-        2.  **Implement**: Implements the feature or fix as described in the task file.
-        3.  **Complete Task**: Upon completion, moves the task file/folder to `.tasks/done/` and commits all changes made.
-
-3.  **Codex (Reviewer & Debugger)**:
-    - **Role**: Audits the code produced by Claude, identifying bugs, refactoring opportunities, and ensuring quality.
-    - **Workflow**:
-        1.  **Claim Review**: Proactively monitors the `.tasks/done/` directory. Claims a task by moving its corresponding file or folder to `.tasks/in-review/`.
-        2.  **Review & Debug**: Performs debugging and refactoring.
-        3.  **Finalize Review**: Once the review is complete, moves the task file/folder to `.tasks/reviewed/`.
-        4.  **Documentation & PR**: Updates all necessary documentation, commits, pushes to the `dev` branch, and triggers a Pull Request from `dev` to `main`.
-
-4.  **Carlo (Integrator & Releaser)**:
-    - **Role**: Performs the final review and merges the completed feature into the `main` branch.
-    - **Workflow**: Once an entire feature's tasks are in the `.tasks/reviewed/` directory, Carlo will merge the feature branch into `main` for release.
-
-This structured process ensures a clear separation of duties, maintains code quality, and provides a transparent, real-time view of the project's status.
-
-## Agent Responsibilities & Best Practices
-
-### UI/UX Development Workflow using v0.dev
-
-To accelerate development and maintain a high standard of user experience, this project has adopted **v0.dev** as the primary tool for creating new UI components.
-
-1.  **Standard Practice**: For any task involving the creation of new UI, the assigned agent will first use v0.dev to generate the component code. The generated code, which is compatible with our Next.js, Tailwind CSS, and shadcn/ui stack, should then be integrated and adapted as needed.
-2.  **Proactive Agent Suggestion**: When a human user requests the development of a UI/UX component, all AI agents are required to first suggest using v0.dev for the task. This ensures the user is aware of our most efficient workflow before work begins.
-
-### Version Control Discipline
-
-**CRITICAL:** All agents must maintain strict version control discipline to ensure the repository remains synchronized and changes are never lost.
-
-#### 1. Commit & Push Frequently
-
-**Required behavior for all agents:**
-
-- **Commit and push changes immediately after completing each task**
-- **When working with `.tasks/` files**: Commit and push **after moving each task file/folder** between directories (todo → in-progress → done → in-review → reviewed)
-- **When editing code**: Commit and push **after completing each logical unit of work** (e.g., implementing a single function, fixing a single bug, adding a single feature)
-- **Minimum requirement**: Push **at least once per task/file edit** in the `.tasks/` folder
-
-#### 2. Commit Message Format
-
-Follow these patterns for task management:
-
+**Task Management** (AGENTIC WORKFLOW - 10x Speed):
 ```bash
-# When Gemini creates new tasks/features
-git add .tasks/
-git commit -m "feat(tasks): create new feature X plan"
-git push origin dev
-
-# When an agent claims a task/feature
-git mv .tasks/todo/feature-name .tasks/in-progress/feature-name
-git commit -m "chore(tasks): claim feature-name for implementation"
-git push origin dev
-
-# When implementing changes
-git add .
-git commit -m "feat: implement feature X as per task A.md"
-git push origin dev
-
-# When Claude completes a task/feature
-git mv .tasks/in-progress/feature-name .tasks/done/feature-name
-git commit -m "chore(tasks): complete feature-name implementation"
-git push origin dev
-
-# When Codex claims a task/feature for review
-git mv .tasks/done/feature-name .tasks/in-review/feature-name
-git commit -m "chore(tasks): claim feature-name for review"
-git push origin dev
-
-# When Codex completes a review
-git mv .tasks/in-review/feature-name .tasks/reviewed/feature-name
-git commit -m "chore(tasks): complete feature-name review"
-git push origin dev
+./scripts/task health         # Check WIP and bottlenecks (stale = >30hr)
+./scripts/task claim X        # Claim task (enforces WIP limit)
+./scripts/task complete X     # Mark task done (target: <30hr)
+./scripts/task list wip       # Show current work with hours tracking
+./scripts/task archive X      # Move to backlog if blocked
 ```
 
-#### 3. Documentation Updates
+**⚡ AGENTIC EXPECTATIONS**:
+- Tasks stale after **30 hours** (not 14 days)
+- Health checks run **every 4 hours** (not weekly)
+- Commit every **15-30 minutes** during work
+- PRs reviewed within **4 hours**
+- Daily velocity: **5-10 tasks/day** (not 3/week)
 
-**After every major change**, agents MUST update:
+**Task Governance**: See `.tasks/TASK_GOVERNANCE.md` (single source of truth for all agents)
 
-- **`README.md`**: If the change affects installation, setup, project structure, or user-facing features
-- **`AGENTS.md`**: If the change affects workflows, development processes, or introduces new patterns
-- **Agent-specific `.md` files**:
-  - **Claude**: Update `CLAUDE.md` if implementation patterns or tool usage changes
-  - **Gemini**: Update `GEMINI.md` if planning strategies or research methods evolve
-  - **Codex**: Update relevant documentation if review processes change
+**Branch Rules**:
+- `main`: Production (auto-deploy Vercel). Direct pushes BLOCKED.
+- `dev`: Working branch. All work here first.
 
-#### 4. What Constitutes a "Major Change"
+---
 
-A change is considered "major" if it involves:
+## Git Workflow
 
-- Adding or removing a service/package
-- Changing the build or deployment process
-- Modifying the branching strategy or git workflow
-- Adding new development commands or scripts
-- Updating dependencies that affect setup or configuration
-- Implementing a new feature that affects how developers work with the codebase
-- Changing authentication, payment, or core integrations
-- Modifying the project structure or file organization
+### Day-to-Day
+1. Work on `dev`: `git checkout dev && git pull`
+2. Commit frequently: `git commit -m "feat: description"` (conventional commits)
+3. Push after each logical unit: `git push origin dev`
+4. Before PR: `pnpm lint && pnpm build`
 
-#### 5. Documentation Update Workflow
+### PR to Production
+1. Create PR `dev` → `main` with clear description
+2. Link issues: `Closes #123`
+3. PR gates: 1 approval, checks pass, conversations resolved, Vercel deploy succeeds
+4. Merge (squash recommended) → auto-deploy
 
-After implementing a major change, follow this sequence:
+**Why frequent commits**: Prevents work loss, keeps team synchronized, enables easy rollbacks.
+
+---
+
+## Project Structure
+
+**Monorepo (pnpm workspace)**:
+- `src/`: Next.js 16 frontend
+- `services/core-api/`: Express.js backend (port 3001)
+- `services/ai-engine/`: Python FastAPI (port 3002, semantic job matching)
+- `shared/types/`: Shared TypeScript definitions
+- `docs/`: Technical documentation
+- `supabase/migrations/`: Database schema
+
+**Subdomains**:
+- `getori.app`: Marketing (landing, pricing, blog, legal)
+- `app.getori.app`: Authenticated app (dashboard, profile, applications)
+- Routing handled by middleware (`src/proxy.ts`)
+
+---
+
+## Essential Commands
 
 ```bash
-# Step 1: Commit code changes
-git add .
-git commit -m "feat: implement new feature"
-git push origin dev
+# Frontend
+pnpm dev                              # Start Next.js (3000)
+pnpm build && pnpm start             # Production
+pnpm lint                            # ESLint check
 
-# Step 2: Update relevant documentation
-git add README.md AGENTS.md CLAUDE.md  # or whichever files need updates
-git commit -m "docs: update guides to reflect new feature implementation"
-git push origin dev
+# Backend
+pnpm dev:api                         # Start core-api (3001)
+pnpm --filter @ori/core-api build    # Build TypeScript
+
+# AI Engine
+cd services/ai-engine
+pip install -r requirements.txt      # First setup
+python main.py                       # Start (3002)
+pytest tests/ -v                     # Tests
+
+# Database
+supabase db pull                      # Sync migrations locally
 ```
 
-#### 6. Why This Matters
+---
 
-- **Prevents Work Loss**: Frequent commits ensure no work is lost due to crashes, network issues, or conflicts
-- **Maintains Synchronization**: Regular pushes keep all agents (human and AI) working from the same source of truth
-- **Enables Collaboration**: Up-to-date documentation allows agents to understand changes made by others
-- **Provides Audit Trail**: Clear commit history makes it easy to track progress and debug issues
-- **Supports Rollbacks**: Small, focused commits make it easier to revert specific changes if needed
-- **Preserves Context**: Future agents can understand the reasoning behind changes through documentation
+## Task Governance (CRITICAL)
 
-**Remember**: The repository is a living system. Your commits and documentation updates are how you communicate with future agents (including yourself). Be thorough, be frequent, and be clear.
+**Every agent MUST follow `.tasks/TASK_GOVERNANCE.md`**
 
-## Project Structure & Module Organization
+| Phase | Owner | Action |
+|-------|-------|--------|
+| Creation | Gemini | Create in `.tasks/todo/` (large: folder+A.md/B.md/C.md, small: file) |
+| Claiming | Claude | Move to `.tasks/in-progress/` + commit |
+| Implementation | Claude | Code + frequent commits |
+| Completion | Claude | Move to `.tasks/done/` + commit |
+| Review | Codex | Move to `.tasks/in-review/` → `.tasks/reviewed/` |
+| Release | Carlo | Merge `.tasks/reviewed/` to `main` |
 
-Ori Platform is a pnpm workspace monorepo. Web code resides in `src/`, backend services in `services/`, and shared packages in `shared/`.
+**Commit discipline**:
+- After EVERY task move: `git commit && git push`
+- After EVERY logical code unit: `git commit && git push`
+- Minimum: Once per task in `.tasks/`
 
-- **`src/`**: The **Next.js 16** application that serves as the main user interface.
-- **`services/`**: Backend services.
-  - `core-api`: Node.js/Express backend API for user profiles, authentication, and business logic.
-  - `ai-engine`: Python/FastAPI service for all AI-powered features.
-- **`shared/`**: Shared packages (e.g., types, utils) used across the monorepo.
+**Quality gates** (before task completion):
+- Code passes linting/build
+- Tests cover new logic (80%+ core-api, 70%+ frontend)
+- Breaking changes have migration plans
+- Documentation updated (README, AGENTS.md, CLAUDE.md)
 
-**AI Engine (Nov 2025):** Fully implemented Python FastAPI service providing semantic job matching, skill gap analysis, and learning path generation. Uses sentence-transformers for local embedding generation (no API keys required). Multi-factor scoring algorithm weights semantic similarity (40%), skill match (30%), experience (15%), location (10%), and salary (5%). Core-api integrates via HTTP client with graceful fallback.
+---
 
-## Build, Test, and Development Commands
+## Agent Workflow (Claude-Primary)
 
-- `pnpm install` — install workspace dependencies (avoid mixing npm/yarn).
-- `pnpm dev` — launch the Next.js app at `http://localhost:3000`.
-- `pnpm dev:api` or `pnpm --filter @ori/core-api dev` — run the Express.js backend API at `http://localhost:3001`.
-- `pnpm build && pnpm start` — compile and serve the production build.
-- `pnpm lint` — enforce the Next.js core-web-vitals ESLint configuration.
-- `pnpm test` — run tests using Vitest; coverage output is written to `coverage/`.
+### Primary Agent: Claude (All Modes)
+Claude now handles the complete development cycle in different modes:
 
-**AI Engine Commands:**
+#### 🔍 Research Mode (replaces Gemini)
+- **Trigger**: "Research: [what to find]"
+- **Do**: Find code, analyze patterns, understand architecture
+- **Tools**: Task with Explore, Grep, Glob, Read
 
-- `cd services/ai-engine && pip install -r requirements.txt` — first-time setup (venv recommended).
-- `python main.py` — start AI engine at `http://localhost:3002` (downloads model on first run).
-- `pytest tests/ -v` — run AI engine tests with verbose output.
+#### 💻 Implementation Mode (default)
+- **Trigger**: "Implement: [what to build]" or default
+- **Do**: Claim tasks → code → test → commit → complete
+- **Rules**: Commit every 15-30 min, use v0.dev for UI, no mock data
 
-## Coding Style & Naming Conventions
+#### ✅ Review Mode (replaces Codex)
+- **Trigger**: "Review: [what to check]"
+- **Do**: Run tests, trigger specialized agents, validate quality
+- **Tools**: Bash (tests/lint), specialized agents
 
-TypeScript strict mode is enabled; favor explicit types and composable patterns. Use two-space indentation, single quotes, trailing semicolons, PascalCase for components, camelCase for hooks and utilities, and SCREAMING_SNAKE_CASE for environment variables. Tailwind classes should follow a logical order: layout → color → state. Run `pnpm lint --fix` before committing.
+### External Consultants (On-Demand Only)
 
-## Testing Guidelines
+#### Gemini (Creative Consultant)
+- **When**: Need creative ideas, UX design, architecture decisions
+- **How**: "Consult Gemini about: [specific question]"
+- **Not for**: Daily coding tasks
 
-Co-locate UI tests as `*.test.tsx` or `*.spec.ts` files (React Testing Library + Vitest/Jest). Cover `services/core-api` endpoints with supertest integration tests. Python agents include pytest suites in `services/ai-engine/tests` and mock Supabase, Stripe, or HTTP clients. Before each pull request, run `pnpm lint` and the relevant `pnpm turbo test --filter ...`, and refresh Supabase migrations whenever the schema changes.
+#### Codex (Technical Consultant)
+- **When**: Complex algorithms, security audits, performance optimization
+- **How**: "Get Codex opinion on: [code or approach]"
+- **Not for**: Standard code reviews
 
-## Commit & Pull Request Guidelines
+#### Carlo (Decision Maker)
+- **Do**: Final review → merge to `main`
+- **How**: When all feature tasks in `.tasks/reviewed/`, merge to `main` → Vercel deploys
 
-Follow the Conventional Commits format (`feat:`, `fix:`, `chore:`). Keep scopes concise (e.g., `feat(core-api): add billing limits`). In pull requests, describe the change, link related issues with `Closes #123`, list any new environment variables or migrations, and attach screenshots or Looms for UI updates. Verify local linting and tests, request reviewers for each affected surface (web, API, AI engine), and document rollout or follow-up actions.
+### Simplified Workflow Example
+```bash
+# Single Claude session, no handoffs:
+./scripts/task claim feature-x
+"Research: Find similar authentication implementations"
+"Implement: Add OAuth provider"
+"Review: Check security and test coverage"
+./scripts/task complete feature-x
+gh pr create
+```
 
-## Security & Configuration Tips
+**Benefits**: 3x faster, no context loss, consistent style, single thread
 
-Store secrets in untracked `.env.local` (web) or service-specific `.env` files, seeded from vaults or `.env.example`. Never commit credentials. Stripe keys, Supabase URLs, and AI model tokens are required for `pnpm dev`. Database changes flow through `supabase/migrations` and `supabase/config.toml`; document any new credentials or setup steps in your PR to ensure reproducibility.
+---
 
-## Keeping This Guide Alive
+## Architecture Quick Facts
 
-Treat this document as the shared playbook. Whenever you introduce a major feature, infrastructure update, or new workflow, update the relevant sections here and reference the pull request so every agent—human or AI—remains aligned and informed. Synchronization across guides is essential for coherent, adaptive collaboration.
+**Authentication**: Supabase Auth → React Context (AuthProvider)
 
-### Recent Completions
+**Data Flow**: Frontend (React Query) → core-api (`/api/v1/*`) → Database (Supabase PostgreSQL)
 
-- **CI Consolidation (Jan 2025):** Merged `verify.yml` and `auto-pr-review.yml` into a single, efficient `pull-request-ci.yml` to accelerate PR checks.
-- **Branch Rename (Jan 2025):** Simplified working branch from `development` to `dev` for cleaner workflow commands
-- **Lint & Build Fixes (Jan 2025):** Resolved all TypeScript strict mode violations and React purity issues in dashboard and test files
-- **CI/CD Updates (Jan 2025):** Updated GitHub workflows to use pnpm v10 for lockfile compatibility
-- **AI Engine (Nov 2025):** Fully implemented Python FastAPI service with semantic matching, skill gap analysis, learning paths, and core-api integration
-- **Branch Simplification (Nov 2025):** Migrated from multi-agent branch structure to streamlined `main`/`dev` workflow with comprehensive branch protection
-- **Automated Reviews:** Integrated Copilot code review for all PRs with automatic push reviews
+**AI Integration**: core-api calls ai-engine (HTTP) → graceful fallback if unavailable
 
-### Immediate Next Steps
+**Payments**: Stripe (test keys in `.env`) → core-api webhook handler (MUST be before `express.json()`)
 
-- Ensure `AGENTS.md` and `CLAUDE.md` stay synchronized with workflow changes
-- Run `pnpm install && pnpm lint` before starting any new work
-- Set up CodeQL scanning and CODEOWNERS file for enhanced security
+**Testing**:
+- Frontend: React Testing Library + Vitest (mock API clients)
+- Backend: Jest + supertest (mock Supabase, Stripe)
+- AI Engine: pytest (mock embeddings)
 
-### Reference Documentation
+---
 
-- **AI Engine Quick Start:** See `AI_ENGINE_QUICKSTART.md` for setup instructions
-- **AI Engine Architecture:** See `services/ai-engine/README.md` for detailed technical documentation
-- **Core-API Integration:** See `services/core-api/src/lib/ai-client.ts` for integration patterns
+## Code Standards
+
+- **TypeScript**: Strict mode enabled, no implicit `any`
+- **Components**: PascalCase, functional + hooks
+- **Hooks/Utils**: camelCase
+- **Env Vars**: SCREAMING_SNAKE_CASE
+- **Tailwind**: layout → appearance → state order
+- **Indentation**: 2 spaces
+- **Quotes**: Single
+- **Tests**: Colocate near source (`*.test.tsx`, `*.spec.ts`)
+
+**Before committing**: `pnpm lint --fix`
+
+---
+
+## When to Update Documentation
+
+Update these after major changes:
+- `README.md`: Setup, structure, user-facing features
+- `AGENTS.md`: Workflows, processes, branching
+- `CLAUDE.md`: Implementation patterns, tool usage
+- `GEMINI.md`: Planning strategies (if changed)
+
+---
+
+## Key Technical Constraints
+
+1. Always use `pnpm` (not npm/yarn)
+2. Core-api uses `.js` extensions (ES module compat)
+3. Stripe webhook MUST be before `express.json()` middleware
+4. Supabase client: singleton via `getSupabaseClient()`
+5. `@/` path alias: frontend only
+6. AI Engine: ~80MB model download on first run
+7. Service ports: frontend 3000, core-api 3001, ai-engine 3002
+
+---
+
+## Specialized Quality Agents
+
+**Auto-triggered on Pull Requests** to ensure code quality and safety:
+
+| Agent | Trigger Condition | Purpose | Location |
+|-------|------------------|---------|----------|
+| `schema-contract-sentinel` | Changes to `supabase/migrations/`, `shared/types/`, API routes | Detect breaking changes, migration safety | `.claude/agents/schema-contract-sentinel.md` |
+| `test-architect` | New features, components, or routes | Ensure test coverage, identify gaps | `.claude/agents/test-architect.md` |
+| `flow-orchestrator` | Multi-service changes (2+ services) | Validate integrations, API contracts | `.claude/agents/flow-orchestrator.md` |
+| `code-guardian` | Every PR | Code quality, security, performance | `.claude/agents/code-guardian.md` |
+| `docs-dx-curator` | Documentation changes (`*.md` files) | Documentation quality, accuracy | `.claude/agents/docs-dx-curator.md` |
+
+### How to Use Specialized Agents
+
+**Automatic (Preferred)**:
+1. Create/update a PR
+2. Relevant agents run automatically via GitHub Actions
+3. Agents post review comments on the PR
+4. Address feedback and push updates
+5. All checks pass → Ready to merge
+
+**Manual Invocation** (during development):
+```
+"Please run the schema-contract-sentinel agent to review these migration changes"
+"Run test-architect to check test coverage for this new feature"
+```
+
+### Agent Workflow Integration
+
+```
+Push Code → GitHub Actions → Agent Reviews → PR Comments → Fix Issues → Merge
+```
+
+**Note**: These agents complement the main workflow agents (Gemini, Claude, Codex, Carlo).
+
+---
+
+## Documentation Index
+
+**Core Guides**:
+- `README.md`: Project overview & setup
+- `AGENTS.md` (this file): Workflow & roles
+- `CLAUDE.md`: Claude's implementation guide
+- `GEMINI.md`: Gemini's planning guide
+- `.tasks/TASK_GOVERNANCE.md`: Task management (CRITICAL)
+- `CLAUDE_QUICKREF.md`: Quick commands for Claude (no reading)
+- `GEMINI_QUICKREF.md`: Quick commands for Gemini (no reading)
+
+**Technical Docs**:
+- `docs/DATABASE_SCHEMA.md`: Schema & RLS policies
+- `docs/API_ENDPOINTS.md`: Endpoint reference
+- `docs/SUBDOMAIN_MIGRATION.md`: Subdomain routing setup
+- `services/ai-engine/README.md`: AI Engine architecture
+
+**Keep these synchronized**:
+- AGENTS.md ↔ CLAUDE.md ↔ GEMINI.md (when workflows change)
+- AGENTS.md ↔ `.tasks/TASK_GOVERNANCE.md` (when task rules change)
+
+---
+
+## Deployment Checklist
+
+- [ ] All checks pass: lint, build, tests
+- [ ] PR approved by reviewer
+- [ ] Documentation updated
+- [ ] `.tasks/reviewed/` contains all feature tasks
+- [ ] Merge to `main` (squash recommended)
+- [ ] Vercel deploy succeeds
+- [ ] Monitor production for 30 min post-deploy

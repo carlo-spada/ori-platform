@@ -75,9 +75,22 @@
       "WebSearch",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:dev.to)",
-      "Bash(git mv:*)"
+      "Bash(git mv:*)",
+      "Bash(npx jest:*)",
+      "Bash(git -C /Users/carlo/Desktop/Projects/ori-platform log --oneline --all -20)",
+      "Bash(git -C /Users/carlo/Desktop/Projects/ori-platform log --all --grep=\"schema-contract-sentinel\\|test-architect\\|flow-orchestrator\\|code-guardian\\|docs-dx-curator\" --oneline)",
+      "Bash(./scripts/task:*)",
+      "Bash(npm view:*)",
+      "mcp__MCP_DOCKER__fetch",
+      "Bash(docker mcp server:*)",
+      "Bash(docker mcp gateway --help:*)"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "MCP_DOCKER"
+  ],
+  "outputStyle": "default"
 }

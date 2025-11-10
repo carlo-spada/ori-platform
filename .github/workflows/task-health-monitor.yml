@@ -1,0 +1,233 @@
+name: Task Health Monitor
+
+on:
+  schedule:
+    # AGENTIC WORKFLOW: Run every 4 hours for rapid development cycles
+    - cron: '0 */4 * * *'  # Every 4 hours
+  workflow_dispatch:  # Allow manual trigger
+  push:
+    paths:
+      - '.tasks/**'  # Also run when tasks change
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+
+    permissions:
+      issues: write
+      contents: read
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Analyze Task Distribution
+        id: health
+        run: |
+          # Configuration for AGENTIC WORKFLOWS (10x faster)
+          WIP_LIMIT=5
+          DONE_THRESHOLD=20      # Increased for rapid completion
+          STALE_THRESHOLD=2      # Lower threshold for faster cycles
+          STALE_HOURS=30         # 30 hours instead of 14 days
+          STALE_DAYS=2           # Using 2 days as proxy for 30+ hours in find command
+
+          # Count tasks in each state
+          TODO_COUNT=$(find .tasks/todo -name "*.md" 2>/dev/null | wc -l || echo 0)
+          WIP_COUNT=$(find .tasks/in-progress -name "*.md" 2>/dev/null | wc -l || echo 0)
+          DONE_COUNT=$(find .tasks/done -name "*.md" 2>/dev/null | wc -l || echo 0)
+          REVIEW_COUNT=$(find .tasks/in-review -name "*.md" 2>/dev/null | wc -l || echo 0)
+          REVIEWED_COUNT=$(find .tasks/reviewed -name "*.md" 2>/dev/null | wc -l || echo 0)
+          BACKLOG_COUNT=$(find .tasks/backlog -name "*.md" 2>/dev/null | wc -l || echo 0)
+
+          # Find stale tasks (using 2 days as proxy for 30+ hours)
+          STALE_COUNT=$(find .tasks/in-progress -name "*.md" -mtime +$STALE_DAYS 2>/dev/null | wc -l || echo 0)
+
+          # Calculate velocity (tasks completed in last 24 hours for agentic workflows)
+          VELOCITY_DAILY=$(find .tasks/done -name "*.md" -mtime -1 2>/dev/null | wc -l || echo 0)
+          VELOCITY_WEEKLY=$(find .tasks/done -name "*.md" -mtime -7 2>/dev/null | wc -l || echo 0)
+
+          # Set health status
+          HEALTH_STATUS="healthy"
+          ALERT_LEVEL="info"
+
+          # Create summary report
+          echo "# 📊 Task Health Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Report Date**: $(date '+%Y-%m-%d %H:%M UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Metrics table
+          echo "## Metrics Overview" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Count | Status | Target |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|------:|:-------|:-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **TODO** | $TODO_COUNT | ✅ | - |" >> $GITHUB_STEP_SUMMARY
+
+          # Check WIP limit
+          if [ $WIP_COUNT -gt $WIP_LIMIT ]; then
+            echo "| **IN PROGRESS** | **$WIP_COUNT** | 🔴 **OVER LIMIT** | ≤ $WIP_LIMIT |" >> $GITHUB_STEP_SUMMARY
+            HEALTH_STATUS="unhealthy"
+            ALERT_LEVEL="error"
+            echo "::error::WIP limit exceeded: $WIP_COUNT tasks (limit: $WIP_LIMIT)"
+          elif [ $WIP_COUNT -eq 0 ]; then
+            echo "| **IN PROGRESS** | $WIP_COUNT | ⚠️ No active work | 2-5 |" >> $GITHUB_STEP_SUMMARY
+            echo "::warning::No tasks in progress"
+          else
+            echo "| **IN PROGRESS** | $WIP_COUNT | ✅ | 2-5 |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Check review backlog
+          if [ $DONE_COUNT -gt $DONE_THRESHOLD ]; then
+            echo "| **DONE** | **$DONE_COUNT** | ⚠️ **BACKLOG** | < $DONE_THRESHOLD |" >> $GITHUB_STEP_SUMMARY
+            echo "::warning::Review backlog: $DONE_COUNT tasks awaiting review"
+            if [ "$HEALTH_STATUS" = "healthy" ]; then
+              HEALTH_STATUS="warning"
+              ALERT_LEVEL="warning"
+            fi
+          else
+            echo "| **DONE** | $DONE_COUNT | ✅ | < $DONE_THRESHOLD |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "| **IN REVIEW** | $REVIEW_COUNT | ✅ | - |" >> $GITHUB_STEP_SUMMARY
+          echo "| **REVIEWED** | $REVIEWED_COUNT | ✅ | - |" >> $GITHUB_STEP_SUMMARY
+          echo "| **BACKLOG** | $BACKLOG_COUNT | 📦 | - |" >> $GITHUB_STEP_SUMMARY
+
+          # Check stale tasks
+          if [ $STALE_COUNT -gt $STALE_THRESHOLD ]; then
+            echo "| **STALE** (>$STALE_HOURS hours) | **$STALE_COUNT** | 🔴 **ACTION NEEDED** | ≤ $STALE_THRESHOLD |" >> $GITHUB_STEP_SUMMARY
+            echo "::error::Stale tasks detected: $STALE_COUNT tasks over $STALE_HOURS hours old"
+            HEALTH_STATUS="unhealthy"
+            ALERT_LEVEL="error"
+          elif [ $STALE_COUNT -gt 0 ]; then
+            echo "| **STALE** (>$STALE_HOURS hours) | $STALE_COUNT | ⚠️ | 0 |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| **STALE** | 0 | ✅ | 0 |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Show velocity (agentic metrics)
+          echo "| **VELOCITY** (24-hour) | $VELOCITY_DAILY tasks/day | 🚀 | - |" >> $GITHUB_STEP_SUMMARY
+          echo "| **VELOCITY** (7-day) | $VELOCITY_WEEKLY tasks/week | 📈 | - |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # List stale tasks if any
+          if [ $STALE_COUNT -gt 0 ]; then
+            echo "## ⚠️ Stale Tasks (>$STALE_HOURS hours in progress)" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            find .tasks/in-progress -name "*.md" -mtime +$STALE_DAYS -exec basename {} .md \; 2>/dev/null | while read task; do
+              echo "- \`$task\`" >> $GITHUB_STEP_SUMMARY
+            done
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # List current WIP if over limit
+          if [ $WIP_COUNT -gt $WIP_LIMIT ]; then
+            echo "## 🚀 Current Work in Progress" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            find .tasks/in-progress -name "*.md" -exec basename {} .md \; 2>/dev/null | while read task; do
+              echo "- \`$task\`" >> $GITHUB_STEP_SUMMARY
+            done
+            echo "" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Recommendations
+          echo "## 💡 Recommendations" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ $WIP_COUNT -gt $WIP_LIMIT ]; then
+            echo "- 🔴 **Reduce WIP**: Complete or archive $(($WIP_COUNT - $WIP_LIMIT)) task(s) to meet limit" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ $DONE_COUNT -gt $DONE_THRESHOLD ]; then
+            echo "- ⚠️ **Review backlog**: Process $DONE_COUNT completed tasks awaiting review" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ $STALE_COUNT -gt 0 ]; then
+            echo "- 🕒 **Address stale tasks**: Review and update $STALE_COUNT stale task(s)" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ $WIP_COUNT -eq 0 ]; then
+            echo "- 💤 **No active work**: Consider claiming a task from TODO" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ "$HEALTH_STATUS" = "healthy" ]; then
+            echo "- ✅ **Task system is healthy!** Keep up the good work!" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "_Use \`./scripts/task health\` locally for real-time status_" >> $GITHUB_STEP_SUMMARY
+
+          # Set outputs for next steps
+          echo "health_status=$HEALTH_STATUS" >> $GITHUB_OUTPUT
+          echo "alert_level=$ALERT_LEVEL" >> $GITHUB_OUTPUT
+          echo "wip_count=$WIP_COUNT" >> $GITHUB_OUTPUT
+          echo "done_count=$DONE_COUNT" >> $GITHUB_OUTPUT
+          echo "stale_count=$STALE_COUNT" >> $GITHUB_OUTPUT
+
+      - name: Create Issue if Unhealthy
+        if: steps.health.outputs.health_status == 'unhealthy'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const today = new Date().toISOString().split('T')[0];
+            const title = `🔴 Task Health Alert - ${today}`;
+
+            // Check if issue already exists for today
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'task-health',
+              state: 'open'
+            });
+
+            const existingIssue = issues.data.find(issue =>
+              issue.title.includes(today)
+            );
+
+            if (!existingIssue) {
+              const wipCount = '${{ steps.health.outputs.wip_count }}';
+              const doneCount = '${{ steps.health.outputs.done_count }}';
+              const staleCount = '${{ steps.health.outputs.stale_count }}';
+
+              let body = '## 🚨 Task System Health Issues Detected\n\n';
+              body += `**Date**: ${today}\n\n`;
+              body += '### Problems:\n';
+
+              if (parseInt(wipCount) > 5) {
+                body += `- **WIP Limit Exceeded**: ${wipCount} tasks in progress (limit: 5)\n`;
+              }
+
+              if (parseInt(staleCount) > 3) {
+                body += `- **Stale Tasks**: ${staleCount} tasks over 14 days old\n`;
+              }
+
+              body += '\n### Actions Required:\n';
+              body += '1. Run `./scripts/task health` locally\n';
+              body += '2. Complete or archive excess tasks\n';
+              body += '3. Review stale tasks\n';
+              body += '\n---\n';
+              body += `[View Full Report](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${{ github.run_id }})`;
+
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: body,
+                labels: ['task-health', 'priority-high']
+              });
+            }
+
+      - name: Post Slack/Discord Notification (Optional)
+        if: steps.health.outputs.alert_level == 'error'
+        run: |
+          echo "Would post to Slack/Discord webhook here if configured"
+          # Example:
+          # curl -X POST $SLACK_WEBHOOK_URL \
+          #   -H 'Content-Type: application/json' \
+          #   -d '{"text":"🔴 Task Health Alert: WIP limit exceeded or stale tasks detected"}'
+
+      - name: Set Workflow Status
+        if: steps.health.outputs.health_status == 'unhealthy'
+        run: |
+          echo "Task system is unhealthy. Please review the summary above."
+          exit 1
