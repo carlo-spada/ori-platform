@@ -85,7 +85,7 @@ const NotFound = () => {
 
           {/* Tertiary: Let me tell you */}
           <Button asChild variant="ghost" className="flex items-center gap-2">
-            <Link href="/about">
+            <Link href="/contact">
               <MessageCircle className="h-4 w-4" />
               <div className="flex flex-col items-start">
                 <span className="font-medium">

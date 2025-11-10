@@ -22,6 +22,7 @@ export function SharedHeader() {
     { slug: 'features', href: '/features', label: t('nav.items.features') },
     { slug: 'pricing', href: '/pricing', label: t('nav.items.pricing') },
     { slug: 'about', href: '/about', label: t('nav.items.about') },
+    { slug: 'journey', href: '/journey', label: t('nav.items.journey') },
     { slug: 'blog', href: '/blog', label: t('nav.items.blog') },
   ]
 
