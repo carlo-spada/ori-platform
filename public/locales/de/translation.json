@@ -1,9 +1,9 @@
 {
   "nav": {
     "items": {
-      "features": "Funktionen",
-      "pricing": "Preise",
-      "about": "Über uns",
+      "features": "Eigenschaften",
+      "pricing": "Preisgestaltung",
+      "about": "Über",
       "blog": "Blog"
     }
   },
@@ -11,53 +11,53 @@
     "columns": {
       "product": {
         "title": "Produkt",
-        "features": "Funktionen",
-        "pricing": "Preise",
-        "about": "Über uns",
+        "features": "Eigenschaften",
+        "pricing": "Preisgestaltung",
+        "about": "Über",
         "blog": "Blog"
       },
       "legal": {
         "title": "Rechtliches",
-        "terms": "Nutzungsbedingungen",
-        "privacy": "Datenschutzerklärung",
+        "terms": "Bedingungen der Dienstleistung",
+        "privacy": "Datenschutzbestimmungen",
         "cookies": "Cookie-Richtlinie"
       }
     }
   },
   "social": {
-    "twitter": "Folgen Sie Ori auf X (ehemals Twitter)",
-    "linkedin": "Vernetzen Sie sich mit Ori auf LinkedIn"
+    "twitter": "Folgen Sie Ori auf X (früher Twitter)",
+    "linkedin": "Verbinden Sie sich mit Ori auf LinkedIn"
   },
   "brand": {
     "mission": "Die Zukunft der Arbeit ist menschlich.",
     "name": "Ori"
   },
   "cta": {
-    "login": "Anmelden",
-    "signup": "Registrieren",
+    "login": "Einloggen",
+    "signup": "Registrieren Sie sich",
     "skipToContent": "Zum Inhalt springen",
     "openMenu": "Menü öffnen",
     "closeMenu": "Menü schließen"
   },
   "notFound": {
     "title": "404: Seite nicht gefunden | Ori",
-    "description": "Die Seite, die Sie suchen, existiert nicht oder wurde möglicherweise verschoben.",
+    "description": "Die von Ihnen gesuchte Seite existiert nicht oder wurde möglicherweise verschoben.",
     "heading": "Seite nicht gefunden",
     "body": "Die Seite, die Sie suchen, wurde möglicherweise verschoben, umbenannt oder existiert nicht mehr.",
-    "primaryCta": "Zur Startseite"
+    "primaryCta": "Zurück nach Hause"
   },
   "landing": {
     "hero": {
       "eyebrow": "Ihre Karriere, kontinuierlich ausgerichtet",
-      "headline": "Entfalten Sie Ihr Potenzial. Bringen Sie Arbeit und Ihr wahres Ich in Einklang.",
-      "subheadline": "Ori ist Ihr lebenslanger KI-Begleiter zur Entdeckung, Verfolgung und Weiterentwicklung in Rollen, die zu Ihren Fähigkeiten, Werten und Ambitionen passen.",
-      "primaryCta": "Kostenlos registrieren",
+      "headline": "Erschließen Sie Ihr Potenzial. Richten Sie Ihre Arbeit an dem aus, was Sie sind.",
+      "subheadline": "Ori ist Ihr lebenslanger KI-Begleiter, der Sie dabei unterstützt, eine Rolle zu finden, die Ihren Fähigkeiten, Werten und Ambitionen entspricht, und sich darin weiterzuentwickeln.",
+      "primaryCta": "Kostenlos anmelden",
       "secondaryCta": "Mehr erfahren",
       "reassurance": "Kostenloser Plan. Kein Spam. Jederzeit kündbar."
     },
     "whyOri": {
       "title": "Warum Ori?",
-      "subtitle": "Ori ist als Ihr lebenslanger Karrierebegleiter konzipiert, nicht nur als weitere Jobbörse."
+      "subtitle": "Ori soll Ihr lebenslanger Karrierebegleiter sein, nicht nur eine weitere Jobbörse."
     },
     "values": [
       {
@@ -108,12 +108,12 @@
         "role": "Softwareentwickler"
       }
     ],
-    "testimonialsTitle": "Was Leute sagen",
-    "testimonialsSubtitle": "Echte Geschichten von Menschen, die Arbeit gefunden haben, die passt.",
-    "howItWorksTitle": "So Funktioniert Es",
-    "howItWorksSubtitle": "Drei einfache Schritte, um Arbeit zu entdecken, die zu Ihren Zielen passt.",
-    "manifesto": "Weil Erfüllung skalierbar sein sollte.",
-    "faqTitle": "Häufig Gestellte Fragen",
+    "testimonialsTitle": "Was die Leute sagen",
+    "testimonialsSubtitle": "Echte Geschichten von Menschen, die eine Arbeit gefunden haben, die zu ihnen passt.",
+    "howItWorksTitle": "Wie es funktioniert",
+    "howItWorksSubtitle": "Drei einfache Schritte, um eine Arbeit zu finden, die Ihren Zielen entspricht.",
+    "manifesto": "Denn Fulfillment sollte skalierbar sein.",
+    "faqTitle": "Häufig gestellte Fragen",
     "faqSubtitle": "Alles, was Sie über Ori und seine Funktionsweise wissen müssen.",
     "faqs": [
       {
@@ -141,20 +141,20 @@
         "a": "Ori ist ein lebenslanger Begleiter, keine Suchmaschine. Es lernt mit Ihnen und passt sich Ihren sich entwickelnden Zielen an."
       }
     ],
-    "strapline": "Weil Erfüllung skalierbar sein sollte.",
+    "strapline": "Denn Fulfillment sollte skalierbar sein.",
     "bottomCta": {
-      "headline": "Bereit, Ihre Karriere auszurichten?",
-      "description": "Schließen Sie sich Tausenden an, die Arbeit entdecken, die passt.",
-      "primaryCta": "Kostenlos starten",
-      "secondaryCta": "Funktionen erkunden"
+      "headline": "Sind Sie bereit, Ihre Karriere neu auszurichten?",
+      "description": "Schließen Sie sich Tausenden von Menschen an, die Arbeit finden, die zu Ihnen passt.",
+      "primaryCta": "Startet kostenlos",
+      "secondaryCta": "Merkmale erforschen"
     }
   },
   "featuresPage": {
     "header": {
       "eyebrow": "FÄHIGKEITEN",
-      "title": "Ein Intelligenter Copilot für Ihre Karriere",
-      "subheadline": "Entdecken Sie, wie die personalisierten Funktionen von Ori zusammenarbeiten, um ein erfüllteres Berufsleben aufzubauen.",
-      "reassurance": "Ruhige, präzise Führung – zu Ihren Bedingungen"
+      "title": "Ein intelligenter Copilot für Ihre Karriere",
+      "subheadline": "Entdecken Sie, wie die personalisierten Funktionen von Ori zusammenarbeiten, um ein erfüllteres Berufsleben zu ermöglichen.",
+      "reassurance": "Ruhige, präzise Führung - zu Ihren Bedingungen"
     },
     "toc": [
       {
@@ -266,28 +266,28 @@
       }
     ],
     "privacy": {
-      "title": "Privat von Grund auf",
+      "title": "Privat durch Design",
       "bullets": [
         "Sie kontrollieren Ihre Daten – jederzeit exportieren oder löschen",
         "Autonomie ist optional und erfordert Erlaubnis",
         "Transparente Begründung hinter Empfehlungen"
       ],
-      "linkText": "Lesen Sie unsere Datenschutzerklärung",
-      "linkHref": "/legal/privacy-policy"
+      "linkText": "Lesen Sie unsere Datenschutzrichtlinie",
+      "linkHref": "/Rechtsvorschriften/Datenschutzrichtlinien"
     },
     "bottomCta": {
-      "title": "Machen Sie den nächsten Schritt in Ihrer Karriere",
-      "description": "Beginnen Sie mit unserem kostenlosen Plan und upgraden Sie, während Sie wachsen.",
-      "primaryCta": "Kostenlos registrieren",
-      "primaryHref": "/pricing",
-      "secondaryCta": "Preise anzeigen",
-      "secondaryHref": "/pricing"
+      "title": "Machen Sie den nächsten Schritt in Ihrer beruflichen Laufbahn",
+      "description": "Beginnen Sie mit unserem kostenlosen Plan und erweitern Sie ihn, wenn Sie wachsen.",
+      "primaryCta": "Kostenlos anmelden",
+      "primaryHref": "/Preise",
+      "secondaryCta": "Preise ansehen",
+      "secondaryHref": "/Preise"
     }
   },
   "pricingPage": {
     "header": {
-      "title": "Wählen Sie Ihren Weg zu einer Erfüllenden Karriere",
-      "subheadline": "Einfache, transparente Preise. Beginnen Sie kostenlos und upgraden Sie jederzeit."
+      "title": "Wählen Sie Ihren Weg zu einer erfüllenden Karriere",
+      "subheadline": "Einfache, transparente Preisgestaltung. Kostenlos starten und jederzeit upgraden."
     },
     "billingToggle": {
       "monthly": "Monatlich",
@@ -393,6 +393,10 @@
         "premium": true
       }
     ],
+    "faqSection": {
+      "title": "Häufig gestellte Fragen",
+      "subtitle": "Alles, was Sie über Ori-Preise wissen müssen."
+    },
     "faqs": [
       {
         "q": "Kann ich meinen Plan später ändern?",
@@ -421,12 +425,12 @@
     ]
   },
   "aboutPage": {
-    "title": "Über Ori | Unsere Mission",
-    "description": "Erfahren Sie mehr über die Mission von Ori, erfüllende Arbeit für alle zugänglich zu machen. Entdecken Sie die Geschichte, Vision und Werte hinter unserem KI-gestützten Karrierebegleiter.",
+    "title": "Über Ori | Unser Auftrag",
+    "description": "Erfahren Sie mehr über die Mission von Ori, erfüllende Arbeit für jeden zugänglich zu machen. Entdecken Sie die Geschichte, die Vision und die Werte hinter unserem KI-gesteuerten Karrierebegleiter.",
     "header": {
       "eyebrow": "Unsere Geschichte",
-      "title": "Die Zukunft der Arbeit ist Menschlich.",
-      "subheadline": "Wir glauben, dass Erfüllung kein Privileg sein sollte. Wir bauen die Technologie, um sie für alle skalierbar zu machen."
+      "title": "Die Zukunft der Arbeit ist menschlich.",
+      "subheadline": "Wir glauben, dass Erfüllung kein Privileg sein sollte. Wir entwickeln die Technologie, um sie für alle skalierbar zu machen."
     },
     "problem": {
       "title": "Warum wir Ori gegründet haben",
@@ -437,7 +441,7 @@
       ]
     },
     "vision": {
-      "title": "Ein Lebenslanger Begleiter für Ihre Reise",
+      "title": "Ein lebenslanger Begleiter für Ihre Reise",
       "paragraphs": [
         "Ori ist mehr als ein Job-Matching-Tool. Es ist ein empathischer Mentor, der zuhört, lernt und sich kümmert. Es versteht Ihre Leidenschaften, Ihre Zweifel, Ihre Ambitionen. Es matcht Sie nicht nur mit Angeboten – es hilft Ihnen, Wege zu entdecken, die Sie sich vielleicht nicht vorgestellt haben.",
         "Ori funktioniert so: Sie sagen uns, was Ihnen wichtig ist, und wir achten darauf. Während Sie sich mit Gelegenheiten auseinandersetzen, neue Fähigkeiten erlernen und wachsen, lernt Ori auch. Es passt Ihren Weg sanft mit Ihnen an, sagt voraus, was Ihnen Erfüllung bringen wird, und hilft Ihnen, dorthin zu gelangen.",
@@ -466,24 +470,47 @@
       ]
     },
     "cta": {
-      "title": "Gestalten Sie mit uns die Zukunft der Arbeit",
-      "body": "Ori ist hier, um Ihnen zu helfen, Arbeit zu finden, die zu Ihrem Leben passt, nicht umgekehrt. Beginnen Sie Ihre Reise heute.",
-      "primaryLabel": "Ori erkunden",
+      "title": "Gestalten Sie mit uns die Zukunft der Arbeit neu",
+      "body": "Ori will Ihnen helfen, eine Arbeit zu finden, die zu Ihrem Leben passt, und nicht umgekehrt. Beginnen Sie Ihre Reise noch heute.",
+      "primaryLabel": "Ori erforschen",
       "secondaryLabel": "Erfahren Sie mehr über unsere Funktionen"
     }
   },
   "blogPage": {
     "title": "Ori Insights | Artikel über KI und die Zukunft der Arbeit",
-    "description": "Erkunden Sie Artikel über Karriereentwicklung, künstliche Intelligenz, empathische Technologie und die Zukunft der Arbeit vom Ori-Team.",
+    "description": "Entdecken Sie die Artikel des Ori-Teams zu den Themen Karriereentwicklung, künstliche Intelligenz, empathische Technologie und die Zukunft der Arbeit.",
     "index": {
       "header": {
-        "title": "Ori Insights",
-        "subheadline": "Gedanken über die Zukunft der Arbeit, persönliches Wachstum und empathische Technologie."
+        "title": "Ori Einblicke",
+        "subheadline": "Gedanken über die Zukunft der Arbeit, persönliches Wachstum und einfühlsame Technologie."
       },
       "pagination": {
-        "previous": "Zurück",
+        "previous": "Vorherige",
         "next": "Weiter"
-      }
+      },
+      "posts": [
+        {
+          "slug": "future-of-work-ai-human-collaboration",
+          "title": "Die Zukunft der Arbeit: KI und menschliche Zusammenarbeit",
+          "excerpt": "Erkundung, wie künstliche Intelligenz den Arbeitsplatz umgestaltet und neue Möglichkeiten für sinnvolle menschliche Beiträge schafft.",
+          "category": "Zukunft der Arbeit",
+          "tags": ["KI", "Technologie", "Karriere"]
+        },
+        {
+          "slug": "building-adaptive-career-pathways",
+          "title": "Aufbau adaptiver Karrierepfade in einer sich verändernden Welt",
+          "excerpt": "Wie man Karrierewechsel navigiert und Widerstandsfähigkeit auf einem sich ständig weiterentwickelnden Arbeitsmarkt aufbaut.",
+          "category": "Karriereentwicklung",
+          "tags": ["Karriere", "Wachstum", "Fähigkeiten"]
+        },
+        {
+          "slug": "empathy-in-technology-design",
+          "title": "Empathie im Technologie-Design",
+          "excerpt": "Warum empathiezentrierte Designprinzipien für den Aufbau von Technologie, die Menschen wirklich dient, unerlässlich sind.",
+          "category": "Technologie",
+          "tags": ["Design", "Empathie", "UX"]
+        }
+      ]
     },
     "post": {
       "defaultAuthor": "Ori AI",
@@ -492,67 +519,67 @@
   },
   "legal": {
     "termsOfService": {
-      "title": "Nutzungsbedingungen",
-      "lastUpdated": "Zuletzt aktualisiert: 1. März 2025"
+      "title": "Bedingungen der Dienstleistung",
+      "lastUpdated": "Zuletzt aktualisiert: März 1, 2025"
     },
     "privacyPolicy": {
-      "title": "Datenschutzerklärung",
-      "lastUpdated": "Zuletzt aktualisiert: 1. März 2025"
+      "title": "Datenschutzbestimmungen",
+      "lastUpdated": "Zuletzt aktualisiert: März 1, 2025"
     },
     "cookiePolicy": {
       "title": "Cookie-Richtlinie",
-      "lastUpdated": "Zuletzt aktualisiert: 1. März 2025"
+      "lastUpdated": "Zuletzt aktualisiert: März 1, 2025"
     }
   },
   "dashboardPage": {
     "header": {
-      "eyebrow": "Ihre Ori-Übersicht",
-      "title": "Willkommen zurück, {{name}}.",
-      "subtitle": "Hier ist, worauf Ori empfiehlt, dass Sie sich als Nächstes konzentrieren."
+      "eyebrow": "Ihr Ori Überblick",
+      "title": "Willkommen zurück, {{Name}}.",
+      "subtitle": "Ori empfiehlt Ihnen, sich auf die folgenden Punkte zu konzentrieren."
     },
     "whatsNext": {
-      "defaultTitle": "Was kommt als Nächstes auf Ihrem Weg?",
-      "defaultMessage": "Vervollständigen Sie Ihr Profil, um tiefgreifend personalisierte Empfehlungen freizuschalten.",
-      "defaultPrimaryCta": "Profil vervollständigen",
-      "defaultPrimaryHref": "/app/profile",
+      "defaultTitle": "Was ist der nächste Schritt auf Ihrem Weg?",
+      "defaultMessage": "Vervollständigen Sie Ihr Profil, um personalisierte Empfehlungen freizuschalten.",
+      "defaultPrimaryCta": "Vollständiges Profil",
+      "defaultPrimaryHref": "/app/profil",
       "defaultSecondaryCta": "Alle Empfehlungen anzeigen",
-      "defaultSecondaryHref": "/app/recommendations"
+      "defaultSecondaryHref": "/app/empfehlungen"
     },
     "chat": {
       "title": "Mit Ori sprechen",
-      "placeholder": "Fragen Sie Ori nach Ihren nächsten Schritten, Optionen oder einer Rolle, die Sie in Betracht ziehen…",
-      "sendLabel": "Senden",
-      "emptyStateMessage": "Beginnen Sie ein Gespräch mit Ori. Fragen Sie nach Karrierewegen, zu entwickelnden Fähigkeiten oder spezifischen Rollen, die Sie interessieren.",
+      "placeholder": "Fragen Sie Ori nach Ihren nächsten Schritten, Optionen oder einer Rolle, die Sie in Betracht ziehen..",
+      "sendLabel": "Send",
+      "emptyStateMessage": "Beginnen Sie ein Gespräch mit Ori. Fragen Sie nach Karrierewegen, Fähigkeiten, die Sie entwickeln möchten, oder nach bestimmten Aufgaben, an denen Sie interessiert sind.",
       "initialMessage": "Hallo! Ich bin Ori, dein KI-Karrierebegleiter. Wie kann ich dir heute helfen?",
       "responseMessage": "Ich habe gehört, dass Sie einen Rat brauchen. Lassen Sie mich überlegen, wie ich Ihnen dabei am besten helfen kann..."
     },
     "quickStats": {
-      "activeApplications": "Active Applications",
+      "activeApplications": "Aktive Anwendungen",
       "jobMatches": "Job Matches",
-      "skillsAdded": "Skills Added",
-      "profileCompletion": "Profile Completion"
+      "skillsAdded": "Hinzugefügte Fertigkeiten",
+      "profileCompletion": "Profil Vervollständigung"
     },
     "recentActivity": {
-      "title": "Recent Activity",
-      "emptyMessage": "No recent activity"
+      "title": "Jüngste Aktivität",
+      "emptyMessage": "Keine aktuelle Aktivität"
     }
   },
   "profilePage": {
     "header": {
-      "title": "Profil & Ziele",
-      "subtitle": "Halten Sie Ihre Informationen aktuell, um Ori die beste Anleitung zu geben."
+      "title": "Profil &amp; Ziele",
+      "subtitle": "Halten Sie Ihre Informationen auf dem neuesten Stand, damit Ori Ihnen die beste Beratung bieten kann."
     },
     "tabs": {
       "profile": "Persönliches Profil",
       "qualifications": "Qualifikationen",
-      "goals": "Karriereziele"
+      "goals": "Berufliche Ziele"
     },
     "profileForm": {
       "fullNameLabel": "Vollständiger Name",
-      "fullNamePlaceholder": "Jane Doe",
+      "fullNamePlaceholder": "Unbekannte",
       "emailLabel": "E-Mail",
       "headlineLabel": "Überschrift",
-      "headlinePlaceholder": "Softwareentwicklerin | KI-Enthusiastin",
+      "headlinePlaceholder": "Software-Ingenieur | KI-Enthusiast",
       "locationLabel": "Standort",
       "locationPlaceholder": "San Francisco, CA",
       "aboutLabel": "Über mich",
@@ -561,65 +588,65 @@
     },
     "qualifications": {
       "heading": "Ihre Qualifikationen",
-      "skillsHeading": "Fähigkeiten",
-      "skillsHelper": "Fügen Sie Fähigkeiten hinzu, die Ihre Expertise und Interessen repräsentieren",
+      "skillsHeading": "Fertigkeiten",
+      "skillsHelper": "Fügen Sie Fähigkeiten hinzu, die Ihr Fachwissen und Ihre Interessen repräsentieren",
       "addSkillPlaceholder": "Eine Fähigkeit hinzufügen",
       "addSkillButton": "Hinzufügen",
       "experienceHeading": "Berufserfahrung",
-      "experienceHelper": "Teilen Sie Ihre berufliche Reise",
+      "experienceHelper": "Teilen Sie Ihren beruflichen Werdegang",
       "addExperienceButton": "Erfahrung hinzufügen",
       "educationHeading": "Bildung",
       "educationHelper": "Ihr akademischer Hintergrund",
       "addEducationButton": "Bildung hinzufügen",
       "editLabel": "Bearbeiten",
       "removeLabel": "Entfernen",
-      "emptySkills": "Noch keine Fähigkeiten hinzugefügt. Beginnen Sie mit Ihren Kernkompetenzen.",
+      "emptySkills": "Noch keine Fähigkeiten hinzugefügt. Beginnen Sie mit dem Hinzufügen Ihrer Schlüsselkompetenzen.",
       "emptyExperience": "Noch keine Berufserfahrung hinzugefügt.",
       "emptyEducation": "Noch keine Bildung hinzugefügt.",
       "experienceModal": {
         "addTitle": "Berufserfahrung hinzufügen",
         "editTitle": "Berufserfahrung bearbeiten",
         "companyLabel": "Unternehmen",
-        "companyPlaceholder": "Unternehmensname",
+        "companyPlaceholder": "Name des Unternehmens",
         "roleLabel": "Rolle",
         "rolePlaceholder": "Berufsbezeichnung",
-        "startDateLabel": "Startdatum",
-        "endDateLabel": "Enddatum",
+        "startDateLabel": "Start Date",
+        "endDateLabel": "End Date",
         "isCurrentLabel": "Ich arbeite derzeit hier",
-        "descriptionLabel": "Beschreibung (optional)",
-        "descriptionPlaceholder": "Beschreiben Sie Ihre Hauptverantwortlichkeiten und Erfolge...",
+        "descriptionLabel": "Beschreibung (fakultativ)",
+        "descriptionPlaceholder": "Beschreiben Sie Ihre wichtigsten Aufgaben und Erfolge...",
         "saveButton": "Erfahrung speichern",
         "cancelButton": "Abbrechen"
       },
       "educationModal": {
         "addTitle": "Bildung hinzufügen",
         "editTitle": "Bildung bearbeiten",
-        "institutionLabel": "Institution",
-        "institutionPlaceholder": "Universitäts- oder Schulname",
-        "degreeLabel": "Abschluss",
-        "degreePlaceholder": "z.B. Bachelor of Science in Informatik",
-        "startDateLabel": "Startdatum",
-        "endDateLabel": "Enddatum",
+        "institutionLabel": "Einrichtung",
+        "institutionPlaceholder": "Name der Universität oder Schule",
+        "degreeLabel": "Grad",
+        "degreePlaceholder": "z.B. Bachelor of Science in Computerwissenschaften",
+        "startDateLabel": "Start Date",
+        "endDateLabel": "End Date",
         "isCurrentLabel": "Ich bin derzeit eingeschrieben",
-        "descriptionLabel": "Beschreibung (optional)",
-        "descriptionPlaceholder": "Auszeichnungen, Aktivitäten oder zusätzliche Details...",
-        "saveButton": "Bildung speichern",
+        "descriptionLabel": "Beschreibung (fakultativ)",
+        "descriptionPlaceholder": "Ehrungen, Aktivitäten oder zusätzliche Details...",
+        "saveButton": "Bildung retten",
         "cancelButton": "Abbrechen"
       }
     },
     "goals": {
-      "heading": "Karriereziele",
+      "heading": "Berufliche Ziele",
       "longTermVisionLabel": "Langfristige Vision",
-      "longTermVisionPlaceholder": "Beschreiben Sie die Karriere und Wirkung, auf die Sie hinarbeiten…",
-      "longTermVisionHelper": "Wie sieht Erfolg für Sie in 5-10 Jahren aus?",
-      "targetRolesLabel": "Zielrollen",
+      "longTermVisionPlaceholder": "Beschreiben Sie die Karriere und den Einfluss, auf den Sie hinarbeiten..",
+      "longTermVisionHelper": "Wie sieht der Erfolg für Sie in 5-10 Jahren aus?",
+      "targetRolesLabel": "Ziel-Rollen",
       "targetRolesHelper": "Rollen, an denen Sie interessiert sind",
-      "addTargetRolePlaceholder": "Fügen Sie eine Rolle hinzu, auf die Sie abzielen möchten",
+      "addTargetRolePlaceholder": "Fügen Sie eine Rolle hinzu, die Sie anstreben möchten",
       "addTargetRoleButton": "Rolle hinzufügen",
       "removeTargetRoleLabel": "Zielrolle entfernen: {{role}}",
       "milestonesLabel": "Wichtige Meilensteine",
-      "milestonesHelper": "Spezifische Erfolge oder Lernziele",
-      "addMilestonePlaceholder": "Meilenstein hinzufügen (z.B. Python lernen, Projekt leiten)",
+      "milestonesHelper": "Spezifische Leistungen oder Lernziele",
+      "addMilestonePlaceholder": "Einen Meilenstein hinzufügen (z. B. Python lernen, ein Projekt leiten)",
       "addMilestoneButton": "Meilenstein hinzufügen",
       "saveButton": "Ziele speichern",
       "emptyTargetRoles": "Noch keine Zielrollen hinzugefügt.",
@@ -628,38 +655,38 @@
   },
   "recommendationsPage": {
     "header": {
-      "title": "Ihre Empfehlungen",
-      "subtitle": "Oris Einblicke, um Ihren nächsten Karriereschritt zu leiten."
+      "title": "Your Recommendations",
+      "subtitle": "Ori's Erkenntnisse, die Ihnen bei Ihrem nächsten Karriereschritt helfen."
     },
     "jobs": {
-      "heading": "Neue Jobmöglichkeiten für Sie",
-      "matchLabel": "{{score}}% Fähigkeitsübereinstimmung",
-      "datePostedLabel": "Veröffentlicht {{date}}",
+      "heading": "Neue Beschäftigungsmöglichkeiten für Sie",
+      "matchLabel": "{{score}}% Übereinstimmung der Fähigkeiten",
+      "datePostedLabel": "Geschrieben {{date}}",
       "viewDetailsLabel": "Details anzeigen",
       "applyNowLabel": "Jetzt bewerben",
       "emptyTitle": "Noch keine neuen Jobempfehlungen",
-      "emptyBody": "Wenn Ori mehr über Sie und den Markt erfährt, werden wir hier neue Rollen aufdecken. In der Zwischenzeit kann die Verfeinerung Ihres Profils helfen, bessere Übereinstimmungen freizuschalten.",
+      "emptyBody": "Wenn Ori mehr über Sie und den Markt erfährt, werden wir hier neue Rollen veröffentlichen. In der Zwischenzeit können Sie Ihr Profil verfeinern, um bessere Treffer zu erzielen.",
       "improveProfileLabel": "Mein Profil verbessern"
     },
     "advice": {
-      "heading": "Personalisierte Karriere-Einblicke",
+      "heading": "Personalisierte Karriereeinblicke",
       "categoryPrefix": "Kategorie:",
       "learnMoreLabel": "Mehr erfahren",
-      "exploreMoreCopy": "Möchten Sie tiefer eintauchen?",
+      "exploreMoreCopy": "Möchten Sie tiefer gehen?",
       "exploreMoreLabel": "Mehr Ratschläge erkunden",
-      "emptyTitle": "Noch keine Ratschlagsempfehlungen",
-      "emptyBody": "Sobald Ori mehr über Ihre Ziele und Aktivitäten versteht, werden wir maßgeschneiderte Einblicke vorschlagen, um Ihnen zu helfen, voranzukommen."
+      "emptyTitle": "Noch keine Beratungsempfehlungen",
+      "emptyBody": "Sobald Ori mehr über Ihre Ziele und Aktivitäten weiß, werden wir Ihnen maßgeschneiderte Vorschläge unterbreiten, die Sie weiterbringen."
     }
   },
   "applicationsPage": {
     "header": {
       "title": "Ihre Bewerbungen",
-      "subtitle": "Verfolgen Sie Ihren Fortschritt und verwalten Sie Ihre Jobbewerbungs-Pipeline."
+      "subtitle": "Verfolgen Sie Ihre Fortschritte und verwalten Sie Ihre Bewerbungsunterlagen."
     },
     "table": {
       "jobTitle": "Berufsbezeichnung",
       "company": "Unternehmen",
-      "applicationDate": "Bewerbungsdatum",
+      "applicationDate": "Anwendungsdatum",
       "status": "Status",
       "lastUpdated": "Zuletzt aktualisiert",
       "actions": "Aktionen",
@@ -667,37 +694,37 @@
       "viewDetails": "Details anzeigen"
     },
     "statusLabels": {
-      "applied": "Beworben",
-      "interviewing": "Im Interview",
-      "offer": "Angebot",
+      "applied": "Angewandt",
+      "interviewing": "Befragung",
+      "offer": "Offer",
       "rejected": "Abgelehnt",
       "paused": "Pausiert"
     },
-    "addButtonLabel": "Neue Bewerbung hinzufügen",
+    "addButtonLabel": "Neue Anwendung hinzufügen",
     "emptyState": {
       "headline": "Noch keine aktiven Bewerbungen",
-      "message": "Beginnen Sie mit der Verfolgung Ihrer Jobsuche, indem Sie Ihre erste Bewerbung hinzufügen.",
-      "ctaLabel": "Ihre erste Bewerbung hinzufügen"
+      "message": "Beginnen Sie mit der Verfolgung Ihrer Stellensuche, indem Sie Ihre erste Bewerbung hinzufügen.",
+      "ctaLabel": "Fügen Sie Ihre erste Bewerbung hinzu"
     }
   },
   "settingsPage": {
     "header": {
       "title": "Einstellungen",
-      "subtitle": "Verwalten Sie Ihr Konto, Benachrichtigungen und Abonnement."
+      "subtitle": "Verwalten Sie Ihr Konto, Ihre Benachrichtigungen und Ihr Abonnement."
     },
     "account": {
       "heading": "Konto",
       "emailLabel": "E-Mail",
       "changePasswordLabel": "Passwort ändern",
-      "exportDataLabel": "Datenexport anfordern",
-      "exportDataHelper": "Wir bereiten eine Kopie Ihrer wichtigsten Konto- und Aktivitätsdaten vor und senden Ihnen einen sicheren Download-Link.",
+      "exportDataLabel": "Request data export",
+      "exportDataHelper": "Wir erstellen eine Kopie Ihrer wichtigsten Konto- und Aktivitätsdaten und senden Ihnen einen sicheren Download-Link.",
       "dangerZoneHeading": "Gefahrenzone",
       "deleteAccountLabel": "Konto löschen",
-      "deleteAccountWarning": "Dies wird Ihr Konto und Ihre Daten dauerhaft löschen, wo gesetzlich zulässig. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "deleteAccountWarning": "Dadurch werden Ihr Konto und Ihre Daten, soweit gesetzlich zulässig, endgültig gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
       "deleteAccountConfirmTitle": "Ihr Konto löschen?",
-      "deleteAccountConfirmBody": "Zur Bestätigung geben Sie bitte DELETE unten ein. Dies wird Ihr Konto und, wo erlaubt, Ihre Daten von Ori dauerhaft entfernen.",
-      "deleteAccountConfirmPlaceholder": "DELETE zur Bestätigung eingeben",
-      "deleteAccountConfirmButton": "Konto dauerhaft löschen",
+      "deleteAccountConfirmBody": "Zur Bestätigung geben Sie bitte unten DELETE ein. Dadurch werden Ihr Konto und, sofern zulässig, Ihre Daten von Ori dauerhaft gelöscht.",
+      "deleteAccountConfirmPlaceholder": "Geben Sie zur Bestätigung DELETE ein",
+      "deleteAccountConfirmButton": "Dauerhaftes Löschen des Kontos",
       "deleteAccountCancelButton": "Abbrechen",
       "exportSuccess": "Datenexport-Anfrage erfolgreich gesendet",
       "deleteSuccess": "Ihr Konto wurde gelöscht",
@@ -705,15 +732,15 @@
     },
     "notifications": {
       "heading": "Benachrichtigungen",
-      "description": "Wählen Sie aus, worüber Ori Sie informieren soll.",
-      "newJobRecommendations": "Neue Jobempfehlungen",
-      "applicationStatusUpdates": "Bewerbungsstatus-Updates",
-      "insightsAndTips": "Ori-Einblicke & Tipps",
-      "saveButton": "Präferenzen speichern",
+      "description": "Wählen Sie aus, worüber Ori Sie auf dem Laufenden halten soll.",
+      "newJobRecommendations": "Empfehlungen für neue Stellen",
+      "applicationStatusUpdates": "Aktualisierungen des Anwendungsstatus",
+      "insightsAndTips": "Ori Einblicke &amp; Tipps",
+      "saveButton": "Einstellungen speichern",
       "saveSuccess": "Benachrichtigungspräferenzen gespeichert"
     },
     "billing": {
-      "heading": "Abonnement & Abrechnung",
+      "heading": "Abonnement &amp; Abrechnung",
       "noSubscriptionMessage": "Sie haben derzeit keinen bezahlten Ori-Plan.",
       "currentPlanLabel": "Aktueller Plan",
       "billingCycleLabel": "Abrechnungszyklus",
@@ -721,114 +748,114 @@
       "paymentMethodLabel": "Zahlungsmethode",
       "changePlanLabel": "Plan ändern",
       "updatePaymentMethodLabel": "Zahlungsmethode aktualisieren",
-      "viewBillingHistoryLabel": "Abrechnungshistorie anzeigen",
+      "viewBillingHistoryLabel": "Abrechnungsverlauf anzeigen",
       "cancelSubscriptionLabel": "Abonnement kündigen"
     }
   },
   "jobDetailPage": {
-    "backToList": "Zurück zu Empfehlungen",
+    "backToList": "Zurück zu den Empfehlungen",
     "actions": {
-      "applyNow": "Jetzt Bewerben"
+      "applyNow": "Jetzt bewerben"
     },
     "analysis": {
-      "heading": "Oris Analyse",
-      "skillMatchLabel": "Fähigkeiten-Übereinstimmung",
-      "goalAlignmentLabel": "Zielausrichtung",
-      "companyInsightLabel": "Unternehmenseinblicke"
+      "heading": "Ori's Analyse",
+      "skillMatchLabel": "Geschicklichkeitsspiel",
+      "goalAlignmentLabel": "Ausrichtung der Ziele",
+      "companyInsightLabel": "Einblick in das Unternehmen"
     },
     "details": {
-      "heading": "Stellendetails",
-      "datePosted": "Veröffentlichungsdatum",
-      "employmentType": "Beschäftigungsart",
-      "salaryRange": "Gehaltsbereich"
+      "heading": "Job-Details",
+      "datePosted": "Veröffentlichte Daten",
+      "employmentType": "Art der Beschäftigung",
+      "salaryRange": "Gehaltsspanne"
     },
     "sections": {
-      "description": "Stellenbeschreibung",
-      "responsibilities": "Hauptverantwortlichkeiten",
+      "description": "Arbeitsbeschreibung",
+      "responsibilities": "Zuständigkeiten",
       "qualifications": "Qualifikationen"
     }
   },
   "adviceDetailPage": {
-    "backToList": "Zurück zu Empfehlungen"
+    "backToList": "Zurück zu den Empfehlungen"
   },
   "onboardingPage": {
-    "progressLabel": "Schritt {{current}} von {{total}}",
+    "progressLabel": "Schritt {{Aktuell}} von {{Gesamt}}",
     "welcome": {
-      "headline": "Willkommen bei Ori, {{name}}.",
-      "body": "Um zu beginnen, stellen wir einige fokussierte Fragen zu Ihren Fähigkeiten und Zielen. Dies dauert nur ein paar Minuten und hilft Ori, Sie effektiver zu leiten.",
-      "primaryButton": "Los geht's"
+      "headline": "Willkommen bei Ori, {{Name}}.",
+      "body": "Zu Beginn stellen wir Ihnen ein paar gezielte Fragen zu Ihren Fähigkeiten und Zielen. Dies dauert nur ein paar Minuten und hilft Ori, Sie besser zu beraten.",
+      "primaryButton": "Fangen wir an"
     },
     "basicInfo": {
-      "headline": "Erzählen Sie uns ein bisschen von sich.",
-      "description": "Ori verwendet diese Informationen, um Ihre Möglichkeiten besser zu kontextualisieren.",
-      "headlineLabel": "Berufliche Überschrift",
-      "headlinePlaceholder": "Softwareentwickler | KI-Enthusiast",
+      "headline": "Erzählen Sie uns ein wenig über sich selbst.",
+      "description": "Ori nutzt diese Informationen, um Ihre Chancen besser zu kontextualisieren.",
+      "headlineLabel": "Professionelle Schlagzeile",
+      "headlinePlaceholder": "Software-Ingenieur | KI-Enthusiast",
       "locationLabel": "Standort",
       "locationPlaceholder": "San Francisco, CA"
     },
     "skills": {
       "headline": "Was sind Ihre wichtigsten Fähigkeiten?",
-      "description": "Wir werden diese verwenden, um Sie mit Rollen und Lernwegen abzugleichen, die zu Ihnen passen.",
-      "inputPlaceholder": "Eine Fähigkeit hinzufügen (z.B. Python, UX-Forschung, Produktstrategie)",
-      "helper": "Streben Sie 5-10 Ihrer relevantesten Fähigkeiten an.",
+      "description": "Anhand dieser Angaben können wir Sie mit den für Sie passenden Aufgaben und Lernwegen zusammenbringen.",
+      "inputPlaceholder": "Eine Fähigkeit hinzufügen (z. B. Python, UX-Forschung, Produktstrategie)",
+      "helper": "Nehmen Sie sich 5-10 Ihrer wichtigsten Fähigkeiten vor.",
       "validationError": "Bitte fügen Sie mindestens 3 Fähigkeiten hinzu, um fortzufahren"
     },
     "goals": {
-      "headline": "Worauf zielen Sie ab?",
-      "description": "Teilen Sie die Richtung, in die sich Ihre Karriere bewegen soll.",
+      "headline": "Was wollen Sie erreichen?",
+      "description": "Teilen Sie uns mit, in welche Richtung Sie Ihre Karriere lenken möchten.",
       "longTermVisionLabel": "Langfristige Vision",
-      "longTermVisionPlaceholder": "Beschreiben Sie kurz die Art von Arbeit und Wirkung, die Sie in Zukunft haben möchten…",
+      "longTermVisionPlaceholder": "Beschreiben Sie kurz die Art der Arbeit und den Einfluss, den Sie in Zukunft haben möchten..",
       "targetRolesLabel": "Zielrollen",
-      "targetRolesPlaceholder": "Eine Rolle hinzufügen (z.B. Senior Data Scientist, Produktleiter)",
-      "helper": "Fügen Sie 1-3 Rollen hinzu, in denen Sie gerne wachsen würden."
+      "targetRolesPlaceholder": "Eine Rolle hinzufügen (z. B. Senior Data Scientist, Head of Product)",
+      "helper": "Fügen Sie 1-3 Rollen hinzu, in die Sie gerne hineinwachsen würden."
     },
     "finalizing": {
-      "headline": "Ihr Ori wird kalibriert…",
-      "body": "Wir richten Ihr Profil mit aktuellen Möglichkeiten und Wachstumspfaden aus. Sie sehen in einem Moment Ihr personalisiertes Dashboard."
+      "headline": "Kalibrierung der Ori..",
+      "body": "Wir gleichen Ihr Profil mit aktuellen Chancen und Wachstumsmöglichkeiten ab. Sie sehen Ihr personalisiertes Dashboard in wenigen Augenblicken."
     },
     "nav": {
       "backLabel": "Zurück",
       "nextLabel": "Weiter",
-      "finishLabel": "Fertig"
+      "finishLabel": "Oberfläche"
     }
   },
   "tooltips": {
     "comingSoon": "Funktion kommt bald"
   },
   "earlyAccessModal": {
-    "title": "We're Building Something Special",
-    "description": "Ori is crafting the future of AI-powered career development. Be among the first to experience it.",
+    "title": "Wir bauen etwas Besonderes",
+    "description": "Ori arbeitet an der Zukunft der KI-gestützten Karriereentwicklung. Seien Sie unter den Ersten, die das erleben.",
     "benefits": {
-      "firstAccess": "Be first to access Ori when we launch",
-      "foundingCommunity": "Join our exclusive founding community",
-      "shapeProduct": "Shape the product with your feedback",
-      "specialPerks": "Special perks for early supporters"
+      "firstAccess": "Seien Sie der Erste, der auf Ori zugreift, wenn wir starten",
+      "foundingCommunity": "Werden Sie Mitglied unserer exklusiven Gründergemeinschaft",
+      "shapeProduct": "Gestalten Sie das Produkt mit Ihrem Feedback",
+      "specialPerks": "Besondere Vergünstigungen für frühe Unterstützer"
     },
     "form": {
-      "firstNameLabel": "First Name (optional)",
-      "firstNamePlaceholder": "Your first name",
-      "emailLabel": "Email Address",
+      "firstNameLabel": "Vorname (optional)",
+      "firstNamePlaceholder": "Ihr Vorname",
+      "emailLabel": "E-Mail Adresse",
       "emailPlaceholder": "your@email.com",
-      "submitButton": "Join the Early Access List",
-      "submitting": "Joining the waitlist...",
-      "disclaimer": "We'll only send you important updates about Ori's development. No spam, ever. Unsubscribe anytime."
+      "submitButton": "Tragen Sie sich in die Early-Access-Liste ein",
+      "submitting": "Auf die Warteliste setzen...",
+      "disclaimer": "Wir schicken dir nur wichtige Informationen über die Entwicklung von Ori. Kein Spam, niemals. Jederzeit abbestellen."
     },
     "success": {
-      "title": "You're on the list!",
-      "description": "Thanks{{name}}! We'll keep you posted on our journey to revolutionize career development.",
-      "descriptionNoName": "Thanks! We'll keep you posted on our journey to revolutionize career development.",
+      "title": "Du stehst auf der Liste!",
+      "description": "Danke{{Name}}! Wir halten Sie auf dem Laufenden über unsere Reise zur Revolutionierung der beruflichen Entwicklung.",
+      "descriptionNoName": "Vielen Dank! Wir halten Sie auf dem Laufenden über unsere Reise zur Revolutionierung der beruflichen Entwicklung.",
       "nextSteps": {
-        "title": "What's next?",
-        "checkInbox": "Check your inbox for a welcome email",
-        "followBlog": "Follow our blog for weekly insights",
-        "joinCommunity": "Join our community discussions"
+        "title": "Was kommt als Nächstes?",
+        "checkInbox": "Prüfen Sie Ihren Posteingang auf eine Willkommens-E-Mail",
+        "followBlog": "Folgen Sie unserem Blog für wöchentliche Einblicke",
+        "joinCommunity": "Beteiligen Sie sich an unseren Community-Diskussionen"
       }
     },
     "toast": {
-      "success": "Welcome to the Ori community!",
-      "successDescription": "Check your inbox for a special welcome message.",
-      "error": "Something went wrong. Please try again.",
-      "invalidEmail": "Please enter a valid email address"
+      "success": "Willkommen in der Ori-Gemeinschaft!",
+      "successDescription": "Prüfen Sie Ihren Posteingang auf eine spezielle Willkommensnachricht.",
+      "error": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+      "invalidEmail": "Bitte geben Sie eine gültige E-Mail Adresse ein"
     }
   }
 }
