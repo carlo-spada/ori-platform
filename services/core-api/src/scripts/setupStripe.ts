@@ -245,17 +245,16 @@ async function setupStripeProductsAndPrices(): Promise<CreatedIds> {
   }
 }
 
-// Run the setup
-if (import.meta.url === `file://${process.argv[1]}`) {
-  setupStripeProductsAndPrices()
-    .then(() => {
-      console.log('\n🎉 Stripe setup completed successfully!')
-      process.exit(0)
-    })
-    .catch((error) => {
-      console.error('\n💥 Stripe setup failed:', error)
-      process.exit(1)
-    })
-}
+// Run the setup (only when executed directly, not when imported)
+// Note: This script is meant to be run with ts-node-dev, not compiled
+setupStripeProductsAndPrices()
+  .then(() => {
+    console.log('\n🎉 Stripe setup completed successfully!')
+    process.exit(0)
+  })
+  .catch((error) => {
+    console.error('\n💥 Stripe setup failed:', error)
+    process.exit(1)
+  })
 
 export { setupStripeProductsAndPrices }
