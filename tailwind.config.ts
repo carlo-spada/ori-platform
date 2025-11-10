@@ -107,6 +107,50 @@ export default {
             transform: 'translateX(-100%)',
           },
         },
+        'slide-in-from-right': {
+          from: {
+            transform: 'translateX(100%)',
+            opacity: '0',
+          },
+          to: {
+            transform: 'translateX(0)',
+            opacity: '1',
+          },
+        },
+        'slide-in-from-bottom': {
+          from: {
+            transform: 'translateY(100%)',
+            opacity: '0',
+          },
+          to: {
+            transform: 'translateY(0)',
+            opacity: '1',
+          },
+        },
+        'zoom-in': {
+          from: {
+            transform: 'scale(0.95)',
+            opacity: '0',
+          },
+          to: {
+            transform: 'scale(1)',
+            opacity: '1',
+          },
+        },
+        'bounce-in': {
+          '0%': {
+            transform: 'scale(0.95)',
+            opacity: '0',
+          },
+          '60%': {
+            transform: 'scale(1.05)',
+            opacity: '1',
+          },
+          '100%': {
+            transform: 'scale(1)',
+            opacity: '1',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -115,6 +159,10 @@ export default {
         'fade-out': 'fade-out 0.2s ease-out',
         'slide-in': 'slide-in 0.3s ease-out',
         'slide-out': 'slide-out 0.3s ease-out',
+        'slide-in-from-right': 'slide-in-from-right 0.3s ease-out',
+        'slide-in-from-bottom': 'slide-in-from-bottom 0.3s ease-out',
+        'zoom-in': 'zoom-in 0.3s ease-out',
+        'bounce-in': 'bounce-in 0.5s ease-out',
       },
     },
   },
