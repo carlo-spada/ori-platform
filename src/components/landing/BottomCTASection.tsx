@@ -32,10 +32,10 @@ export function BottomCTASection(props?: BottomCTASectionProps) {
   return (
     <Section data-testid="bottom-cta" className="bg-surface/50">
       <div className="mx-auto max-w-3xl text-center">
-        <h2 className="text-foreground mb-4 text-3xl font-semibold sm:text-4xl">
+        <h2 className="mb-4 text-3xl font-semibold text-foreground sm:text-4xl">
           {content.headline}
         </h2>
-        <p className="text-muted-foreground mb-8 text-lg">
+        <p className="mb-8 text-lg text-muted-foreground">
           {content.description}
         </p>
 
@@ -58,7 +58,7 @@ export function BottomCTASection(props?: BottomCTASectionProps) {
           </Button>
         </div>
 
-        <p className="text-muted-foreground text-sm italic">
+        <p className="text-sm italic text-muted-foreground">
           {content.strapline}
         </p>
       </div>

@@ -1,0 +1,39 @@
+{
+  "title": "Informativa sui cookie",
+  "lastUpdated": "Ultimo aggiornamento: 1 marzo 2025",
+  "content": "<h2 id=\"intro\">1. Introduzione</h2>\n<p>\n  La presente Informativa sui cookie spiega come <strong>Ori</strong> (\"Ori\", \"noi\", \"ci\" o \"nostro\") utilizza i cookie e tecnologie simili quando utilizzate i nostri siti web e le nostre applicazioni (il \"Servizio\"). Deve essere letta insieme alla nostra Informativa sulla privacy</p>\n\n<h2 id=\"what-are-cookies\">2. Cosa sono i cookie?</h2>\n<p>\n  I cookie sono piccoli file di testo che vengono memorizzati sul vostro dispositivo quando visitate un sito web o utilizzate un servizio online. Sono ampiamente utilizzati per far funzionare i siti web, per ricordare le vostre preferenze e per fornire informazioni al proprietario del sito</p>\n<p>\n  Anche noi utilizziamo tecnologie simili, come la memorizzazione locale, i pixel e gli script di tracciamento. In questa Informativa, ci riferiamo a tutte queste tecnologie collettivamente come \"cookie\"</p>\n\n<h2 id=\"types-of-cookies\">3. Tipi di cookie utilizzati</h2>\n<p>\n  Utilizziamo le seguenti categorie di cookie</p>\n<ul>\n  <li>\n   <strong>Cookie strettamente necessari</strong>: Questi cookie sono essenziali per il funzionamento del Servizio e non possono essere disattivati nei nostri sistemi. Di solito vengono impostati solo in risposta ad azioni compiute dall'utente, come l'impostazione delle preferenze sulla privacy, il login o la compilazione di moduli  </li>\n  <li>\n   <strong>Cookie di prestazione e di analisi</strong>: Questi cookie ci aiutano a capire come gli utenti interagiscono con il Servizio raccogliendo informazioni come le visualizzazioni delle pagine, le fonti di traffico e l'utilizzo delle funzioni. Utilizziamo queste informazioni per migliorare le prestazioni e l'esperienza degli utenti  </li>\n  <li>\n   <strong>Cookie di funzionalità</strong>: Questi cookie consentono al Servizio di ricordare le scelte effettuate dall'utente (come la lingua o la regione) e di fornire funzionalità avanzate e più personalizzate  </li>\n  <li>\n   <strong>Cookie pubblicitari e di marketing</strong> (se e quando utilizzati): Questi cookie possono essere utilizzati per fornire annunci pubblicitari pertinenti, per misurare l'efficacia delle campagne o per evitare che lo stesso annuncio venga mostrato ripetutamente. Se inizieremo a utilizzare i cookie pubblicitari, aggiorneremo la presente Informativa e, ove necessario, otterremo il consenso dell'utente  </li>\n</ul>\n\n<h2 id=\"specific-cookies\">4. Cookie specifici e tecnologie simili</h2>\n<p>\n  I cookie specifici che utilizziamo possono cambiare nel tempo, man mano che miglioriamo o aggiorniamo il Servizio. Un elenco più dettagliato e aggiornato dei cookie e delle tecnologie simili (compresi i nomi, i fornitori e le finalità) può essere reso disponibile all'interno del Servizio, ad esempio in un banner sui cookie, nel centro preferenze o in una pagina di aiuto</p>\n\n<h2 id=\"managing-cookies\">5. Come controllare i cookie</h2>\n<p>\n  L'utente ha a disposizione diverse opzioni per la gestione dei cookie</p>\n<ul>\n  <li>\n   <strong>Impostazioni del browser</strong>: La maggior parte dei browser web consente di eliminare i cookie, bloccarli o ricevere un avviso prima che un cookie venga memorizzato. Per ulteriori informazioni, consultare la guida o le impostazioni del browser. Se si bloccano tutti i cookie, alcune parti del Servizio potrebbero non funzionare correttamente  </li>\n  <li>\n   <strong>Cookie banner o centro preferenze</strong> (se implementato): Possiamo fornire controlli in loco per gestire i cookie non essenziali (ad esempio, cookie analitici o pubblicitari). Laddove richiesto dalla legge, chiederemo il consenso dell'utente prima di utilizzare tali cookie  </li>\n  <li>\n   <strong>Meccanismi di opt-out di terze parti</strong>: Alcuni fornitori di analisi e pubblicità offrono le proprie opzioni di opt-out. Ove applicabile, i link o le informazioni possono essere forniti all'interno del Servizio o nella nostra Informativa sulla privacy  </li>\n</ul>\n\n<h2 id=\"legal-basis-cookies\">6. Basi legali per l'utilizzo dei cookie</h2>\n<p>\n  Laddove richiesto dalla legge (ad esempio, nel SEE, nel Regno Unito o in giurisdizioni simili), ci basiamo su</p>\n<ul>\n  <li><strong>Consenso</strong> per l'inserimento e l'accesso ai cookie non essenziali (come i cookie analitici o pubblicitari); e</li>\n  <li><strong>Interessi legittimi</strong> o basi legali equivalenti per i cookie strettamente necessari che sono richiesti per il funzionamento del Servizio.</li>\n</ul>\n\n<h2 id=\"changes\">7. Modifiche alla presente Informativa sui cookie</h2>\n<p>\n  Possiamo aggiornare la presente Informativa sui cookie di tanto in tanto per riflettere le modifiche al nostro utilizzo dei cookie, ai requisiti legali o al Servizio. In tal caso, aggiorneremo la data dell'\"Ultimo aggiornamento\" e, ove necessario, richiederemo nuovamente il consenso per determinati cookie</p>\n\n<h2 id=\"contact\">8. Contatto</h2>\n<p>\n  In caso di domande sulla presente Informativa sui cookie o sul nostro utilizzo di cookie e tecnologie simili, si prega di contattarci all'indirizzo</p>\n<p>\n <strong>Ori Technologies S.A. de C.V.</strong><br />\n  Via Antonio Fogazzaro, 5A, 35125 Padova PD, Italia<br />\n  Email: <a href=\"mailto:support@carlospada.me\">support@carlospada.me</a></p>\n\n<hr />\n<footer>\n  &copy; 2025 Ori Technologies S.A. de C.V. - Tutti i diritti riservati</footer>",
+  "tocItems": [
+    {
+      "id": "intro",
+      "label": "1. Introduzione"
+    },
+    {
+      "id": "what-are-cookies",
+      "label": "2. Cosa sono i cookie?"
+    },
+    {
+      "id": "types-of-cookies",
+      "label": "3. Tipi di cookie utilizzati"
+    },
+    {
+      "id": "specific-cookies",
+      "label": "4. Cookie specifici e tecnologie simili"
+    },
+    {
+      "id": "managing-cookies",
+      "label": "5. Come controllare i cookie"
+    },
+    {
+      "id": "legal-basis-cookies",
+      "label": "6. Base legale per l'utilizzo dei cookie"
+    },
+    {
+      "id": "changes",
+      "label": "7. Modifiche alla presente Informativa sui cookie"
+    },
+    {
+      "id": "contact",
+      "label": "8. Contatto"
+    }
+  ]
+}

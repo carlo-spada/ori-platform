@@ -7,6 +7,7 @@
 ## Current State Analysis
 
 ### What Works Well
+
 - RLS policies secure all user-facing tables (100% coverage)
 - Consistent API client patterns across frontend and backend
 - Type-safe database operations with TypeScript
@@ -14,6 +15,7 @@
 - Clear separation of concerns (frontend → API → database)
 
 ### Critical Gaps
+
 1. **No Direct Database Debugging**
    - Developers must use Supabase Dashboard for inspection
    - No schema introspection tools
@@ -44,9 +46,11 @@
 ## Phase 4 MCP Integration Goals
 
 ### Goal 1: Schema Introspection & Documentation
+
 **Problem:** Developers need to understand database structure without leaving the editor.
 
 **MCP Functions:**
+
 ```
 db_get_schema_overview()
   → Returns table counts, RLS status, index count, trigger count
@@ -73,9 +77,11 @@ db_export_schema_as_markdown()
 **Value:** Instant schema access without dashboard context-switching.
 
 ### Goal 2: RLS Policy Testing & Validation
+
 **Problem:** RLS policies are complex and hard to test. Developers often can't tell if a policy works correctly.
 
 **MCP Functions:**
+
 ```
 db_test_rls_policy(table_name, user_id, operation)
   → Simulates query with specific user context
@@ -101,9 +107,11 @@ db_check_policy_performance()
 **Value:** Catch RLS bugs before production. Verify security assumptions.
 
 ### Goal 3: Query Execution & Analysis
+
 **Problem:** Developers can't run ad-hoc queries or analyze performance.
 
 **MCP Functions:**
+
 ```
 db_execute_query(sql, safe_mode=true)
   → Executes read-only SQL (safe_mode prevents writes)
@@ -129,9 +137,11 @@ db_test_index(table_name, column_list)
 **Value:** Debug performance issues. Optimize queries. Validate index choices.
 
 ### Goal 4: Migration Support
+
 **Problem:** Developers can't validate migrations before applying them. Rollbacks are untested.
 
 **MCP Functions:**
+
 ```
 db_validate_migration(sql)
   → Checks syntax and safety
@@ -165,9 +175,11 @@ db_rollback_last_migration()
 **Value:** Catch migration errors early. Prevent rollback surprises.
 
 ### Goal 5: Data Inspection & Validation
+
 **Problem:** Developers need to debug data issues but can't easily inspect the database.
 
 **MCP Functions:**
+
 ```
 db_get_table_data(table_name, limit=10, where_clause="")
   → Returns sample data from table (respects RLS for safety)
@@ -206,9 +218,11 @@ db_get_data_statistics(table_name)
 **Value:** Debug data issues. Ensure data integrity. Create test data easily.
 
 ### Goal 6: Development Workflow Integration
+
 **Problem:** Database tasks are scattered across different tools. No integrated workflow.
 
 **MCP Functions:**
+
 ```
 db_get_development_checklist()
   → Returns checklist for adding new table:
@@ -249,6 +263,7 @@ db_generate_type_definitions(table_name)
 ## Implementation Priority (Phase 4)
 
 ### Must Have (Week 1)
+
 1. Schema Introspection (Goal 1)
    - Essential for understanding database
    - Unblocks other features
@@ -262,6 +277,7 @@ db_generate_type_definitions(table_name)
    - Can be scoped to current user's data
 
 ### Should Have (Week 2)
+
 4. RLS Policy Testing (Goal 2)
    - Critical for security
    - Prevents bugs in production
@@ -271,6 +287,7 @@ db_generate_type_definitions(table_name)
    - No actual rollbacks yet
 
 ### Nice to Have (Week 3+)
+
 6. Data Seeding (Goal 5 - seed functions)
    - Improves development experience
    - Not critical for core functionality
@@ -286,12 +303,14 @@ db_generate_type_definitions(table_name)
 All MCP functions must include safety checks:
 
 ### Read Safety
+
 - [ ] **SELECT queries only** - No INSERT/UPDATE/DELETE in read functions
 - [ ] **RLS respected** - Queries run as authenticated user when applicable
 - [ ] **LIMIT enforced** - Max 1000 rows returned by default
 - [ ] **Timeout protection** - Queries timeout after 30 seconds
 
 ### Write Safety
+
 - [ ] **Explicit confirmation required** - User must confirm before any writes
 - [ ] **Test database only** - Never write to production directly
 - [ ] **Transaction rollback** - All writes wrapped in transactions, rollback tested
@@ -299,12 +318,14 @@ All MCP functions must include safety checks:
 - [ ] **Backup before migration** - Require backup before applying migrations
 
 ### Security Safety
+
 - [ ] **User context isolation** - Tests use real user IDs, can't bypass RLS
 - [ ] **No credentials in responses** - Never return API keys or secrets
 - [ ] **Policy SQL validation** - Check policy definitions before testing
 - [ ] **No schema modification** - Read-only introspection functions only
 
 ### Error Handling
+
 - [ ] **Connection errors** - Clear messages, don't expose connection strings
 - [ ] **Query errors** - Show error message, suggest fixes
 - [ ] **Permission errors** - Explain what permission is missing
@@ -323,11 +344,11 @@ All MCP functions must include safety checks:
 ```
 1. db_describe_table('user_profiles')
    → Shows all columns, RLS policies
-   
+
 2. db_test_rls_policy('user_profiles', user_a_id, 'SELECT')
    → Simulates User A querying their profile
    → Returns: "Can access 1 row with profile data" ✓ or "Access denied" ✗
-   
+
 3. If denied, db_get_rls_policies('user_profiles')
    → Shows exact policy SQL
    → Claude identifies the issue
@@ -345,14 +366,14 @@ All MCP functions must include safety checks:
 1. db_explain_query('SELECT * FROM applications WHERE user_id = ? ORDER BY...')
    → Shows execution plan
    → Identifies sequential scan on applications table
-   
+
 2. db_get_table_indexes('applications')
    → Shows existing indexes
    → Index on user_id exists, but composite index missing
-   
+
 3. db_test_index('applications', ['user_id', 'application_date'])
    → Shows 10x performance improvement with new index
-   
+
 4. db_generate_migration_script('add composite index on applications')
    → Generates migration file
 ```
@@ -368,16 +389,16 @@ All MCP functions must include safety checks:
 ```
 1. db_propose_new_table('Track user skills and proficiency levels')
    → Suggests columns, constraints, indexes
-   
+
 2. db_generate_migration_script(...)
    → Creates migration file with RLS policies
-   
+
 3. db_generate_type_definitions('user_skills')
    → Creates TypeScript interfaces
-   
+
 4. db_generate_api_scaffolding('user_skills')
    → Creates Express.js routes with validation
-   
+
 5. db_get_development_checklist()
    → Shows what's left: React hooks, components, tests
 ```
@@ -391,11 +412,13 @@ All MCP functions must include safety checks:
 **Concept:** Capture database state at key points, enable quick comparison.
 
 **Use Cases:**
+
 - Compare schema before/after migration
 - Identify unexpected changes
 - Rollback detection
 
 **MCP Functions:**
+
 ```
 db_create_schema_snapshot(label)
   → Captures current schema version
@@ -420,6 +443,7 @@ db_restore_from_snapshot(snapshot_label)
 **Goal:** Give developers visibility into database health.
 
 **MCP Functions:**
+
 ```
 db_get_health_check()
   → Returns:
@@ -451,24 +475,28 @@ db_report_missing_indexes()
 ## Long-Term Roadmap (Beyond Phase 4)
 
 ### Phase 5: Automatic Schema Optimization
+
 - Analyze query patterns
 - Suggest table redesigns
 - Recommend denormalization opportunities
 - Auto-generate analytics tables
 
 ### Phase 6: Temporal Queries & Auditing
+
 - Track data changes over time
 - Audit who changed what and when
 - Implement soft deletes
 - Enable time-travel queries
 
 ### Phase 7: Advanced Analytics
+
 - Generate dashboards
 - Analyze user behavior from database
 - Predict performance issues
 - Optimize costs
 
 ### Phase 8: Multi-Database Support
+
 - Support multiple Supabase projects
 - Compare schemas across environments
 - Sync test data from production (anonymized)
@@ -494,6 +522,7 @@ By end of Phase 4:
 **Risk:** Accidental data loss or corruption
 
 **Mitigation:**
+
 - All write operations in test database first
 - Transactions and rollbacks enforced
 - Require explicit confirmation for sensitive ops
@@ -502,6 +531,7 @@ By end of Phase 4:
 **Risk:** Security bypass (accessing other user's data)
 
 **Mitigation:**
+
 - RLS policies enforced in MCP functions
 - No raw SQL execution of user input
 - Policy validation before testing
@@ -510,6 +540,7 @@ By end of Phase 4:
 **Risk:** Performance issues from running ad-hoc queries
 
 **Mitigation:**
+
 - Query timeouts (30 seconds)
 - Result limits (1000 rows max)
 - Read-only mode for exploration
@@ -520,6 +551,7 @@ By end of Phase 4:
 ## Files to Create/Modify
 
 ### New Files
+
 ```
 docs/POSTGRESQL_MCP_PHASE4_ROADMAP.md ← you are here
 docs/MCP_POSTGRES_FUNCTION_REFERENCE.md ← detailed API docs
@@ -528,6 +560,7 @@ docs/MCP_POSTGRES_SAFETY_GUIDELINES.md ← security best practices
 ```
 
 ### Modified Files
+
 ```
 .claude/CLAUDE.md ← add MCP postgres tips
 CLAUDE.md ← add Phase 4 guidelines
@@ -549,4 +582,3 @@ docs/DATABASE_QUICK_REFERENCE.md ← link to MCP functions
 **Created:** November 9, 2025
 **Status:** Ready for Implementation
 **Owner:** Claude (Implementer & Builder)
-

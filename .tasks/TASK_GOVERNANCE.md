@@ -54,6 +54,7 @@ The `.tasks/` folder is the **single source of truth** for project status. Witho
 **What**: Create task files or folders
 
 **Rules**:
+
 ```
 Feature or Large Task (Epic)?
   → Create folder: .tasks/todo/feature-name/
@@ -65,6 +66,7 @@ Single, Small Task?
 ```
 
 **Commit Immediately**:
+
 ```bash
 git add .tasks/
 git commit -m "feat(tasks): create feature-name plan"
@@ -78,6 +80,7 @@ git push origin dev
 **What**: Move task file/folder from `todo` to `in-progress`
 
 **Rules**:
+
 ```
 Moving a folder?
   → Move entire folder as one unit
@@ -90,12 +93,14 @@ Moving a single file?
 ```
 
 **Commit Message**:
+
 ```bash
 git commit -m "chore(tasks): claim feature-name for implementation"
 git push origin dev
 ```
 
 **Never**:
+
 - ❌ Leave tasks in `todo` while working on them
 - ❌ Forget to commit and push the move
 - ❌ Move only some files from a folder (move entire folder)
@@ -107,11 +112,13 @@ git push origin dev
 **What**: Implement according to task file
 
 **Rules**:
+
 - Implement code as described in task file
 - Commit work frequently (after each logical unit)
 - Don't move task files yet (stay in `in-progress`)
 
 **Commit Messages**:
+
 ```bash
 # Frequent commits during implementation
 git commit -m "feat: implement feature X as per task"
@@ -125,6 +132,7 @@ git push origin dev
 **What**: Move task file/folder from `in-progress` to `in-review`
 
 **Rules**:
+
 ```bash
 # Move entire folder/file to review
 git mv .tasks/in-progress/feature-name .tasks/in-review/feature-name
@@ -141,6 +149,7 @@ git push origin dev
 **What**: Review, debug, refactor, then approve
 
 **Rules**:
+
 ```bash
 # Review is already in .tasks/in-review/
 # Perform review, debugging, refactoring
@@ -159,6 +168,7 @@ git push origin dev
 **What**: Merge to main branch
 
 **Rules**:
+
 - All feature tasks must be in `.tasks/done/` (approved and ready)
 - Create PR from `dev` to `main`
 - Merge after approval and checks pass
@@ -181,23 +191,28 @@ git push origin dev
 **Estimated Duration**: X hours / Y days
 
 ## Overview
+
 Brief description of what this feature is and why it matters.
 
 ## Acceptance Criteria
+
 - [ ] Criterion 1
 - [ ] Criterion 2
 - [ ] Criterion 3
 
 ## Work Units
+
 - **A.md**: First part (e.g., "Backend API setup")
 - **B.md**: Second part (e.g., "Frontend component")
 - **C.md**: Third part (e.g., "Testing & integration")
 
 ## Dependencies
+
 - Other tasks this depends on
 - External dependencies
 
 ## Notes
+
 Any additional context for agents working on this.
 ```
 
@@ -211,6 +226,7 @@ Any additional context for agents working on this.
 **Depends On**: None (or link to other task)
 
 ## What to Do
+
 Clear, step-by-step instructions for implementing this work unit.
 
 1. Step 1
@@ -218,16 +234,19 @@ Clear, step-by-step instructions for implementing this work unit.
 3. Step 3
 
 ## Acceptance Criteria
+
 - [ ] Thing is done
 - [ ] Tests pass
 - [ ] Documentation updated
 
 ## Resources
+
 - Links to relevant code
 - Links to relevant docs
 - API endpoints to reference
 
 ## Notes
+
 Additional context for the implementing agent.
 ```
 
@@ -244,23 +263,28 @@ Additional context for the implementing agent.
 **Estimated**: 30 minutes
 
 ## Problem
+
 Button in settings page doesn't match brand colors.
 
 ## Solution
+
 Update `src/components/ui/Button.tsx` to use correct color from brand palette.
 
 ## Steps
+
 1. Open file
 2. Change color value
 3. Test in browser
 4. Run lint check
 
 ## Acceptance Criteria
+
 - [ ] Button matches brand color
 - [ ] No lint errors
 - [ ] Visually verified in browser
 
 ## Related Files
+
 - `src/components/ui/Button.tsx`
 - `src/lib/colors.ts`
 ```
@@ -302,6 +326,7 @@ Update `src/components/ui/Button.tsx` to use correct color from brand palette.
 ### Rule 1: No Duplicate Tasks
 
 **Check Before Creating**:
+
 ```bash
 # Search for similar tasks
 grep -r "keyword" .tasks/todo/
@@ -314,6 +339,7 @@ grep -r "keyword" .tasks/done/
 ### Rule 2: No Task Abandonment
 
 **If a task isn't relevant anymore**:
+
 ```bash
 # Move to backlog with archive note (don't delete)
 git mv .tasks/todo/old-task.md .tasks/backlog/old-task.md
@@ -325,6 +351,7 @@ git push origin dev
 ```
 
 **Never**:
+
 - ❌ Delete task files
 - ❌ Leave stale tasks in `todo`
 - ❌ Create new task when old one exists
@@ -332,6 +359,7 @@ git push origin dev
 ### Rule 3: Folder Movement as Unit
 
 **Always move entire folders together**:
+
 ```bash
 # RIGHT - move folder as unit
 git mv .tasks/todo/feature-name .tasks/in-progress/feature-name
@@ -348,18 +376,21 @@ git mv .tasks/todo/feature-name/A.md .tasks/in-progress/A.md
 ### Rule 4: Clear Task Ownership
 
 **Each task in `in-progress` has owner**:
+
 ```markdown
 **Claimed By**: [Agent Name]
 **Claimed At**: [Date/Time]
 ```
 
 **Multiple agents?**:
+
 - Don't claim same task twice
 - Add note: "Collaboration: Claude on backend, Codex on tests"
 
 ### Rule 5: Task Status Tracking
 
 **Task files should show current status**:
+
 ```
 Status: TODO        ← Created, not started
 Status: IN_PROGRESS ← Actively being worked on
@@ -393,6 +424,7 @@ find .tasks/in-review -type f -mtime +3
 ```
 
 **Health Metrics** (target ranges):
+
 - `todo/`: 20-50 tasks (reasonable backlog)
 - `in-progress/`: 2-5 features (focus)
 - `in-review/`: 0-3 items (awaiting review)
@@ -400,6 +432,7 @@ find .tasks/in-review -type f -mtime +3
 - `archived/`: Should grow over time (old tasks)
 
 **If metrics off**:
+
 - Too many in `todo`: Need to prioritize
 - Stuck in `in-progress`: Agent blocked?
 - Stuck in `in-review`: Reviewer bottleneck?
@@ -414,6 +447,7 @@ find .tasks/in-review -type f -mtime +3
 **Problem**: Agent can't complete task due to dependency
 
 **Solution**:
+
 ```markdown
 **Status**: BLOCKED (not a standard status, but indicates)
 **Blocked By**: Name of blocking task
@@ -424,6 +458,7 @@ Example:
 ```
 
 **Action**:
+
 1. Add `BLOCKED` note to task file
 2. Don't move it out of `in-progress`
 3. Comment in blocking task
@@ -434,6 +469,7 @@ Example:
 **Problem**: Task started but is too complex to finish in reasonable time
 
 **Solution**:
+
 ```bash
 # Split large task into smaller pieces
 # Move back to todo, break into sub-tasks
@@ -453,6 +489,7 @@ git push origin dev
 **Problem**: Two similar tasks in todo
 
 **Solution**:
+
 ```bash
 # Keep the more detailed/important one
 # Archive the duplicate to backlog
@@ -471,6 +508,7 @@ git push origin dev
 **Problem**: Requirements changed, task obsolete
 
 **Solution**:
+
 ```bash
 # Archive with reason to backlog
 git mv .tasks/todo/old-task.md .tasks/backlog/old-task.md
@@ -487,6 +525,7 @@ git push origin dev
 ## Agent Responsibilities
 
 ### Gemini (Planner)
+
 - ✅ Create tasks in `.tasks/todo/`
 - ✅ Break epics into work units (A.md, B.md, C.md)
 - ✅ Include acceptance criteria
@@ -496,6 +535,7 @@ git push origin dev
 - ❌ Don't create duplicate tasks
 
 ### Claude (Implementer)
+
 - ✅ Claim task by moving to `in-progress`
 - ✅ Implement according to task file
 - ✅ Move to `in-review` when implementation complete
@@ -504,6 +544,7 @@ git push origin dev
 - ❌ Don't modify task files (create new task instead if scope changes)
 
 ### Codex (Reviewer)
+
 - ✅ Monitor `.tasks/in-review/` for review items
 - ✅ Review, debug, and refactor as needed
 - ✅ Move to `done` when approved (ready for merge)
@@ -512,6 +553,7 @@ git push origin dev
 - ❌ Don't merge directly to main (Carlo does that)
 
 ### Carlo (Integrator)
+
 - ✅ Monitor `.tasks/done/` for release-ready items
 - ✅ Merge feature to `main` when all tasks are done
 - ✅ Handle final integration and deployment
@@ -563,6 +605,7 @@ See: .tasks/in-progress/feature-name/B.md"
 ## Prevention Checklist
 
 **Before Creating Task**:
+
 - [ ] Task doesn't already exist
 - [ ] Task is not too vague
 - [ ] Task has clear acceptance criteria
@@ -571,12 +614,14 @@ See: .tasks/in-progress/feature-name/B.md"
 - [ ] Task is assigned correct folder/filename
 
 **Before Moving Task**:
+
 - [ ] Status in file is updated
 - [ ] Entire folder moved as unit (not partial)
 - [ ] Commit message is descriptive
 - [ ] Pushed to remote
 
 **During Implementation**:
+
 - [ ] Status updated if task becomes blocked
 - [ ] Working on correct task (matches file name)
 - [ ] Frequent commits (at least once per session)
@@ -606,14 +651,14 @@ If the task board gets messy:
 
 ## Summary
 
-| Goal | How |
-|------|-----|
-| Prevent duplicate tasks | Check before creating, archive old ones |
-| Prevent lost work | Commit after every move and implementation |
-| Prevent chaos | One owner per task, clear status, regular audits |
-| Prevent confusion | Clear task descriptions, acceptance criteria |
-| Prevent blocking | Track dependencies, communicate blockers |
-| Prevent burnout | Reasonable task sizes, break epics into units |
+| Goal                    | How                                              |
+| ----------------------- | ------------------------------------------------ |
+| Prevent duplicate tasks | Check before creating, archive old ones          |
+| Prevent lost work       | Commit after every move and implementation       |
+| Prevent chaos           | One owner per task, clear status, regular audits |
+| Prevent confusion       | Clear task descriptions, acceptance criteria     |
+| Prevent blocking        | Track dependencies, communicate blockers         |
+| Prevent burnout         | Reasonable task sizes, break epics into units    |
 
 **Follow these rules, and the task board stays healthy. Break them, and it becomes a mess.**
 

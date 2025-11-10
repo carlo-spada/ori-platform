@@ -20,10 +20,10 @@ export function FAQSection() {
   return (
     <Section data-testid="faq">
       <div className="mb-12 text-center">
-        <h2 className="text-foreground mb-4 text-3xl font-semibold sm:text-4xl">
+        <h2 className="mb-4 text-3xl font-semibold text-foreground sm:text-4xl">
           {t('landing.faqTitle')}
         </h2>
-        <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
+        <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
           {t('landing.faqSubtitle')}
         </p>
       </div>
@@ -32,10 +32,10 @@ export function FAQSection() {
         <Accordion type="single" collapsible className="w-full">
           {faqs.map((faq, index) => (
             <AccordionItem key={index} value={`item-${index}`}>
-              <AccordionTrigger className="text-foreground hover:text-accent text-left text-base font-medium">
+              <AccordionTrigger className="text-left text-base font-medium text-foreground hover:text-accent">
                 {faq.q}
               </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground text-sm leading-relaxed">
+              <AccordionContent className="text-sm leading-relaxed text-muted-foreground">
                 {faq.a}
               </AccordionContent>
             </AccordionItem>

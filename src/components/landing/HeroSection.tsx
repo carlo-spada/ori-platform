@@ -22,20 +22,20 @@ export function HeroSection() {
 
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-4xl text-center">
-        <p className="text-accent mb-4 text-sm font-medium tracking-wide uppercase sm:text-base">
+        <p className="mb-4 text-sm font-medium uppercase tracking-wide text-accent sm:text-base">
           {t('landing.hero.eyebrow')}
         </p>
 
         <h1
           data-testid="hero-title"
-          className="text-foreground mb-6 text-4xl leading-tight font-semibold sm:text-5xl lg:text-6xl"
+          className="mb-6 text-4xl font-semibold leading-tight text-foreground sm:text-5xl lg:text-6xl"
         >
           {t('landing.hero.headline')}
         </h1>
 
         <p
           data-testid="hero-subtitle"
-          className="text-muted-foreground mx-auto mb-8 max-w-3xl text-lg leading-relaxed sm:text-xl"
+          className="mx-auto mb-8 max-w-3xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
         >
           {t('landing.hero.subheadline')}
         </p>
@@ -63,7 +63,7 @@ export function HeroSection() {
         </div>
 
         {/* Reassurance */}
-        <p className="text-muted-foreground text-sm">
+        <p className="text-sm text-muted-foreground">
           {t('landing.hero.reassurance')}
         </p>
       </div>

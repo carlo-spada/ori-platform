@@ -24,6 +24,7 @@ Build essential marketing and community engagement pages to establish presence, 
 **Route**: `/faq` or `/help`
 
 **Content Sections**:
+
 - General Questions (What is Ori? Who is it for?)
 - Account & Billing (Pricing, subscriptions, refunds)
 - Features & Capabilities (What can I do? Integrations?)
@@ -31,12 +32,14 @@ Build essential marketing and community engagement pages to establish presence, 
 - Technical Support (How to get help, response times)
 
 **Features**:
+
 - Categorized accordion UI (shadcn/ui)
 - Search functionality
 - "Was this helpful?" feedback buttons
 - Link to contact/support
 
 **Implementation**:
+
 ```typescript
 // src/app/faq/page.tsx
 - Use v0.dev to generate FAQ accordion component
@@ -50,6 +53,7 @@ Build essential marketing and community engagement pages to establish presence, 
 **Route**: `/whitepaper` or `/vision`
 
 **Content**:
+
 1. **The Problem** (2-3 paragraphs)
    - What pain point does Ori solve?
    - Why existing solutions fall short
@@ -72,6 +76,7 @@ Build essential marketing and community engagement pages to establish presence, 
    - Future features
 
 **Design**:
+
 - Long-form reading experience
 - Illustrations/diagrams (use v0.dev or Figma)
 - Downloadable PDF version
@@ -82,18 +87,21 @@ Build essential marketing and community engagement pages to establish presence, 
 **Route**: `/roadmap`
 
 **Sections**:
+
 - **Now** (Current sprint - 2 weeks)
 - **Next** (Next month)
 - **Later** (Next quarter)
 - **Done** (Completed features)
 
 **Features**:
+
 - Kanban-style or timeline visualization
 - Feature cards with descriptions
 - Upvote/interest indicators (optional)
 - Last updated timestamp
 
 **Implementation Options**:
+
 1. Static page (markdown-based, updated manually)
 2. Integration with GitHub Projects API
 3. Use Canny.io or ProductBoard embed
@@ -107,6 +115,7 @@ Build essential marketing and community engagement pages to establish presence, 
 **Implementation Options**:
 
 **Option A: GitHub Issues Integration**
+
 ```typescript
 // Pros: Free, integrated with dev workflow
 // Cons: Requires GitHub account
@@ -118,6 +127,7 @@ Build essential marketing and community engagement pages to establish presence, 
 ```
 
 **Option B: Canny.io Integration**
+
 ```typescript
 // Pros: Purpose-built, beautiful UI, no GitHub needed
 // Cons: Paid ($50/mo after trial)
@@ -128,6 +138,7 @@ Build essential marketing and community engagement pages to establish presence, 
 ```
 
 **Option C: Custom Implementation**
+
 ```typescript
 // Pros: Full control, no external dependency
 // Cons: More development time
@@ -147,6 +158,7 @@ Build essential marketing and community engagement pages to establish presence, 
 **Purpose**: Enable community funding and early investment opportunities
 
 **Content**:
+
 - Why support Ori early?
 - Supporter benefits/perks
 - Transparency: How funds are used
@@ -155,6 +167,7 @@ Build essential marketing and community engagement pages to establish presence, 
 **Implementation Options**:
 
 **Option A: Patreon Integration**
+
 ```typescript
 // Pros: Established platform, handles payments
 // Cons: Platform fees (5-12%)
@@ -165,6 +178,7 @@ Build essential marketing and community engagement pages to establish presence, 
 ```
 
 **Option B: Custom Stripe Donation**
+
 ```typescript
 // Pros: Direct, lower fees
 // Cons: More implementation work
@@ -176,6 +190,7 @@ Build essential marketing and community engagement pages to establish presence, 
 ```
 
 **Option C: Ko-fi / Buy Me a Coffee**
+
 ```typescript
 // Pros: Simple, quick setup
 // Cons: Less control, not "investment" focused
@@ -184,6 +199,7 @@ Build essential marketing and community engagement pages to establish presence, 
 **Recommendation**: Option B (Custom Stripe) - leverage existing infrastructure, lowest fees.
 
 **Supporter Tiers** (suggested):
+
 - **Early Bird** ($5/month) - Name on website, early access
 - **Founding Supporter** ($25/month) - Above + input on roadmap
 - **Platinum Patron** ($100/month) - Above + direct feedback sessions
@@ -191,6 +207,7 @@ Build essential marketing and community engagement pages to establish presence, 
 ## Design System
 
 Use existing shadcn/ui components:
+
 - Accordion (FAQ)
 - Card (roadmap, features)
 - Button (CTAs)
@@ -200,6 +217,7 @@ Use existing shadcn/ui components:
 ## SEO Optimization
 
 Each page should have:
+
 - Unique meta title and description
 - Open Graph tags for social sharing
 - Structured data (FAQ, Organization)
@@ -243,6 +261,7 @@ Each page should have:
 ## Success Metrics
 
 After launch, track:
+
 - Page views on each page
 - Time on page (engagement)
 - Feature request submissions

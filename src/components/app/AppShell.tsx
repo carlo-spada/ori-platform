@@ -15,7 +15,7 @@ export interface AppShellProps {
  */
 export function AppShell({ children }: AppShellProps) {
   return (
-    <div className="bg-background text-foreground flex min-h-screen w-screen flex-col overflow-hidden md:flex-row">
+    <div className="flex min-h-screen w-screen flex-col overflow-hidden bg-background text-foreground md:flex-row">
       {/* Desktop/Tablet Sidebar - Hidden on mobile */}
       <SidebarNav className="hidden md:flex" />
 

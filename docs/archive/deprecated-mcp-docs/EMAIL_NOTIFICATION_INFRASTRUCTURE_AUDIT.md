@@ -9,6 +9,7 @@
 ## Executive Summary
 
 The Ori Platform has **zero functional email/notification infrastructure** currently deployed. The system contains:
+
 - Placeholder code for email sending (`sendNotification`, `sendPaymentFailureNotification`, `sendPaymentMethodExpiringNotification`)
 - Stripe webhook hooks ready to trigger notifications (but no actual email delivery)
 - Frontend UI for notification preferences (but no backend persistence)
@@ -23,11 +24,13 @@ This is actually a **greenfield opportunity** to build a clean, production-ready
 ## 1. Current Email/Notification Service Files
 
 ### Primary Implementation File
+
 **Location**: `/Users/carlo/Desktop/Projects/ori-platform/services/core-api/src/utils/notifications.ts`
 
 **Status**: Placeholder only (119 lines)
 
 **Functions Defined**:
+
 ```typescript
 // 1. Generic notification sender (placeholder)
 export async function sendNotification(
@@ -50,6 +53,7 @@ export async function sendPaymentMethodExpiringNotification(
 ```
 
 **Current Behavior**:
+
 - Attempts to insert into non-existent `notifications` table
 - Has SendGrid code as comments (removed, legacy)
 - Includes placeholder for email sending
@@ -57,12 +61,13 @@ export async function sendPaymentMethodExpiringNotification(
 - Called from Stripe webhook handler but doesn't deliver
 
 **Interfaces Defined**:
+
 ```typescript
 export interface NotificationOptions {
-  to: string              // Email address
-  subject: string         // Email subject line
-  message: string         // Email message body
-  type?: 'email' | 'in_app' | 'both'  // Delivery method
+  to: string // Email address
+  subject: string // Email subject line
+  message: string // Email message body
+  type?: 'email' | 'in_app' | 'both' // Delivery method
 }
 ```
 
@@ -71,12 +76,15 @@ export interface NotificationOptions {
 ## 2. Environment Configuration
 
 ### File Location
+
 `/Users/carlo/Desktop/Projects/ori-platform/services/core-api/.env.example`
 
 ### Current Email-Related Configuration
+
 **MISSING**: All email provider configuration
 
 ### What Should Be Added
+
 ```env
 # Resend Configuration (Phase 3)
 RESEND_API_KEY=re_xxxxxxxxxxxxx        # Get from: https://resend.com/home → API Keys
@@ -84,7 +92,8 @@ RESEND_FROM_EMAIL=noreply@getori.app   # Sender email address
 RESEND_REPLY_TO=support@getori.app     # Reply-to address (optional)
 ```
 
-**Status in .env.example**: 
+**Status in .env.example**:
+
 - Lines 81-83: Comments reference Resend MCP but values are placeholders
 - These are listed under "MCP (Model Context Protocol) Configuration" section
 - Marked as development-only for local testing
@@ -102,6 +111,7 @@ The application has **NO** notification-related tables created yet.
 **Purpose**: Store in-app notifications for users
 
 **Proposed Schema**:
+
 ```sql
 CREATE TABLE notifications (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -126,6 +136,7 @@ CREATE INDEX idx_notifications_read ON notifications(read);
 **Purpose**: Store user email notification preferences
 
 **Proposed Schema** (Option A - Separate Table):
+
 ```sql
 CREATE TABLE notification_preferences (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -140,6 +151,7 @@ CREATE TABLE notification_preferences (
 ```
 
 **Proposed Schema** (Option B - JSONB Column in user_profiles):
+
 ```sql
 ALTER TABLE user_profiles
 ADD COLUMN notification_preferences JSONB DEFAULT '{
@@ -157,6 +169,7 @@ ADD COLUMN notification_preferences JSONB DEFAULT '{
 **Purpose**: Track sent emails for debugging and compliance
 
 **Proposed Schema**:
+
 ```sql
 CREATE TABLE email_logs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -179,6 +192,7 @@ CREATE INDEX idx_email_logs_status ON email_logs(status);
 ### Existing Related Tables
 
 **user_profiles table** (currently has):
+
 - `stripe_customer_id` - Links to Stripe for payment emails
 - `stripe_subscription_id` - Tracks subscription status
 - `subscription_status` - For subscription-related notifications
@@ -210,7 +224,8 @@ These provide the foundation for payment-related emails.
 5. **PUT /api/v1/notifications/preferences**
    - Update user's email notification preferences
 
-**Implementation Location**: 
+**Implementation Location**:
+
 - New file needed: `services/core-api/src/routes/notifications.ts`
 - Updates needed: `services/core-api/src/routes/payments.ts` (email triggers)
 
@@ -315,14 +330,15 @@ File: `/Users/carlo/Desktop/Projects/ori-platform/services/core-api/src/routes/p
 
 File: `/Users/carlo/Desktop/Projects/ori-platform/services/core-api/src/routes/__tests__/payments.webhooks.test.ts`
 
-**Current Tests**: 
+**Current Tests**:
+
 - Webhook signature validation (Lines 394-432)
 - Event structure validation (Lines 435-501)
 - Database updates documentation (Lines 529-571)
 - Payment failure notification test comment (Line 329-343)
 - Payment method expiring notification test comment (Line 380-390)
 
-**Status**: Tests document what *should* happen but don't test actual email sending
+**Status**: Tests document what _should_ happen but don't test actual email sending
 
 ---
 
@@ -333,6 +349,7 @@ File: `/Users/carlo/Desktop/Projects/ori-platform/services/core-api/src/routes/_
 **File**: `src/components/settings/NotificationSettings.tsx`
 
 **Current Implementation**:
+
 - Shows toggles for:
   - New job recommendations
   - Application status updates
@@ -346,7 +363,8 @@ File: `/Users/carlo/Desktop/Projects/ori-platform/services/core-api/src/routes/_
 
 **File**: `src/app/app/settings/page.tsx`
 
-**Status**: 
+**Status**:
+
 - Notification preferences component rendered
 - No API integration for loading/saving preferences
 - No loading/error states
@@ -372,6 +390,7 @@ export interface NotificationPreferences {
 ### Journey 1: User Signup (Priority: HIGH)
 
 **Current Flow**:
+
 ```
 1. User signs up
 2. Supabase Auth sends email verification (Supabase-branded)
@@ -380,6 +399,7 @@ export interface NotificationPreferences {
 ```
 
 **Missing**:
+
 - Welcome email from Ori (after confirmation)
 - Personalized onboarding guidance
 - Feature overview
@@ -387,40 +407,47 @@ export interface NotificationPreferences {
 ### Journey 2: Job Recommendations (Priority: HIGH)
 
 **Current Flow**:
+
 ```
 1. AI Engine generates recommendations
 2. Frontend displays in dashboard
 ```
 
 **Missing**:
+
 - Email notification when new recommendations available
 - Job preview in email
 - CTA to view in app
 
-**Integration Point**: 
+**Integration Point**:
+
 - Recommendation endpoint (likely `/api/v1/chat` or `/api/v1/jobs`)
 - User preference: `newJobRecommendations`
 
 ### Journey 3: Application Status Updates (Priority: MEDIUM)
 
 **Current Flow**:
+
 ```
 1. User updates application status
 2. Status visible in dashboard
 ```
 
 **Missing**:
+
 - Email notification on status change
 - Next steps guidance
 - Timeline information
 
 **Integration Point**:
+
 - File: `services/core-api/src/routes/applications.ts`
 - User preference: `applicationStatusUpdates`
 
 ### Journey 4: Payment Events (Priority: HIGH - Partially Implemented)
 
 **Current Flow**:
+
 ```
 1. Stripe event occurs (payment success/failure, card expiring)
 2. Webhook sent to `/api/v1/payments/webhook`
@@ -438,6 +465,7 @@ export interface NotificationPreferences {
 **UI Exists**: Yes - preference toggle in settings
 
 **What's Missing**:
+
 - Scheduled job to send weekly/monthly emails
 - Personalized content
 - Optional AI Engine integration
@@ -457,13 +485,15 @@ export interface NotificationPreferences {
    - Comments about email notification (not tested)
    - No actual email sending tests
 
-**Gap**: 
+**Gap**:
+
 - No unit tests for `sendNotification()`
 - No integration tests for Stripe → email flow
 - No preference checking logic tests
 - No email template rendering tests
 
 **What's Needed**:
+
 - Tests for email service functions
 - Mocked Resend API calls
 - Integration tests for webhook → email
@@ -476,6 +506,7 @@ export interface NotificationPreferences {
 ### Trigger Point 1: Stripe Webhooks (ACTIVE)
 
 **Flow**:
+
 ```
 Stripe Event → API POST to /api/v1/payments/webhook
   ↓ (signature verified)
@@ -491,12 +522,14 @@ Notification inserted to database (or fails silently)
 ```
 
 **Events Sending Notifications**:
+
 - `invoice.payment_failed` → Payment failure email
 - `customer.source.expiring` → Card expiring email
 
 ### Trigger Point 2: User Signup (NOT YET IMPLEMENTED)
 
 **Potential Flow**:
+
 ```
 User confirms email → Backend detects confirmation (needs hook)
   ↓
@@ -508,6 +541,7 @@ sendWelcomeEmail(supabase, userId)
 ### Trigger Point 3: Recommendations (NOT YET IMPLEMENTED)
 
 **Potential Flow**:
+
 ```
 New recommendation generated → Check user preference
   ↓
@@ -519,6 +553,7 @@ If enabled: sendRecommendationEmail(supabase, userId, recommendation)
 ### Trigger Point 4: Application Status Update (NOT YET IMPLEMENTED)
 
 **Potential Flow**:
+
 ```
 User updates application status → Check user preference
   ↓
@@ -535,12 +570,14 @@ If enabled: sendApplicationStatusEmail(supabase, userId, application)
 
 **Path**: `POST /api/v1/payments/webhook`
 
-**Raw Body Handling**: 
+**Raw Body Handling**:
+
 - Special middleware in `src/index.ts` (Lines 31-35)
 - `express.raw({ type: 'application/json' })` applied before JSON parsing
 - Required for Stripe signature verification
 
 **Webhook Events Handled** (7 types):
+
 1. `checkout.session.completed` - Initial subscription
 2. `customer.subscription.created` - New subscription
 3. `customer.subscription.updated` - Changes/upgrades
@@ -552,11 +589,13 @@ If enabled: sendApplicationStatusEmail(supabase, userId, application)
 ### Data Linkage
 
 **Stripe Customer ↔ User Profile**:
+
 - User profile has `stripe_customer_id` column
 - Used to look up user when webhook received
 - Used to fetch user email from Supabase auth
 
 **Current Email Lookup**:
+
 ```typescript
 // From sendPaymentFailureNotification()
 const { data: profile } = await supabase
@@ -565,7 +604,9 @@ const { data: profile } = await supabase
   .eq('stripe_customer_id', customerId)
   .single()
 
-const { data: { user } } = await supabase.auth.admin.getUserById(profile.user_id)
+const {
+  data: { user },
+} = await supabase.auth.admin.getUserById(profile.user_id)
 // user.email is available here
 ```
 
@@ -575,33 +616,33 @@ const { data: { user } } = await supabase.auth.admin.getUserById(profile.user_id
 
 ### Core API Files (Backend)
 
-| File | Location | Status | Purpose |
-|------|----------|--------|---------|
-| notifications.ts | `services/core-api/src/utils/` | Placeholder | Email/notification sending (non-functional) |
-| payments.ts | `services/core-api/src/routes/` | Partial | Stripe webhooks with email hooks |
-| .env.example | `services/core-api/` | Config | Environment variable template |
-| index.ts | `services/core-api/src/` | Active | Express app setup with webhook middleware |
-| payments.webhooks.test.ts | `services/core-api/src/routes/__tests__/` | Tests | Webhook event tests |
+| File                      | Location                                  | Status      | Purpose                                     |
+| ------------------------- | ----------------------------------------- | ----------- | ------------------------------------------- |
+| notifications.ts          | `services/core-api/src/utils/`            | Placeholder | Email/notification sending (non-functional) |
+| payments.ts               | `services/core-api/src/routes/`           | Partial     | Stripe webhooks with email hooks            |
+| .env.example              | `services/core-api/`                      | Config      | Environment variable template               |
+| index.ts                  | `services/core-api/src/`                  | Active      | Express app setup with webhook middleware   |
+| payments.webhooks.test.ts | `services/core-api/src/routes/__tests__/` | Tests       | Webhook event tests                         |
 
 ### Frontend Files
 
-| File | Location | Status | Purpose |
-|------|----------|--------|---------|
-| NotificationSettings.tsx | `src/components/settings/` | UI Only | Notification preference toggles |
-| settings/page.tsx | `src/app/app/` | Partial | Settings page with notification component |
-| types.ts | `src/lib/` | Defined | NotificationPreferences interface |
+| File                     | Location                   | Status  | Purpose                                   |
+| ------------------------ | -------------------------- | ------- | ----------------------------------------- |
+| NotificationSettings.tsx | `src/components/settings/` | UI Only | Notification preference toggles           |
+| settings/page.tsx        | `src/app/app/`             | Partial | Settings page with notification component |
+| types.ts                 | `src/lib/`                 | Defined | NotificationPreferences interface         |
 
 ### Database Files
 
-| File | Location | Status | Purpose |
-|------|----------|--------|---------|
+| File        | Location               | Status     | Purpose                                       |
+| ----------- | ---------------------- | ---------- | --------------------------------------------- |
 | migrations/ | `supabase/migrations/` | Incomplete | Database schema (notifications table missing) |
 
 ### Documentation Files
 
-| File | Location | Status | Purpose |
-|------|----------|--------|---------|
-| RESEND_MCP_READINESS.md | `docs/` | Comprehensive | Phase 3 email implementation plan |
+| File                    | Location | Status        | Purpose                           |
+| ----------------------- | -------- | ------------- | --------------------------------- |
+| RESEND_MCP_READINESS.md | `docs/`  | Comprehensive | Phase 3 email implementation plan |
 
 ---
 
@@ -673,6 +714,7 @@ const { data: { user } } = await supabase.auth.admin.getUserById(profile.user_id
 ## 14. Readiness Assessment
 
 ### What's Complete ✓
+
 - Stripe webhook infrastructure (receiving events)
 - Frontend UI for notification preferences
 - Type definitions for notifications
@@ -680,6 +722,7 @@ const { data: { user } } = await supabase.auth.admin.getUserById(profile.user_id
 - User email available from Supabase auth + Stripe
 
 ### What's Missing ❌
+
 - Email service integration
 - Email templates
 - Database tables for notifications & preferences
@@ -690,11 +733,13 @@ const { data: { user } } = await supabase.auth.admin.getUserById(profile.user_id
 - Welcome/recommendation email triggers
 
 ### Blockers: NONE
+
 - No blocking dependencies
 - Can be built independently
 - Clean greenfield opportunity
 
 ### Timeline Estimate: 60-80 hours
+
 - Resend MCP setup: 4-6 hours
 - Email service implementation: 12-16 hours
 - API endpoints: 10-15 hours
@@ -709,6 +754,7 @@ const { data: { user } } = await supabase.auth.admin.getUserById(profile.user_id
 ## 15. Key Files to Reference
 
 **Absolute Paths**:
+
 1. `/Users/carlo/Desktop/Projects/ori-platform/services/core-api/src/utils/notifications.ts` - Primary placeholder
 2. `/Users/carlo/Desktop/Projects/ori-platform/services/core-api/src/routes/payments.ts` - Stripe webhook integration
 3. `/Users/carlo/Desktop/Projects/ori-platform/services/core-api/.env.example` - Configuration template
@@ -721,6 +767,7 @@ const { data: { user } } = await supabase.auth.admin.getUserById(profile.user_id
 ## Summary
 
 The Ori Platform has **zero functional email/notification infrastructure**. The code skeleton exists with:
+
 - Placeholder notification functions that don't send emails
 - Stripe webhook hooks ready to trigger notifications
 - Frontend UI for preferences (no backend)
@@ -730,6 +777,7 @@ The Ori Platform has **zero functional email/notification infrastructure**. The 
 This is a **greenfield opportunity** to build a clean system from scratch using Resend MCP, starting with payment notifications and expanding to recommendations and onboarding emails.
 
 **Next Steps** (Phase 3):
+
 1. Create notification database tables
 2. Build email service layer with Resend MCP
 3. Create email templates (payment, welcome, recommendations)
@@ -738,4 +786,3 @@ This is a **greenfield opportunity** to build a clean system from scratch using 
 6. Integrate preference saving in frontend settings
 7. Add welcome email to signup flow
 8. Add recommendation email triggers
-

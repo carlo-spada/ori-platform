@@ -37,16 +37,19 @@ The following migrations exist and need to be applied:
 ### Option 1: Using Supabase CLI (Recommended)
 
 1. **Install Supabase CLI:**
+
    ```bash
    npm install -g supabase
    ```
 
 2. **Login to Supabase:**
+
    ```bash
    supabase login
    ```
 
 3. **Link your project:**
+
    ```bash
    supabase link --project-ref YOUR_PROJECT_REF
    ```
@@ -55,6 +58,7 @@ The following migrations exist and need to be applied:
    `https://supabase.com/dashboard/project/YOUR_PROJECT_REF`
 
 4. **Push migrations:**
+
    ```bash
    supabase db push
    ```
@@ -108,6 +112,7 @@ ORDER BY table_name;
 ```
 
 You should see:
+
 - `user_profiles`
 - `experiences`
 - `education`
@@ -141,6 +146,7 @@ ORDER BY column_name;
 ```
 
 Should include:
+
 - `id`, `user_id`, `created_at`, `updated_at`
 - `full_name`, `headline`, `location`, `about`
 - `skills`, `target_roles`, `long_term_vision`
@@ -154,6 +160,7 @@ Should include:
 **Cause:** Migration was partially applied or run multiple times
 
 **Solution:**
+
 - If using CLI: Supabase tracks applied migrations, skip this error
 - If manual: Skip the CREATE TABLE statement that already exists
 
@@ -181,6 +188,7 @@ After migrations are applied:
    - Redirect URLs: `https://app.getori.app/**`
 
 2. **Test creating a user:**
+
    ```bash
    # Via app
    Visit https://app.getori.app/signup
@@ -195,6 +203,7 @@ After migrations are applied:
 ## Development vs Production
 
 ### Development (Local)
+
 If you're developing locally, you can use Supabase local development:
 
 ```bash
@@ -203,6 +212,7 @@ supabase db reset  # Applies all migrations
 ```
 
 ### Production
+
 For production, always use `supabase db push` or manually apply migrations via dashboard.
 
 **Never** use `db reset` in production - it will delete all data!
@@ -212,9 +222,11 @@ For production, always use `supabase db push` or manually apply migrations via d
 If you need to rollback a migration:
 
 ### Using CLI
+
 Supabase CLI doesn't support automatic rollback. You need to write a manual rollback migration.
 
 ### Manual Rollback
+
 Create a new migration that undoes the changes:
 
 ```bash
@@ -244,6 +256,7 @@ If you encounter issues:
 ## Migration History
 
 All migrations are tracked in `supabase/migrations/` with timestamps. Each file is named:
+
 ```
 YYYYMMDDHHMMSS_descriptive_name.sql
 ```

@@ -178,9 +178,6 @@ const FALLBACK_TOC_ITEMS = [
 
 export default function TermsOfServicePage() {
   return (
-    <LegalDocument
-      namespace="legal-terms"
-      fallbackContent={FALLBACK_CONTENT}
-    />
+    <LegalDocument namespace="legal-terms" fallbackContent={FALLBACK_CONTENT} />
   )
 }

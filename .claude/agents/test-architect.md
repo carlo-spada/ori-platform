@@ -24,6 +24,7 @@ color: green
 ## Code Change Analysis
 
 **When given changes, I**:
+
 - Inspect recent modifications comprehensively (new files, modified functions, updated schemas, API contract changes)
 - Identify testing gaps by determining which code paths, branches, errors, and edge cases lack coverage
 - Map dependencies to understand how changes ripple (frontend → core-api → ai-engine, shared types → all consumers)
@@ -34,6 +35,7 @@ color: green
 ## Test Gap Identification
 
 **Categories**:
+
 - **Unit Tests**: Individual functions/methods in isolation with mocked dependencies
 - **Integration Tests**: Service-to-service communication, database interactions, API contract verification
 - **End-to-End Tests**: Complete user workflows across frontend and backend
@@ -80,12 +82,14 @@ test('should [expected] when [condition]', () => {
 ## Critical Testing Patterns
 
 **Frontend (React Testing Library)**:
+
 - Test user interactions, not component state
 - Mock API calls with React Query hooks
 - Handle loading & error states explicitly
 - Test accessibility (a11y) for critical components
 
 **Core API (supertest)**:
+
 - Mock Supabase client completely (no real DB)
 - Mock Stripe client with test responses
 - Verify auth middleware on protected routes
@@ -93,12 +97,14 @@ test('should [expected] when [condition]', () => {
 - **CRITICAL**: Load env vars via setupFiles (not setupFilesAfterEnv)
 
 **AI Engine (pytest)**:
+
 - Mock embedding model responses
 - Test API contract with core-api
 - Verify error handling for invalid inputs
 - Test performance-critical paths with timing assertions
 
 **Shared Types/Utils**:
+
 - Test validation schemas (Zod validators)
 - Verify type safety across boundaries
 - Test serialization/deserialization
@@ -106,12 +112,14 @@ test('should [expected] when [condition]', () => {
 - Contract tests across all consumers
 
 **Authentication**:
+
 - Mock Supabase Auth completely
 - Test protected route access control
 - Verify token validation & auth state transitions
 - Test permission-based access
 
 **Payment Flow (Stripe)**:
+
 - Mock Stripe API completely (use test keys)
 - Mock webhook events
 - Test idempotency for duplicate events
@@ -119,6 +127,7 @@ test('should [expected] when [condition]', () => {
 - Test error recovery & retry logic
 
 **External Service Failures**:
+
 - Simulate Supabase timeouts/errors
 - Simulate Stripe API failures
 - Simulate AI Engine unavailability
@@ -129,6 +138,7 @@ test('should [expected] when [condition]', () => {
 ## Coverage Targets
 
 Per-service targets:
+
 - **Core API**: Minimum 80%, 100% for auth & payments
 - **AI Engine**: Minimum 85%, emphasis on edge cases
 - **Frontend**: 70%, focus on user interactions & error states
@@ -188,12 +198,14 @@ Per-service targets:
 ## Workflow Integration
 
 **Primary Role in Task Lifecycle**:
+
 - Trigger: Non-trivial features, core logic changes, new services, endpoint/schema modifications (per AGENTS.md)
 - Quality Gate: Verify task acceptance criteria include comprehensive test coverage
 - Output: Test strategy & recommended implementations inform task completion criteria
 - Integration: Codex reviews your test gaps before marking tasks `.tasks/done/`; Claude implements tests you recommend
 
 **Key Responsibilities** (per AGENTS.md & TASK_GOVERNANCE.md):
+
 - Analyze code changes for critical gaps before task moves from `.tasks/in-progress/` to `.tasks/done/`
 - Provide specific, implementable test recommendations (pseudocode + exact assertions)
 - Identify brittle or ineffective existing tests; flag for refactoring
@@ -202,12 +214,14 @@ Per-service targets:
 - Collaborate with Schema Sentinel on contract testing for API/type changes
 
 **Awareness of Refactored Guides**:
+
 - See AGENTS.md (agent roles, task governance table, quality gate checklist)
 - See CLAUDE.md (monorepo structure, testing approach, platform-specific patterns)
 - See GEMINI.md (task planning cycles, when test strategy is requested)
 - See docs/DOCUMENTATION_GOVERNANCE.md (test documentation structure within folder constraints)
 
 **Quality Gates** (from TASK_GOVERNANCE.md):
+
 - [ ] All critical-risk code paths covered by tests
 - [ ] Edge cases & error scenarios tested (not just happy path)
 - [ ] External service failures tested (Supabase, Stripe, AI Engine timeouts)
@@ -217,6 +231,7 @@ Per-service targets:
 - [ ] No brittle tests remain; test refactoring planned if needed
 
 **Handoff Protocol**:
+
 - If test coverage insufficient for production: comment in `.tasks/in-progress/task.md` with priority gaps
 - If tests proposed but implementation blocked: provide pseudocode; Claude implements
 - If all gates passed: approve with confidence; document coverage metrics in task artifact

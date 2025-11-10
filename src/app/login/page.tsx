@@ -46,16 +46,16 @@ export default function Login() {
   }
 
   return (
-    <div className="bg-background flex min-h-screen w-full items-center justify-center px-4">
+    <div className="flex min-h-screen w-full items-center justify-center bg-background px-4">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
           <Link
             href="/"
-            className="text-foreground hover:text-accent mb-4 inline-block text-2xl font-semibold transition-colors"
+            className="mb-4 inline-block text-2xl font-semibold text-foreground transition-colors hover:text-accent"
           >
             Ori
           </Link>
-          <h1 className="text-foreground mb-2 text-3xl font-bold">
+          <h1 className="mb-2 text-3xl font-bold text-foreground">
             Welcome back
           </h1>
           <p className="text-muted-foreground">
@@ -64,11 +64,11 @@ export default function Login() {
         </div>
 
         <div className="space-y-6">
-          <div className="border-border bg-card space-y-4 rounded-xl border p-8">
+          <div className="space-y-4 rounded-xl border border-border bg-card p-8">
             <div>
               <label
                 htmlFor="email"
-                className="text-foreground mb-2 block text-sm font-medium"
+                className="mb-2 block text-sm font-medium text-foreground"
               >
                 Email
               </label>
@@ -76,7 +76,7 @@ export default function Login() {
                 type="email"
                 id="email"
                 name="email"
-                className="border-border bg-background text-foreground focus:ring-accent w-full rounded-lg border px-4 py-2 focus:ring-2 focus:outline-none"
+                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
                 placeholder="you@example.com"
               />
             </div>
@@ -84,7 +84,7 @@ export default function Login() {
             <div>
               <label
                 htmlFor="password"
-                className="text-foreground mb-2 block text-sm font-medium"
+                className="mb-2 block text-sm font-medium text-foreground"
               >
                 Password
               </label>
@@ -92,7 +92,7 @@ export default function Login() {
                 type="password"
                 id="password"
                 name="password"
-                className="border-border bg-background text-foreground focus:ring-accent w-full rounded-lg border px-4 py-2 focus:ring-2 focus:outline-none"
+                className="w-full rounded-lg border border-border bg-background px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
                 placeholder="••••••••"
               />
             </div>
@@ -102,11 +102,11 @@ export default function Login() {
             </Button>
           </div>
 
-          <p className="text-muted-foreground text-center text-sm">
+          <p className="text-center text-sm text-muted-foreground">
             Don&apos;t have an account?{' '}
             <Link
               href="/signup"
-              className="text-accent hover:text-accent/80 underline underline-offset-2"
+              className="text-accent underline underline-offset-2 hover:text-accent/80"
             >
               Sign up
             </Link>
@@ -115,7 +115,7 @@ export default function Login() {
           <p className="text-center">
             <Link
               href="/"
-              className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+              className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
               ← Back to home
             </Link>

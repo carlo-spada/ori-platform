@@ -60,9 +60,7 @@ export function getPlanKeyFromStatus(
 /**
  * Get subscription status from Stripe price ID
  */
-export function getStatusFromPriceId(
-  priceId: string,
-): string {
+export function getStatusFromPriceId(priceId: string): string {
   for (const [key, plan] of Object.entries(STRIPE_PLANS)) {
     if (plan.priceId === priceId) {
       return key

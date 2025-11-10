@@ -21,12 +21,12 @@ interface StatCardProps {
 function StatCard({ icon, label, value, trend }: StatCardProps) {
   return (
     <article
-      className="border-border bg-card hover:bg-card/80 flex flex-col gap-3 rounded-xl border p-4 transition-colors"
+      className="flex flex-col gap-3 rounded-xl border border-border bg-card p-4 transition-colors hover:bg-card/80"
       aria-label={`${label}: ${value}`}
     >
       <div className="flex items-center justify-between">
         <div
-          className="bg-primary/10 text-primary flex h-10 w-10 items-center justify-center rounded-lg"
+          className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary"
           aria-hidden="true"
         >
           {icon}
@@ -42,10 +42,10 @@ function StatCard({ icon, label, value, trend }: StatCardProps) {
         )}
       </div>
       <div>
-        <div className="text-foreground text-2xl font-bold tabular-nums">
+        <div className="text-2xl font-bold tabular-nums text-foreground">
           {typeof value === 'number' ? value.toLocaleString() : value}
         </div>
-        <div className="text-muted-foreground mt-0.5 text-sm">{label}</div>
+        <div className="mt-0.5 text-sm text-muted-foreground">{label}</div>
       </div>
     </article>
   )

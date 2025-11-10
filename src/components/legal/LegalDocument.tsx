@@ -12,7 +12,10 @@ interface LegalDocumentProps {
  * Unified component for rendering legal documents from translation files
  * This replaces the hardcoded content in individual legal pages
  */
-export function LegalDocument({ namespace, fallbackContent }: LegalDocumentProps) {
+export function LegalDocument({
+  namespace,
+  fallbackContent,
+}: LegalDocumentProps) {
   const { t, i18n } = useTranslation(namespace)
 
   // Get the translated content
@@ -21,15 +24,18 @@ export function LegalDocument({ namespace, fallbackContent }: LegalDocumentProps
   const content = t('content', { defaultValue: fallbackContent || '' })
 
   // Get table of contents items if they exist
-  const tocItemsRaw = t('tocItems', { returnObjects: true, defaultValue: [] }) as Array<{
+  const tocItemsRaw = t('tocItems', {
+    returnObjects: true,
+    defaultValue: [],
+  }) as Array<{
     id: string
     title: string
   }>
 
   // Map title to label for LegalPageLayout compatibility
-  const tocItems = tocItemsRaw.map(item => ({
+  const tocItems = tocItemsRaw.map((item) => ({
     id: item.id,
-    label: item.title
+    label: item.title,
   }))
 
   return (

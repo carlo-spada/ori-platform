@@ -18,50 +18,52 @@ export default function BlogIndexPage() {
 
   // Load posts from translations
   const translatedPosts = t('blogPage.index.posts', { returnObjects: true })
-  const mockPosts: BlogPost[] = Array.isArray(translatedPosts) ? translatedPosts : [
-    {
-      slug: 'future-of-work-ai-human-collaboration',
-      title: 'The Future of Work: AI and Human Collaboration',
-      excerpt:
-        'Exploring how artificial intelligence is reshaping the workplace and creating new opportunities for meaningful human contribution.',
-      content: '<p>Full article content would go here...</p>',
-      author: t('blogPage.post.defaultAuthor'),
-      date: '2025-01-15T10:00:00Z',
-      readingTimeMinutes: 8,
-      category: 'Future of Work',
-      tags: ['AI', 'Technology', 'Career'],
-      featureImageUrl:
-        'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=675&fit=crop',
-    },
-    {
-      slug: 'building-adaptive-career-pathways',
-      title: 'Building Adaptive Career Pathways in a Changing World',
-      excerpt:
-        'How to navigate career transitions and build resilience in an ever-evolving job market.',
-      content: '<p>Full article content would go here...</p>',
-      author: t('blogPage.post.defaultAuthor'),
-      date: '2025-01-10T10:00:00Z',
-      readingTimeMinutes: 6,
-      category: 'Career Development',
-      tags: ['Career', 'Growth', 'Skills'],
-      featureImageUrl:
-        'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=675&fit=crop',
-    },
-    {
-      slug: 'empathy-in-technology-design',
-      title: 'Empathy in Technology Design',
-      excerpt:
-        'Why empathy-first design principles are essential for building technology that truly serves people.',
-      content: '<p>Full article content would go here...</p>',
-      author: t('blogPage.post.defaultAuthor'),
-      date: '2025-01-05T10:00:00Z',
-      readingTimeMinutes: 7,
-      category: 'Technology',
-      tags: ['Design', 'Empathy', 'UX'],
-      featureImageUrl:
-        'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&h=675&fit=crop',
-    },
-  ]
+  const mockPosts: BlogPost[] = Array.isArray(translatedPosts)
+    ? translatedPosts
+    : [
+        {
+          slug: 'future-of-work-ai-human-collaboration',
+          title: 'The Future of Work: AI and Human Collaboration',
+          excerpt:
+            'Exploring how artificial intelligence is reshaping the workplace and creating new opportunities for meaningful human contribution.',
+          content: '<p>Full article content would go here...</p>',
+          author: t('blogPage.post.defaultAuthor'),
+          date: '2025-01-15T10:00:00Z',
+          readingTimeMinutes: 8,
+          category: 'Future of Work',
+          tags: ['AI', 'Technology', 'Career'],
+          featureImageUrl:
+            'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=675&fit=crop',
+        },
+        {
+          slug: 'building-adaptive-career-pathways',
+          title: 'Building Adaptive Career Pathways in a Changing World',
+          excerpt:
+            'How to navigate career transitions and build resilience in an ever-evolving job market.',
+          content: '<p>Full article content would go here...</p>',
+          author: t('blogPage.post.defaultAuthor'),
+          date: '2025-01-10T10:00:00Z',
+          readingTimeMinutes: 6,
+          category: 'Career Development',
+          tags: ['Career', 'Growth', 'Skills'],
+          featureImageUrl:
+            'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=675&fit=crop',
+        },
+        {
+          slug: 'empathy-in-technology-design',
+          title: 'Empathy in Technology Design',
+          excerpt:
+            'Why empathy-first design principles are essential for building technology that truly serves people.',
+          content: '<p>Full article content would go here...</p>',
+          author: t('blogPage.post.defaultAuthor'),
+          date: '2025-01-05T10:00:00Z',
+          readingTimeMinutes: 7,
+          category: 'Technology',
+          tags: ['Design', 'Empathy', 'UX'],
+          featureImageUrl:
+            'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1200&h=675&fit=crop',
+        },
+      ]
 
   // Set SEO metadata
   useEffect(() => {
@@ -98,10 +100,10 @@ export default function BlogIndexPage() {
     <PublicLayout>
       {/* Page Header */}
       <Section data-testid="blog-header" className="text-center">
-        <h1 className="text-foreground mb-6 text-4xl font-bold sm:text-5xl lg:text-6xl">
+        <h1 className="mb-6 text-4xl font-bold text-foreground sm:text-5xl lg:text-6xl">
           {t('blogPage.index.header.title')}
         </h1>
-        <p className="text-muted-foreground mx-auto max-w-3xl text-lg sm:text-xl">
+        <p className="mx-auto max-w-3xl text-lg text-muted-foreground sm:text-xl">
           {t('blogPage.index.header.subheadline')}
         </p>
       </Section>
@@ -140,7 +142,7 @@ export default function BlogIndexPage() {
               {t('blogPage.index.pagination.previous')}
             </Button>
 
-            <span className="text-muted-foreground text-sm">
+            <span className="text-sm text-muted-foreground">
               Page {currentPage} of {totalPages}
             </span>
 

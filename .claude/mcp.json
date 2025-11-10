@@ -2,10 +2,7 @@
   "mcpServers": {
     "stripe": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-stripe"
-      ],
+      "args": ["-y", "@modelcontextprotocol/server-stripe"],
       "env": {
         "STRIPE_API_KEY": "${STRIPE_API_KEY}",
         "STRIPE_WEBHOOK_SECRET": "${STRIPE_WEBHOOK_SECRET}"
@@ -15,10 +12,7 @@
     },
     "resend": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-resend"
-      ],
+      "args": ["-y", "@modelcontextprotocol/server-resend"],
       "env": {
         "RESEND_API_KEY": "${RESEND_API_KEY}"
       },
@@ -27,10 +21,7 @@
     },
     "postgres": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-postgres"
-      ],
+      "args": ["-y", "@modelcontextprotocol/server-postgres"],
       "env": {
         "DATABASE_URL": "${DATABASE_URL}",
         "READ_ONLY": "false"

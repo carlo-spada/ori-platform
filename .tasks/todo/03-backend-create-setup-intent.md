@@ -21,5 +21,5 @@ Create a new API endpoint in `services/core-api` that the frontend can call to i
 - New unit tests are added to verify the endpoint's functionality.
 
 ---
-**Note to Claude:** This task has been updated to switch from Stripe Checkout Sessions to Stripe Setup Intents to support an embedded payment experience using Stripe Elements. Please adapt your implementation accordingly.
 
+**Note to Claude:** This task has been updated to switch from Stripe Checkout Sessions to Stripe Setup Intents to support an embedded payment experience using Stripe Elements. Please adapt your implementation accordingly.

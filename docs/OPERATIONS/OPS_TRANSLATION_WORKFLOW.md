@@ -64,15 +64,15 @@ DEEPL_API_KEY=your_key tsx scripts/translate.ts
 
 #### Command Line Options
 
-| Option | Description | Example |
-|--------|-------------|---------|
-| `--sync` | Translate only missing keys (default) | `--sync` |
-| `--force` | Retranslate all keys, overwrite existing | `--force` |
-| `--check` | Check for missing translations without changes | `--check` |
-| `--namespace` | Target specific namespace(s) | `--namespace=legal-terms,translation` |
-| `--language` | Target specific language(s) | `--language=de,es` |
-| `--verbose` | Show detailed progress | `--verbose` |
-| `--dry-run` | Preview changes without writing files | `--dry-run` |
+| Option        | Description                                    | Example                               |
+| ------------- | ---------------------------------------------- | ------------------------------------- |
+| `--sync`      | Translate only missing keys (default)          | `--sync`                              |
+| `--force`     | Retranslate all keys, overwrite existing       | `--force`                             |
+| `--check`     | Check for missing translations without changes | `--check`                             |
+| `--namespace` | Target specific namespace(s)                   | `--namespace=legal-terms,translation` |
+| `--language`  | Target specific language(s)                    | `--language=de,es`                    |
+| `--verbose`   | Show detailed progress                         | `--verbose`                           |
+| `--dry-run`   | Preview changes without writing files          | `--dry-run`                           |
 
 #### Examples
 
@@ -117,6 +117,7 @@ tsx scripts/extract-translatable.ts --fix
 ```
 
 **Output:**
+
 - Lists top hardcoded strings by frequency
 - Suggests translation keys
 - Can automatically add to `translation.json`
@@ -147,6 +148,7 @@ The `.github/workflows/translate.yml` workflow provides:
 ### Setting Up GitHub Actions
 
 1. **Add DeepL API Key**:
+
    ```
    Settings → Secrets → Actions → New repository secret
    Name: DEEPL_API_KEY
@@ -163,6 +165,7 @@ The `.github/workflows/translate.yml` workflow provides:
 ### Adding New Translations
 
 1. **Add to English source**:
+
 ```json
 // public/locales/en/translation.json
 {
@@ -174,6 +177,7 @@ The `.github/workflows/translate.yml` workflow provides:
 ```
 
 2. **Use in React component**:
+
 ```tsx
 import { useTranslation } from 'react-i18next'
 
@@ -189,6 +193,7 @@ function Component() {
 ```
 
 3. **Sync translations**:
+
 ```bash
 DEEPL_API_KEY=your_key tsx scripts/translate.ts
 ```
@@ -211,11 +216,13 @@ The content is managed entirely through the translation system, making updates s
 ### DeepL API Plans
 
 #### Free Plan
+
 - **Limit**: 500,000 characters/month
 - **Key Format**: Ends with `:fx` (e.g., `xxxx-xxxx-xxxx:fx`)
 - **Best For**: Development, small projects
 
 #### Pro Plan
+
 - **Limit**: Pay-per-use (displays as 1 trillion)
 - **Key Format**: Standard UUID (e.g., `xxxx-xxxx-xxxx`)
 - **Best For**: Production, regular updates
@@ -224,6 +231,7 @@ The content is managed entirely through the translation system, making updates s
 ### Automatic Detection
 
 The script automatically detects your key type:
+
 ```
 🔌 Checking DeepL API...
 Key type: PRO
@@ -242,6 +250,7 @@ Key type: PRO
 ### Failed Translations Log
 
 Failed translations are logged to `.tmp/failed-translations.log`:
+
 ```
 2025-01-15T10:30:00Z | translation | de | dashboard.title | Rate limit exceeded
 ```
@@ -268,6 +277,7 @@ The script provides clear, actionable error messages:
 ### 1. Translation Keys
 
 Use hierarchical, descriptive keys:
+
 ```json
 {
   "dashboard": {
@@ -288,6 +298,7 @@ Use hierarchical, descriptive keys:
 ### 3. Cost Management
 
 **Monthly estimates**:
+
 - Initial setup: ~200,000 characters
 - Blog post (5000 words): ~25,000 characters × 4 languages = 100,000
 - UI updates: ~10,000 characters
@@ -298,12 +309,12 @@ Use hierarchical, descriptive keys:
 
 ### Common Issues
 
-| Issue | Solution |
-|-------|----------|
-| API key error | Check key format (Free ends with `:fx`) |
-| Rate limiting | Script auto-retries with delays |
-| Missing translations | Run without `--check` flag |
-| Failed translations | Check `.tmp/failed-translations.log` |
+| Issue                | Solution                                |
+| -------------------- | --------------------------------------- |
+| API key error        | Check key format (Free ends with `:fx`) |
+| Rate limiting        | Script auto-retries with delays         |
+| Missing translations | Run without `--check` flag              |
+| Failed translations  | Check `.tmp/failed-translations.log`    |
 
 ### Testing
 
@@ -339,6 +350,7 @@ If you're migrating from the old multi-script system:
 ## Support
 
 For translation issues:
+
 1. Check this documentation
 2. Review `.tmp/failed-translations.log`
 3. Verify API key and limits
@@ -347,5 +359,5 @@ For translation issues:
 
 ---
 
-*Last updated: November 2024*
-*Unified translation system v2.0*
+_Last updated: November 2024_
+_Unified translation system v2.0_

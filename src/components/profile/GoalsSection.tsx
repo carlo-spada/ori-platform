@@ -114,11 +114,11 @@ export function GoalsSection({
         <div className="mb-3">
           <label
             htmlFor="longTermVision"
-            className="text-foreground block text-lg font-semibold"
+            className="block text-lg font-semibold text-foreground"
           >
             {labels.longTermVisionLabel}
           </label>
-          <p className="text-muted-foreground mt-1 text-sm">
+          <p className="mt-1 text-sm text-muted-foreground">
             {labels.longTermVisionHelper}
           </p>
         </div>
@@ -128,17 +128,17 @@ export function GoalsSection({
           onChange={(e) => updateGoals({ longTermVision: e.target.value })}
           placeholder={labels.longTermVisionPlaceholder}
           rows={4}
-          className="border-border bg-background text-foreground placeholder:text-muted-foreground focus:ring-accent w-full resize-none rounded-xl border px-4 py-2.5 transition-all focus:ring-2 focus:outline-none"
+          className="w-full resize-none rounded-xl border border-border bg-background px-4 py-2.5 text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent"
         />
       </section>
 
       {/* Target Roles */}
       <section>
         <div className="mb-3">
-          <h3 className="text-foreground text-lg font-semibold">
+          <h3 className="text-lg font-semibold text-foreground">
             {labels.targetRolesLabel}
           </h3>
-          <p className="text-muted-foreground mt-1 text-sm">
+          <p className="mt-1 text-sm text-muted-foreground">
             {labels.targetRolesHelper}
           </p>
         </div>
@@ -148,7 +148,7 @@ export function GoalsSection({
             {goalsData.targetRoles.map((role, index) => (
               <span
                 key={index}
-                className="border-accent/20 bg-accent/10 text-accent inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm"
+                className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/10 px-3 py-1.5 text-sm text-accent"
               >
                 {role}
                 <button
@@ -158,7 +158,7 @@ export function GoalsSection({
                     '{role}',
                     role,
                   )}
-                  className="focus-visible:ring-accent rounded-full transition-opacity hover:opacity-70 focus-visible:ring-2 focus-visible:outline-none"
+                  className="rounded-full transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 >
                   <X className="h-3 w-3" aria-hidden="true" />
                 </button>
@@ -166,7 +166,7 @@ export function GoalsSection({
             ))}
           </div>
         ) : (
-          <p className="text-muted-foreground mb-4 text-sm">
+          <p className="mb-4 text-sm text-muted-foreground">
             {labels.emptyTargetRoles}
           </p>
         )}
@@ -177,7 +177,7 @@ export function GoalsSection({
             value={newRole}
             onChange={(e) => setNewRole(e.target.value)}
             placeholder={labels.addTargetRolePlaceholder}
-            className="border-border bg-background text-foreground placeholder:text-muted-foreground focus:ring-accent flex-1 rounded-xl border px-4 py-2 transition-all focus:ring-2 focus:outline-none"
+            className="flex-1 rounded-xl border border-border bg-background px-4 py-2 text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent"
           />
           <Button
             type="button"
@@ -194,10 +194,10 @@ export function GoalsSection({
       {/* Key Milestones */}
       <section>
         <div className="mb-3">
-          <h3 className="text-foreground text-lg font-semibold">
+          <h3 className="text-lg font-semibold text-foreground">
             {labels.milestonesLabel}
           </h3>
-          <p className="text-muted-foreground mt-1 text-sm">
+          <p className="mt-1 text-sm text-muted-foreground">
             {labels.milestonesHelper}
           </p>
         </div>
@@ -207,7 +207,7 @@ export function GoalsSection({
             {goalsData.milestones.map((milestone) => (
               <div
                 key={milestone.id}
-                className="border-border bg-card/30 hover:bg-card/50 flex items-center gap-3 rounded-xl border p-3 transition-colors"
+                className="flex items-center gap-3 rounded-xl border border-border bg-card/30 p-3 transition-colors hover:bg-card/50"
               >
                 <button
                   type="button"
@@ -215,14 +215,14 @@ export function GoalsSection({
                   aria-label={`Mark "${milestone.label}" as ${
                     milestone.completed ? 'incomplete' : 'complete'
                   }`}
-                  className="border-accent hover:bg-accent/10 focus-visible:ring-accent focus-visible:ring-offset-background flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                  className="flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 border-accent transition-colors hover:bg-accent/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   {milestone.completed && (
-                    <Check className="text-accent h-3 w-3" aria-hidden="true" />
+                    <Check className="h-3 w-3 text-accent" aria-hidden="true" />
                   )}
                 </button>
                 <label
-                  className="text-foreground flex-1 cursor-pointer text-sm"
+                  className="flex-1 cursor-pointer text-sm text-foreground"
                   onClick={() => handleToggleMilestone(milestone.id)}
                 >
                   <span
@@ -237,7 +237,7 @@ export function GoalsSection({
                   type="button"
                   onClick={() => handleRemoveMilestone(milestone.id)}
                   aria-label={`Remove milestone: ${milestone.label}`}
-                  className="text-muted-foreground hover:text-destructive focus-visible:ring-accent rounded-full transition-colors focus-visible:ring-2 focus-visible:outline-none"
+                  className="rounded-full text-muted-foreground transition-colors hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 >
                   <X className="h-4 w-4" aria-hidden="true" />
                 </button>
@@ -245,7 +245,7 @@ export function GoalsSection({
             ))}
           </div>
         ) : (
-          <p className="text-muted-foreground mb-4 text-sm">
+          <p className="mb-4 text-sm text-muted-foreground">
             {labels.emptyMilestones}
           </p>
         )}
@@ -256,7 +256,7 @@ export function GoalsSection({
             value={newMilestone}
             onChange={(e) => setNewMilestone(e.target.value)}
             placeholder={labels.addMilestonePlaceholder}
-            className="border-border bg-background text-foreground placeholder:text-muted-foreground focus:ring-accent flex-1 rounded-xl border px-4 py-2 transition-all focus:ring-2 focus:outline-none"
+            className="flex-1 rounded-xl border border-border bg-background px-4 py-2 text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent"
           />
           <Button
             type="button"
@@ -271,7 +271,7 @@ export function GoalsSection({
       </section>
 
       {/* Submit Button */}
-      <div className="border-border flex justify-end border-t pt-6">
+      <div className="flex justify-end border-t border-border pt-6">
         <Button type="submit" disabled={isSubmitting} className="min-w-[140px]">
           {isSubmitting ? (
             <>

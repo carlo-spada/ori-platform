@@ -18,18 +18,21 @@ Currently, the application lacks error boundaries. If a React component throws a
 ### Files to Create/Modify
 
 **Components:**
+
 - `src/components/ErrorBoundary.tsx` - Main error boundary component (NEW)
 - `src/components/RouteErrorBoundary.tsx` - Route-level error boundary (NEW)
 - `src/components/error/ErrorFallback.tsx` - Default error UI (NEW)
 - `src/components/error/NotFound.tsx` - 404 page component (NEW)
 
 **Layout Integration:**
+
 - `src/app/layout.tsx` - Wrap root with error boundary
 - `src/app/app/layout.tsx` - Wrap app routes with error boundary
 - `src/app/error.tsx` - Next.js error page
 - `src/app/not-found.tsx` - Next.js 404 page
 
 **Utilities:**
+
 - `src/lib/error-logging.ts` - Error logging service (NEW)
 
 ### Implementation Steps
@@ -37,6 +40,7 @@ Currently, the application lacks error boundaries. If a React component throws a
 #### 1. Create Base Error Boundary Component
 
 `src/components/ErrorBoundary.tsx`:
+
 ```typescript
 import React, { Component, ReactNode } from 'react'
 
@@ -79,6 +83,7 @@ export class ErrorBoundary extends Component<Props, State> {
 #### 2. Create Error Fallback UI
 
 `src/components/error/ErrorFallback.tsx`:
+
 - Display user-friendly error message
 - "Try Again" button to reset error boundary
 - "Go Home" button to navigate to dashboard
@@ -86,6 +91,7 @@ export class ErrorBoundary extends Component<Props, State> {
 - Optional: "Report Issue" button to send error report
 
 Design elements:
+
 - Use alert-triangle icon from lucide-react
 - Red/orange color scheme for visual alert
 - Keep it simple and non-technical
@@ -94,6 +100,7 @@ Design elements:
 #### 3. Create Route Error Boundary
 
 `src/components/RouteErrorBoundary.tsx`:
+
 - Specialized error boundary for route-level errors
 - Shows error within page layout (preserves navigation)
 - Different styling from full-page errors
@@ -101,6 +108,7 @@ Design elements:
 #### 4. Create 404 Not Found Page
 
 `src/app/not-found.tsx`:
+
 - Custom 404 page design
 - Search bar to find what user was looking for
 - Links to main sections (Dashboard, Profile, Applications)
@@ -109,6 +117,7 @@ Design elements:
 #### 5. Create Next.js Error Pages
 
 `src/app/error.tsx`:
+
 ```typescript
 'use client'
 
@@ -134,6 +143,7 @@ export default function Error({
 #### 6. Create Error Logging Service
 
 `src/lib/error-logging.ts`:
+
 - Function to log errors to external service (Sentry, LogRocket, etc.)
 - For now, log to console in development
 - Prepare structure for future integration
@@ -143,6 +153,7 @@ export default function Error({
 #### 7. Integrate Error Boundaries
 
 **Root Layout** (`src/app/layout.tsx`):
+
 ```typescript
 <ErrorBoundary fallback={<GlobalErrorFallback />}>
   {children}
@@ -150,6 +161,7 @@ export default function Error({
 ```
 
 **App Layout** (`src/app/app/layout.tsx`):
+
 ```typescript
 <ErrorBoundary fallback={<AppErrorFallback />}>
   <Navigation />
@@ -158,6 +170,7 @@ export default function Error({
 ```
 
 **Critical Components** (wrap individually):
+
 - Dashboard page
 - Profile forms
 - Payment checkout
@@ -166,6 +179,7 @@ export default function Error({
 #### 8. Add Error Recovery Actions
 
 Implement smart recovery in ErrorFallback:
+
 - Clear localStorage and retry (for cache-related errors)
 - Refresh page
 - Navigate to safe route (dashboard)
@@ -174,6 +188,7 @@ Implement smart recovery in ErrorFallback:
 #### 9. Add Development Mode Features
 
 In development:
+
 - Show full error stack trace
 - Show component stack
 - Show error boundary tree
@@ -182,6 +197,7 @@ In development:
 #### 10. Testing
 
 Create test scenarios:
+
 - Component that throws in render
 - Component that throws in useEffect
 - Async error in event handler
@@ -214,16 +230,19 @@ Create test scenarios:
 ### Error Boundary Strategy
 
 **Level 1: Root Boundary**
+
 - Catches catastrophic errors
 - Full-page error fallback
 - Last line of defense
 
 **Level 2: Layout Boundaries**
+
 - Preserve navigation/header
 - Show error in content area
 - Maintains app context
 
 **Level 3: Component Boundaries**
+
 - Wrap complex/critical components
 - Show inline error state
 - Rest of page remains functional
@@ -231,6 +250,7 @@ Create test scenarios:
 ### Design System Integration
 
 Use existing UI components:
+
 - `Alert` component for error messages
 - `Button` component for actions
 - `Card` component for error containers

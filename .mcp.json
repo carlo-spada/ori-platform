@@ -15,11 +15,19 @@
     },
     "postgres": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://postgres:fyrruC-cyvwed-cyhmu6@db.zvngsecxzcgxafbzjewh.supabase.co:5432/postgres"]
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://postgres:fyrruC-cyvwed-cyhmu6@db.zvngsecxzcgxafbzjewh.supabase.co:5432/postgres"
+      ]
     },
     "filesystem": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/carlo/Desktop/Projects/ori-platform"]
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/carlo/Desktop/Projects/ori-platform"
+      ]
     }
   }
 }

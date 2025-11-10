@@ -12,6 +12,7 @@
 The email and notification system is currently a **greenfield implementation** - the infrastructure exists only as UI and placeholder code with zero actual email sending capability. This is an **opportunity** to build a production-ready system cleanly with Resend MCP from the ground up.
 
 ### Key Findings
+
 - ❌ **No email sending capability** - notifications.ts is placeholder only
 - ❌ **No email provider configured** - Resend/SendGrid/SES integration missing
 - ✅ **Preferences UI exists** - But no backend persistence
@@ -20,6 +21,7 @@ The email and notification system is currently a **greenfield implementation** -
 - ❌ **Database tables missing** - notifications and preferences tables needed
 
 ### Recommendation
+
 **Proceed with Phase 3.** Building email system from scratch is actually cleaner than migrating existing implementation. Resend MCP is ideal for this greenfield approach.
 
 ---
@@ -29,6 +31,7 @@ The email and notification system is currently a **greenfield implementation** -
 ### Email Infrastructure: Status = NOT IMPLEMENTED
 
 **Primary File**: `services/core-api/src/utils/notifications.ts`
+
 - 119 lines of skeleton code
 - Comments showing old SendGrid integration (removed, not active)
 - Two functions exist but **don't actually send emails**:
@@ -41,11 +44,13 @@ The email and notification system is currently a **greenfield implementation** -
 ### Email Provider Configuration: NOT CONFIGURED
 
 **Environment Variables**: Missing entirely
+
 - ❌ No `RESEND_API_KEY` in `.env` or `.env.example`
 - ❌ No `RESEND_FROM_EMAIL` configured
 - ❌ No other email provider configuration
 
 **What's Needed** (Phase 3):
+
 ```env
 RESEND_API_KEY=re_xxxxxxxxxxxxx
 RESEND_FROM_EMAIL=noreply@getori.app
@@ -57,6 +62,7 @@ RESEND_REPLY_TO=support@getori.app
 **Gap**: Zero email templates (HTML or plain text)
 
 **Templates Needed** (Phase 3):
+
 1. Welcome email (signup confirmation)
 2. Payment failure alert
 3. Payment method expiring warning
@@ -72,16 +78,19 @@ RESEND_REPLY_TO=support@getori.app
 ### Journey 1: User Signup (Priority: HIGH)
 
 **Current Flow**:
+
 ```
 User signup → Supabase Auth email verification → Click link → Dashboard
 ```
 
 **Current Issue**:
+
 - Supabase sends confirmation email (Supabase-branded, not Ori-branded)
 - No welcome email after confirmation
 - Missing onboarding guidance via email
 
 **What Needs to Happen** (Phase 3):
+
 1. User confirms email with Supabase
 2. Trigger event in backend
 3. Send Ori-branded welcome email with:
@@ -92,6 +101,7 @@ User signup → Supabase Auth email verification → Click link → Dashboard
 4. Track email preference (always send, respects preferences later)
 
 **File**: `src/app/signup/page.tsx` (Lines 50-98)
+
 - Shows "Check your email" confirmation screen
 - Needs backend hook to trigger welcome email
 
@@ -100,16 +110,19 @@ User signup → Supabase Auth email verification → Click link → Dashboard
 ### Journey 2: Job Recommendations (Priority: HIGH)
 
 **Current Flow**:
+
 ```
 AI Engine generates recommendations → Frontend displays in dashboard
 ```
 
 **Current Issue**:
+
 - No external notification
 - Users must log in to see recommendations
 - Missing push/email engagement opportunity
 
 **What Needs to Happen** (Phase 3):
+
 1. Backend endpoint detects new recommendations (`/api/v1/chat` or recommendation routes)
 2. Check user preference: `newJobRecommendations` (from settings)
 3. If enabled, send email with:
@@ -119,6 +132,7 @@ AI Engine generates recommendations → Frontend displays in dashboard
 4. Optional: Digest mode (daily/weekly) instead of individual
 
 **File**: Frontend recommendation component
+
 - Location: `src/components/recommendations/JobRecommendationCard.tsx`
 - Backend endpoint: Needs exploration (likely `/api/v1/chat` or `/api/v1/jobs`)
 
@@ -129,16 +143,19 @@ AI Engine generates recommendations → Frontend displays in dashboard
 ### Journey 3: Application Status Updates (Priority: MEDIUM)
 
 **Current Flow**:
+
 ```
 User tracks applications in dashboard → Manual updates → Dashboard view
 ```
 
 **Current Issue**:
+
 - No external notification
 - User must remember to check app
 - Missed opportunity for engagement
 
 **What Needs to Happen** (Phase 3):
+
 1. Backend endpoint detects application status change
 2. Check user preference: `applicationStatusUpdates`
 3. If enabled, send email with:
@@ -148,6 +165,7 @@ User tracks applications in dashboard → Manual updates → Dashboard view
    - CTA: View application details
 
 **File**: `services/core-api/src/routes/applications.ts`
+
 - Need to add email trigger on status change
 - Preference: User setting exists at `src/lib/types.ts:96` (`applicationStatusUpdates`)
 
@@ -156,6 +174,7 @@ User tracks applications in dashboard → Manual updates → Dashboard view
 ### Journey 4: Payment Events (Priority: HIGH - Partial)
 
 **Current Flow**:
+
 ```
 Stripe webhook → payments.ts webhook handler → Attempt to send notification
 ```
@@ -163,6 +182,7 @@ Stripe webhook → payments.ts webhook handler → Attempt to send notification
 **Current Status**: 🟡 PARTIAL - Framework exists but email sending missing
 
 **What's There**:
+
 - Lines 267-282: `invoice.payment_failed` webhook handler
   - Calls `sendPaymentFailureNotification()`
   - Has access to user email via Stripe customer lookup
@@ -173,6 +193,7 @@ Stripe webhook → payments.ts webhook handler → Attempt to send notification
   - Framework ready, implementation missing
 
 **What Needs to Happen** (Phase 3):
+
 1. Update `sendPaymentFailureNotification()` to use Resend MCP
 2. Create payment failure email template
 3. Add subscription confirmation email (new webhook event)
@@ -180,6 +201,7 @@ Stripe webhook → payments.ts webhook handler → Attempt to send notification
 5. Email sends automatically on Stripe webhook (not preference-based)
 
 **File**: `services/core-api/src/routes/payments.ts`
+
 - Lines 281: Payment failure notification call
 - Lines 293: Payment method expiring notification call
 - Both need implementation in notifications.ts
@@ -193,11 +215,13 @@ Stripe webhook → payments.ts webhook handler → Attempt to send notification
 **Current Status**: 🟡 UI exists, no backend
 
 **What's There**:
+
 - Frontend UI: `src/components/settings/NotificationSettings.tsx`
 - Preference toggle: `insightsAndTips` (src/lib/types.ts:97)
 - No backend implementation
 
 **What Could Happen** (Phase 3 or later):
+
 1. Scheduled job sends weekly/monthly insights
 2. Personalized based on user profile
 3. Career tips, market trends, skill recommendations
@@ -212,6 +236,7 @@ Stripe webhook → payments.ts webhook handler → Attempt to send notification
 **Purpose**: Store in-app notifications
 
 **Should Have**:
+
 ```sql
 CREATE TABLE notifications (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -238,6 +263,7 @@ CREATE INDEX idx_notifications_read ON notifications(read);
 **Purpose**: Store user email notification preferences
 
 **Should Have**:
+
 ```sql
 CREATE TABLE notification_preferences (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -252,6 +278,7 @@ CREATE TABLE notification_preferences (
 ```
 
 **Or**: Add to existing `user_profiles` table as JSONB column:
+
 ```sql
 ALTER TABLE user_profiles
 ADD COLUMN notification_preferences JSONB DEFAULT '{
@@ -271,6 +298,7 @@ ADD COLUMN notification_preferences JSONB DEFAULT '{
 **Purpose**: Track sent emails for debugging and compliance
 
 **Should Have**:
+
 ```sql
 CREATE TABLE email_logs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -325,6 +353,7 @@ CREATE INDEX idx_email_logs_status ON email_logs(status);
 ### Frontend State: ✅ EXISTS (but not persistent)
 
 **File**: `src/components/settings/NotificationSettings.tsx`
+
 - Shows toggles for:
   - New job recommendations
   - Application status updates
@@ -332,6 +361,7 @@ CREATE INDEX idx_email_logs_status ON email_logs(status);
 - Currently shows mock data
 
 **File**: `src/lib/types.ts` (Lines 95-99)
+
 ```typescript
 export interface NotificationPreferences {
   newJobRecommendations: boolean
@@ -343,6 +373,7 @@ export interface NotificationPreferences {
 **Issue**: Settings page doesn't save preferences to backend
 
 **What's Needed** (Phase 3):
+
 1. Create API endpoint: `PUT /api/v1/notifications/preferences`
 2. Add React Hook: `useSaveNotificationPreferences()`
 3. Update component to call hook on toggle change
@@ -350,6 +381,7 @@ export interface NotificationPreferences {
 5. Show toast on successful save
 
 **File to Update**: `src/app/app/settings/page.tsx`
+
 - Add preference save logic
 - May need to refetch preferences on load
 
@@ -360,26 +392,31 @@ export interface NotificationPreferences {
 ### Current Integration Points
 
 **1. Stripe Webhook Handler** (services/core-api/src/routes/payments.ts:267-305)
+
 - ✅ Ready to trigger emails
 - 🟡 Email functions exist but don't send
 - Needs: Update `sendPaymentFailureNotification()` to use Resend
 
 **2. User Settings** (src/components/settings/NotificationSettings.tsx)
+
 - ✅ UI exists
 - ❌ Save logic missing
 - Needs: API endpoint + React hook
 
 **3. Signup Flow** (src/app/signup/page.tsx)
+
 - ✅ User confirms email
 - ❌ Welcome email not triggered
 - Needs: Backend hook to detect confirmation + send welcome
 
 **4. Recommendations** (src/components/recommendations/JobRecommendationCard.tsx)
+
 - ✅ Recommendations displayed
 - ❌ Email trigger not implemented
 - Needs: Backend endpoint to trigger email on new recommendation
 
 **5. Applications** (services/core-api/src/routes/applications.ts)
+
 - ✅ Application CRUD endpoints exist
 - ❌ Email trigger not implemented
 - Needs: Add email trigger on status change
@@ -464,17 +501,20 @@ Each template: 50-150 lines of HTML
 ### Current Tests: NONE
 
 **What's Missing**:
+
 - No tests for notification sending
 - No tests for email preference logic
 - No tests for Stripe webhook → email flow
 
 **What's Needed** (Phase 3):
+
 - Unit tests for email service
 - Integration tests for webhook → email
 - Tests for preference checking logic
 - Mocked Resend API calls
 
 **Location**: `services/core-api/src/routes/__tests__/`
+
 - Create `notifications.test.ts`
 - Update `payments.test.ts` to test email integration
 
@@ -482,14 +522,14 @@ Each template: 50-150 lines of HTML
 
 ## Risks & Mitigations
 
-| Risk | Impact | Mitigation |
-|------|--------|-----------|
-| Missing notifications table | Medium | Create migration before Phase 3 |
-| Email not sending silently | High | Add logging + monitoring |
-| User preferences not respected | Medium | Add permission checks before sending |
-| Email deliverability issues | High | Resend MCP handles this; monitor bounce rate |
-| Template rendering errors | Medium | Test templates in Resend dashboard |
-| Missing RLS policies | Medium | Add RLS on preferences table |
+| Risk                           | Impact | Mitigation                                   |
+| ------------------------------ | ------ | -------------------------------------------- |
+| Missing notifications table    | Medium | Create migration before Phase 3              |
+| Email not sending silently     | High   | Add logging + monitoring                     |
+| User preferences not respected | Medium | Add permission checks before sending         |
+| Email deliverability issues    | High   | Resend MCP handles this; monitor bounce rate |
+| Template rendering errors      | Medium | Test templates in Resend dashboard           |
+| Missing RLS policies           | Medium | Add RLS on preferences table                 |
 
 ---
 
@@ -558,18 +598,21 @@ Each template: 50-150 lines of HTML
 ## Key Insights for Phase 3
 
 **Build Cleanly**: Since email system is greenfield, this is opportunity to design it properly:
+
 - Separate email service layer (reusable)
 - Clean preference checking logic
 - Easy to add new email types later
 - Test-friendly architecture
 
 **Leverage Existing**:
+
 - Stripe webhooks already ready
 - User emails available from Stripe/Auth
 - Preference UI already designed
 - Type definitions already created
 
 **Focus on MVP First**:
+
 - Payment emails (already have hooks)
 - Welcome email on signup
 - Recommendation emails

@@ -19,6 +19,7 @@ Connect Claude CLI to Model Context Protocol (MCP) servers for 5x productivity b
 ## MCP Servers to Connect
 
 ### Priority 1: Stripe MCP (30 min)
+
 - **Purpose**: Direct Stripe operations (customers, subscriptions, webhooks)
 - **Benefits**:
   - Create/update subscriptions without manual API calls
@@ -31,6 +32,7 @@ Connect Claude CLI to Model Context Protocol (MCP) servers for 5x productivity b
 - **Configuration**: Add to Claude Desktop config with `STRIPE_SECRET_KEY`
 
 ### Priority 2: Supabase MCP (30 min)
+
 - **Purpose**: Database operations, RLS policies, auth management
 - **Benefits**:
   - Query database directly from Claude
@@ -41,6 +43,7 @@ Connect Claude CLI to Model Context Protocol (MCP) servers for 5x productivity b
 - **Configuration**: Supabase connection string + service role key
 
 ### Priority 3: PostgreSQL MCP (30 min)
+
 - **Purpose**: Direct database queries and schema operations
 - **Benefits**:
   - Run complex queries without writing SQL files
@@ -53,6 +56,7 @@ Connect Claude CLI to Model Context Protocol (MCP) servers for 5x productivity b
 - **Configuration**: Supabase PostgreSQL connection string
 
 ### Priority 4: Resend MCP (15 min)
+
 - **Purpose**: Email operations and template management
 - **Benefits**:
   - Test email templates instantly
@@ -62,6 +66,7 @@ Connect Claude CLI to Model Context Protocol (MCP) servers for 5x productivity b
 - **Configuration**: `RESEND_API_KEY`
 
 ### Priority 5: Vercel MCP (30 min)
+
 - **Purpose**: Deployment management and monitoring
 - **Benefits**:
   - Deploy from CLI
@@ -72,6 +77,7 @@ Connect Claude CLI to Model Context Protocol (MCP) servers for 5x productivity b
 - **Configuration**: Vercel token
 
 ### Optional: DigitalOcean MCP (30 min)
+
 - **Purpose**: Server management (if using DO for backend)
 - **Benefits**: Server operations, monitoring, scaling
 - **Configuration**: DO API token
@@ -79,6 +85,7 @@ Connect Claude CLI to Model Context Protocol (MCP) servers for 5x productivity b
 ## Implementation Steps
 
 ### Step 1: Install MCP Servers
+
 ```bash
 # Navigate to MCP servers directory
 cd ~/.config/claude-desktop/mcp-servers
@@ -90,7 +97,9 @@ npx -y @modelcontextprotocol/create-server postgres
 ```
 
 ### Step 2: Configure Claude Desktop
+
 Edit `~/.config/claude-desktop/config.json`:
+
 ```json
 {
   "mcpServers": {
@@ -113,12 +122,14 @@ Edit `~/.config/claude-desktop/config.json`:
 ```
 
 ### Step 3: Test Connections
+
 - [ ] Stripe: Query customer list
 - [ ] PostgreSQL: Query user_profiles table
 - [ ] Resend: Send test email
 - [ ] Vercel: Check deployment status
 
 ### Step 4: Document MCP Usage
+
 - [ ] Create `.claude/mcp-usage.md` with examples
 - [ ] Add to CLAUDE.md reference section
 - [ ] Note any gotchas or limitations
@@ -147,11 +158,13 @@ Edit `~/.config/claude-desktop/config.json`:
 ## Expected Productivity Gains
 
 **Before MCP**:
+
 - Stripe operation: Write code → test → debug → iterate (15-30 min)
 - Database query: Write query file → run → parse results (5-10 min)
 - Email test: Deploy → trigger → check inbox (10 min)
 
 **After MCP**:
+
 - Stripe operation: Direct command (30 seconds)
 - Database query: Ask Claude → instant result (10 seconds)
 - Email test: Direct send command (10 seconds)

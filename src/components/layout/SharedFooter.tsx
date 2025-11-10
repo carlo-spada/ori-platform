@@ -86,7 +86,7 @@ export function SharedFooter() {
           <div className="space-y-4">
             <Link
               href="/"
-              className="focus-visible:ring-accent flex w-fit items-center gap-2 rounded-md transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:outline-none"
+              className="flex w-fit items-center gap-2 rounded-md transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               <Image
                 src="/ori-logo.svg"
@@ -95,11 +95,11 @@ export function SharedFooter() {
                 height={28}
                 className="text-primary"
               />
-              <span className="text-foreground text-xl font-semibold tracking-tight">
+              <span className="text-xl font-semibold tracking-tight text-foreground">
                 Ori
               </span>
             </Link>
-            <p className="text-muted-foreground max-w-xs text-sm leading-relaxed">
+            <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
               {t('brand.mission')}
             </p>
           </div>
@@ -107,7 +107,7 @@ export function SharedFooter() {
           {/* Column 2 & 3: Footer Links */}
           {footerColumns.map((column) => (
             <div key={column.title} className="space-y-4">
-              <h3 className="text-foreground text-sm font-semibold tracking-wide uppercase">
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
                 {column.title}
               </h3>
               <ul className="space-y-3">
@@ -118,7 +118,7 @@ export function SharedFooter() {
                         href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-muted-foreground hover:text-foreground focus-visible:ring-accent inline-block rounded-md text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+                        className="inline-block rounded-md text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                       >
                         {link.label}
                       </a>
@@ -127,7 +127,7 @@ export function SharedFooter() {
                     <li key={link.label}>
                       <Link
                         href={link.href}
-                        className="text-muted-foreground hover:text-foreground focus-visible:ring-accent inline-block rounded-md text-sm transition-colors focus-visible:ring-2 focus-visible:outline-none"
+                        className="inline-block rounded-md text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                       >
                         {link.label}
                       </Link>
@@ -140,10 +140,10 @@ export function SharedFooter() {
 
           {/* Column 3: Social Links */}
           <div className="space-y-4">
-            <h3 className="text-foreground text-sm font-semibold tracking-wide uppercase">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
               Connect
             </h3>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-sm text-muted-foreground">
               Follow us on social media
             </p>
             <div className="flex items-center gap-3">
@@ -156,7 +156,7 @@ export function SharedFooter() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.ariaLabel}
-                    className="text-muted-foreground hover:text-foreground focus-visible:ring-accent inline-flex h-10 w-10 items-center justify-center rounded-xl transition-all hover:bg-white/5 focus-visible:ring-2 focus-visible:outline-none"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-xl text-muted-foreground transition-all hover:bg-white/5 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   >
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </a>
@@ -168,7 +168,7 @@ export function SharedFooter() {
 
         {/* Sub-footer */}
         <div className="mt-12 border-t border-white/10 pt-8">
-          <p className="text-muted-foreground text-center text-sm lg:text-left">
+          <p className="text-center text-sm text-muted-foreground lg:text-left">
             © {new Date().getFullYear()} {t('brand.name')}. All rights
             reserved.
           </p>

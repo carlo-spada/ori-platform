@@ -10,6 +10,7 @@ Priority: High
 ### Objective
 
 Implement a production-grade email system using Resend + React Email that supports:
+
 - Beautiful, custom transactional emails
 - Marketing and promotional campaigns
 - AI-generated personalized content
@@ -22,12 +23,14 @@ The current placeholder email system in `services/core-api/src/utils/notificatio
 ### Technology Stack
 
 **Email Infrastructure:**
+
 - **Resend** - Email delivery API (transactional + marketing)
 - **React Email** - Component-based email templates
 - **n8n or Make.com** - AI workflow automation (Phase 2)
 - **OpenAI/Anthropic API** - Content generation (Phase 2)
 
 **Why Resend:**
+
 - Clean, modern API perfect for Next.js/TypeScript
 - Build emails with React components (maintainable, type-safe)
 - 3,000 emails/month free, then $20/month for 50,000
@@ -38,6 +41,7 @@ The current placeholder email system in `services/core-api/src/utils/notificatio
 ### Files to Create/Modify
 
 **Core API:**
+
 - `services/core-api/src/emails/client.ts` - Resend client singleton
 - `services/core-api/src/emails/utils.ts` - Email helpers and utilities
 - `services/core-api/src/emails/templates/EarlyAccessWelcome.tsx` - React Email template
@@ -50,6 +54,7 @@ The current placeholder email system in `services/core-api/src/utils/notificatio
 - `services/core-api/.env` - Add Resend API key
 
 **Documentation:**
+
 - `docs/EMAIL_SYSTEM.md` - Complete email system documentation
 - `docs/EMAIL_TEMPLATES.md` - Template design guide
 
@@ -58,6 +63,7 @@ The current placeholder email system in `services/core-api/src/utils/notificatio
 #### Phase 1: Core Email Infrastructure (Priority: High)
 
 1. **Install Dependencies**:
+
    ```bash
    cd services/core-api
    pnpm add resend
@@ -73,6 +79,7 @@ The current placeholder email system in `services/core-api/src/utils/notificatio
 
 3. **Configure Environment Variables**:
    Add to `services/core-api/.env`:
+
    ```env
    RESEND_API_KEY=re_xxxxxxxxxxxxx
    RESEND_FROM_EMAIL=hello@getori.app
@@ -81,6 +88,7 @@ The current placeholder email system in `services/core-api/src/utils/notificatio
    ```
 
 4. **Create Email Client** (`emails/client.ts`):
+
    ```typescript
    import { Resend } from 'resend'
 
@@ -109,9 +117,18 @@ The current placeholder email system in `services/core-api/src/utils/notificatio
 5. **Create React Email Templates**:
 
    **Early Access Welcome** (`templates/EarlyAccessWelcome.tsx`):
+
    ```tsx
    import {
-     Html, Head, Body, Container, Heading, Text, Button, Hr, Img
+     Html,
+     Head,
+     Body,
+     Container,
+     Heading,
+     Text,
+     Button,
+     Hr,
+     Img,
    } from '@react-email/components'
 
    interface EarlyAccessWelcomeProps {
@@ -121,19 +138,25 @@ The current placeholder email system in `services/core-api/src/utils/notificatio
 
    export default function EarlyAccessWelcome({
      firstName,
-     email
+     email,
    }: EarlyAccessWelcomeProps) {
      return (
        <Html>
          <Head />
          <Body style={main}>
            <Container style={container}>
-             <Img src="https://getori.app/logo.png" width="48" height="48" alt="Ori" />
+             <Img
+               src="https://getori.app/logo.png"
+               width="48"
+               height="48"
+               alt="Ori"
+             />
              <Heading style={h1}>
                {firstName ? `Welcome, ${firstName}!` : 'Welcome!'}
              </Heading>
              <Text style={text}>
-               You're now on the early access list for Ori, the AI-powered career companion.
+               You're now on the early access list for Ori, the AI-powered
+               career companion.
              </Text>
              {/* Add gradient backgrounds, animations, beautiful design */}
            </Container>
@@ -154,6 +177,7 @@ The current placeholder email system in `services/core-api/src/utils/notificatio
 
 6. **Update Notification System**:
    Modify `utils/notifications.ts` to use Resend:
+
    ```typescript
    import { sendEmail } from '../emails/client'
    import PaymentFailureEmail from '../emails/templates/PaymentFailure'
@@ -172,6 +196,7 @@ The current placeholder email system in `services/core-api/src/utils/notificatio
    ```
 
 7. **Create Webhook Handler** (`routes/webhooks/resend.ts`):
+
    ```typescript
    import { Router } from 'express'
    import { Webhook } from 'resend'
@@ -216,22 +241,25 @@ The current placeholder email system in `services/core-api/src/utils/notificatio
      - Personalized skill recommendations
 
 10. **AI Content Generation Integration**:
+
     ```typescript
     // Example: AI-generated weekly insights
     async function generateWeeklyInsights(user: User) {
       const response = await anthropic.messages.create({
         model: 'claude-3-5-sonnet-20241022',
-        messages: [{
-          role: 'user',
-          content: `Generate 3 personalized career insights for ${user.role}
-                    interested in ${user.skills.join(', ')}`
-        }]
+        messages: [
+          {
+            role: 'user',
+            content: `Generate 3 personalized career insights for ${user.role}
+                    interested in ${user.skills.join(', ')}`,
+          },
+        ],
       })
 
       return sendEmail({
         to: user.email,
         subject: 'Your Weekly Career Insights',
-        react: WeeklyInsightsEmail({ insights: response.content })
+        react: WeeklyInsightsEmail({ insights: response.content }),
       })
     }
     ```
@@ -245,6 +273,7 @@ The current placeholder email system in `services/core-api/src/utils/notificatio
 ### Email Templates to Create
 
 **Transactional:**
+
 1. ✅ Early Access Welcome - Sent when user joins waitlist
 2. ✅ Payment Confirmation - Sent after successful payment
 3. ✅ Payment Failure - Sent when payment fails
@@ -252,17 +281,12 @@ The current placeholder email system in `services/core-api/src/utils/notificatio
 5. Account Verification - Email confirmation link
 6. Password Reset - Secure reset link
 
-**Marketing/Promotional:**
-7. ✅ Weekly Career Insights - AI-generated personalized tips
-8. Launch Announcement - When platform goes live
-9. New Feature Announcements - Product updates
-10. Inactive User Re-engagement - Win back dormant users
-11. Upgrade Prompts - Free → Plus → Premium
-12. Referral Program - Share and earn rewards
+**Marketing/Promotional:** 7. ✅ Weekly Career Insights - AI-generated personalized tips 8. Launch Announcement - When platform goes live 9. New Feature Announcements - Product updates 10. Inactive User Re-engagement - Win back dormant users 11. Upgrade Prompts - Free → Plus → Premium 12. Referral Program - Share and earn rewards
 
 ### Acceptance Criteria
 
 **Phase 1 (Core):**
+
 - ✅ Resend account configured with verified domain
 - ✅ React Email templates are beautiful, branded, mobile-responsive
 - ✅ Early access emails send successfully
@@ -273,6 +297,7 @@ The current placeholder email system in `services/core-api/src/utils/notificatio
 - ✅ Documentation complete
 
 **Phase 2 (AI Automation):**
+
 - ✅ n8n workflows automate email sequences
 - ✅ AI generates personalized email content
 - ✅ Marketing campaigns can be scheduled and sent
@@ -293,11 +318,13 @@ The current placeholder email system in `services/core-api/src/utils/notificatio
 ### Cost Estimation
 
 **Resend Pricing:**
+
 - Free tier: 3,000 emails/month
 - Paid: $20/month for 50,000 emails
 - Expected usage: ~5,000 emails/month initially
 
 **n8n (optional):**
+
 - Self-hosted: Free (Docker container)
 - n8n Cloud: $20/month
 
@@ -306,11 +333,13 @@ The current placeholder email system in `services/core-api/src/utils/notificatio
 ### Estimated Effort
 
 **Phase 1 (Core):** 4-6 hours
+
 - Resend setup: 1 hour
 - React Email templates: 2-3 hours
 - Integration & testing: 1-2 hours
 
 **Phase 2 (AI):** 6-8 hours
+
 - n8n workflows: 3-4 hours
 - AI content generation: 2-3 hours
 - Testing & refinement: 1-2 hours

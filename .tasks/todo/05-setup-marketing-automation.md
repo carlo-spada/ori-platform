@@ -23,6 +23,7 @@ Establish automated content marketing infrastructure (blog) and social media pre
 **Route**: `/blog`
 
 **Content Strategy**:
+
 - **Frequency**: 2-3 posts per week
 - **Topics**:
   - Product updates and milestones
@@ -34,6 +35,7 @@ Establish automated content marketing infrastructure (blog) and social media pre
 **Automation Approach**:
 
 **Option A: AI-Generated + Editorial Review**
+
 ```typescript
 // Workflow:
 // 1. AI generates draft posts (Claude API)
@@ -49,6 +51,7 @@ Establish automated content marketing infrastructure (blog) and social media pre
 ```
 
 **Option B: Hybrid (Manual + AI Enhancement)**
+
 ```typescript
 // Workflow:
 // 1. Human writes outline/key points
@@ -81,6 +84,7 @@ content/blog/
 ```
 
 **Features**:
+
 - Markdown/MDX support
 - Syntax highlighting (code blocks)
 - Table of contents
@@ -94,11 +98,11 @@ content/blog/
 ```typescript
 // scripts/generate-blog-post.ts
 
-import Anthropic from '@anthropic-ai/sdk';
+import Anthropic from '@anthropic-ai/sdk'
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
-});
+})
 
 async function generateBlogPost(topic: string, keywords: string[]) {
   const prompt = `
@@ -116,25 +120,26 @@ Requirements:
 - Conversational but professional tone
 
 Output in MDX format with frontmatter.
-`;
+`
 
   const message = await anthropic.messages.create({
     model: 'claude-sonnet-4-5-20250929',
     max_tokens: 4000,
     messages: [{ role: 'user', content: prompt }],
-  });
+  })
 
-  return message.content[0].text;
+  return message.content[0].text
 }
 ```
 
 **GitHub Action for Scheduled Generation**:
+
 ```yaml
 # .github/workflows/generate-blog-post.yml
 name: Generate Blog Post Draft
 on:
   schedule:
-    - cron: '0 9 * * 1,3,5'  # Mon, Wed, Fri at 9 AM
+    - cron: '0 9 * * 1,3,5' # Mon, Wed, Fri at 9 AM
   workflow_dispatch:
     inputs:
       topic:
@@ -162,6 +167,7 @@ jobs:
 #### 3. Blog Admin UI (1 hour - optional)
 
 Simple admin page for reviewing drafts:
+
 - List unpublished drafts
 - Edit in markdown editor
 - Publish button (moves to published folder)
@@ -172,21 +178,25 @@ Simple admin page for reviewing drafts:
 ### Platforms to Focus On
 
 **Priority 1: LinkedIn**
+
 - **Why**: Professional audience, B2B focus, high engagement
 - **Content**: Company updates, industry insights, job market trends
 - **Frequency**: 3-5 posts per week
 
 **Priority 2: Twitter/X**
+
 - **Why**: Tech community, real-time updates, viral potential
 - **Content**: Quick tips, product updates, engagement with community
 - **Frequency**: 1-2 posts per day
 
 **Priority 3: GitHub**
+
 - **Why**: Developer community, transparency, technical credibility
 - **Content**: Public repos, open-source contributions, technical docs
 - **Frequency**: As needed
 
 **Optional: Instagram/TikTok**
+
 - **Why**: Visual storytelling, younger audience
 - **Content**: Behind-the-scenes, team culture, short tips
 - **Frequency**: 2-3 posts per week (if resources allow)
@@ -222,20 +232,21 @@ Simple admin page for reviewing drafts:
 // 3. Generate Instagram caption (visual, with hashtags)
 
 async function generateSocialPosts(blogPost: {
-  title: string;
-  summary: string;
-  url: string;
+  title: string
+  summary: string
+  url: string
 }) {
-  const linkedInPost = await generateLinkedInPost(blogPost);
-  const twitterThread = await generateTwitterThread(blogPost);
+  const linkedInPost = await generateLinkedInPost(blogPost)
+  const twitterThread = await generateTwitterThread(blogPost)
 
   // Save to Buffer/Hootsuite via API
-  await schedulePost('linkedin', linkedInPost);
-  await schedulePost('twitter', twitterThread[0]);
+  await schedulePost('linkedin', linkedInPost)
+  await schedulePost('twitter', twitterThread[0])
 }
 ```
 
 **Automation Workflow**:
+
 ```
 New blog post published
   → Trigger webhook/GitHub Action
@@ -247,6 +258,7 @@ New blog post published
 ### Content Calendar Template
 
 **Weekly Rhythm**:
+
 - **Monday**: Motivational/inspirational (career tips)
 - **Tuesday**: Product update or feature highlight
 - **Wednesday**: Blog post share (deep content)
@@ -259,12 +271,14 @@ New blog post published
 **Purpose**: Direct line to interested users
 
 **Platform Options**:
+
 - Resend (already integrated)
 - Mailchimp
 - ConvertKit
 - Substack
 
 **Implementation**:
+
 1. Newsletter signup form (embedded on site)
 2. Welcome email sequence (automated via Resend)
 3. Weekly/bi-weekly digest (blog posts + updates)
@@ -281,6 +295,7 @@ New blog post published
 ## Acceptance Criteria
 
 ### Blog
+
 - [ ] Blog infrastructure deployed (`/blog` route)
 - [ ] At least 3 initial posts published
 - [ ] Content generation script working
@@ -289,6 +304,7 @@ New blog post published
 - [ ] Analytics tracking enabled
 
 ### Social Media
+
 - [ ] LinkedIn, Twitter/X accounts created and branded
 - [ ] At least 10 posts scheduled for next 2 weeks
 - [ ] Automation script for blog → social posts
@@ -296,6 +312,7 @@ New blog post published
 - [ ] Bio links to website
 
 ### Newsletter (Optional)
+
 - [ ] Signup form on website
 - [ ] Welcome email sequence created
 - [ ] First newsletter drafted
@@ -315,6 +332,7 @@ New blog post published
 ## Success Metrics
 
 Track after 30 days:
+
 - Blog: Page views, time on page, bounce rate
 - LinkedIn: Followers, engagement rate, post reach
 - Twitter: Followers, retweets, replies

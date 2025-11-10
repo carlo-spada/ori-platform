@@ -12,16 +12,19 @@ This epic represents the foundation phase of integrating Model Context Protocol 
 ## Phases Included in This Epic
 
 ### Phase 1.1: Infrastructure Discovery & Audit
+
 - Stripe payment system audit
 - Resend/email system audit
 - PostgreSQL/database testing audit
 
 ### Phase 1.2: MCP Server Setup & Configuration
+
 - Configure `.claude/mcp.json`
 - Test each MCP server locally
 - Validate authentication and connectivity
 
 ### Phase 1.3: Documentation & Team Training
+
 - Create MCP setup guide for developers
 - Complete audit documentation
 - Train team on MCP basics
@@ -56,18 +59,19 @@ See individual task files (1.1.md through 1.3.md) for specific work items.
 
 ## Timeline
 
-| Week | Day | Milestone |
-|------|-----|-----------|
-| 1 | Mon | Kickoff, review plan |
-| 1 | Tue-Wed | Stripe, Resend, PostgreSQL audits |
-| 1 | Thu | MCP server setup and testing |
-| 1 | Fri | Documentation complete |
-| 2 | Mon-Fri | Buffer time, team training, contingencies |
-| 2 | Fri EOD | Phase 1 complete, Phase 2 ready |
+| Week | Day     | Milestone                                 |
+| ---- | ------- | ----------------------------------------- |
+| 1    | Mon     | Kickoff, review plan                      |
+| 1    | Tue-Wed | Stripe, Resend, PostgreSQL audits         |
+| 1    | Thu     | MCP server setup and testing              |
+| 1    | Fri     | Documentation complete                    |
+| 2    | Mon-Fri | Buffer time, team training, contingencies |
+| 2    | Fri EOD | Phase 1 complete, Phase 2 ready           |
 
 ## Moving to Next Phase
 
 Phase 1 is complete when:
+
 - ✅ All audits documented
 - ✅ All three MCPs operational locally
 - ✅ `.claude/mcp.json` committed with all configs

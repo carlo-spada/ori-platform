@@ -32,10 +32,10 @@ export function HowItWorksSection() {
   return (
     <Section data-testid="howitworks">
       <div className="mb-12 text-center">
-        <h2 className="text-foreground mb-4 text-3xl font-semibold sm:text-4xl">
+        <h2 className="mb-4 text-3xl font-semibold text-foreground sm:text-4xl">
           {t('landing.howItWorksTitle')}
         </h2>
-        <p className="text-muted-foreground mx-auto max-w-2xl text-lg">
+        <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
           {t('landing.howItWorksSubtitle')}
         </p>
       </div>
@@ -48,7 +48,7 @@ export function HowItWorksSection() {
               {/* Connector line (hidden on mobile) */}
               {index < steps.length - 1 && (
                 <div
-                  className="bg-border absolute top-12 left-[60%] hidden h-px w-[80%] md:block"
+                  className="absolute left-[60%] top-12 hidden h-px w-[80%] bg-border md:block"
                   aria-hidden="true"
                 />
               )}
@@ -56,16 +56,16 @@ export function HowItWorksSection() {
               <div className="relative z-10 text-center">
                 {/* Step number */}
                 <div
-                  className="border-accent/20 bg-accent/10 mb-6 inline-flex h-24 w-24 items-center justify-center rounded-full border-2"
+                  className="mb-6 inline-flex h-24 w-24 items-center justify-center rounded-full border-2 border-accent/20 bg-accent/10"
                   aria-hidden="true"
                 >
-                  {Icon && <Icon className="text-accent h-10 w-10" />}
+                  {Icon && <Icon className="h-10 w-10 text-accent" />}
                 </div>
 
-                <h3 className="text-foreground mb-3 text-xl font-semibold">
+                <h3 className="mb-3 text-xl font-semibold text-foreground">
                   {index + 1}. {step.title}
                 </h3>
-                <p className="text-muted-foreground mx-auto max-w-xs text-sm leading-relaxed">
+                <p className="mx-auto max-w-xs text-sm leading-relaxed text-muted-foreground">
                   {step.description}
                 </p>
               </div>
@@ -75,7 +75,7 @@ export function HowItWorksSection() {
       </div>
 
       {/* Manifesto alignment caption */}
-      <p className="text-muted-foreground mx-auto mt-12 max-w-2xl text-center text-sm italic">
+      <p className="mx-auto mt-12 max-w-2xl text-center text-sm italic text-muted-foreground">
         {t('landing.manifesto')}
       </p>
     </Section>

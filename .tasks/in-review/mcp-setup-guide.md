@@ -7,6 +7,7 @@
 ## Overview
 
 Setting up Model Context Protocol (MCP) servers to enable direct integrations with:
+
 1. Filesystem (project files)
 2. PostgreSQL/Supabase (database)
 3. GitHub (repository operations)
@@ -26,6 +27,7 @@ Setting up Model Context Protocol (MCP) servers to enable direct integrations wi
 **Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
 
 **How to Access**:
+
 1. Open Claude Desktop
 2. Go to Settings → Developer
 3. Click "Edit Config"
@@ -37,6 +39,7 @@ Setting up Model Context Protocol (MCP) servers to enable direct integrations wi
 **Purpose**: Allow Claude to read/write project files directly
 
 **Configuration**:
+
 ```json
 {
   "mcpServers": {
@@ -53,6 +56,7 @@ Setting up Model Context Protocol (MCP) servers to enable direct integrations wi
 ```
 
 **Benefits**:
+
 - Read any file in the project
 - Create/edit files
 - Search across codebase
@@ -68,6 +72,7 @@ After restart, ask Claude: "List all files in src/components/"
 **Official Supabase MCP** (HTTP-based, hosted by Supabase):
 
 **Configuration**:
+
 ```json
 {
   "mcpServers": {
@@ -85,6 +90,7 @@ After restart, ask Claude: "List all files in src/components/"
 ```
 
 **Authentication**:
+
 - First time you use it, Claude Desktop will open a browser window
 - Login to your Supabase account
 - Grant organization access to the MCP client
@@ -113,10 +119,12 @@ After restart, ask Claude: "List all files in src/components/"
 ```
 
 **Which to choose?**
+
 - **Supabase MCP** (recommended): Full features, OAuth auth, easier setup
 - **PostgreSQL MCP**: Direct DB only, requires password, more manual
 
 **Benefits**:
+
 - Query tables directly
 - Inspect schema
 - Run migrations
@@ -130,6 +138,7 @@ Ask Claude: "Show me the schema of the user_profiles table"
 **Purpose**: Repository operations (issues, PRs, commits, workflows)
 
 **Get GitHub Token**:
+
 1. Go to: https://github.com/settings/tokens/new
 2. Scopes needed:
    - `repo` (full control of private repos)
@@ -138,6 +147,7 @@ Ask Claude: "Show me the schema of the user_profiles table"
 3. Generate token and copy
 
 **Configuration**:
+
 ```json
 {
   "mcpServers": {
@@ -158,6 +168,7 @@ Ask Claude: "Show me the schema of the user_profiles table"
 ```
 
 **Benefits**:
+
 - Create/update issues
 - Manage PRs
 - Trigger workflows
@@ -172,10 +183,12 @@ Ask Claude: "List open issues in carlo-spada/ori-platform"
 **Purpose**: Payment operations, webhook testing
 
 **Get Stripe Key**:
+
 1. Go to: https://dashboard.stripe.com/test/apikeys
 2. Copy "Secret key" (starts with `sk_test_`)
 
 **Configuration**:
+
 ```json
 {
   "mcpServers": {
@@ -197,6 +210,7 @@ Ask Claude: "List open issues in carlo-spada/ori-platform"
 ```
 
 **Benefits**:
+
 - Create customers
 - Manage subscriptions
 - Test webhooks
@@ -229,18 +243,11 @@ Save this to `claude_desktop_config.json`:
     },
     "supabase": {
       "command": "npx",
-      "args": [
-        "-y",
-        "mcp-remote",
-        "https://mcp.supabase.com/mcp"
-      ]
+      "args": ["-y", "mcp-remote", "https://mcp.supabase.com/mcp"]
     },
     "github": {
       "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-github"
-      ],
+      "args": ["-y", "@modelcontextprotocol/server-github"],
       "env": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
       }
@@ -250,6 +257,7 @@ Save this to `claude_desktop_config.json`:
 ```
 
 **What you need**:
+
 - GitHub Personal Access Token (https://github.com/settings/tokens/new)
 - That's it! Supabase will prompt for OAuth login on first use.
 
@@ -290,11 +298,13 @@ If you prefer direct database connection instead of Supabase MCP:
 ### "Cannot connect to MCP server"
 
 **Windows users**: Use full path instead of `npx`:
+
 ```json
 "command": "C:\\Program Files\\nodejs\\npx.cmd"
 ```
 
 **Mac users**: Verify npx is in PATH:
+
 ```bash
 which npx
 # Should output: /usr/local/bin/npx or similar
@@ -323,21 +333,25 @@ which npx
 After setup, test each server:
 
 **Filesystem**:
+
 - [ ] Can list project files
 - [ ] Can read file contents
 - [ ] Can create new files
 
 **PostgreSQL/Supabase**:
+
 - [ ] Can query tables
 - [ ] Can inspect schema
 - [ ] Can run SELECT statements
 
 **GitHub**:
+
 - [ ] Can list issues
 - [ ] Can view PR status
 - [ ] Can check workflow runs
 
 **Stripe** (if configured):
+
 - [ ] Can list customers
 - [ ] Can create test customer
 - [ ] Can query subscriptions
@@ -363,11 +377,13 @@ With MCP servers connected, you can now:
 ## Expected Productivity Gains
 
 **Before MCP**:
+
 - Read file: Copy path → use Read tool → wait for response (10-20 seconds)
 - Database query: Write SQL → run in Supabase UI → copy results (1-2 minutes)
 - GitHub operation: Use gh CLI → parse output (30 seconds - 1 minute)
 
 **After MCP**:
+
 - Read file: Ask Claude → instant response (2-3 seconds)
 - Database query: Ask Claude → instant results (5 seconds)
 - GitHub operation: Ask Claude → done (5 seconds)

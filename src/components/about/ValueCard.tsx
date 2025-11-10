@@ -15,13 +15,13 @@ export function ValueCard({
   return (
     <div
       className={cn(
-        'border-border bg-card/50 hover:border-accent/50 rounded-xl border p-6 transition-all duration-200 hover:shadow-md',
+        'rounded-xl border border-border bg-card/50 p-6 transition-all duration-200 hover:border-accent/50 hover:shadow-md',
         className,
       )}
       {...props}
     >
-      <h3 className="text-foreground mb-3 text-xl font-semibold">{name}</h3>
-      <p className="text-muted-foreground leading-relaxed">{description}</p>
+      <h3 className="mb-3 text-xl font-semibold text-foreground">{name}</h3>
+      <p className="leading-relaxed text-muted-foreground">{description}</p>
     </div>
   )
 }

@@ -42,7 +42,7 @@ export function SkillsStep({ skills, copy, onChange }: SkillsStepProps) {
     <div className="flex flex-col gap-6 py-4">
       <div className="space-y-2">
         <h2 className="text-xl font-semibold sm:text-2xl">{copy.headline}</h2>
-        <p className="text-muted-foreground text-sm">{copy.description}</p>
+        <p className="text-sm text-muted-foreground">{copy.description}</p>
       </div>
 
       <div className="space-y-4">
@@ -60,7 +60,7 @@ export function SkillsStep({ skills, copy, onChange }: SkillsStepProps) {
           </Button>
         </div>
 
-        <p className="text-muted-foreground text-xs">{copy.helper}</p>
+        <p className="text-xs text-muted-foreground">{copy.helper}</p>
 
         {skills.length > 0 && skills.length < 3 && (
           <p className="text-sm font-medium text-amber-600 dark:text-amber-400">

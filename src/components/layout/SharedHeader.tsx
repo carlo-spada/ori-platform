@@ -104,7 +104,7 @@ export function SharedHeader() {
           {/* Logo / Wordmark */}
           <Link
             href="/"
-            className="focus-visible:ring-accent flex items-center gap-2 rounded-md transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:outline-none"
+            className="flex items-center gap-2 rounded-md transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             data-testid="logo"
           >
             <Image
@@ -114,7 +114,7 @@ export function SharedHeader() {
               height={28}
               className="text-primary"
             />
-            <span className="text-foreground text-xl font-semibold tracking-tight">
+            <span className="text-xl font-semibold tracking-tight text-foreground">
               Ori
             </span>
           </Link>
@@ -132,10 +132,10 @@ export function SharedHeader() {
                 data-testid={`nav-link-${item.slug}`}
                 className={cn(
                   'rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200',
-                  'hover:text-foreground hover:bg-white/5',
-                  'focus-visible:ring-accent focus-visible:ring-2 focus-visible:outline-none',
+                  'hover:bg-white/5 hover:text-foreground',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
                   isActive(item.href)
-                    ? 'text-foreground decoration-accent/80 font-semibold underline underline-offset-4'
+                    ? 'font-semibold text-foreground underline decoration-accent/80 underline-offset-4'
                     : 'text-muted-foreground',
                 )}
               >
@@ -150,7 +150,7 @@ export function SharedHeader() {
             <Button
               variant="ghost"
               asChild
-              className="text-foreground/80 hover:text-foreground rounded-xl hover:bg-white/5"
+              className="rounded-xl text-foreground/80 hover:bg-white/5 hover:text-foreground"
               data-testid="cta-login"
             >
               <Link href="/login">{t('cta.login')}</Link>
@@ -171,7 +171,7 @@ export function SharedHeader() {
               variant="ghost"
               size="sm"
               asChild
-              className="text-foreground/80 hover:text-foreground rounded-xl hover:bg-white/5"
+              className="rounded-xl text-foreground/80 hover:bg-white/5 hover:text-foreground"
               data-testid="cta-login-mobile"
             >
               <Link href="/login">{t('cta.login')}</Link>
@@ -184,7 +184,7 @@ export function SharedHeader() {
               aria-label={
                 mobileMenuOpen ? t('cta.closeMenu') : t('cta.openMenu')
               }
-              className="text-foreground focus-visible:ring-accent inline-flex items-center justify-center rounded-xl p-2 transition-colors hover:bg-white/5 focus-visible:ring-2 focus-visible:outline-none"
+              className="inline-flex items-center justify-center rounded-xl p-2 text-foreground transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               data-testid="mobile-menu-button"
             >
               {mobileMenuOpen ? (
@@ -211,7 +211,7 @@ export function SharedHeader() {
         >
           <div
             ref={mobileMenuRef}
-            className="bg-surface fixed top-16 right-0 h-[calc(100vh-4rem)] z-[60] w-full max-w-sm overflow-hidden border-l border-white/10 shadow-2xl lg:hidden"
+            className="bg-surface fixed right-0 top-16 z-[60] h-[calc(100vh-4rem)] w-full max-w-sm overflow-hidden border-l border-white/10 shadow-2xl lg:hidden"
             role="dialog"
             aria-modal="true"
             aria-label="Main navigation"
@@ -227,7 +227,7 @@ export function SharedHeader() {
                     hamburgerButtonRef.current?.focus()
                   }}
                   aria-label={t('cta.closeMenu')}
-                  className="text-foreground focus-visible:ring-accent inline-flex items-center justify-center rounded-xl p-2 transition-colors hover:bg-white/5 focus-visible:ring-2 focus-visible:outline-none"
+                  className="inline-flex items-center justify-center rounded-xl p-2 text-foreground transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 >
                   <X className="h-6 w-6" aria-hidden="true" />
                 </button>
@@ -245,9 +245,9 @@ export function SharedHeader() {
                         data-testid={`mobile-nav-link-${item.slug}`}
                         className={cn(
                           'block rounded-xl px-4 py-3 text-base font-medium transition-all duration-200',
-                          'focus-visible:ring-accent hover:bg-white/5 focus-visible:ring-2 focus-visible:outline-none',
+                          'hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
                           isActive(item.href)
-                            ? 'text-foreground bg-white/5 font-semibold'
+                            ? 'bg-white/5 font-semibold text-foreground'
                             : 'text-muted-foreground hover:text-foreground',
                         )}
                       >

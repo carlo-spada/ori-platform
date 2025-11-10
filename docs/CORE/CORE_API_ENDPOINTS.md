@@ -8,6 +8,7 @@
 ## Subdomain Architecture
 
 The platform uses subdomain-based routing:
+
 - **Marketing:** `https://getori.app` - Public pages
 - **Application:** `https://app.getori.app` - All API endpoints, authentication, and app features
 

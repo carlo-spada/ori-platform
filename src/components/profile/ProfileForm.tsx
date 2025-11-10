@@ -59,7 +59,7 @@ export function ProfileForm({
       <div>
         <label
           htmlFor="fullName"
-          className="text-foreground mb-2 block text-sm font-medium"
+          className="mb-2 block text-sm font-medium text-foreground"
         >
           {labels.fullName}
         </label>
@@ -69,7 +69,7 @@ export function ProfileForm({
           value={formData.fullName}
           onChange={(e) => handleChange('fullName', e.target.value)}
           placeholder={labels.fullNamePlaceholder}
-          className="border-border bg-background text-foreground placeholder:text-muted-foreground focus:ring-accent w-full rounded-xl border px-4 py-2.5 transition-all focus:ring-2 focus:outline-none"
+          className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent"
           required
         />
       </div>
@@ -78,7 +78,7 @@ export function ProfileForm({
       <div>
         <label
           htmlFor="email"
-          className="text-foreground mb-2 block text-sm font-medium"
+          className="mb-2 block text-sm font-medium text-foreground"
         >
           {labels.email}
         </label>
@@ -87,7 +87,7 @@ export function ProfileForm({
           id="email"
           value={formData.email}
           readOnly
-          className="border-border bg-muted/30 text-muted-foreground w-full cursor-not-allowed rounded-xl border px-4 py-2.5"
+          className="w-full cursor-not-allowed rounded-xl border border-border bg-muted/30 px-4 py-2.5 text-muted-foreground"
         />
       </div>
 
@@ -95,7 +95,7 @@ export function ProfileForm({
       <div>
         <label
           htmlFor="headline"
-          className="text-foreground mb-2 block text-sm font-medium"
+          className="mb-2 block text-sm font-medium text-foreground"
         >
           {labels.headline}
         </label>
@@ -105,7 +105,7 @@ export function ProfileForm({
           value={formData.headline || ''}
           onChange={(e) => handleChange('headline', e.target.value)}
           placeholder={labels.headlinePlaceholder}
-          className="border-border bg-background text-foreground placeholder:text-muted-foreground focus:ring-accent w-full rounded-xl border px-4 py-2.5 transition-all focus:ring-2 focus:outline-none"
+          className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent"
         />
       </div>
 
@@ -113,7 +113,7 @@ export function ProfileForm({
       <div>
         <label
           htmlFor="location"
-          className="text-foreground mb-2 block text-sm font-medium"
+          className="mb-2 block text-sm font-medium text-foreground"
         >
           {labels.location}
         </label>
@@ -123,7 +123,7 @@ export function ProfileForm({
           value={formData.location || ''}
           onChange={(e) => handleChange('location', e.target.value)}
           placeholder={labels.locationPlaceholder}
-          className="border-border bg-background text-foreground placeholder:text-muted-foreground focus:ring-accent w-full rounded-xl border px-4 py-2.5 transition-all focus:ring-2 focus:outline-none"
+          className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent"
         />
       </div>
 
@@ -131,7 +131,7 @@ export function ProfileForm({
       <div>
         <label
           htmlFor="about"
-          className="text-foreground mb-2 block text-sm font-medium"
+          className="mb-2 block text-sm font-medium text-foreground"
         >
           {labels.about}
         </label>
@@ -141,12 +141,12 @@ export function ProfileForm({
           onChange={(e) => handleChange('about', e.target.value)}
           placeholder={labels.aboutPlaceholder}
           rows={5}
-          className="border-border bg-background text-foreground placeholder:text-muted-foreground focus:ring-accent w-full resize-none rounded-xl border px-4 py-2.5 transition-all focus:ring-2 focus:outline-none"
+          className="w-full resize-none rounded-xl border border-border bg-background px-4 py-2.5 text-foreground transition-all placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-accent"
         />
       </div>
 
       {/* Submit Button */}
-      <div className="border-border flex justify-end border-t pt-4">
+      <div className="flex justify-end border-t border-border pt-4">
         <Button type="submit" disabled={isSubmitting} className="min-w-[140px]">
           {isSubmitting ? (
             <>

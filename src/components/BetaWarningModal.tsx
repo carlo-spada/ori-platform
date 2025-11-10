@@ -17,7 +17,11 @@ interface BetaWarningModalProps {
   onProceed: () => void
 }
 
-export function BetaWarningModal({ isOpen, onClose, onProceed }: BetaWarningModalProps) {
+export function BetaWarningModal({
+  isOpen,
+  onClose,
+  onProceed,
+}: BetaWarningModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[500px]">
@@ -44,8 +48,9 @@ export function BetaWarningModal({ isOpen, onClose, onProceed }: BetaWarningModa
                   We're still in active development
                 </p>
                 <p className="text-sm text-amber-800 dark:text-amber-200">
-                  Not all features are fully functional yet. You may encounter bugs,
-                  incomplete features, or unexpected behavior as we continue building.
+                  Not all features are fully functional yet. You may encounter
+                  bugs, incomplete features, or unexpected behavior as we
+                  continue building.
                 </p>
               </div>
             </div>
@@ -55,32 +60,36 @@ export function BetaWarningModal({ isOpen, onClose, onProceed }: BetaWarningModa
             <p className="text-sm font-medium">What to expect:</p>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex gap-2">
-                <Bug className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                <Bug className="mt-0.5 h-4 w-4 flex-shrink-0" />
                 <span>Some features may not work as expected</span>
               </li>
               <li className="flex gap-2">
-                <Rocket className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                <Rocket className="mt-0.5 h-4 w-4 flex-shrink-0" />
                 <span>New features and improvements added regularly</span>
               </li>
               <li className="flex gap-2">
-                <MessageSquare className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                <MessageSquare className="mt-0.5 h-4 w-4 flex-shrink-0" />
                 <span>Your feedback helps us improve faster</span>
               </li>
             </ul>
           </div>
 
           <div className="rounded-lg border bg-card p-4">
-            <p className="text-sm font-medium mb-2">Help us improve</p>
+            <p className="mb-2 text-sm font-medium">Help us improve</p>
             <p className="text-sm text-muted-foreground">
-              Encountered a bug or have a suggestion? We'd love to hear from you!
-              Reach out through the feedback button in your dashboard or email us
-              directly.
+              Encountered a bug or have a suggestion? We'd love to hear from
+              you! Reach out through the feedback button in your dashboard or
+              email us directly.
             </p>
           </div>
         </div>
 
         <DialogFooter className="flex-col gap-2 sm:flex-row">
-          <Button variant="outline" onClick={onClose} className="w-full sm:w-auto">
+          <Button
+            variant="outline"
+            onClick={onClose}
+            className="w-full sm:w-auto"
+          >
             Maybe later
           </Button>
           <Button onClick={onProceed} className="w-full sm:w-auto">

@@ -281,10 +281,10 @@ export default function Profile() {
   return (
     <div className="flex h-full flex-col gap-4" data-testid="profile-page">
       <header className="space-y-1">
-        <h1 className="text-foreground text-2xl font-bold sm:text-3xl">
+        <h1 className="text-2xl font-bold text-foreground sm:text-3xl">
           {t('profilePage.header.title')}
         </h1>
-        <p className="text-muted-foreground text-sm sm:text-base">
+        <p className="text-sm text-muted-foreground sm:text-base">
           {t('profilePage.header.subtitle')}
         </p>
       </header>
@@ -303,7 +303,7 @@ export default function Profile() {
         role="tabpanel"
         id={`${activeTab}-panel`}
         aria-labelledby={`${activeTab}-tab`}
-        className="border-border bg-card/50 flex-1 overflow-y-auto rounded-2xl border p-4 backdrop-blur-sm sm:p-6"
+        className="flex-1 overflow-y-auto rounded-2xl border border-border bg-card/50 p-4 backdrop-blur-sm sm:p-6"
       >
         {activeTab === 'profile' && (
           <ProfileForm

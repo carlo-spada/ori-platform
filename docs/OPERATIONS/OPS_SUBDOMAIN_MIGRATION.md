@@ -19,6 +19,7 @@ The Ori Platform uses subdomain-based routing to separate the marketing site fro
 ### Marketing Site (getori.app)
 
 **Public Pages:**
+
 - `/` - Landing page
 - `/about` - About us
 - `/pricing` - Pricing plans
@@ -30,18 +31,21 @@ The Ori Platform uses subdomain-based routing to separate the marketing site fro
 - `/legal/cookie-policy` - Cookie policy
 
 **Behavior:**
+
 - Accessing `/login`, `/signup`, `/onboarding`, `/select-plan`, or `/app/*` on main domain redirects to app subdomain
 - Marketing pages are not accessible on app subdomain (redirects to main domain)
 
 ### Application (app.getori.app)
 
 **Authentication Pages:**
+
 - `/login` - User login
 - `/signup` - User registration
 - `/select-plan` - Plan selection after signup
 - `/onboarding` - User onboarding flow
 
 **Authenticated Pages:**
+
 - `/` - Dashboard (root redirects to dashboard)
 - `/dashboard` - User dashboard
 - `/profile` - User profile and settings
@@ -50,6 +54,7 @@ The Ori Platform uses subdomain-based routing to separate the marketing site fro
 - `/settings` - Account settings
 
 **Behavior:**
+
 - Root path `/` automatically shows dashboard
 - Clean URLs (e.g., `/dashboard` instead of `/app/dashboard`)
 - Marketing pages redirect to main domain
@@ -69,6 +74,7 @@ The Next.js middleware handles all subdomain routing:
 ### URL Mapping
 
 **On App Subdomain:**
+
 ```
 User visits: app.getori.app/dashboard
 Rewrites to: app.getori.app/app/dashboard (internal file path)
@@ -76,6 +82,7 @@ File served: src/app/app/dashboard/page.tsx
 ```
 
 **On Main Domain:**
+
 ```
 User visits: getori.app/login
 Redirects to: app.getori.app/login
@@ -109,6 +116,7 @@ src/app/
 ```
 
 **Key Points:**
+
 - No files need to be moved - middleware handles all routing
 - Routes in `app/` folder are served with clean URLs on app subdomain
 - Example: File at `src/app/app/dashboard/page.tsx` is accessible at `app.getori.app/dashboard`
@@ -126,10 +134,12 @@ Add both domains in Vercel project settings:
 ### Step 2: Configure DNS
 
 **Main Domain (`getori.app`):**
+
 - Type: `A` or `CNAME`
 - Target: Vercel's DNS target (provided in Vercel dashboard)
 
 **App Subdomain (`app.getori.app`):**
+
 - Type: `CNAME`
 - Name: `app`
 - Target: `cname.vercel-dns.com`
@@ -156,6 +166,7 @@ Add both domains in Vercel project settings:
 No environment variables needed for subdomain routing (middleware handles it automatically).
 
 Optional variables for external services:
+
 ```env
 # Vercel (Production)
 NEXT_PUBLIC_APP_URL=https://app.getori.app
@@ -169,12 +180,14 @@ FRONTEND_URL=https://app.getori.app
 To test subdomain routing locally:
 
 1. **Add to `/etc/hosts`:**
+
    ```
    127.0.0.1 app.localhost
    127.0.0.1 localhost
    ```
 
 2. **Start dev server:**
+
    ```bash
    pnpm dev
    ```
@@ -236,6 +249,7 @@ When users install the PWA on their device, it opens directly to `app.getori.app
 ### Redirect Loops
 
 If you experience redirect loops:
+
 1. Clear browser cache and cookies
 2. Check that both domains are properly configured in Vercel
 3. Verify middleware logic in `src/proxy.ts`
@@ -266,6 +280,7 @@ If issues occur:
    - Vercel → Domains → Delete `app.getori.app`
 
 2. **Revert middleware:**
+
    ```bash
    git revert <commit-hash>
    git push origin main

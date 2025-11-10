@@ -9,12 +9,14 @@
 ## Problem
 
 The Core API backend (`services/core-api`) is not deployed to production. This breaks:
+
 - ❌ Stripe payment flow (Setup Intent, Subscription endpoints)
 - ❌ Webhook processing (payment confirmations)
 - ❌ All API endpoints (jobs, applications, profiles)
 - ❌ Frontend API calls return 404/CORS errors
 
 **Current State**:
+
 - Frontend deployed: ✅ https://ori-platform-b57ndkgou-carlo-spada.vercel.app
 - Backend deployed: ❌ NOT DEPLOYED
 
@@ -23,6 +25,7 @@ The Core API backend (`services/core-api`) is not deployed to production. This b
 ### Option A: DigitalOcean App Platform ⭐ RECOMMENDED
 
 **Pros**:
+
 - Always-on Node.js server (no cold starts)
 - Perfect for webhooks (long-running connections)
 - Affordable: $5-12/month
@@ -32,16 +35,19 @@ The Core API backend (`services/core-api`) is not deployed to production. This b
 - Can colocate with managed PostgreSQL if needed
 
 **Cons**:
+
 - Separate platform to manage
 - Need to configure CORS for frontend
 - Requires payment method
 
 **Pricing**:
+
 - Basic: $5/month (512MB RAM, 1 vCPU)
 - Professional: $12/month (1GB RAM, 1 vCPU) ← Recommended
 - Free $200 credit for new accounts
 
 **Deployment Steps**:
+
 1. Connect GitHub repository
 2. Select `services/core-api` as source
 3. Set build command: `pnpm install && pnpm build`
@@ -54,6 +60,7 @@ The Core API backend (`services/core-api`) is not deployed to production. This b
 ### Option B: Railway
 
 **Pros**:
+
 - Modern platform, great DX
 - Free tier: $5/month credit
 - GitHub integration
@@ -61,10 +68,12 @@ The Core API backend (`services/core-api`) is not deployed to production. This b
 - Good for Node.js/Express
 
 **Cons**:
+
 - Can get expensive quickly (usage-based)
 - Free tier limited ($5 credit)
 
 **Pricing**:
+
 - Starter: $5/month credit (usage-based after)
 - Developer: $20/month minimum
 
@@ -73,17 +82,20 @@ The Core API backend (`services/core-api`) is not deployed to production. This b
 ### Option C: Fly.io
 
 **Pros**:
+
 - Edge deployment (low latency)
 - Free tier available
 - Good for containerized apps
 - Global deployment
 
 **Cons**:
+
 - Learning curve (Dockerfiles)
 - Free tier has sleep behavior
 - Complex pricing model
 
 **Pricing**:
+
 - Free tier: 3 shared-cpu VMs, 3GB storage
 - Paid: ~$2-10/month for always-on
 
@@ -92,11 +104,13 @@ The Core API backend (`services/core-api`) is not deployed to production. This b
 ### Option D: Vercel Serverless Functions ❌ NOT RECOMMENDED
 
 **Pros**:
+
 - Same platform as frontend
 - Zero config deployment
 - Auto-scaling
 
 **Cons**:
+
 - ❌ 10-second timeout limit (breaks long webhooks)
 - ❌ Cold starts (bad for webhooks)
 - ❌ Not ideal for Express apps
@@ -107,6 +121,7 @@ The Core API backend (`services/core-api`) is not deployed to production. This b
 ## Recommendation: DigitalOcean App Platform
 
 **Why**:
+
 1. **Webhook-friendly**: Always-on, no timeouts
 2. **Affordable**: $5-12/month predictable pricing
 3. **Easy setup**: GitHub integration, minimal config
@@ -118,11 +133,13 @@ The Core API backend (`services/core-api`) is not deployed to production. This b
 ### Phase 1: Preparation (15 minutes)
 
 #### 1. Create DigitalOcean Account
+
 - Go to: https://cloud.digitalocean.com/registrations/new
 - Use GitHub to sign up (easier)
 - Get $200 free credit (new accounts)
 
 #### 2. Prepare Environment Variables
+
 Create `.env.production` locally (DON'T commit):
 
 ```bash
@@ -147,6 +164,7 @@ AI_ENGINE_URL=http://localhost:3002  # Update when AI engine deployed
 ```
 
 #### 3. Verify Build Works Locally
+
 ```bash
 cd services/core-api
 pnpm install
@@ -171,11 +189,13 @@ node dist/index.js
 #### Step 2: Configure Build Settings (5 min)
 
 **Build Command**:
+
 ```bash
 pnpm install && pnpm build
 ```
 
 **Run Command**:
+
 ```bash
 node dist/index.js
 ```
@@ -187,6 +207,7 @@ node dist/index.js
 #### Step 3: Add Environment Variables (10 min)
 
 In DigitalOcean dashboard, add all env vars from `.env.production`:
+
 - NODE_ENV
 - PORT
 - SUPABASE_URL
@@ -211,6 +232,7 @@ In DigitalOcean dashboard, add all env vars from `.env.production`:
 Go to Vercel Dashboard → ori-platform → Settings → Environment Variables
 
 Update:
+
 ```bash
 NEXT_PUBLIC_API_URL=https://your-app-name.ondigitalocean.app
 ```
@@ -225,6 +247,7 @@ git push origin main
 #### 2. Update Stripe Webhook URL
 
 Go to Stripe Dashboard → Webhooks:
+
 1. Edit existing webhook OR create new one
 2. URL: `https://your-app-name.ondigitalocean.app/api/payments/webhook`
 3. Events: Select all subscription and payment events
@@ -236,10 +259,12 @@ Go to Stripe Dashboard → Webhooks:
 In `services/core-api/src/index.ts`, verify CORS allows frontend:
 
 ```typescript
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    credentials: true,
+  }),
+)
 ```
 
 Should already be correct, but verify.
@@ -247,12 +272,14 @@ Should already be correct, but verify.
 ### Phase 4: Verification (20 minutes)
 
 #### Test 1: Health Check
+
 ```bash
 curl https://your-app-name.ondigitalocean.app/health
 # Expected: {"status":"ok"}
 ```
 
 #### Test 2: API Endpoints
+
 ```bash
 # Get Stripe Setup Intent (requires auth token)
 curl -X POST https://your-app-name.ondigitalocean.app/api/v1/setup-intent \
@@ -262,6 +289,7 @@ curl -X POST https://your-app-name.ondigitalocean.app/api/v1/setup-intent \
 ```
 
 #### Test 3: Webhook Endpoint
+
 ```bash
 # Use Stripe CLI to test webhook
 stripe listen --forward-to https://your-app-name.ondigitalocean.app/api/payments/webhook
@@ -270,6 +298,7 @@ stripe trigger checkout.session.completed
 ```
 
 #### Test 4: Frontend Integration
+
 1. Open frontend: https://ori-platform-b57ndkgou-carlo-spada.vercel.app
 2. Login
 3. Go to /select-plan
@@ -294,27 +323,32 @@ stripe trigger checkout.session.completed
 ## Monitoring & Debugging
 
 ### View Logs
+
 - DigitalOcean Dashboard → App → Runtime Logs
 - Look for startup messages, errors, webhook events
 
 ### Common Issues
 
 **1. "Cannot connect to database"**
+
 - Check SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY
 - Verify Supabase allows connections from DigitalOcean IPs
 - Check RLS policies
 
 **2. "CORS error" in frontend**
+
 - Verify FRONTEND_URL matches actual frontend URL
 - Check CORS configuration in core-api
 - Ensure frontend API_URL is correct
 
 **3. "Webhook signature verification failed"**
+
 - Ensure STRIPE_WEBHOOK_SECRET matches Stripe dashboard
 - Check webhook URL is correct
 - Verify raw body parsing is enabled
 
 **4. "Module not found" errors**
+
 - Check build command includes `pnpm install`
 - Verify `dist/` folder is created
 - Check tsconfig.json paths are correct
@@ -322,6 +356,7 @@ stripe trigger checkout.session.completed
 ## Cost Estimate
 
 **Monthly Costs** (production-ready):
+
 - DigitalOcean App Platform: $12/month (Professional tier)
 - Supabase: $0 (free tier) or $25/month (Pro)
 - Vercel: $0 (Hobby tier) or $20/month (Pro)
@@ -352,6 +387,7 @@ stripe trigger checkout.session.completed
 ## Rollback Plan
 
 If deployment fails:
+
 1. Check logs in DigitalOcean dashboard
 2. Revert to previous deployment (DigitalOcean keeps history)
 3. Or: Delete app and redeploy from scratch
@@ -360,6 +396,7 @@ If deployment fails:
 ## Documentation to Update
 
 After successful deployment:
+
 - [ ] Update README.md with production API URL
 - [ ] Update .env.example with DigitalOcean placeholders
 - [ ] Document deployment process in DEPLOYMENT.md

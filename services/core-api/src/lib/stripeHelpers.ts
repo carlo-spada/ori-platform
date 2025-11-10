@@ -52,7 +52,10 @@ export async function ensureStripeCustomer(
       .eq('user_id', userId)
 
     if (updateError) {
-      console.error('Error updating user profile with Stripe customer ID:', updateError)
+      console.error(
+        'Error updating user profile with Stripe customer ID:',
+        updateError,
+      )
       throw new Error('Failed to save Stripe customer ID')
     }
 

@@ -35,10 +35,10 @@ export function NotificationSettings({
   return (
     <section className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-6">
       <div>
-        <h2 className="text-foreground mb-1 text-xl font-semibold">
+        <h2 className="mb-1 text-xl font-semibold text-foreground">
           {labels.heading}
         </h2>
-        <p className="text-muted-foreground text-sm">{labels.description}</p>
+        <p className="text-sm text-muted-foreground">{labels.description}</p>
       </div>
 
       <div className="space-y-4">

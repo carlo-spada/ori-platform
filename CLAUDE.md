@@ -52,6 +52,7 @@ supabase/migrations/    # Database schema
 ## Architecture Patterns
 
 ### Authentication
+
 ```typescript
 // Frontend: Use AuthProvider context
 import { useAuth } from '@/contexts/AuthProvider'
@@ -59,11 +60,15 @@ const { user, isLoading } = useAuth()
 ```
 
 ### Data Fetching (React Query)
+
 ```typescript
 // API Client: src/integrations/api/
 export async function fetchProfile(): Promise<UserProfile> {
   const headers = await getAuthHeaders()
-  const res = await fetch(`${API_URL}/api/v1/profile`, { method: 'GET', headers })
+  const res = await fetch(`${API_URL}/api/v1/profile`, {
+    method: 'GET',
+    headers,
+  })
   if (!res.ok) throw new Error('Failed to fetch')
   return res.json()
 }
@@ -82,6 +87,7 @@ const { data: profile, isLoading, error } = useProfile()
 ```
 
 ### Adding API Endpoints
+
 1. Create handler in `services/core-api/src/routes/`
 2. Define Zod validation schemas
 3. Mount in `services/core-api/src/index.ts`
@@ -96,6 +102,7 @@ const { data: profile, isLoading, error } = useProfile()
 ## UI Development (v0.dev First)
 
 For any new component or UI:
+
 1. Go to v0.dev
 2. Describe component: "I need a [description] that [functionality] with [style]"
 3. Iterate prompt until generated code matches task
@@ -107,29 +114,34 @@ For any new component or UI:
 ## Testing
 
 **Frontend** (`src/**/*.test.tsx`):
+
 - React Testing Library (test behavior, not implementation)
 - Vitest test runner
 - Mock API clients (never real network calls)
+
 ```typescript
 import { vi } from 'vitest'
 vi.mock('@/integrations/api/profile', () => ({
-  fetchProfile: vi.fn().mockResolvedValue({ id: '1', name: 'Test' })
+  fetchProfile: vi.fn().mockResolvedValue({ id: '1', name: 'Test' }),
 }))
 ```
 
 **Backend** (`services/core-api/src/routes/__tests__/`):
+
 - Jest + supertest
 - Mock Supabase completely (no real DB)
 - Mock Stripe (use test keys)
 - **CRITICAL**: Load env vars in `setupFiles` (not `setupFilesAfterEnv`)
+
 ```typescript
 // services/core-api/jest.config.js
 module.exports = {
-  setupFiles: ['./src/__tests__/setup.ts'],  // ← Load env first
+  setupFiles: ['./src/__tests__/setup.ts'], // ← Load env first
 }
 ```
 
 **AI Engine** (`services/ai-engine/tests/`):
+
 - pytest
 - Mock embedding model responses
 - Test API contracts with core-api
@@ -138,15 +150,15 @@ module.exports = {
 
 ## Code Standards
 
-| Item | Standard |
-|------|----------|
-| TypeScript | Strict mode, no implicit `any` |
-| Components | PascalCase, functional + hooks |
-| Functions | camelCase, async/await |
-| Env Vars | SCREAMING_SNAKE_CASE |
-| Indentation | 2 spaces |
-| Strings | Single quotes |
-| Tailwind | `layout → color → state` order |
+| Item        | Standard                       |
+| ----------- | ------------------------------ |
+| TypeScript  | Strict mode, no implicit `any` |
+| Components  | PascalCase, functional + hooks |
+| Functions   | camelCase, async/await         |
+| Env Vars    | SCREAMING_SNAKE_CASE           |
+| Indentation | 2 spaces                       |
+| Strings     | Single quotes                  |
+| Tailwind    | `layout → color → state` order |
 
 **Before commit**: `pnpm lint --fix`
 
@@ -155,6 +167,7 @@ module.exports = {
 ## Environment Setup
 
 ### Frontend (`.env.local`)
+
 ```env
 NEXT_PUBLIC_SUPABASE_URL=https://...
 NEXT_PUBLIC_SUPABASE_ANON_KEY=...
@@ -162,6 +175,7 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
 ```
 
 ### Core API (`services/core-api/.env`)
+
 ```env
 PORT=3001
 SUPABASE_URL=https://...
@@ -173,6 +187,7 @@ AI_ENGINE_URL=http://localhost:3002
 ```
 
 ### AI Engine (`services/ai-engine/.env`)
+
 ```env
 PORT=3002
 ENVIRONMENT=development
@@ -224,6 +239,7 @@ FRONTEND_URL=http://localhost:3000
 ## Documentation to Update (If Major Change)
 
 After landing a significant feature:
+
 - `README.md`: Setup, structure, new features
 - `AGENTS.md`: If workflow changed
 - `CLAUDE.md` (this file): If implementation patterns changed

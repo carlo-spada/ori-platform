@@ -100,13 +100,13 @@ export default function Recommendations() {
     // Loading state
     if (isLoadingJobs) {
       return (
-        <div className="border-border bg-card space-y-4 rounded-2xl border p-8 text-center">
+        <div className="space-y-4 rounded-2xl border border-border bg-card p-8 text-center">
           <div className="animate-pulse space-y-4">
-            <div className="bg-muted mx-auto h-8 w-1/4 rounded" />
-            <div className="bg-muted mx-auto h-4 w-1/2 rounded" />
+            <div className="mx-auto h-8 w-1/4 rounded bg-muted" />
+            <div className="mx-auto h-4 w-1/2 rounded bg-muted" />
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6">
               {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="bg-muted h-48 rounded-2xl" />
+                <div key={i} className="h-48 rounded-2xl bg-muted" />
               ))}
             </div>
           </div>
@@ -117,11 +117,11 @@ export default function Recommendations() {
     // Error state
     if (jobsError) {
       return (
-        <div className="border-border bg-card space-y-4 rounded-2xl border p-8 text-center">
-          <h2 className="text-foreground text-xl font-semibold">
+        <div className="space-y-4 rounded-2xl border border-border bg-card p-8 text-center">
+          <h2 className="text-xl font-semibold text-foreground">
             Failed to load recommendations
           </h2>
-          <p className="text-muted-foreground mx-auto max-w-2xl">
+          <p className="mx-auto max-w-2xl text-muted-foreground">
             {jobsError instanceof Error
               ? jobsError.message
               : 'An error occurred while fetching job recommendations'}
@@ -134,11 +134,11 @@ export default function Recommendations() {
     // Empty state
     if (jobRecommendations.length === 0) {
       return (
-        <div className="border-border bg-card space-y-4 rounded-2xl border p-8 text-center">
-          <h2 className="text-foreground text-xl font-semibold">
+        <div className="space-y-4 rounded-2xl border border-border bg-card p-8 text-center">
+          <h2 className="text-xl font-semibold text-foreground">
             {t('recommendationsPage.jobs.emptyTitle')}
           </h2>
-          <p className="text-muted-foreground mx-auto max-w-2xl">
+          <p className="mx-auto max-w-2xl text-muted-foreground">
             {t('recommendationsPage.jobs.emptyBody')}
           </p>
           <Button asChild>
@@ -154,11 +154,11 @@ export default function Recommendations() {
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-foreground text-xl font-semibold">
+          <h2 className="text-xl font-semibold text-foreground">
             {t('recommendationsPage.jobs.heading')}
           </h2>
           {jobMatchData?.usage && (
-            <p className="text-muted-foreground text-sm">
+            <p className="text-sm text-muted-foreground">
               {t('recommendationsPage.jobs.usageLabel', {
                 used: jobMatchData.usage.used,
                 limit: jobMatchData.usage.limit,
@@ -187,11 +187,11 @@ export default function Recommendations() {
   const renderAdviceView = () => {
     if (careerAdvice.length === 0) {
       return (
-        <div className="border-border bg-card space-y-4 rounded-2xl border p-8 text-center">
-          <h2 className="text-foreground text-xl font-semibold">
+        <div className="space-y-4 rounded-2xl border border-border bg-card p-8 text-center">
+          <h2 className="text-xl font-semibold text-foreground">
             {t('recommendationsPage.advice.emptyTitle')}
           </h2>
-          <p className="text-muted-foreground mx-auto max-w-2xl">
+          <p className="mx-auto max-w-2xl text-muted-foreground">
             {t('recommendationsPage.advice.emptyBody')}
           </p>
         </div>
@@ -200,7 +200,7 @@ export default function Recommendations() {
 
     return (
       <div className="space-y-6">
-        <h2 className="text-foreground text-xl font-semibold">
+        <h2 className="text-xl font-semibold text-foreground">
           {t('recommendationsPage.advice.heading')}
         </h2>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6">
@@ -215,8 +215,8 @@ export default function Recommendations() {
             />
           ))}
         </div>
-        <div className="border-border border-t pt-4 text-center">
-          <p className="text-muted-foreground mb-2 text-sm">
+        <div className="border-t border-border pt-4 text-center">
+          <p className="mb-2 text-sm text-muted-foreground">
             {t('recommendationsPage.advice.exploreMoreCopy')}
           </p>
           <Button variant="link" asChild>
@@ -230,7 +230,7 @@ export default function Recommendations() {
   return (
     <div className="flex h-full flex-col gap-4">
       <header className="space-y-1">
-        <h1 className="text-foreground text-3xl font-bold sm:text-4xl">
+        <h1 className="text-3xl font-bold text-foreground sm:text-4xl">
           {t('recommendationsPage.header.title')}
         </h1>
         <p className="text-muted-foreground">
@@ -255,7 +255,7 @@ export default function Recommendations() {
         </Button>
       </div>
 
-      <section className="border-border bg-card flex-1 overflow-y-auto rounded-2xl border p-4 sm:p-6">
+      <section className="flex-1 overflow-y-auto rounded-2xl border border-border bg-card p-4 sm:p-6">
         {recommendationType === 'jobs' ? renderJobsView() : renderAdviceView()}
       </section>
     </div>

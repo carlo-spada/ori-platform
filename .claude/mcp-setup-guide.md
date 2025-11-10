@@ -23,12 +23,12 @@
 
 ## Environment Variables Reference
 
-| Variable | Source | Mode | Required |
-|----------|--------|------|----------|
-| `STRIPE_API_KEY` | Stripe Dashboard → Developers | Test | ✅ |
-| `STRIPE_WEBHOOK_SECRET` | Stripe Dashboard → Webhooks | Test | ✅ |
-| `RESEND_API_KEY` | Resend Dashboard → API Keys | Test | ✅ |
-| `DATABASE_URL` | Supabase → Settings | Dev | ✅ |
+| Variable                | Source                        | Mode | Required |
+| ----------------------- | ----------------------------- | ---- | -------- |
+| `STRIPE_API_KEY`        | Stripe Dashboard → Developers | Test | ✅       |
+| `STRIPE_WEBHOOK_SECRET` | Stripe Dashboard → Webhooks   | Test | ✅       |
+| `RESEND_API_KEY`        | Resend Dashboard → API Keys   | Test | ✅       |
+| `DATABASE_URL`          | Supabase → Settings           | Dev  | ✅       |
 
 ---
 
@@ -37,6 +37,7 @@
 ### Stripe MCP
 
 **Get Keys**:
+
 1. Go to [Stripe Dashboard](https://dashboard.stripe.com)
 2. **Test Mode** (toggle top right)
 3. **Developers** → **API Keys** → Copy **Secret Key** (`sk_test_...`)
@@ -44,12 +45,14 @@
 5. Copy webhook signing secret (`whsec_test_...`)
 
 **Set Variables**:
+
 ```bash
 export STRIPE_API_KEY="sk_test_XXXXX"
 export STRIPE_WEBHOOK_SECRET="whsec_test_XXXXX"
 ```
 
 **Verify**:
+
 - "List test customers in Stripe"
 - "Create test customer for test@example.com"
 
@@ -58,15 +61,18 @@ export STRIPE_WEBHOOK_SECRET="whsec_test_XXXXX"
 ### Resend MCP
 
 **Get Key**:
+
 1. Go to [Resend Dashboard](https://resend.com/home)
 2. **API Keys** → Copy **Test API Key** (`re_test_...`)
 
 **Set Variable**:
+
 ```bash
 export RESEND_API_KEY="re_test_XXXXX"
 ```
 
 **Verify**:
+
 - "Preview welcome email"
 - "Show available email templates"
 
@@ -75,17 +81,20 @@ export RESEND_API_KEY="re_test_XXXXX"
 ### PostgreSQL MCP
 
 **Get Connection String**:
+
 1. [Supabase Dashboard](https://supabase.com/dashboard)
 2. Select project → **Settings** → **Database** → **Connection string**
 3. Copy **Full connection string** (URI style): `postgresql://[user]:[password]@[host]:[port]/[database]`
 4. **Note**: URL-encode special chars: `@` → `%40`, `:` → `%3A`
 
 **Set Variable**:
+
 ```bash
 export DATABASE_URL="postgresql://user:password@host:5432/database"
 ```
 
 **Verify**:
+
 - "Show all tables"
 - "Describe user_profiles table"
 - "List RLS policies"
@@ -103,26 +112,33 @@ MCPs are **automatically loaded** when Claude Code starts. Environment variables
 ## Environment Variable Management
 
 ### Option 1: Shell (Recommended)
+
 Add to `~/.bashrc`, `~/.zshrc`, or `~/.fish/config.fish`:
+
 ```bash
 export STRIPE_API_KEY="sk_test_..."
 export STRIPE_WEBHOOK_SECRET="whsec_test_..."
 export RESEND_API_KEY="re_test_..."
 export DATABASE_URL="postgresql://..."
 ```
+
 Then: `source ~/.bashrc` or restart terminal
 
 ### Option 2: .env.local (Project-Specific)
+
 Create `.env.local` in project root (never commit):
+
 ```env
 STRIPE_API_KEY=sk_test_...
 STRIPE_WEBHOOK_SECRET=whsec_test_...
 RESEND_API_KEY=re_test_...
 DATABASE_URL=postgresql://...
 ```
+
 Claude Code reads automatically.
 
 ### Option 3: Direct in Claude Code (Testing Only)
+
 Temporary, not persistent. Don't use for production keys.
 
 ---
@@ -130,12 +146,14 @@ Temporary, not persistent. Don't use for production keys.
 ## Security Best Practices
 
 ### ✅ DO
+
 - Use **test/sandbox keys** in development (keys starting with `test_`)
 - Use **unique passwords** for database connections
 - Rotate API keys regularly
 - Store production keys securely (not in code)
 
 ### ❌ DON'T
+
 - Commit `.env.local` to git
 - Use production keys in development
 - Share API keys in chat/email/slack
@@ -149,11 +167,13 @@ Temporary, not persistent. Don't use for production keys.
 ### Stripe MCP Errors
 
 **"Invalid API Key"**:
+
 - Key must start with `sk_test_` (not `pk_test_`)
 - Check you're in **Test Mode** in Stripe dashboard
 - Try creating new API key
 
 **"Webhook secret invalid"**:
+
 - Get from **Developers** → **Webhooks** (different from API key)
 - Must start with `whsec_test_`
 - Copy exact string (no extra spaces)
@@ -161,6 +181,7 @@ Temporary, not persistent. Don't use for production keys.
 ### Resend MCP Errors
 
 **"Invalid API Key"**:
+
 - Key starts with `re_test_` or `re_`
 - Check key hasn't expired
 - Generate new key if stuck
@@ -168,6 +189,7 @@ Temporary, not persistent. Don't use for production keys.
 ### PostgreSQL MCP Errors
 
 **"Connection refused"**:
+
 - Database running? (`psql` connects?)
 - Connection string format: `postgresql://user:password@host:port/database`
 - Username/password correct?
@@ -175,11 +197,13 @@ Temporary, not persistent. Don't use for production keys.
 - URL-encode special chars: `@` → `%40`, `:` → `%3A`, `#` → `%23`
 
 **"Permission denied"**:
+
 - User has read access to database?
 - RLS policies blocking queries?
 - Use service role/admin credentials for testing
 
 **"Database does not exist"**:
+
 - Check database name in connection string
 - Connected to correct Supabase project?
 
@@ -188,6 +212,7 @@ Temporary, not persistent. Don't use for production keys.
 ## MCP Commands Reference
 
 ### Stripe
+
 ```
 "List test customers"
 "Create customer with email john@example.com"
@@ -196,6 +221,7 @@ Temporary, not persistent. Don't use for production keys.
 ```
 
 ### Resend
+
 ```
 "Show available templates"
 "Preview welcome email"
@@ -203,6 +229,7 @@ Temporary, not persistent. Don't use for production keys.
 ```
 
 ### PostgreSQL
+
 ```
 "Show all tables"
 "Describe user_profiles table"
@@ -226,11 +253,11 @@ Temporary, not persistent. Don't use for production keys.
 
 ## File Locations
 
-| File | Location | Purpose |
-|------|----------|---------|
-| **MCP Config** | `.claude/mcp.json` | Configurations (committed) |
-| **This Guide** | `.claude/mcp-setup-guide.md` | Setup instructions |
-| **Secrets** | `.env.local` or shell | Credentials (NOT committed) |
+| File           | Location                     | Purpose                     |
+| -------------- | ---------------------------- | --------------------------- |
+| **MCP Config** | `.claude/mcp.json`           | Configurations (committed)  |
+| **This Guide** | `.claude/mcp-setup-guide.md` | Setup instructions          |
+| **Secrets**    | `.env.local` or shell        | Credentials (NOT committed) |
 
 ---
 

@@ -9,18 +9,18 @@ Integrate the Stripe MCP Server to enable programmatic testing of our payment an
 ## Detailed Requirements
 
 1.  **Configure the Stripe MCP Server:**
-    *   Set up the Stripe MCP server in our Claude Code environment.
-    *   Ensure it is configured with the necessary API keys (from GitHub secrets).
+    - Set up the Stripe MCP server in our Claude Code environment.
+    - Ensure it is configured with the necessary API keys (from GitHub secrets).
 
 2.  **Create a `StripeService`:**
-    *   Create a new service in `services/core-api/src/services/stripe.ts`.
-    *   This service should encapsulate all Stripe-related logic and use the Stripe MCP server for all interactions with the Stripe API.
-    *   It should provide a simple, high-level API for our application to use (e.g., `createCustomer`, `createSubscription`, `handleWebhook`).
+    - Create a new service in `services/core-api/src/services/stripe.ts`.
+    - This service should encapsulate all Stripe-related logic and use the Stripe MCP server for all interactions with the Stripe API.
+    - It should provide a simple, high-level API for our application to use (e.g., `createCustomer`, `createSubscription`, `handleWebhook`).
 
 3.  **Refactor Payment and Subscription Tests:**
-    *   Refactor our existing payment and subscription tests to use the new `StripeService`.
-    *   The tests should use the Stripe MCP server to create test customers, subscriptions, and invoices.
-    *   The tests should also cover webhook handling.
+    - Refactor our existing payment and subscription tests to use the new `StripeService`.
+    - The tests should use the Stripe MCP server to create test customers, subscriptions, and invoices.
+    - The tests should also cover webhook handling.
 
 ## Acceptance Criteria
 

@@ -24,11 +24,11 @@ const NotFound = () => {
       description={t('notFound.seo.description')}
     >
       <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
-        <p className="text-muted-foreground mb-2 text-sm">404</p>
+        <p className="mb-2 text-sm text-muted-foreground">404</p>
         <h1 className="mb-4 text-3xl font-semibold sm:text-4xl">
           {t('notFound.heading')}
         </h1>
-        <p className="text-muted-foreground mb-6 max-w-md">
+        <p className="mb-6 max-w-md text-muted-foreground">
           {t('notFound.body')}
         </p>
         <Button asChild>
