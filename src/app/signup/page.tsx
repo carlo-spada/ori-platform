@@ -8,7 +8,7 @@ import { setDocumentMeta } from '@/lib/seo'
 import { useAuth } from '@/contexts/AuthProvider'
 import { CheckCircle2, Loader2 } from 'lucide-react'
 import { BetaWarningModal } from '@/components/BetaWarningModal'
-import { supabase } from '@/integrations/supabase/client'
+import { getSupabaseClient } from '@/integrations/supabase/client'
 import { toast } from '@/components/ui/sonner'
 
 export default function Signup() {
@@ -58,6 +58,11 @@ export default function Signup() {
     setIsLoading(true)
 
     try {
+      const supabase = getSupabaseClient()
+      if (!supabase) {
+        throw new Error('Supabase client is not configured')
+      }
+
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
