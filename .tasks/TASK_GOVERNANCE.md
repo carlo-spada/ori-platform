@@ -1,6 +1,6 @@
 # Task Governance & Best Practices
 
-**Purpose**: Maintain task board integrity, prevent chaos, and enable smooth agent collaboration
+**Purpose**: Maintain task board integrity for Claude-primary workflow with agentic speed (10x)
 **Status**: Active framework
 **Last Updated**: November 10, 2025
 

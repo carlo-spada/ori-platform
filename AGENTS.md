@@ -6,7 +6,13 @@
 
 ## Quick Reference
 
-**Workflow**: `dev` → implement → commit/push → PR `dev` → `main` → Vercel deploy
+**Workflow**: Claude (research → implement → review) → PR → `main` → Deploy
+
+**Mode Switching** (within same Claude session):
+- Research: `"Research: [what to find]"`
+- Implement: `"Implement: [feature]"` (default)
+- Review: `"Review: [what to check]"`
+- Consult: `"Consult [Gemini/Codex]: [question]"` (rare)
 
 **Task Management** (AGENTIC WORKFLOW - 10x Speed):
 ```bash
@@ -117,26 +123,54 @@ supabase db pull                      # Sync migrations locally
 
 ---
 
-## Agent Roles
+## Agent Workflow (Claude-Primary)
 
-### Gemini (Planner & Researcher)
-- **Do**: Strategic analysis → create tasks → audit progress → improve UX
-- **How**: Every 2 hours, audit project state. Formulate plans → create `.tasks/` files → push
-- **Governance**: Check `.tasks/TASK_GOVERNANCE.md` quality gates BEFORE creating tasks
+### Primary Agent: Claude (All Modes)
+Claude now handles the complete development cycle in different modes:
 
-### Claude (Implementer & Builder)
-- **Do**: Claim tasks → implement → push frequently → complete
-- **How**: Move task → code → commit/push after each logical unit → move task to done
-- **Must**: Use v0.dev for UI components. Never mock data in frontend (React Query only).
+#### 🔍 Research Mode (replaces Gemini)
+- **Trigger**: "Research: [what to find]"
+- **Do**: Find code, analyze patterns, understand architecture
+- **Tools**: Task with Explore, Grep, Glob, Read
 
-### Codex (Reviewer & Debugger)
-- **Do**: Review code → debug/refactor → update docs → create PR
-- **How**: Monitor `.tasks/done/` → move to `.tasks/in-review/` → review → move to `.tasks/reviewed/`
-- **Gate**: Ensure tests pass, docs current, quality metrics met
+#### 💻 Implementation Mode (default)
+- **Trigger**: "Implement: [what to build]" or default
+- **Do**: Claim tasks → code → test → commit → complete
+- **Rules**: Commit every 15-30 min, use v0.dev for UI, no mock data
 
-### Carlo (Integrator & Releaser)
+#### ✅ Review Mode (replaces Codex)
+- **Trigger**: "Review: [what to check]"
+- **Do**: Run tests, trigger specialized agents, validate quality
+- **Tools**: Bash (tests/lint), specialized agents
+
+### External Consultants (On-Demand Only)
+
+#### Gemini (Creative Consultant)
+- **When**: Need creative ideas, UX design, architecture decisions
+- **How**: "Consult Gemini about: [specific question]"
+- **Not for**: Daily coding tasks
+
+#### Codex (Technical Consultant)
+- **When**: Complex algorithms, security audits, performance optimization
+- **How**: "Get Codex opinion on: [code or approach]"
+- **Not for**: Standard code reviews
+
+#### Carlo (Decision Maker)
 - **Do**: Final review → merge to `main`
 - **How**: When all feature tasks in `.tasks/reviewed/`, merge to `main` → Vercel deploys
+
+### Simplified Workflow Example
+```bash
+# Single Claude session, no handoffs:
+./scripts/task claim feature-x
+"Research: Find similar authentication implementations"
+"Implement: Add OAuth provider"
+"Review: Check security and test coverage"
+./scripts/task complete feature-x
+gh pr create
+```
+
+**Benefits**: 3x faster, no context loss, consistent style, single thread
 
 ---
 
