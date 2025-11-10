@@ -595,13 +595,12 @@ The following workflows are deprecated as of Week 6, 2025:
 | Manual email setup | EmailService + Resend MCP | Week 8 |
 | External database tools (psql, DBeaver) | PostgreSQL MCP queries | Week 10 |
 
-See `docs/MCP_MIGRATION_STRATEGIES.md` for detailed migration guides.
-
 ### Documentation References
 
-- **Master Plan**: `docs/MCP_INTEGRATION_MASTER_PLAN.md`
-- **Architecture**: `docs/MCP_PHASE1_ARCHITECTURE.md`
-- **Migration**: `docs/MCP_MIGRATION_STRATEGIES.md`
-- **Stripe Workflows**: `docs/STRIPE_MCP_WORKFLOWS.md`
-- **Email Workflows**: `docs/RESEND_MCP_WORKFLOWS.md`
-- **Database Workflows**: `docs/POSTGRES_MCP_WORKFLOWS.md`
+See `docs/MCP_DOCUMENTATION_INDEX.md` for the current, authoritative guide to all MCP documentation.
+
+**Key Documents**:
+- **Decision Guide**: `docs/NEXT_STEPS.md` - What's happening and options
+- **Implementation Plan**: `docs/MCP_REFACTORING_PLAN.md` - Phase-by-phase strategy
+- **Navigation Index**: `docs/MCP_DOCUMENTATION_INDEX.md` - All MCP docs and reading paths
+- **Architecture Audit**: `docs/MCP_ARCHITECTURE_AUDIT.md` - Why we need MCP (reference)
