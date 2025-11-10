@@ -6,14 +6,19 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { setDocumentMeta } from '@/lib/seo'
 import { useAuth } from '@/contexts/AuthProvider'
-import { CheckCircle2 } from 'lucide-react'
-import { EarlyAccessModal } from '@/components/EarlyAccessModal'
+import { CheckCircle2, Loader2 } from 'lucide-react'
+import { BetaWarningModal } from '@/components/BetaWarningModal'
+import { supabase } from '@/integrations/supabase/client'
+import { toast } from '@/components/ui/sonner'
 
 export default function Signup() {
   const router = useRouter()
   const { user } = useAuth()
-  const [showEarlyAccessModal, setShowEarlyAccessModal] = useState(false)
+  const [showBetaWarning, setShowBetaWarning] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     setDocumentMeta({
@@ -30,21 +35,49 @@ export default function Signup() {
     }
   }, [user, router])
 
-  // Auto-show early access modal on page load
-  useEffect(() => {
-    const hasJoinedEarlyAccess = localStorage.getItem('ori-early-access')
-    if (!hasJoinedEarlyAccess) {
-      // Small delay to ensure smooth page render
-      const timer = setTimeout(() => {
-        setShowEarlyAccessModal(true)
-      }, 500)
-      return () => clearTimeout(timer)
-    }
-  }, [])
+  const handleSignupClick = (e: React.FormEvent) => {
+    e.preventDefault()
 
-  const handleSignupClick = () => {
-    // Show early access modal immediately on button click
-    setShowEarlyAccessModal(true)
+    // Validate inputs
+    if (!email || !password) {
+      toast.error('Please fill in all fields')
+      return
+    }
+
+    if (password.length < 6) {
+      toast.error('Password must be at least 6 characters')
+      return
+    }
+
+    // Show beta warning modal first
+    setShowBetaWarning(true)
+  }
+
+  const handleProceedWithSignup = async () => {
+    setShowBetaWarning(false)
+    setIsLoading(true)
+
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
+      })
+
+      if (error) throw error
+
+      if (data.user) {
+        setShowConfirmation(true)
+        toast.success('Account created! Check your email to verify.')
+      }
+    } catch (error: any) {
+      console.error('Signup error:', error)
+      toast.error(error.message || 'Failed to create account. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   if (showConfirmation) {
@@ -115,7 +148,7 @@ export default function Signup() {
           </p>
         </div>
 
-        <div className="space-y-6">
+        <form onSubmit={handleSignupClick} className="space-y-6">
           <div className="border-border bg-card space-y-4 rounded-xl border p-8">
             <div>
               <label
@@ -128,8 +161,12 @@ export default function Signup() {
                 type="email"
                 id="email"
                 name="email"
-                className="border-border bg-background text-foreground focus:ring-accent w-full rounded-lg border px-4 py-2 focus:ring-2 focus:outline-none"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isLoading}
+                className="border-border bg-background text-foreground focus:ring-accent w-full rounded-lg border px-4 py-2 focus:ring-2 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                 placeholder="you@example.com"
+                required
               />
             </div>
 
@@ -144,17 +181,28 @@ export default function Signup() {
                 type="password"
                 id="password"
                 name="password"
-                className="border-border bg-background text-foreground focus:ring-accent w-full rounded-lg border px-4 py-2 focus:ring-2 focus:outline-none"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={isLoading}
+                className="border-border bg-background text-foreground focus:ring-accent w-full rounded-lg border px-4 py-2 focus:ring-2 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                 placeholder="••••••••"
                 minLength={6}
+                required
               />
               <p className="text-muted-foreground mt-1 text-xs">
                 Must be at least 6 characters
               </p>
             </div>
 
-            <Button type="button" onClick={handleSignupClick} className="w-full">
-              Create account
+            <Button type="submit" disabled={isLoading} className="w-full">
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Creating account...
+                </>
+              ) : (
+                'Create account'
+              )}
             </Button>
           </div>
 
@@ -176,14 +224,14 @@ export default function Signup() {
               ← Back to home
             </Link>
           </p>
-        </div>
+        </form>
       </div>
 
-      {/* Early Access Modal */}
-      <EarlyAccessModal
-        isOpen={showEarlyAccessModal}
-        onClose={() => setShowEarlyAccessModal(false)}
-        trigger="signup"
+      {/* Beta Warning Modal */}
+      <BetaWarningModal
+        isOpen={showBetaWarning}
+        onClose={() => setShowBetaWarning(false)}
+        onProceed={handleProceedWithSignup}
       />
     </div>
   )
