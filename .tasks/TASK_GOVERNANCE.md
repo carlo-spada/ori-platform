@@ -35,9 +35,9 @@ The `.tasks/` folder is the **single source of truth** for project status. Witho
 │   └── single-task.md          # Small tasks as single files
 ├── in-progress/                # Actively being worked on (WIP limit: 5)
 │   └── (same structure)
-├── in-review/                   # Completed, under review
+├── in-review/                  # Completed implementation, under review
 │   └── (same structure)
-└── done/                        # Reviewed and approved, ready for merge
+└── done/                       # Reviewed and approved, ready for merge to main
     └── (same structure)
 ```
 
@@ -118,52 +118,48 @@ git commit -m "feat: implement feature X as per task"
 git push origin dev
 ```
 
-### Phase 4: Completion (Claude → `.tasks/done/`)
+### Phase 4: Completion (Claude → `.tasks/in-review/`)
 
 **Who**: Claude (Implementer)
 **When**: Implementation finished
-**What**: Move task file/folder from `in-progress` to `done`
+**What**: Move task file/folder from `in-progress` to `in-review`
 
 **Rules**:
 ```bash
-# Move entire folder/file
-git mv .tasks/in-progress/feature-name .tasks/done/feature-name
+# Move entire folder/file to review
+git mv .tasks/in-progress/feature-name .tasks/in-review/feature-name
 
 # Commit and push
-git commit -m "chore(tasks): complete feature-name implementation"
+git commit -m "chore(tasks): complete feature-name - moved to review"
 git push origin dev
 ```
 
-### Phase 5: Review (Codex → `.tasks/in-review/`)
+### Phase 5: Review (Codex → `.tasks/done/`)
 
 **Who**: Codex (Reviewer)
-**When**: Proactively monitors `.tasks/done/`
-**What**: Move to review, debug, refactor
+**When**: Proactively monitors `.tasks/in-review/`
+**What**: Review, debug, refactor, then approve
 
 **Rules**:
 ```bash
-# Claim for review
-git mv .tasks/done/feature-name .tasks/in-review/feature-name
-git commit -m "chore(tasks): claim feature-name for review"
-git push origin dev
-
+# Review is already in .tasks/in-review/
 # Perform review, debugging, refactoring
 # Make code changes as needed
 
-# Complete review
-git mv .tasks/in-review/feature-name .tasks/reviewed/feature-name
-git commit -m "chore(tasks): complete feature-name review"
+# Approve and move to done
+git mv .tasks/in-review/feature-name .tasks/done/feature-name
+git commit -m "chore(tasks): approve feature-name - ready for merge"
 git push origin dev
 ```
 
 ### Phase 6: Integration (Carlo → `main`)
 
 **Who**: Carlo (Integrator/Releaser)
-**When**: All feature tasks are in `.tasks/reviewed/`
+**When**: All feature tasks are in `.tasks/done/`
 **What**: Merge to main branch
 
 **Rules**:
-- All feature tasks must be in `.tasks/reviewed/`
+- All feature tasks must be in `.tasks/done/` (approved and ready)
 - Create PR from `dev` to `main`
 - Merge after approval and checks pass
 
@@ -178,7 +174,7 @@ git push origin dev
 ```markdown
 # Feature Name
 
-**Status**: TODO / IN_PROGRESS / DONE / IN_REVIEW / REVIEWED
+**Status**: TODO / IN_PROGRESS / IN_REVIEW / DONE
 **Created**: Date
 **Owner**: Agent Name
 **Priority**: HIGH / MEDIUM / LOW
@@ -210,7 +206,7 @@ Any additional context for agents working on this.
 ```markdown
 # Feature Name - Part A: Backend API Setup
 
-**Status**: TODO / IN_PROGRESS / DONE
+**Status**: TODO / IN_PROGRESS / IN_REVIEW / DONE
 **Estimated**: 4 hours
 **Depends On**: None (or link to other task)
 
@@ -319,8 +315,8 @@ grep -r "keyword" .tasks/done/
 
 **If a task isn't relevant anymore**:
 ```bash
-# Move to archived (don't delete)
-git mv .tasks/todo/old-task.md .tasks/archived/old-task.md
+# Move to backlog with archive note (don't delete)
+git mv .tasks/todo/old-task.md .tasks/backlog/old-task.md
 git commit -m "chore(tasks): archive old-task - no longer needed"
 git push origin dev
 
@@ -365,12 +361,11 @@ git mv .tasks/todo/feature-name/A.md .tasks/in-progress/A.md
 
 **Task files should show current status**:
 ```
-Status: TODO      ← Created, not started
+Status: TODO        ← Created, not started
 Status: IN_PROGRESS ← Actively being worked on
-Status: DONE      ← Implemented, awaiting review
-Status: IN_REVIEW ← Under review/debugging
-Status: REVIEWED  ← Ready for main branch
-Status: ARCHIVED  ← No longer relevant
+Status: IN_REVIEW   ← Implemented, under review/debugging
+Status: DONE        ← Reviewed and approved, ready for merge to main
+Status: ARCHIVED    ← No longer relevant
 ```
 
 **Update status in task file when moving directories.**
@@ -386,31 +381,29 @@ Status: ARCHIVED  ← No longer relevant
 echo "Task Distribution:"
 find .tasks/todo -type f -name "*.md" | wc -l
 find .tasks/in-progress -type f -name "*.md" | wc -l
-find .tasks/done -type f -name "*.md" | wc -l
 find .tasks/in-review -type f -name "*.md" | wc -l
-find .tasks/reviewed -type f -name "*.md" | wc -l
+find .tasks/done -type f -name "*.md" | wc -l
 find .tasks/archived -type f -name "*.md" | wc -l
 
 # Check for stale tasks (in-progress for 2+ weeks)
 find .tasks/in-progress -type f -mtime +14
 
-# Check for stale done tasks (awaiting review for 3+ weeks)
-find .tasks/done -type f -mtime +21
+# Check for stale review tasks (in-review for 3+ days)
+find .tasks/in-review -type f -mtime +3
 ```
 
 **Health Metrics** (target ranges):
 - `todo/`: 20-50 tasks (reasonable backlog)
 - `in-progress/`: 2-5 features (focus)
-- `done/`: 0-3 items (moving fast)
-- `in-review/`: 1-2 items (review bottleneck?)
-- `reviewed/`: 0-2 items (ready to ship)
+- `in-review/`: 0-3 items (awaiting review)
+- `done/`: 0-5 items (ready to merge to main)
 - `archived/`: Should grow over time (old tasks)
 
 **If metrics off**:
 - Too many in `todo`: Need to prioritize
 - Stuck in `in-progress`: Agent blocked?
-- Stuck in `done`: Review backlog?
 - Stuck in `in-review`: Reviewer bottleneck?
+- Too many in `done`: Time to merge to main?
 
 ---
 
@@ -457,14 +450,14 @@ git push origin dev
 
 ### Scenario 3: Duplicate Tasks Exist
 
-**Problem**: Two similar tasks in backlog
+**Problem**: Two similar tasks in todo
 
 **Solution**:
 ```bash
 # Keep the more detailed/important one
-# Archive the duplicate
+# Archive the duplicate to backlog
 
-git mv .tasks/todo/duplicate-task.md .tasks/archived/duplicate-task.md
+git mv .tasks/todo/duplicate-task.md .tasks/backlog/duplicate-task.md
 
 # Add note:
 # **ARCHIVED**: Duplicate of existing-task.md
@@ -479,8 +472,8 @@ git push origin dev
 
 **Solution**:
 ```bash
-# Archive with reason
-git mv .tasks/todo/old-task.md .tasks/archived/old-task.md
+# Archive with reason to backlog
+git mv .tasks/todo/old-task.md .tasks/backlog/old-task.md
 
 # Add note at top:
 # **ARCHIVED** [Date]: No longer needed - feature X changed requirements
@@ -505,23 +498,22 @@ git push origin dev
 ### Claude (Implementer)
 - ✅ Claim task by moving to `in-progress`
 - ✅ Implement according to task file
-- ✅ Move to `done` when complete
+- ✅ Move to `in-review` when implementation complete
 - ✅ Commit and push after each step
 - ❌ Don't leave task in `in-progress` when stuck (communicate or archive)
 - ❌ Don't modify task files (create new task instead if scope changes)
 
 ### Codex (Reviewer)
-- ✅ Monitor `.tasks/done/` for review items
-- ✅ Claim for review by moving to `in-review`
-- ✅ Debug and refactor as needed
-- ✅ Move to `reviewed` when complete
+- ✅ Monitor `.tasks/in-review/` for review items
+- ✅ Review, debug, and refactor as needed
+- ✅ Move to `done` when approved (ready for merge)
 - ✅ Commit and push at each step
 - ❌ Don't skip review (even "small" changes)
 - ❌ Don't merge directly to main (Carlo does that)
 
 ### Carlo (Integrator)
-- ✅ Monitor `.tasks/reviewed/` for release-ready items
-- ✅ Merge feature to `main` when all tasks are reviewed
+- ✅ Monitor `.tasks/done/` for release-ready items
+- ✅ Merge feature to `main` when all tasks are done
 - ✅ Handle final integration and deployment
 - ❌ Don't merge unreviewed code
 - ❌ Don't skip CI/CD checks

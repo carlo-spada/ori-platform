@@ -34,10 +34,8 @@ jobs:
           # Count tasks in each state
           TODO_COUNT=$(find .tasks/todo -name "*.md" 2>/dev/null | wc -l || echo 0)
           WIP_COUNT=$(find .tasks/in-progress -name "*.md" 2>/dev/null | wc -l || echo 0)
-          DONE_COUNT=$(find .tasks/done -name "*.md" 2>/dev/null | wc -l || echo 0)
           REVIEW_COUNT=$(find .tasks/in-review -name "*.md" 2>/dev/null | wc -l || echo 0)
-          REVIEWED_COUNT=$(find .tasks/reviewed -name "*.md" 2>/dev/null | wc -l || echo 0)
-          BACKLOG_COUNT=$(find .tasks/backlog -name "*.md" 2>/dev/null | wc -l || echo 0)
+          DONE_COUNT=$(find .tasks/done -name "*.md" 2>/dev/null | wc -l || echo 0)
 
           # Find stale tasks (using 2 days as proxy for 30+ hours)
           STALE_COUNT=$(find .tasks/in-progress -name "*.md" -mtime +$STALE_DAYS 2>/dev/null | wc -l || echo 0)
@@ -76,21 +74,19 @@ jobs:
             echo "| **IN PROGRESS** | $WIP_COUNT | ✅ | 2-5 |" >> $GITHUB_STEP_SUMMARY
           fi
 
-          # Check review backlog
+          echo "| **IN REVIEW** | $REVIEW_COUNT | ✅ | 0-3 |" >> $GITHUB_STEP_SUMMARY
+
+          # Check if too many done tasks (ready for merge)
           if [ $DONE_COUNT -gt $DONE_THRESHOLD ]; then
-            echo "| **DONE** | **$DONE_COUNT** | ⚠️ **BACKLOG** | < $DONE_THRESHOLD |" >> $GITHUB_STEP_SUMMARY
-            echo "::warning::Review backlog: $DONE_COUNT tasks awaiting review"
+            echo "| **DONE** | **$DONE_COUNT** | ⚠️ **READY FOR MERGE** | < $DONE_THRESHOLD |" >> $GITHUB_STEP_SUMMARY
+            echo "::warning::Many tasks ready for merge: $DONE_COUNT tasks approved and ready"
             if [ "$HEALTH_STATUS" = "healthy" ]; then
               HEALTH_STATUS="warning"
               ALERT_LEVEL="warning"
             fi
           else
-            echo "| **DONE** | $DONE_COUNT | ✅ | < $DONE_THRESHOLD |" >> $GITHUB_STEP_SUMMARY
+            echo "| **DONE** | $DONE_COUNT | ✅ | 0-5 |" >> $GITHUB_STEP_SUMMARY
           fi
-
-          echo "| **IN REVIEW** | $REVIEW_COUNT | ✅ | - |" >> $GITHUB_STEP_SUMMARY
-          echo "| **REVIEWED** | $REVIEWED_COUNT | ✅ | - |" >> $GITHUB_STEP_SUMMARY
-          echo "| **BACKLOG** | $BACKLOG_COUNT | 📦 | - |" >> $GITHUB_STEP_SUMMARY
 
           # Check stale tasks
           if [ $STALE_COUNT -gt $STALE_THRESHOLD ]; then
@@ -138,7 +134,7 @@ jobs:
           fi
 
           if [ $DONE_COUNT -gt $DONE_THRESHOLD ]; then
-            echo "- ⚠️ **Review backlog**: Process $DONE_COUNT completed tasks awaiting review" >> $GITHUB_STEP_SUMMARY
+            echo "- ⚠️ **Merge ready**: $DONE_COUNT approved tasks ready for merge to main" >> $GITHUB_STEP_SUMMARY
           fi
 
           if [ $STALE_COUNT -gt 0 ]; then

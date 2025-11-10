@@ -106,9 +106,9 @@ supabase db pull                      # Sync migrations locally
 | Creation | Gemini | Create in `.tasks/todo/` (large: folder+A.md/B.md/C.md, small: file) |
 | Claiming | Claude | Move to `.tasks/in-progress/` + commit |
 | Implementation | Claude | Code + frequent commits |
-| Completion | Claude | Move to `.tasks/done/` + commit |
-| Review | Codex | Move to `.tasks/in-review/` → `.tasks/reviewed/` |
-| Release | Carlo | Merge `.tasks/reviewed/` to `main` |
+| Completion | Claude | Move to `.tasks/in-review/` + commit |
+| Review | Codex | Review, debug, refactor → move to `.tasks/done/` + commit |
+| Release | Carlo | Merge `.tasks/done/` to `main` |
 
 **Commit discipline**:
 - After EVERY task move: `git commit && git push`
@@ -157,7 +157,7 @@ Claude now handles the complete development cycle in different modes:
 
 #### Carlo (Decision Maker)
 - **Do**: Final review → merge to `main`
-- **How**: When all feature tasks in `.tasks/reviewed/`, merge to `main` → Vercel deploys
+- **How**: When all feature tasks in `.tasks/done/`, merge to `main` → Vercel deploys
 
 ### Simplified Workflow Example
 ```bash
@@ -293,7 +293,7 @@ Push Code → GitHub Actions → Agent Reviews → PR Comments → Fix Issues �
 - [ ] All checks pass: lint, build, tests
 - [ ] PR approved by reviewer
 - [ ] Documentation updated
-- [ ] `.tasks/reviewed/` contains all feature tasks
+- [ ] `.tasks/done/` contains all feature tasks (approved and ready)
 - [ ] Merge to `main` (squash recommended)
 - [ ] Vercel deploy succeeds
 - [ ] Monitor production for 30 min post-deploy

@@ -190,11 +190,10 @@ single file: fix-auth-redirect.md (not a folder)
 ```
 .tasks/                  # Task board (THE source of truth)
 ├── todo/                # New tasks waiting to be claimed
-├── in-progress/         # Being worked on
-├── done/                # Implemented, awaiting review
-├── in-review/           # Under review
-├── reviewed/            # Ready for production
-└── archived/            # Superseded or cancelled
+├── in-progress/         # Being worked on (WIP limit: 5)
+├── in-review/           # Completed implementation, under review
+├── done/                # Reviewed and approved, ready for merge to main
+└── backlog/             # Archived, superseded, or cancelled tasks
 
 src/                     # Next.js 16 frontend
 services/core-api/       # Express.js backend
@@ -237,16 +236,16 @@ After any major change or new task pattern, update:
 
 **Target distribution**:
 - `todo/`: 20-50 tasks (healthy backlog)
-- `in-progress/`: 2-5 items (focused execution)
-- `done/`: 0-3 items (fast moving)
-- `in-review/`: 1-2 items (healthy review queue)
-- `reviewed/`: 0-2 items (ready to ship)
-- `archived/`: Growing over time (old superseded tasks)
+- `in-progress/`: 2-5 items (focused execution, WIP limit enforced)
+- `in-review/`: 0-3 items (awaiting review)
+- `done/`: 0-5 items (ready to merge to main)
+- `backlog/`: Growing over time (archived/superseded tasks)
 
 **If metrics off**:
-- Too many in `todo`: Prioritize, archive old ones
-- Stuck in `in-progress`: Claude blocked? Unblock or reassign
-- Stuck in `done`: Slow review? Codex bottleneck?
+- Too many in `todo`: Prioritize, archive old ones to backlog
+- Stuck in `in-progress`: Claude blocked? Unblock or archive
+- Stuck in `in-review`: Codex review bottleneck?
+- Too many in `done`: Time to merge to main?
 - Stuck in `in-review`: Complex refactoring needed?
 
 Run quarterly health check or when feeling stuck.
