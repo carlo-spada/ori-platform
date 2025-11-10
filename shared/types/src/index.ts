@@ -230,3 +230,57 @@ export interface SendMessageResponse {
   message: ChatMessage
   conversation_id: string
 }
+
+// Notification types
+export type NotificationType =
+  | 'welcome'
+  | 'payment_failure'
+  | 'card_expiring'
+  | 'trial_ending'
+  | 'subscription_confirmation'
+  | 'recommendations'
+  | 'application_status'
+
+export type NotificationStatus =
+  | 'pending'
+  | 'sent'
+  | 'failed'
+  | 'bounced'
+  | 'complained'
+
+export interface Notification {
+  id: string
+  user_id: string
+  type: NotificationType
+  subject: string
+  recipient_email: string
+  status: NotificationStatus
+  sent_at?: string
+  failed_at?: string
+  error_message?: string
+  resend_email_id?: string
+  triggered_by_event?: string
+  idempotency_key?: string
+  metadata?: Record<string, unknown>
+  created_at: string
+  updated_at: string
+}
+
+export interface NotificationPreferences {
+  id: string
+  user_id: string
+  payment_failure_emails: boolean
+  card_expiring_emails: boolean
+  trial_ending_emails: boolean
+  subscription_emails: boolean
+  recommendation_emails: boolean
+  application_status_emails: boolean
+  security_emails: boolean
+  weekly_digest: boolean
+  unsubscribed: boolean
+  unsubscribed_at?: string
+  unsubscribe_token: string
+  metadata?: Record<string, unknown>
+  created_at: string
+  updated_at: string
+}

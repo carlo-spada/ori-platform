@@ -75,7 +75,8 @@
       "WebSearch",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:dev.to)",
-      "Bash(git mv:*)"
+      "Bash(git mv:*)",
+      "Bash(npx jest:*)"
     ],
     "deny": [],
     "ask": []
