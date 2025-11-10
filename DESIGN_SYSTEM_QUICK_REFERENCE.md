@@ -235,7 +235,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-
 ;<Section>
   <div className="mb-12 text-center">
     <h2 className="mb-4 text-3xl font-semibold text-foreground sm:text-4xl">

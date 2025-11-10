@@ -10,6 +10,7 @@ import React, {
 } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthProvider'
+import { getSupabaseClient } from '@/integrations/supabase/client'
 import { toast } from 'sonner'
 import type {
   OnboardingData,
@@ -74,6 +75,27 @@ const ONBOARDING_STEPS_ARRAY: OnboardingStepKey[] = [
 const AUTOSAVE_DELAY = 2000 // 2 seconds
 const SESSION_KEY = 'onboarding_session'
 
+// Helper to get auth headers
+async function getAuthHeaders(): Promise<HeadersInit> {
+  const supabase = getSupabaseClient()
+  if (!supabase) {
+    throw new Error('Supabase client not initialized')
+  }
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+
+  if (!session) {
+    throw new Error('No active session')
+  }
+
+  return {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${session.access_token}`,
+  }
+}
+
 export function OnboardingProvider({
   children,
 }: {
@@ -93,7 +115,7 @@ export function OnboardingProvider({
   const [welcomeBack, setWelcomeBack] = useState<WelcomeBackState | null>(null)
 
   // Refs for debouncing
-  const saveTimeoutRef = useRef<NodeJS.Timeout>()
+  const saveTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
   const lastSavedDataRef = useRef<string>('')
 
   const currentStep = ONBOARDING_STEPS_ARRAY[currentStepIndex]
@@ -235,12 +257,10 @@ export function OnboardingProvider({
       localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData))
 
       // Save to backend
+      const headers = await getAuthHeaders()
       const response = await fetch('/api/v1/onboarding/session', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${await user.getIdToken()}`,
-        },
+        headers,
         body: JSON.stringify(sessionData),
       })
 
@@ -300,10 +320,9 @@ export function OnboardingProvider({
 
       // Try backend if no local data
       if (!localData) {
+        const headers = await getAuthHeaders()
         const response = await fetch('/api/v1/onboarding/session', {
-          headers: {
-            Authorization: `Bearer ${await user.getIdToken()}`,
-          },
+          headers,
         })
 
         if (response.ok) {
@@ -334,11 +353,10 @@ export function OnboardingProvider({
 
     if (user) {
       try {
+        const headers = await getAuthHeaders()
         await fetch('/api/v1/onboarding/session', {
           method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${await user.getIdToken()}`,
-          },
+          headers,
         })
       } catch (error) {
         console.error('Failed to clear session:', error)
@@ -402,12 +420,10 @@ export function OnboardingProvider({
           industries: data.preferences?.industries,
         }
 
+        const headers = await getAuthHeaders()
         const response = await fetch('/api/v1/profile/onboarding', {
           method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${await user?.getIdToken()}`,
-          },
+          headers,
           body: JSON.stringify(profileData),
         })
 
