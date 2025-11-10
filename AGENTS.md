@@ -8,6 +8,15 @@
 
 **Workflow**: `dev` → implement → commit/push → PR `dev` → `main` → Vercel deploy
 
+**Task Management** (NEW - Use the CLI!):
+```bash
+./scripts/task health         # Check WIP and bottlenecks
+./scripts/task claim X        # Claim task (enforces WIP limit)
+./scripts/task complete X     # Mark task done
+./scripts/task list wip       # Show current work
+./scripts/task archive X      # Move to backlog
+```
+
 **Task Governance**: See `.tasks/TASK_GOVERNANCE.md` (single source of truth for all agents)
 
 **Branch Rules**:
@@ -178,6 +187,43 @@ Update these after major changes:
 
 ---
 
+## Specialized Quality Agents
+
+**Auto-triggered on Pull Requests** to ensure code quality and safety:
+
+| Agent | Trigger Condition | Purpose | Location |
+|-------|------------------|---------|----------|
+| `schema-contract-sentinel` | Changes to `supabase/migrations/`, `shared/types/`, API routes | Detect breaking changes, migration safety | `.claude/agents/schema-contract-sentinel.md` |
+| `test-architect` | New features, components, or routes | Ensure test coverage, identify gaps | `.claude/agents/test-architect.md` |
+| `flow-orchestrator` | Multi-service changes (2+ services) | Validate integrations, API contracts | `.claude/agents/flow-orchestrator.md` |
+| `code-guardian` | Every PR | Code quality, security, performance | `.claude/agents/code-guardian.md` |
+| `docs-dx-curator` | Documentation changes (`*.md` files) | Documentation quality, accuracy | `.claude/agents/docs-dx-curator.md` |
+
+### How to Use Specialized Agents
+
+**Automatic (Preferred)**:
+1. Create/update a PR
+2. Relevant agents run automatically via GitHub Actions
+3. Agents post review comments on the PR
+4. Address feedback and push updates
+5. All checks pass → Ready to merge
+
+**Manual Invocation** (during development):
+```
+"Please run the schema-contract-sentinel agent to review these migration changes"
+"Run test-architect to check test coverage for this new feature"
+```
+
+### Agent Workflow Integration
+
+```
+Push Code → GitHub Actions → Agent Reviews → PR Comments → Fix Issues → Merge
+```
+
+**Note**: These agents complement the main workflow agents (Gemini, Claude, Codex, Carlo).
+
+---
+
 ## Documentation Index
 
 **Core Guides**:
@@ -186,6 +232,8 @@ Update these after major changes:
 - `CLAUDE.md`: Claude's implementation guide
 - `GEMINI.md`: Gemini's planning guide
 - `.tasks/TASK_GOVERNANCE.md`: Task management (CRITICAL)
+- `CLAUDE_QUICKREF.md`: Quick commands for Claude (no reading)
+- `GEMINI_QUICKREF.md`: Quick commands for Gemini (no reading)
 
 **Technical Docs**:
 - `docs/DATABASE_SCHEMA.md`: Schema & RLS policies
