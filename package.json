@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --webpack",
+    "dev": "concurrently -n \"frontend,backend\" -c \"cyan,green\" \"next dev --webpack\" \"pnpm --filter @ori/core-api dev\"",
+    "dev:frontend": "next dev --webpack",
+    "dev:backend": "pnpm --filter @ori/core-api dev",
     "dev:api": "pnpm --filter @ori/core-api dev",
     "build": "next build --webpack",
     "start": "next start",
@@ -87,6 +89,7 @@
     "@vitejs/plugin-react": "^5.1.0",
     "@vitest/ui": "^4.0.8",
     "autoprefixer": "^10.4.21",
+    "concurrently": "^9.2.1",
     "deepl-node": "^1.21.0",
     "eslint": "^9.39.1",
     "eslint-config-next": "16.0.1",

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
@@ -9,7 +9,8 @@ import { BasicInfoStep } from '@/components/onboarding/BasicInfoStep'
 import { SkillsStep } from '@/components/onboarding/SkillsStep'
 import { GoalsStep } from '@/components/onboarding/GoalsStep'
 import { FinalizingStep } from '@/components/onboarding/FinalizingStep'
-import { useCompleteOnboarding } from '@/hooks/useProfile'
+import { useCompleteOnboarding, useProfile } from '@/hooks/useProfile'
+import { useAuth } from '@/contexts/AuthProvider'
 import { toast } from 'sonner'
 import type { OnboardingData, OnboardingStepKey } from '@/lib/types'
 
@@ -24,7 +25,8 @@ const DEFAULT_BASIC_INFO = { headline: '', location: '' } as const
 const DEFAULT_GOALS = { longTermVision: '', targetRoles: [] as string[] }
 
 export default function OnboardingPage() {
-  const userName = 'there' // Placeholder until onboarding is wired to real user data
+  const { user } = useAuth()
+  const { data: profile, isLoading: isProfileLoading } = useProfile()
   const { t } = useTranslation()
   const router = useRouter()
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
@@ -34,8 +36,28 @@ export default function OnboardingPage() {
     goals: { ...DEFAULT_GOALS },
   })
 
+  // Get user's name from user metadata or email
+  const userName =
+    user?.user_metadata?.full_name ||
+    user?.email?.split('@')[0] ||
+    'there'
+
   const { mutate: submitOnboarding, isPending: isSubmitting } =
     useCompleteOnboarding()
+
+  // Redirect if not authenticated
+  useEffect(() => {
+    if (!user && !isProfileLoading) {
+      router.push('/login')
+    }
+  }, [user, isProfileLoading, router])
+
+  // Redirect if onboarding already completed
+  useEffect(() => {
+    if (profile?.onboarding_completed) {
+      router.push('/dashboard')
+    }
+  }, [profile, router])
 
   const currentStep = STEPS[currentStepIndex]
   const totalSteps = STEPS.length - 1 // Don't count finalizing in progress
@@ -193,6 +215,18 @@ export default function OnboardingPage() {
     currentStep !== 'welcome' && currentStep !== 'finalizing'
   const showBackButton =
     currentStep !== 'welcome' && currentStep !== 'finalizing'
+
+  // Show loading while checking auth/profile
+  if (!user || isProfileLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="text-center">
+          <div className="mb-4 inline-block h-8 w-8 animate-spin rounded-full border-4 border-accent border-t-transparent" />
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="flex min-h-screen w-screen items-center justify-center bg-background px-4 py-8 text-foreground">
