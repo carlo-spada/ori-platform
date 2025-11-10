@@ -14,6 +14,7 @@ import subscriptionsRouter from './routes/subscriptions.js'
 import usersRouter from './routes/users.js'
 import chatRouter from './routes/chat.js'
 import profileRouter from './routes/profile.js'
+import { notificationsRouter } from './routes/notifications.js'
 
 dotenv.config()
 
@@ -48,6 +49,7 @@ app.use('/api/v1/setup-intent', setupIntentRouter)
 app.use('/api/v1/subscriptions', subscriptionsRouter)
 app.use('/api/v1/profile', profileRouter)
 app.use('/api/v1/users', usersRouter)
+app.use('/api/v1/notifications', notificationsRouter)
 
 app.listen(port, () => {
   console.log(`[core-api]: Server is running at http://localhost:${port}`)
