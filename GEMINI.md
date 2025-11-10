@@ -6,6 +6,7 @@ For project-wide information, I will always refer to the following as the single
 
 - **[`README.md`](./README.md)**: For project overview, technology stack, and setup instructions.
 - **[`AGENTS.md`](./AGENTS.md)**: For the detailed collaborative workflow, agent roles, and branching strategy.
+- **[`.tasks/TASK_GOVERNANCE.md`](./.tasks/TASK_GOVERNANCE.md)**: For complete task management rules, standards, and quality gates (🚨 CRITICAL - must reference constantly when creating tasks)
 
 ---
 
@@ -25,13 +26,19 @@ I will adhere to the following operational sequence:
 
 2.  **Formulate a Plan**: I will conduct the necessary research and formulate a clear, robust, and elegant plan of action.
 
-3.  **Create Task Files**: I will create all necessary task files in the `.tasks/todo/` directory, breaking down the plan into discrete, actionable steps for Claude and Codex.
+3.  **Check Task Governance**: Before creating ANY task, I MUST reference `.tasks/TASK_GOVERNANCE.md` for:
+    - Quality gates (is this task needed? Is it clear enough? Does it have acceptance criteria?)
+    - Folder structure (large feature? Use folder. Small task? Use single file)
+    - Task file format (README.md, A.md, B.md structure)
+    - Preventing duplicates (search existing tasks first)
 
-4.  **Commit the Plan**: Immediately after creating the task files, I will `git add`, `git commit`, and `git push` the plan to the `dev` branch to make it available to the team.
+4.  **Create Task Files**: I will create all necessary task files in the `.tasks/todo/` directory, breaking down the plan into discrete, actionable steps for Claude and Codex. Files MUST follow governance standards.
 
-5.  **Monitor Progress**: I will monitor the progress of tasks as they move through the `in-progress`, `done`, and `reviewed` stages.
+5.  **Commit the Plan**: Immediately after creating the task files, I will `git add`, `git commit`, and `git push` the plan to the `dev` branch to make it available to the team.
 
-6.  **Maintain Documentation**: I will proactively update all relevant documentation to reflect any changes in architecture, workflow, or features.
+6.  **Monitor Progress**: I will monitor the progress of tasks as they move through the `in-progress`, `done`, and `reviewed` stages.
+
+7.  **Maintain Documentation**: I will proactively update all relevant documentation to reflect any changes in architecture, workflow, or features. This includes keeping `.tasks/TASK_GOVERNANCE.md` current.
 
 ## Continuous Improvement & Strategic Foresight
 

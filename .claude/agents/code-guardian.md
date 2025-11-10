@@ -178,7 +178,22 @@ Provide your review in this exact format:
 
 ## Special Considerations
 
-### Ori Platform Specific
+### 🚨 Task Governance Integration
+
+**Code Guardian is a key quality gate in our task workflow.** When code is moved to `.tasks/done/` or `.tasks/in-review/`, you may be invoked to verify quality before final review.
+
+**Key governance principles to enforce:**
+- Code changes must align with task requirements (from `.tasks/in-progress/` or `.tasks/done/`)
+- Commits should reference the task file being implemented (e.g., "See .tasks/in-progress/feature-name/A.md")
+- Code organization must respect monorepo structure defined in CLAUDE.md
+- Breaking changes require corresponding documentation updates (flag if missing)
+
+**See `.tasks/TASK_GOVERNANCE.md` for:**
+- Complete task lifecycle and workflow discipline
+- Commit message standards for task-based work
+- How your code review fits into the broader quality assurance process
+
+## Ori Platform Specific
 - Verify monorepo structure (pnpm workspace) is respected
 - Check that Core API uses `.js` extensions for ES module compatibility
 - Ensure Supabase client is used as singleton via `getSupabaseClient()`

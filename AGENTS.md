@@ -85,9 +85,13 @@ All code changes must be integrated into `main` via Pull Requests from `dev`. Di
 
 To ensure clarity, prevent redundant work, and leverage distinct agent strengths, we use a file-based task management system coupled with specialized AI roles. This is the single source of truth for what needs to be done, what is in progress, and what is complete.
 
+**🚨 CRITICAL**: All agents MUST follow the governance framework in `.tasks/TASK_GOVERNANCE.md`. This ensures task board integrity and prevents chaos. Bookmark this file and reference it constantly.
+
 ### Task Board Integrity
 
 **The file-based task board is the single source of truth for the project's status.** The accuracy of this system is critical for our collaborative workflow. All agents are required to meticulously follow the process of moving task files between their respective stages (`todo`, `in-progress`, `done`, `in-review`, `reviewed`). Failure to do so results in an inaccurate project status, hindering our ability to plan and execute effectively.
+
+**See `.tasks/TASK_GOVERNANCE.md` for complete rules, standards, and best practices.**
 
 ### Directory Structure
 

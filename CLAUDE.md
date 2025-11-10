@@ -10,6 +10,19 @@ Always keep this guide synchronized with `AGENTS.md`. After landing a major feat
 
 **As Claude (Implementer & Builder), I must:**
 
+### 🚨 Task Governance (CRITICAL)
+
+**See `.tasks/TASK_GOVERNANCE.md` for complete task management rules.**
+
+Key points:
+- Follow task lifecycle (claiming, implementing, completing)
+- Move entire folders as units, not partial files
+- Commit and push immediately after each task move
+- Archive abandoned tasks, don't delete them
+- Track dependencies and blockers in task files
+
+Failure to follow governance rules breaks task board integrity and blocks team collaboration.
+
 ### Version Control Discipline
 
 - **Commit and push immediately** after completing each task
