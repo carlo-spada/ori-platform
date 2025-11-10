@@ -43,8 +43,21 @@
     "title": "404: Page Not Found | Ori",
     "description": "The page you are looking for does not exist or may have been moved.",
     "heading": "Page not found",
-    "body": "The page you're looking for may have been moved, renamed, or no longer exists.",
-    "primaryCta": "Back to home"
+    "body": "The page you're looking for may have been moved, renamed, or no longer exists. Let Ori guide you back:",
+    "ctas": {
+      "home": {
+        "label": "Take me home",
+        "description": "Return to where it all begins"
+      },
+      "back": {
+        "label": "Guide me back",
+        "description": "Retrace your steps"
+      },
+      "contact": {
+        "label": "Let me tell you",
+        "description": "Share what you were looking for"
+      }
+    }
   },
   "landing": {
     "hero": {
