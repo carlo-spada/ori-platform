@@ -61,22 +61,42 @@ Setting up Model Context Protocol (MCP) servers to enable direct integrations wi
 **Test**:
 After restart, ask Claude: "List all files in src/components/"
 
-### 2. PostgreSQL/Supabase MCP Server (15 minutes)
+### 2. Supabase MCP Server (5 minutes) ⭐ RECOMMENDED
 
-**Purpose**: Direct database queries and schema inspection
+**Purpose**: Full Supabase integration - database, storage, edge functions, auth
 
-**Get Credentials**:
-1. Go to Supabase Dashboard: https://supabase.com/dashboard
-2. Select your project
-3. Go to Settings → Database
-4. Copy Connection String (Session mode)
-5. Replace `[YOUR-PASSWORD]` with actual password
+**Official Supabase MCP** (HTTP-based, hosted by Supabase):
 
 **Configuration**:
 ```json
 {
   "mcpServers": {
     "filesystem": { ... },
+    "supabase": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.supabase.com/mcp"
+      ]
+    }
+  }
+}
+```
+
+**Authentication**:
+- First time you use it, Claude Desktop will open a browser window
+- Login to your Supabase account
+- Grant organization access to the MCP client
+- No need for manual API keys!
+
+**⚠️ Security Note**: Supabase MCP is designed for **development and testing only**. Never connect to production data.
+
+**Alternative: Direct PostgreSQL Server** (if you prefer direct DB connection):
+
+```json
+{
+  "mcpServers": {
     "postgres": {
       "command": "npx",
       "args": [
@@ -85,25 +105,16 @@ After restart, ask Claude: "List all files in src/components/"
         "postgresql://postgres.PROJECT_REF.supabase.co:5432/postgres"
       ],
       "env": {
-        "PGPASSWORD": "your_password_here"
+        "PGPASSWORD": "${SUPABASE_DB_PASSWORD}"
       }
     }
   }
 }
 ```
 
-**Security Note**: Store password securely. Consider using environment variables:
-```json
-"env": {
-  "PGPASSWORD": "${SUPABASE_DB_PASSWORD}"
-}
-```
-
-Then set in shell profile:
-```bash
-# Add to ~/.zshrc or ~/.bashrc
-export SUPABASE_DB_PASSWORD="your_password"
-```
+**Which to choose?**
+- **Supabase MCP** (recommended): Full features, OAuth auth, easier setup
+- **PostgreSQL MCP**: Direct DB only, requires password, more manual
 
 **Benefits**:
 - Query tables directly
@@ -196,6 +207,8 @@ Ask Claude: "List recent Stripe customers"
 
 ## Complete Configuration Template
 
+### Recommended Setup (Easiest)
+
 Save this to `claude_desktop_config.json`:
 
 ```json
@@ -214,16 +227,13 @@ Save this to `claude_desktop_config.json`:
         "/Users/carlo/Desktop/Projects/ori-platform"
       ]
     },
-    "postgres": {
+    "supabase": {
       "command": "npx",
       "args": [
         "-y",
-        "@modelcontextprotocol/server-postgres",
-        "postgresql://postgres.YOUR_PROJECT_REF.supabase.co:5432/postgres"
-      ],
-      "env": {
-        "PGPASSWORD": "${SUPABASE_DB_PASSWORD}"
-      }
+        "mcp-remote",
+        "https://mcp.supabase.com/mcp"
+      ]
     },
     "github": {
       "command": "npx",
@@ -235,6 +245,34 @@ Save this to `claude_desktop_config.json`:
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
       }
     }
+  }
+}
+```
+
+**What you need**:
+- GitHub Personal Access Token (https://github.com/settings/tokens/new)
+- That's it! Supabase will prompt for OAuth login on first use.
+
+### Alternative: With Direct PostgreSQL
+
+If you prefer direct database connection instead of Supabase MCP:
+
+```json
+{
+  "mcpServers": {
+    "filesystem": { ... },
+    "postgres": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://postgres.YOUR_PROJECT_REF.supabase.co:5432/postgres"
+      ],
+      "env": {
+        "PGPASSWORD": "${SUPABASE_DB_PASSWORD}"
+      }
+    },
+    "github": { ... }
   }
 }
 ```
