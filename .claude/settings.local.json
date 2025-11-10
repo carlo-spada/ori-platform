@@ -71,7 +71,11 @@
       "Bash(do ls -1 public/locales/$lang/legal-terms.json)",
       "Bash(echo:*)",
       "Bash(node -e:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:dev.to)",
+      "Bash(git mv:*)"
     ],
     "deny": [],
     "ask": []
