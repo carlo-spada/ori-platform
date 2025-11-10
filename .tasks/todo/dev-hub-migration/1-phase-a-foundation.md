@@ -1,58 +1,67 @@
-# Task: Dev-Hub Migration - Phase A: Foundation
+# Task: Dev-Hub Migration - Phase A: Foundation (IaC Edition)
 
 **Assigned to:** Claude
 
 ## High-Level Goal
 
-Provision and configure the core "Dev-Hub" VPS. This server will host our persistent development services, starting with the core MCP servers and a staging database. The goal is to create a stable, always-on environment that our local machines can connect to.
+Create the foundational "Dev-Hub" by defining and deploying our core infrastructure as code using Pulumi. This phase will establish a persistent, repeatable, and AI-manageable server environment to host our development services, starting with the core MCP servers and a staging database.
 
 ## Detailed Requirements
 
-### 1. Provision and Secure the VPS
-
-- **Choose a Provider:** Select a cloud provider (e.g., DigitalOcean, AWS, Vultr).
-- **Select Server Specs:** Provision a VPS with at least 4GB RAM and 2 vCPUs (e.g., DigitalOcean "General Purpose" Droplet or AWS EC2 `t3.medium`).
-- **Initial Server Setup:**
-    - Perform initial server setup and hardening.
-    - Create a non-root user with `sudo` privileges.
-    - Set up a firewall (e.g., `ufw`), allowing only essential ports (SSH, HTTP, HTTPS, and any ports needed for the MCP servers).
-    - Set up SSH key-based authentication and disable password authentication.
-
-### 2. Set Up Docker and Docker Compose
-
-- **Install Docker:** Install the Docker Engine on the VPS.
-- **Install Docker Compose:** Install the Docker Compose plugin.
-- **Permissions:** Add your non-root user to the `docker` group to manage Docker without `sudo`.
-
-### 3. Create the `dev-hub-infra` Repository
+### 1. Set Up the `dev-hub-infra` Repository and Pulumi Project
 
 - **Create a New Private Repository:** Create a new, private GitHub repository named `dev-hub-infra`.
-- **Initial Structure:** This repository will house the `docker-compose.yml` file and any other configuration files for the Dev-Hub.
-- **`docker-compose.yml`:** Create the initial `docker-compose.yml` file with services for:
-    - **Stripe MCP Server:** Using the appropriate Docker image or command.
-    - **Resend MCP Server:** Using the appropriate Docker image or command.
-    - **PostgreSQL MCP Server:** Using the appropriate Docker image or command.
-    - **Staging Database:** Using the official `postgres:latest` Docker image. Configure it with a persistent volume for data.
+- **Initialize Pulumi Project:**
+    - Inside this repository, initialize a new Pulumi project using the **TypeScript** template.
+    - Configure the project to use the selected cloud provider (e.g., DigitalOcean, AWS).
+    - Add the necessary provider packages (e.g., `@pulumi/digitalocean`).
+- **Define the Core Infrastructure in Pulumi:**
+    - Write TypeScript code to define the following resources:
+        - **A VPS Instance:** (e.g., a DigitalOcean Droplet). The configuration (size, region) should be easily adjustable through Pulumi's config system. Start with at least 4GB RAM and 2 vCPUs.
+        - **Firewall Rules:** Define firewall rules as code, allowing SSH, HTTP, HTTPS, and any ports needed for our services.
+        - **SSH Key:** Programmatically add your public SSH key to the VPS for secure access.
+- **Initial Deployment:**
+    - Run `pulumi up` to deploy the initial infrastructure.
+    - Verify that the VPS is created and accessible via SSH.
 
-### 4. Deploy and Verify the Dev-Hub
+### 2. Create the "Pulumi MCP Server"
 
-- **Clone the Repository:** Clone the `dev-hub-infra` repository onto the VPS.
-- **Launch the Stack:** Use `docker-compose up -d` to launch all the services.
-- **Verify Services:**
-    - Check the logs for each container to ensure they started without errors.
-    - Verify that the services are running and accessible from within the VPS.
-    - Ensure the staging database is running and its data volume is correctly mounted.
+- **Create a Wrapper Script:**
+    - Within the `dev-hub-infra` repository, create a simple Node.js/TypeScript script that will act as our "Pulumi MCP Server".
+    - This script should be a simple command-line interface (CLI) that accepts commands like `provision`, `destroy`, `update`, and `status`.
+    - When it receives a command, it should execute the corresponding Pulumi command (e.g., `pulumi up --yes`, `pulumi destroy --yes`, `pulumi preview`).
+- **Containerize the Wrapper:**
+    - Create a `Dockerfile` for this wrapper script. This container will have Pulumi, Node.js, and any necessary cloud provider CLIs installed.
+    - This allows us to run our infrastructure commands from a controlled, containerized environment.
 
-### 5. Update Local Development Configuration
+### 3. Define and Deploy Services with Docker Compose
 
-- **Update `.env.example`:** In the main `ori-platform` repository, update the `.env.example` file. Change the hostnames/IPs for the MCP services to point to the new Dev-Hub's public IP address.
-- **Document the Change:** Add a section to the `README.md` or a new `CONTRIBUTING.md` file explaining the new Dev-Hub architecture and how developers should configure their local environments to connect to it.
+- **Create `docker-compose.yml`:**
+    - In the `dev-hub-infra` repository, create a `docker-compose.yml` file.
+    - Define the following services:
+        - **`pulumi-mcp`:** The service for our new Pulumi MCP wrapper, built from the Dockerfile created in the previous step.
+        - **Stripe MCP Server:** Using the appropriate Docker image or command.
+        - **Resend MCP Server:** Using the appropriate Docker image or command.
+        - **PostgreSQL MCP Server:** Using the appropriate Docker image or command.
+        - **Staging Database:** Using the official `postgres:latest` Docker image, configured with a persistent volume.
+- **Automate Deployment:**
+    - The Pulumi code should be updated to handle the deployment of these services.
+    - Use Pulumi's `docker` provider or a remote provisioner to:
+        1. Clone the `dev-hub-infra` repository onto the newly created VPS.
+        2. Run `docker-compose up -d` on the VPS to launch all the services.
+
+### 4. Update Local Development Configuration
+
+- **Update `.env.example`:** In the main `ori-platform` repository, update the `.env.example` file. The hostnames for the MCP services should now point to the public IP address of the Dev-Hub (which can be exported from the Pulumi stack).
+- **Document the New Workflow:** Update the project's `README.md` or `CONTRIBUTING.md` to explain the new IaC workflow, the Dev-Hub architecture, and how developers should configure their local environments.
 
 ## Acceptance Criteria
 
-- [ ] A new VPS is provisioned, secured, and has Docker/Docker Compose installed.
-- [ ] A new private GitHub repository `dev-hub-infra` exists and contains the `docker-compose.yml` file.
-- [ ] The `docker-compose.yml` file correctly defines the Stripe, Resend, and PostgreSQL MCP servers, plus a staging Postgres database.
-- [ ] All services are successfully deployed and running on the VPS via Docker Compose.
+- [ ] A new private GitHub repository `dev-hub-infra` exists.
+- [ ] The repository contains a Pulumi project (in TypeScript) that defines the VPS and its firewall rules.
+- [ ] The repository contains a `docker-compose.yml` file defining all core services, including a new "Pulumi MCP Server".
+- [ ] Running `pulumi up` successfully provisions the VPS and deploys the Docker Compose stack on it.
+- [ ] All services (MCPs, staging DB, Pulumi MCP) are running correctly on the VPS.
 - [ ] The local development environment in the `ori-platform` repo is updated to connect to the services on the Dev-Hub.
-- [ ] Documentation is updated to reflect the new development setup.
+- [ ] Documentation is updated to reflect the new Infrastructure as Code workflow.
+- [ ] Claude can use the new Pulumi MCP to get the status of the infrastructure.
