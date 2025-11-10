@@ -54,25 +54,23 @@ export function SharedFooter() {
         },
       ],
     },
+  ]
+
+  const legalLinks = [
     {
-      title: t('footer.columns.legal.title'),
-      links: [
-        {
-          label: t('footer.columns.legal.privacy'),
-          href: '/legal/privacy-policy',
-          external: false,
-        },
-        {
-          label: t('footer.columns.legal.terms'),
-          href: '/legal/terms-of-service',
-          external: false,
-        },
-        {
-          label: t('footer.columns.legal.cookies'),
-          href: '/legal/cookie-policy',
-          external: false,
-        },
-      ],
+      label: t('footer.columns.legal.privacy'),
+      href: '/legal/privacy-policy',
+      external: false,
+    },
+    {
+      label: t('footer.columns.legal.terms'),
+      href: '/legal/terms-of-service',
+      external: false,
+    },
+    {
+      label: t('footer.columns.legal.cookies'),
+      href: '/legal/cookie-policy',
+      external: false,
     },
   ]
 
@@ -95,31 +93,52 @@ export function SharedFooter() {
       data-testid="footer"
     >
       <div className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
-          {/* Column 1: Logo & Mission */}
-          <div className="space-y-4">
-            <Link
-              href="/"
-              className="flex w-fit items-center gap-2 rounded-md transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-            >
-              <Image
-                src="/ori-logo.svg"
-                alt="Ori"
-                width={28}
-                height={28}
-                className="text-primary"
-              />
-              <span className="text-xl font-semibold tracking-tight text-foreground">
-                Ori
-              </span>
-            </Link>
-            <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
-              {t('brand.mission')}
-            </p>
+        {/* Main Footer Grid - 3 columns on desktop */}
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+          {/* Column 1: Ori - Logo, Mission & Legal */}
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <Link
+                href="/"
+                className="flex w-fit items-center gap-2 rounded-md transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              >
+                <Image
+                  src="/ori-logo.svg"
+                  alt="Ori"
+                  width={28}
+                  height={28}
+                  className="text-primary"
+                />
+                <span className="text-xl font-semibold tracking-tight text-foreground">
+                  Ori
+                </span>
+              </Link>
+              <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
+                {t('brand.mission')}
+              </p>
+            </div>
+
+            {/* Legal links under Ori */}
+            <div className="space-y-4">
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
+                {t('footer.columns.legal.title')}
+              </h3>
+              <ul className="space-y-3">
+                {legalLinks.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="inline-block rounded-md text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
-          {/* Column 2 & 3: Footer Links */}
+          {/* Column 2 & 3: Product and Support columns */}
           {footerColumns.map((column) => (
             <div key={column.title} className="space-y-4">
               <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
@@ -150,35 +169,37 @@ export function SharedFooter() {
                   ),
                 )}
               </ul>
+
+              {/* Connect under Support column */}
+              {column.title === t('footer.columns.support.title') && (
+                <div className="space-y-4 pt-6">
+                  <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
+                    Connect
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    Follow us on social media
+                  </p>
+                  <div className="flex items-center gap-3">
+                    {socialLinks.map((social) => {
+                      const Icon = iconMap[social.platform]
+                      return Icon ? (
+                        <a
+                          key={social.platform}
+                          href={social.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={social.ariaLabel}
+                          className="inline-flex h-10 w-10 items-center justify-center rounded-xl text-muted-foreground transition-all hover:bg-white/5 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                        >
+                          <Icon className="h-5 w-5" aria-hidden="true" />
+                        </a>
+                      ) : null
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           ))}
-
-          {/* Column 3: Social Links */}
-          <div className="space-y-4">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
-              Connect
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              Follow us on social media
-            </p>
-            <div className="flex items-center gap-3">
-              {socialLinks.map((social) => {
-                const Icon = iconMap[social.platform]
-                return Icon ? (
-                  <a
-                    key={social.platform}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.ariaLabel}
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-xl text-muted-foreground transition-all hover:bg-white/5 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                  >
-                    <Icon className="h-5 w-5" aria-hidden="true" />
-                  </a>
-                ) : null
-              })}
-            </div>
-          </div>
         </div>
 
         {/* Sub-footer */}

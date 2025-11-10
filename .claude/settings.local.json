@@ -121,7 +121,17 @@
       "mcp__postgres__query",
       "Bash(bash:*)",
       "Bash(gh run watch:*)",
-      "Bash(npx prettier:*)"
+      "Bash(npx prettier:*)",
+      "Bash(npx supabase:*)",
+      "Bash(if [ -f \"services/core-api/.env\" ])",
+      "Bash(then echo \"Core API .env exists\")",
+      "Bash(else echo \"No .env file found\")",
+      "Bash(compgen -A function)",
+      "mcp__filesystem__directory_tree",
+      "mcp__filesystem__read_text_file",
+      "Bash(npx next dev --webpack)",
+      "Bash(lsof:*)",
+      "mcp__filesystem__write_file"
     ],
     "deny": [],
     "ask": []

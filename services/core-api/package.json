@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "setup:stripe": "ts-node-dev --transpile-only src/scripts/setupStripe.ts"
+    "setup:stripe": "tsx src/scripts/setupStripe.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.80.0",
@@ -30,6 +30,7 @@
     "supertest": "^7.1.4",
     "ts-jest": "^29.4.5",
     "ts-node-dev": "^2.0.0",
+    "tsx": "^4.20.6",
     "typescript": "^5.9.3"
   }
 }

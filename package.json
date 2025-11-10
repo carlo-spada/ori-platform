@@ -3,9 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently -n \"frontend,backend\" -c \"cyan,green\" \"next dev --webpack\" \"pnpm --filter @ori/core-api dev\"",
-    "dev:frontend": "next dev --webpack",
-    "dev:backend": "pnpm --filter @ori/core-api dev",
+    "dev": "next dev --webpack",
     "dev:api": "pnpm --filter @ori/core-api dev",
     "build": "next build --webpack",
     "start": "next start",
@@ -110,7 +108,7 @@
   },
   "pnpm": {
     "overrides": {
-      "path-to-regexp": "6.3.0",
+      "path-to-regexp": "0.1.10",
       "undici": ">=5.29.0",
       "esbuild": ">=0.25.0"
     }

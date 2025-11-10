@@ -14,6 +14,7 @@ import subscriptionsRouter from './routes/subscriptions.js'
 import usersRouter from './routes/users.js'
 import chatRouter from './routes/chat.js'
 import profileRouter from './routes/profile.js'
+import onboardingRouter from './routes/onboarding.js'
 import { notificationsRouter } from './routes/notifications.js'
 import betaTestersRouter from './routes/betaTesters.js'
 
@@ -49,6 +50,7 @@ app.use('/api/v1/payments', paymentRoutes)
 app.use('/api/v1/setup-intent', setupIntentRouter)
 app.use('/api/v1/subscriptions', subscriptionsRouter)
 app.use('/api/v1/profile', profileRouter)
+app.use('/api/v1/onboarding', onboardingRouter)
 app.use('/api/v1/users', usersRouter)
 app.use('/api/v1/notifications', notificationsRouter)
 app.use('/api/v1/beta-testers', betaTestersRouter)
