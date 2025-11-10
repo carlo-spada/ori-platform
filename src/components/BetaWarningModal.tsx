@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import {
   Dialog,
   DialogContent,
@@ -9,19 +10,57 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { AlertTriangle, Bug, MessageSquare, Rocket } from 'lucide-react'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { AlertTriangle, Bug, MessageSquare, Rocket, Mail } from 'lucide-react'
+import { useSubmitBetaTester } from '@/hooks/useBetaTesters'
+import { toast } from 'sonner'
 
 interface BetaWarningModalProps {
   isOpen: boolean
   onClose: () => void
-  onProceed: () => void
+  onProceed: (email: string) => void
+  defaultEmail?: string
 }
 
 export function BetaWarningModal({
   isOpen,
   onClose,
   onProceed,
+  defaultEmail = '',
 }: BetaWarningModalProps) {
+  const [email, setEmail] = useState(defaultEmail)
+  const [firstName, setFirstName] = useState('')
+  const { mutate: submitBetaTester, isPending } = useSubmitBetaTester()
+
+  const handleProceed = async () => {
+    if (!email) {
+      toast.error('Please enter your email address')
+      return
+    }
+
+    // Submit to beta testers list
+    submitBetaTester(
+      {
+        email,
+        firstName: firstName || undefined,
+        source: 'signup',
+      },
+      {
+        onSuccess: () => {
+          // Proceed with signup
+          onProceed(email)
+        },
+        onError: (error) => {
+          console.error('Failed to submit beta tester:', error)
+          // Still proceed with signup even if beta submission fails
+          toast.warning('Continuing with signup...')
+          onProceed(email)
+        },
+      },
+    )
+  }
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[500px]">
@@ -74,13 +113,50 @@ export function BetaWarningModal({
             </ul>
           </div>
 
-          <div className="rounded-lg border bg-card p-4">
-            <p className="mb-2 text-sm font-medium">Help us improve</p>
-            <p className="text-sm text-muted-foreground">
-              Encountered a bug or have a suggestion? We'd love to hear from
-              you! Reach out through the feedback button in your dashboard or
-              email us directly.
+          {/* Email capture form */}
+          <div className="space-y-4 rounded-lg border bg-card p-4">
+            <p className="text-sm font-medium">
+              Join our beta tester community
             </p>
+            <p className="text-sm text-muted-foreground">
+              Get updates on new features and be part of shaping Ori's future
+            </p>
+
+            <div className="space-y-3">
+              <div>
+                <Label htmlFor="beta-first-name" className="text-xs">
+                  First Name (Optional)
+                </Label>
+                <Input
+                  id="beta-first-name"
+                  type="text"
+                  placeholder="Your first name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  disabled={isPending}
+                  className="mt-1"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="beta-email" className="text-xs">
+                  Email Address *
+                </Label>
+                <div className="relative mt-1">
+                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    id="beta-email"
+                    type="email"
+                    placeholder="you@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={isPending}
+                    required
+                    className="pl-10"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -88,12 +164,17 @@ export function BetaWarningModal({
           <Button
             variant="outline"
             onClick={onClose}
+            disabled={isPending}
             className="w-full sm:w-auto"
           >
             Maybe later
           </Button>
-          <Button onClick={onProceed} className="w-full sm:w-auto">
-            I understand, let's go!
+          <Button
+            onClick={handleProceed}
+            disabled={isPending || !email}
+            className="w-full sm:w-auto"
+          >
+            {isPending ? 'Joining...' : "I understand, let's go!"}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -53,7 +53,7 @@ export default function Signup() {
     setShowBetaWarning(true)
   }
 
-  const handleProceedWithSignup = async () => {
+  const handleProceedWithSignup = async (betaEmail: string) => {
     setShowBetaWarning(false)
     setIsLoading(true)
 
@@ -63,11 +63,14 @@ export default function Signup() {
         throw new Error('Supabase client is not configured')
       }
 
+      // Use the email from beta form if provided, otherwise use the signup email
+      const signupEmail = betaEmail || email
+
       const { data, error } = await supabase.auth.signUp({
-        email,
+        email: signupEmail,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: `${window.location.origin}/select-plan`,
         },
       })
 
@@ -75,7 +78,7 @@ export default function Signup() {
 
       if (data.user) {
         setShowConfirmation(true)
-        toast.success('Account created! Check your email to verify.')
+        toast.success('Welcome to Ori Beta! Check your email to verify your account.')
       }
     } catch (error: any) {
       console.error('Signup error:', error)
@@ -239,6 +242,7 @@ export default function Signup() {
         isOpen={showBetaWarning}
         onClose={() => setShowBetaWarning(false)}
         onProceed={handleProceedWithSignup}
+        defaultEmail={email}
       />
     </div>
   )
