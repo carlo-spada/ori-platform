@@ -4,7 +4,9 @@
       "features": "Caratteristiche",
       "pricing": "Prezzi",
       "about": "Circa",
-      "blog": "Blog"
+      "blog": "Blog",
+      "journey": "Viaggio",
+      "contact": "Contatto"
     }
   },
   "footer": {
@@ -21,7 +23,29 @@
         "terms": "Termini di servizio",
         "privacy": "Informativa sulla privacy",
         "cookies": "Informativa sui cookie"
+      },
+      "company": {
+        "title": "Azienda",
+        "about": "Circa",
+        "journey": "Viaggio",
+        "blog": "Blog"
+      },
+      "helpLegal": {
+        "title": "Aiuto e legale",
+        "contact": "Contatto",
+        "helpCenter": "Centro assistenza",
+        "privacy": "Informativa sulla privacy",
+        "terms": "Termini di servizio",
+        "cookies": "Informativa sui cookie"
       }
+    },
+    "brand": {
+      "tagline": "Il futuro del lavoro è umano.",
+      "cta": "Iniziare"
+    },
+    "meta": {
+      "copyright": "© {{anno}} Ori. Tutti i diritti riservati.",
+      "followUs": "Seguiteci"
     }
   },
   "social": {
@@ -44,7 +68,21 @@
     "description": "La pagina che state cercando non esiste o potrebbe essere stata spostata.",
     "heading": "Pagina non trovata",
     "body": "La pagina che state cercando potrebbe essere stata spostata, rinominata o non esistere più.",
-    "primaryCta": "Torna a casa"
+    "primaryCta": "Torna a casa",
+    "ctas": {
+      "home": {
+        "label": "Portami a casa",
+        "description": "Ritorno a dove tutto ha inizio"
+      },
+      "back": {
+        "label": "Guidami indietro",
+        "description": "Ripercorrere i propri passi"
+      },
+      "contact": {
+        "label": "Lasciate che vi dica",
+        "description": "Condividi quello che stavi cercando"
+      }
+    }
   },
   "landing": {
     "hero": {
@@ -494,21 +532,33 @@
           "title": "Il Futuro del Lavoro: Collaborazione tra IA e Umani",
           "excerpt": "Esplorare come l'intelligenza artificiale sta rimodellando il luogo di lavoro e creando nuove opportunità per contributi umani significativi.",
           "category": "Futuro del Lavoro",
-          "tags": ["IA", "Tecnologia", "Carriera"]
+          "tags": [
+            "IA",
+            "Tecnologia",
+            "Carriera"
+          ]
         },
         {
           "slug": "building-adaptive-career-pathways",
           "title": "Costruire Percorsi di Carriera Adattivi in un Mondo Mutevole",
           "excerpt": "Come navigare le transizioni di carriera e costruire resilienza in un mercato del lavoro in continua evoluzione.",
           "category": "Sviluppo della Carriera",
-          "tags": ["Carriera", "Crescita", "Competenze"]
+          "tags": [
+            "Carriera",
+            "Crescita",
+            "Competenze"
+          ]
         },
         {
           "slug": "empathy-in-technology-design",
           "title": "L'Empatia nel Design Tecnologico",
           "excerpt": "Perché i principi di design incentrati sull'empatia sono essenziali per costruire tecnologia che serve veramente le persone.",
           "category": "Tecnologia",
-          "tags": ["Design", "Empatia", "UX"]
+          "tags": [
+            "Design",
+            "Empatia",
+            "UX"
+          ]
         }
       ]
     },
@@ -853,6 +903,144 @@
       "successDescription": "Controllate la vostra casella di posta elettronica per ricevere uno speciale messaggio di benvenuto.",
       "error": "Qualcosa è andato storto. Riprovare.",
       "invalidEmail": "Inserire un indirizzo e-mail valido"
+    }
+  },
+  "contactPage": {
+    "meta": {
+      "title": "Contattaci | Ori",
+      "description": "Mettetevi in contatto con il team Ori. Saremo lieti di ascoltarvi."
+    },
+    "hero": {
+      "eyebrow": "Chiacchieriamo",
+      "headline": "Saremo lieti di ascoltarvi",
+      "subheadline": "Se avete una domanda, un feedback o volete semplicemente salutarci, siamo tutt'orecchi."
+    },
+    "contactInfo": {
+      "title": "Contattate",
+      "email": {
+        "label": "Inviaci un'e-mail",
+        "value": "support@getori.app",
+        "description": "In genere rispondiamo entro 24 ore"
+      },
+      "note": "Potete anche contattarci tramite il modulo e vi risponderemo al più presto."
+    },
+    "form": {
+      "title": "Inviaci un messaggio",
+      "nameLabel": "Il tuo nome",
+      "namePlaceholder": "Sconosciuta",
+      "emailLabel": "Indirizzo e-mail",
+      "emailPlaceholder": "jane@example.com",
+      "messageLabel": "Messaggio",
+      "messagePlaceholder": "Diteci cosa vi passa per la testa...",
+      "submitButton": "Invia il messaggio",
+      "submitting": "Invio...",
+      "successTitle": "Messaggio inviato!",
+      "successDescription": "Grazie per averci contattato. Vi risponderemo presto.",
+      "errorTitle": "Qualcosa è andato storto",
+      "errorDescription": "Riprova o inviaci un'e-mail direttamente a support@getori.app"
+    }
+  },
+  "journeyPage": {
+    "meta": {
+      "title": "Il nostro viaggio | Ori",
+      "description": "Dove stiamo andando e come ci stiamo arrivando, a una velocità 10 volte superiore."
+    },
+    "hero": {
+      "eyebrow": "Il cammino da percorrere",
+      "headline": "Il nostro viaggio per rivoluzionare le carriere",
+      "subheadline": "Ecco cosa stiamo costruendo, quando lo faremo e perché è importante. Questa è la nostra tabella di marcia, accelerata di 10 volte per voi."
+    },
+    "intro": {
+      "title": "Perché esistiamo",
+      "body": "Le carriere non sono lineari. Le persone cambiano, cambiano e si evolvono. Eppure, gli strumenti per lo sviluppo delle carriere sono fermi al passato, a job board statiche e a consigli che si adattano a tutti. Ori è diverso. Stiamo costruendo un compagno di intelligenza artificiale per tutta la vita che cresce con voi, comprende il vostro percorso unico e vi aiuta a navigare in ogni transizione con fiducia."
+    },
+    "timeline": {
+      "title": "La tabella di marcia"
+    },
+    "cta": {
+      "title": "Unitevi a noi in questo viaggio",
+      "description": "Partecipate alla costruzione del futuro dello sviluppo professionale. Il vostro feedback ci permette di capire dove andremo a parare.",
+      "primaryButton": "Accesso anticipato",
+      "secondaryButton": "Contattateci"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Accesso - Ori",
+      "description": "Accedete al vostro account Ori per continuare il vostro percorso professionale.",
+      "heading": "Bentornato",
+      "subheading": "Effettuate il login per continuare il vostro percorso professionale",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "--------",
+      "submitButton": "Accedi",
+      "submitting": "Accesso...",
+      "noAccount": "Non avete un account?",
+      "signupLink": "Iscriviti",
+      "backToHome": "← Torna alla pagina iniziale",
+      "errors": {
+        "fillFields": "Compilare tutti i campi",
+        "failed": "Accesso non riuscito. Controllare le credenziali."
+      },
+      "success": "Bentornati!"
+    },
+    "signup": {
+      "title": "Iscriviti - Ori",
+      "description": "Create il vostro account Ori e iniziate il vostro percorso di carriera personalizzato.",
+      "heading": "Iniziare",
+      "subheading": "Crea il tuo account per iniziare il tuo percorso professionale",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "--------",
+      "passwordHelper": "Deve essere di almeno 6 caratteri",
+      "submitButton": "Creare un account",
+      "submitting": "Creare un account...",
+      "hasAccount": "Avete già un account?",
+      "loginLink": "Accedi",
+      "backToHome": "← Torna alla pagina iniziale",
+      "errors": {
+        "fillFields": "Compilare tutti i campi",
+        "passwordLength": "La password deve essere di almeno 6 caratteri",
+        "failed": "Impossibile creare un account. Riprovare."
+      },
+      "confirmation": {
+        "heading": "Controllare la posta elettronica",
+        "message": "Le abbiamo inviato un link di conferma. Controlla la tua e-mail e clicca sul link per verificare il tuo account.",
+        "loginButton": "Vai al login"
+      },
+      "success": "Benvenuti in Ori Beta! Controlla la tua e-mail per verificare il tuo account."
+    }
+  },
+  "betaWarning": {
+    "title": "Benvenuti a Ori Beta",
+    "subtitle": "Vi state unendo a noi nelle fasi iniziali",
+    "warning": {
+      "title": "Siamo ancora in fase di sviluppo attivo",
+      "message": "Non tutte le funzioni sono ancora completamente funzionanti. È possibile che si verifichino bug, funzioni incomplete o comportamenti inaspettati man mano che la costruzione prosegue."
+    },
+    "expectations": {
+      "title": "Cosa aspettarsi:",
+      "bugs": "Alcune funzioni potrebbero non funzionare come previsto",
+      "newFeatures": "Nuove funzionalità e miglioramenti aggiunti regolarmente",
+      "feedback": "Il vostro feedback ci aiuta a migliorare più rapidamente"
+    },
+    "community": {
+      "title": "Unitevi alla nostra comunità di beta tester",
+      "message": "Ricevere aggiornamenti sulle nuove funzionalità e partecipare alla definizione del futuro di Ori",
+      "firstNameLabel": "Nome (facoltativo)",
+      "firstNamePlaceholder": "Il vostro nome di battesimo",
+      "emailLabel": "Indirizzo e-mail *",
+      "emailPlaceholder": "you@example.com"
+    },
+    "actions": {
+      "cancel": "Forse più tardi",
+      "proceed": "Ho capito, andiamo!",
+      "joining": "Unirsi..."
+    },
+    "errors": {
+      "emailRequired": "Inserisci il tuo indirizzo e-mail"
     }
   }
 }

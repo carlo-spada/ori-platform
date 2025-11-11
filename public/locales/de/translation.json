@@ -4,7 +4,9 @@
       "features": "Eigenschaften",
       "pricing": "Preisgestaltung",
       "about": "Über",
-      "blog": "Blog"
+      "blog": "Blog",
+      "journey": "Reise",
+      "contact": "Kontakt"
     }
   },
   "footer": {
@@ -21,7 +23,29 @@
         "terms": "Bedingungen der Dienstleistung",
         "privacy": "Datenschutzbestimmungen",
         "cookies": "Cookie-Richtlinie"
+      },
+      "company": {
+        "title": "Unternehmen",
+        "about": "Über",
+        "journey": "Reise",
+        "blog": "Blog"
+      },
+      "helpLegal": {
+        "title": "Hilfe &amp; Recht",
+        "contact": "Kontakt",
+        "helpCenter": "Hilfe-Center",
+        "privacy": "Datenschutzbestimmungen",
+        "terms": "Bedingungen der Dienstleistung",
+        "cookies": "Cookie-Richtlinie"
       }
+    },
+    "brand": {
+      "tagline": "Die Zukunft der Arbeit ist menschlich.",
+      "cta": "Los geht's"
+    },
+    "meta": {
+      "copyright": "© {{Jahr}} Ori. Alle Rechte vorbehalten.",
+      "followUs": "Folgen Sie uns"
     }
   },
   "social": {
@@ -44,7 +68,21 @@
     "description": "Die von Ihnen gesuchte Seite existiert nicht oder wurde möglicherweise verschoben.",
     "heading": "Seite nicht gefunden",
     "body": "Die Seite, die Sie suchen, wurde möglicherweise verschoben, umbenannt oder existiert nicht mehr.",
-    "primaryCta": "Zurück nach Hause"
+    "primaryCta": "Zurück nach Hause",
+    "ctas": {
+      "home": {
+        "label": "Bring mich nach Hause",
+        "description": "Zurück zum Anfang"
+      },
+      "back": {
+        "label": "Führe mich zurück",
+        "description": "Verfolgen Sie Ihre Schritte zurück"
+      },
+      "contact": {
+        "label": "Ich sage Ihnen",
+        "description": "Teilen Sie mit, wonach Sie gesucht haben"
+      }
+    }
   },
   "landing": {
     "hero": {
@@ -494,21 +532,33 @@
           "title": "Die Zukunft der Arbeit: KI und menschliche Zusammenarbeit",
           "excerpt": "Erkundung, wie künstliche Intelligenz den Arbeitsplatz umgestaltet und neue Möglichkeiten für sinnvolle menschliche Beiträge schafft.",
           "category": "Zukunft der Arbeit",
-          "tags": ["KI", "Technologie", "Karriere"]
+          "tags": [
+            "KI",
+            "Technologie",
+            "Karriere"
+          ]
         },
         {
           "slug": "building-adaptive-career-pathways",
           "title": "Aufbau adaptiver Karrierepfade in einer sich verändernden Welt",
           "excerpt": "Wie man Karrierewechsel navigiert und Widerstandsfähigkeit auf einem sich ständig weiterentwickelnden Arbeitsmarkt aufbaut.",
           "category": "Karriereentwicklung",
-          "tags": ["Karriere", "Wachstum", "Fähigkeiten"]
+          "tags": [
+            "Karriere",
+            "Wachstum",
+            "Fähigkeiten"
+          ]
         },
         {
           "slug": "empathy-in-technology-design",
           "title": "Empathie im Technologie-Design",
           "excerpt": "Warum empathiezentrierte Designprinzipien für den Aufbau von Technologie, die Menschen wirklich dient, unerlässlich sind.",
           "category": "Technologie",
-          "tags": ["Design", "Empathie", "UX"]
+          "tags": [
+            "Design",
+            "Empathie",
+            "UX"
+          ]
         }
       ]
     },
@@ -856,6 +906,144 @@
       "successDescription": "Prüfen Sie Ihren Posteingang auf eine spezielle Willkommensnachricht.",
       "error": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
       "invalidEmail": "Bitte geben Sie eine gültige E-Mail Adresse ein"
+    }
+  },
+  "contactPage": {
+    "meta": {
+      "title": "Kontakt Us | Ori",
+      "description": "Setzen Sie sich mit dem Ori-Team in Verbindung. Wir würden uns freuen, von Ihnen zu hören."
+    },
+    "hero": {
+      "eyebrow": "Plaudern wir ein wenig",
+      "headline": "Wir würden uns freuen, von Ihnen zu hören",
+      "subheadline": "Egal, ob Sie eine Frage haben, ein Feedback geben oder einfach nur Hallo sagen wollen - wir sind ganz Ohr."
+    },
+    "contactInfo": {
+      "title": "Kontakt aufnehmen",
+      "email": {
+        "label": "E-Mail an uns",
+        "value": "support@getori.app",
+        "description": "Wir antworten in der Regel innerhalb von 24 Stunden"
+      },
+      "note": "Sie können uns auch über das Formular erreichen, und wir werden uns so schnell wie möglich bei Ihnen melden."
+    },
+    "form": {
+      "title": "Senden Sie uns eine Nachricht",
+      "nameLabel": "Ihr Name",
+      "namePlaceholder": "Unbekannte",
+      "emailLabel": "E-Mail Adresse",
+      "emailPlaceholder": "jane@example.com",
+      "messageLabel": "Nachricht",
+      "messagePlaceholder": "Sagen Sie uns, was Sie auf dem Herzen haben...",
+      "submitButton": "Send message",
+      "submitting": "Ich schicke...",
+      "successTitle": "Nachricht gesendet!",
+      "successDescription": "Danke, dass Sie sich gemeldet haben. Wir werden uns bald wieder bei Ihnen melden.",
+      "errorTitle": "Etwas ist schief gelaufen",
+      "errorDescription": "Bitte versuchen Sie es erneut oder schreiben Sie uns direkt eine E-Mail an support@getori.app"
+    }
+  },
+  "journeyPage": {
+    "meta": {
+      "title": "Unsere Reise | Ori",
+      "description": "Wohin wir gehen und wie wir dorthin kommen - mit 10-facher Geschwindigkeit."
+    },
+    "hero": {
+      "eyebrow": "Der Weg nach vorn",
+      "headline": "Unsere Reise zur Revolutionierung von Karrieren",
+      "subheadline": "Hier erfahren Sie, was wir bauen, wann wir es bauen und warum es wichtig ist. Das ist unser Fahrplan - 10 Mal schneller für Sie."
+    },
+    "intro": {
+      "title": "Warum wir existieren",
+      "body": "Karrieren verlaufen nicht linear. Menschen verändern sich, schwenken um und entwickeln sich weiter. Doch die Instrumente für die Karriereentwicklung sind in der Vergangenheit verhaftet - statische Jobbörsen und Einheitsratschläge. Ori ist anders. Wir entwickeln einen lebenslangen KI-Begleiter, der mit Ihnen wächst, Ihren einzigartigen Weg versteht und Ihnen hilft, jeden Übergang mit Zuversicht zu meistern."
+    },
+    "timeline": {
+      "title": "Der Fahrplan"
+    },
+    "cta": {
+      "title": "Begleiten Sie uns auf dieser Reise",
+      "description": "Beteiligen Sie sich an der Gestaltung der Zukunft der beruflichen Entwicklung. Ihr Feedback bestimmt, wohin wir als nächstes gehen.",
+      "primaryButton": "Frühzeitig Zugang erhalten",
+      "secondaryButton": "Kontakt"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Anmelden - Ori",
+      "description": "Loggen Sie sich in Ihr Ori-Konto ein, um Ihre berufliche Laufbahn fortzusetzen.",
+      "heading": "Willkommen zurück",
+      "subheading": "Loggen Sie sich ein, um Ihre berufliche Laufbahn fortzusetzen",
+      "emailLabel": "E-Mail",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Passwort",
+      "passwordPlaceholder": "--------",
+      "submitButton": "Einloggen",
+      "submitting": "Einloggen...",
+      "noAccount": "Sie haben noch kein Konto?",
+      "signupLink": "Registrieren Sie sich",
+      "backToHome": "← Zurück zur Startseite",
+      "errors": {
+        "fillFields": "Bitte füllen Sie alle Felder aus",
+        "failed": "Anmeldung fehlgeschlagen. Bitte überprüfen Sie Ihre Anmeldedaten."
+      },
+      "success": "Willkommen zurück!"
+    },
+    "signup": {
+      "title": "Anmeldung - Ori",
+      "description": "Erstellen Sie Ihr Ori-Konto und beginnen Sie Ihre persönliche Karrierereise.",
+      "heading": "Los geht's",
+      "subheading": "Erstellen Sie Ihr Konto und beginnen Sie Ihre berufliche Laufbahn",
+      "emailLabel": "E-Mail",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Passwort",
+      "passwordPlaceholder": "--------",
+      "passwordHelper": "Muss mindestens 6 Zeichen lang sein",
+      "submitButton": "Konto erstellen",
+      "submitting": "Konto erstellen...",
+      "hasAccount": "Sie haben bereits ein Konto?",
+      "loginLink": "Einloggen",
+      "backToHome": "← Zurück zur Startseite",
+      "errors": {
+        "fillFields": "Bitte füllen Sie alle Felder aus",
+        "passwordLength": "Das Passwort muss mindestens 6 Zeichen lang sein",
+        "failed": "Konto konnte nicht erstellt werden. Bitte versuchen Sie es erneut."
+      },
+      "confirmation": {
+        "heading": "Prüfen Sie Ihre E-Mail",
+        "message": "Wir haben Ihnen einen Bestätigungslink geschickt. Bitte überprüfen Sie Ihre E-Mail und klicken Sie auf den Link, um Ihr Konto zu bestätigen.",
+        "loginButton": "Zur Anmeldung gehen"
+      },
+      "success": "Willkommen bei Ori Beta! Überprüfe deine E-Mail, um dein Konto zu verifizieren."
+    }
+  },
+  "betaWarning": {
+    "title": "Willkommen bei Ori Beta",
+    "subtitle": "Sie sind in der Anfangsphase dabei",
+    "warning": {
+      "title": "Wir sind noch in der aktiven Entwicklung",
+      "message": "Noch sind nicht alle Funktionen voll funktionsfähig. Es kann sein, dass Sie auf Fehler, unvollständige Funktionen oder unerwartetes Verhalten stoßen, während wir mit der Entwicklung fortfahren."
+    },
+    "expectations": {
+      "title": "Was Sie erwarten können:",
+      "bugs": "Einige Funktionen funktionieren möglicherweise nicht wie erwartet",
+      "newFeatures": "Neue Funktionen und Verbesserungen werden regelmäßig hinzugefügt",
+      "feedback": "Ihr Feedback hilft uns, uns schneller zu verbessern"
+    },
+    "community": {
+      "title": "Treten Sie unserer Beta-Tester-Gemeinschaft bei",
+      "message": "Informieren Sie sich über neue Funktionen und nehmen Sie an der Gestaltung der Zukunft von Ori teil",
+      "firstNameLabel": "Vorname (fakultativ)",
+      "firstNamePlaceholder": "Ihr Vorname",
+      "emailLabel": "E-Mail Adresse *",
+      "emailPlaceholder": "you@example.com"
+    },
+    "actions": {
+      "cancel": "Vielleicht später",
+      "proceed": "Ich verstehe, los geht's!",
+      "joining": "Beitritt..."
+    },
+    "errors": {
+      "emailRequired": "Bitte geben Sie Ihre E-Mail Adresse ein"
     }
   }
 }
