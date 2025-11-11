@@ -13,6 +13,7 @@ import { getSupabaseClient } from '@/integrations/supabase/client'
 import { toast } from '@/components/ui/sonner'
 import { SharedHeader } from '@/components/layout/SharedHeader'
 import { SharedFooter } from '@/components/layout/SharedFooter'
+import { SocialAuthButtons } from '@/components/auth/SocialAuthButtons'
 
 export default function Signup() {
   const router = useRouter()
@@ -170,8 +171,15 @@ export default function Signup() {
             </p>
           </div>
 
-          <form onSubmit={handleSignupClick} className="space-y-6">
-            <div className="space-y-4 rounded-xl border border-border bg-card p-8">
+          <div className="space-y-6">
+            {/* Social Auth Buttons */}
+            <div className="rounded-xl border border-border bg-card p-8">
+              <SocialAuthButtons mode="signup" />
+            </div>
+
+            {/* Email/Password Form */}
+            <form onSubmit={handleSignupClick} className="space-y-6">
+              <div className="space-y-4 rounded-xl border border-border bg-card p-8">
               <div>
                 <label
                   htmlFor="email"
@@ -226,27 +234,28 @@ export default function Signup() {
                   t('auth.signup.submitButton')
                 )}
               </Button>
-            </div>
+              </div>
 
-            <p className="text-center text-sm text-muted-foreground">
-              {t('auth.signup.hasAccount')}{' '}
-              <Link
-                href="/login"
-                className="text-accent underline underline-offset-2 hover:text-accent/80"
-              >
-                {t('auth.signup.loginLink')}
-              </Link>
-            </p>
+              <p className="text-center text-sm text-muted-foreground">
+                {t('auth.signup.hasAccount')}{' '}
+                <Link
+                  href="/login"
+                  className="text-accent underline underline-offset-2 hover:text-accent/80"
+                >
+                  {t('auth.signup.loginLink')}
+                </Link>
+              </p>
 
-            <p className="text-center">
-              <Link
-                href="/"
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {t('auth.signup.backToHome')}
-              </Link>
-            </p>
-          </form>
+              <p className="text-center">
+                <Link
+                  href="/"
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {t('auth.signup.backToHome')}
+                </Link>
+              </p>
+            </form>
+          </div>
         </div>
 
         {/* Beta Warning Modal */}

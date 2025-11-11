@@ -11,6 +11,7 @@ import { Loader2 } from 'lucide-react'
 import { toast } from '@/components/ui/sonner'
 import { SharedHeader } from '@/components/layout/SharedHeader'
 import { SharedFooter } from '@/components/layout/SharedFooter'
+import { SocialAuthButtons } from '@/components/auth/SocialAuthButtons'
 
 export default function Login() {
   const router = useRouter()
@@ -83,8 +84,15 @@ export default function Login() {
             </p>
           </div>
 
-          <form onSubmit={handleLoginClick} className="space-y-6">
-            <div className="space-y-4 rounded-xl border border-border bg-card p-8">
+          <div className="space-y-6">
+            {/* Social Auth Buttons */}
+            <div className="rounded-xl border border-border bg-card p-8">
+              <SocialAuthButtons mode="login" />
+            </div>
+
+            {/* Email/Password Form */}
+            <form onSubmit={handleLoginClick} className="space-y-6">
+              <div className="space-y-4 rounded-xl border border-border bg-card p-8">
               <div>
                 <label
                   htmlFor="email"
@@ -135,27 +143,28 @@ export default function Login() {
                   t('auth.login.submitButton')
                 )}
               </Button>
-            </div>
+              </div>
 
-            <p className="text-center text-sm text-muted-foreground">
-              {t('auth.login.noAccount')}{' '}
+              <p className="text-center text-sm text-muted-foreground">
+                {t('auth.login.noAccount')}{' '}
               <Link
                 href="/signup"
                 className="text-accent underline underline-offset-2 hover:text-accent/80"
               >
                 {t('auth.login.signupLink')}
               </Link>
-            </p>
+              </p>
 
-            <p className="text-center">
-              <Link
-                href="/"
-                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {t('auth.login.backToHome')}
-              </Link>
-            </p>
-          </form>
+              <p className="text-center">
+                <Link
+                  href="/"
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {t('auth.login.backToHome')}
+                </Link>
+              </p>
+            </form>
+          </div>
         </div>
       </main>
       <SharedFooter />
