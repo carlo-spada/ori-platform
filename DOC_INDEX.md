@@ -273,10 +273,35 @@ pnpm test       # Must pass (or skip with --skip-tests)
 | Where are Stripe webhooks? | `CLAUDE.md` | "Critical Technical Constraints" |
 | How do I run the dev server? | `README.md` | "Getting Started" |
 
+### Documentation Search Tool
+
+**New in Phase 3**: Use the `find-docs` command to search across all documentation:
+
+```bash
+# Search by keyword
+pnpm find-docs "authentication"
+pnpm find-docs "mcp setup"
+pnpm find-docs "stripe payment" --limit 5
+pnpm find-docs "database schema"
+
+# View help
+pnpm find-docs --help
+```
+
+**How it works**:
+- Searches titles, YAML frontmatter, headings, file paths, and content
+- Ranks results by relevance (title matches score highest)
+- Shows document metadata (type, role, reading time)
+- Displays contextual snippets
+- Prioritizes CRITICAL and HIGH priority docs
+
+**Search Coverage**: 300+ markdown files across the entire codebase
+
 ### Search Strategy
 1. **Start here**: DOC_INDEX.md (you are here!)
-2. **Implementation questions**: CLAUDE.md
-3. **Planning questions**: GEMINI.md or AGENTS.md
+2. **Quick search**: `pnpm find-docs "<keyword>"` for instant results
+3. **Implementation questions**: CLAUDE.md
+4. **Planning questions**: GEMINI.md or AGENTS.md
 4. **Specific feature**: Search `docs/` by topic
 5. **API details**: `docs/API_ENDPOINTS.md`
 6. **When stuck**: `.tasks/TASK_GOVERNANCE.md` or `AGENTS.md`
