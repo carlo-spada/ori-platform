@@ -60,6 +60,20 @@ services:
   #     - redis
   #   command: pnpm dev
 
+  # DeepL MCP Server (optional - usually run directly with pnpm)
+  # Uncomment to run in container
+  # deepl-mcp:
+  #   build: ./services/deepl-mcp
+  #   ports:
+  #     - "3002:3002"
+  #   volumes:
+  #     - ./services/deepl-mcp:/app
+  #     - /app/node_modules
+  #   environment:
+  #     - DEEPL_API_KEY=${DEEPL_API_KEY}
+  #     - NODE_ENV=development
+  #   command: pnpm dev
+
 volumes:
   postgres_data:
   redis_data:

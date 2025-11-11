@@ -1067,5 +1067,70 @@
     "errors": {
       "emailRequired": "Please enter your email address"
     }
+  },
+  "seo": {
+    "landing": {
+      "title": "Ori - Your AI Career Companion",
+      "description": "Unlock your potential with Ori, the AI-powered platform for discovering, pursuing, and evolving within roles that fit your skills, values, and ambitions.",
+      "jsonld": {
+        "name": "Ori",
+        "description": "AI-powered career companion for personalized job discovery and professional growth"
+      }
+    }
+  },
+  "selectPlan": {
+    "title": "Choose Your Plan",
+    "subtitle": "Start your career journey with the plan that fits your needs",
+    "billing": {
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "savePercent": "(Save 20%)"
+    },
+    "plans": {
+      "free": {
+        "name": "Free",
+        "price": "$0",
+        "period": "/month",
+        "features": {
+          "jobMatching": "Basic job matching",
+          "applications": "5 applications per month",
+          "resumeBuilder": "Basic resume builder",
+          "support": "Email support"
+        },
+        "cta": "Get Started"
+      },
+      "plus": {
+        "name": "Plus",
+        "features": {
+          "unlimitedMatches": "Unlimited job matches",
+          "aiResume": "AI-powered resume builder",
+          "prioritySupport": "Priority support",
+          "analytics": "Advanced analytics",
+          "skillsGap": "Skills gap analysis"
+        },
+        "cta": "Choose Plus"
+      },
+      "premium": {
+        "name": "Premium",
+        "badge": "Popular",
+        "features": {
+          "everythingPlus": "Everything in Plus",
+          "coaching": "Personalized coaching",
+          "workshops": "Exclusive workshops",
+          "careerAnalytics": "Career analytics",
+          "mentorship": "1-on-1 mentorship sessions"
+        },
+        "cta": "Choose Premium"
+      }
+    },
+    "payment": {
+      "title": "Complete Payment",
+      "selected": "You selected:",
+      "monthly": "monthly",
+      "yearly": "yearly"
+    },
+    "month": "month",
+    "year": "year",
+    "success": "Payment method added successfully!"
   }
 }

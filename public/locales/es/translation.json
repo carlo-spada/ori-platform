@@ -1045,5 +1045,70 @@
     "errors": {
       "emailRequired": "Introduzca su dirección de correo electrónico"
     }
+  },
+  "seo": {
+    "landing": {
+      "title": "Ori - Tu compañero de carreras de IA",
+      "description": "Libera tu potencial con Ori, la plataforma basada en IA para descubrir, buscar y evolucionar dentro de los roles que se ajustan a tus habilidades, valores y ambiciones.",
+      "jsonld": {
+        "name": "Ori",
+        "description": "Compañero de carrera basado en inteligencia artificial para la búsqueda personalizada de empleo y el crecimiento profesional"
+      }
+    }
+  },
+  "selectPlan": {
+    "title": "Elija su plan",
+    "subtitle": "Comience su carrera profesional con el plan que mejor se adapte a sus necesidades",
+    "billing": {
+      "monthly": "Mensualmente",
+      "yearly": "Anualmente",
+      "savePercent": "(Ahorre un 20%)"
+    },
+    "plans": {
+      "free": {
+        "name": "Gratis",
+        "price": "$0",
+        "period": "/mes",
+        "features": {
+          "jobMatching": "Adecuación básica de puestos de trabajo",
+          "applications": "5 solicitudes al mes",
+          "resumeBuilder": "Creador básico de currículos",
+          "support": "Asistencia por correo electrónico"
+        },
+        "cta": "Comenzar"
+      },
+      "plus": {
+        "name": "Más",
+        "features": {
+          "unlimitedMatches": "Un número ilimitado de ofertas de empleo",
+          "aiResume": "Creador de currículos basado en inteligencia artificial",
+          "prioritySupport": "Asistencia prioritaria",
+          "analytics": "Análisis avanzados",
+          "skillsGap": "Análisis de las carencias de cualificaciones"
+        },
+        "cta": "Elige Plus"
+      },
+      "premium": {
+        "name": "Premium",
+        "badge": "Popular",
+        "features": {
+          "everythingPlus": "Todo en Plus",
+          "coaching": "Asesoramiento personalizado",
+          "workshops": "Talleres exclusivos",
+          "careerAnalytics": "Análisis de carrera",
+          "mentorship": "sesiones individuales de tutoría"
+        },
+        "cta": "Elija Premium"
+      }
+    },
+    "payment": {
+      "title": "Pago completo",
+      "selected": "Has seleccionado:",
+      "monthly": "mensualmente",
+      "yearly": "anual"
+    },
+    "month": "mes",
+    "year": "año",
+    "success": "¡Forma de pago añadida correctamente!"
   }
 }

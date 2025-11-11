@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslation } from 'react-i18next'
 import { Elements } from '@stripe/react-stripe-js'
 import { getStripe } from '@/lib/stripe'
 import { useAuth } from '@/contexts/AuthProvider'
@@ -19,48 +20,49 @@ type PlanId =
 
 type BillingInterval = 'monthly' | 'yearly'
 
-const PLANS = {
-  free: {
-    name: 'Free',
-    price: { monthly: 0, yearly: 0 },
-    features: [
-      'Basic job matching',
-      '5 applications per month',
-      'Basic resume builder',
-      'Email support',
-    ],
-  },
-  plus: {
-    name: 'Plus',
-    price: { monthly: 5, yearly: 48 },
-    features: [
-      'Unlimited job matches',
-      'AI-powered resume builder',
-      'Priority support',
-      'Advanced analytics',
-      'Skills gap analysis',
-    ],
-  },
-  premium: {
-    name: 'Premium',
-    price: { monthly: 10, yearly: 96 },
-    features: [
-      'Everything in Plus',
-      'Personalized coaching',
-      'Exclusive workshops',
-      'Career analytics',
-      '1-on-1 mentorship sessions',
-    ],
-  },
-}
-
 export default function SelectPlanPage() {
   const router = useRouter()
+  const { t } = useTranslation()
   const { user } = useAuth()
   const [selectedPlan, setSelectedPlan] = useState<PlanId>('free')
   const [billingInterval, setBillingInterval] =
     useState<BillingInterval>('monthly')
   const [showPayment, setShowPayment] = useState(false)
+
+  const PLANS = {
+    free: {
+      name: t('selectPlan.plans.free.name'),
+      price: { monthly: 0, yearly: 0 },
+      features: [
+        t('selectPlan.plans.free.features.jobMatching'),
+        t('selectPlan.plans.free.features.applications'),
+        t('selectPlan.plans.free.features.resumeBuilder'),
+        t('selectPlan.plans.free.features.support'),
+      ],
+    },
+    plus: {
+      name: t('selectPlan.plans.plus.name'),
+      price: { monthly: 5, yearly: 48 },
+      features: [
+        t('selectPlan.plans.plus.features.unlimitedMatches'),
+        t('selectPlan.plans.plus.features.aiResume'),
+        t('selectPlan.plans.plus.features.prioritySupport'),
+        t('selectPlan.plans.plus.features.analytics'),
+        t('selectPlan.plans.plus.features.skillsGap'),
+      ],
+    },
+    premium: {
+      name: t('selectPlan.plans.premium.name'),
+      price: { monthly: 10, yearly: 96 },
+      features: [
+        t('selectPlan.plans.premium.features.everythingPlus'),
+        t('selectPlan.plans.premium.features.coaching'),
+        t('selectPlan.plans.premium.features.workshops'),
+        t('selectPlan.plans.premium.features.careerAnalytics'),
+        t('selectPlan.plans.premium.features.mentorship'),
+      ],
+    },
+  }
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -80,7 +82,7 @@ export default function SelectPlanPage() {
   }
 
   const handlePaymentSuccess = () => {
-    toast.success('Payment method added successfully!')
+    toast.success(t('selectPlan.success'))
     router.push('/onboarding')
   }
 
@@ -97,9 +99,9 @@ export default function SelectPlanPage() {
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-12 text-center">
-          <h1 className="mb-4 text-4xl font-bold">Choose Your Plan</h1>
+          <h1 className="mb-4 text-4xl font-bold">{t('selectPlan.title')}</h1>
           <p className="text-lg text-muted-foreground">
-            Start your career journey with the plan that fits your needs
+            {t('selectPlan.subtitle')}
           </p>
         </div>
 
@@ -113,7 +115,7 @@ export default function SelectPlanPage() {
                   : 'text-muted-foreground'
               }
             >
-              Monthly
+              {t('selectPlan.billing.monthly')}
             </span>
             <button
               onClick={() =>
@@ -138,9 +140,9 @@ export default function SelectPlanPage() {
                   : 'text-muted-foreground'
               }
             >
-              Yearly{' '}
+              {t('selectPlan.billing.yearly')}{' '}
               <span className="text-sm font-semibold text-accent">
-                (Save 20%)
+                {t('selectPlan.billing.savePercent')}
               </span>
             </span>
           </div>
@@ -157,8 +159,12 @@ export default function SelectPlanPage() {
             >
               <h3 className="mb-2 text-2xl font-bold">{PLANS.free.name}</h3>
               <div className="mb-6">
-                <span className="text-4xl font-bold">$0</span>
-                <span className="text-muted-foreground">/month</span>
+                <span className="text-4xl font-bold">
+                  {t('selectPlan.plans.free.price')}
+                </span>
+                <span className="text-muted-foreground">
+                  {t('selectPlan.plans.free.period')}
+                </span>
               </div>
               <ul className="mb-8 space-y-3">
                 {PLANS.free.features.map((feature, idx) => (
@@ -173,7 +179,7 @@ export default function SelectPlanPage() {
                 variant={selectedPlan === 'free' ? 'default' : 'outline'}
                 className="w-full"
               >
-                Get Started
+                {t('selectPlan.plans.free.cta')}
               </Button>
             </div>
 
@@ -192,7 +198,10 @@ export default function SelectPlanPage() {
                   ${PLANS.plus.price[billingInterval]}
                 </span>
                 <span className="text-muted-foreground">
-                  /{billingInterval === 'monthly' ? 'month' : 'year'}
+                  /
+                  {billingInterval === 'monthly'
+                    ? t('selectPlan.month')
+                    : t('selectPlan.year')}
                 </span>
               </div>
               <ul className="mb-8 space-y-3">
@@ -207,7 +216,7 @@ export default function SelectPlanPage() {
                 onClick={() => handlePlanSelect(getPlanId('plus'))}
                 className="w-full"
               >
-                Choose Plus
+                {t('selectPlan.plans.plus.cta')}
               </Button>
             </div>
 
@@ -221,7 +230,7 @@ export default function SelectPlanPage() {
               }`}
             >
               <div className="absolute right-4 top-4 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-white">
-                Popular
+                {t('selectPlan.plans.premium.badge')}
               </div>
               <h3 className="mb-2 text-2xl font-bold">{PLANS.premium.name}</h3>
               <div className="mb-6">
@@ -229,7 +238,10 @@ export default function SelectPlanPage() {
                   ${PLANS.premium.price[billingInterval]}
                 </span>
                 <span className="text-muted-foreground">
-                  /{billingInterval === 'monthly' ? 'month' : 'year'}
+                  /
+                  {billingInterval === 'monthly'
+                    ? t('selectPlan.month')
+                    : t('selectPlan.year')}
                 </span>
               </div>
               <ul className="mb-8 space-y-3">
@@ -244,7 +256,7 @@ export default function SelectPlanPage() {
                 onClick={() => handlePlanSelect(getPlanId('premium'))}
                 className="w-full"
               >
-                Choose Premium
+                {t('selectPlan.plans.premium.cta')}
               </Button>
             </div>
           </div>
@@ -252,12 +264,20 @@ export default function SelectPlanPage() {
           /* Payment Form */
           <div className="mx-auto max-w-lg">
             <div className="mb-6 rounded-2xl border border-border bg-card p-8">
-              <h2 className="mb-2 text-2xl font-bold">Complete Payment</h2>
+              <h2 className="mb-2 text-2xl font-bold">
+                {t('selectPlan.payment.title')}
+              </h2>
               <p className="mb-6 text-muted-foreground">
-                You selected:{' '}
+                {t('selectPlan.payment.selected')}{' '}
                 <span className="font-semibold text-foreground">
-                  {selectedPlan.includes('plus') ? 'Plus' : 'Premium'} (
-                  {billingInterval})
+                  {selectedPlan.includes('plus')
+                    ? t('selectPlan.plans.plus.name')
+                    : t('selectPlan.plans.premium.name')}{' '}
+                  (
+                  {billingInterval === 'monthly'
+                    ? t('selectPlan.payment.monthly')
+                    : t('selectPlan.payment.yearly')}
+                  )
                 </span>
               </p>
 

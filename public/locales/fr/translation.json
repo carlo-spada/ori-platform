@@ -1045,5 +1045,70 @@
     "errors": {
       "emailRequired": "Veuillez saisir votre adresse électronique"
     }
+  },
+  "seo": {
+    "landing": {
+      "title": "Ori - Votre compagnon de carrière en IA",
+      "description": "Libérez votre potentiel avec Ori, la plateforme alimentée par l'IA pour découvrir, poursuivre et évoluer dans des rôles qui correspondent à vos compétences, vos valeurs et vos ambitions.",
+      "jsonld": {
+        "name": "Ori",
+        "description": "Compagnon de carrière alimenté par l'IA pour une recherche d'emploi et une croissance professionnelle personnalisées"
+      }
+    }
+  },
+  "selectPlan": {
+    "title": "Choisissez votre plan",
+    "subtitle": "Commencez votre parcours professionnel avec le plan qui correspond à vos besoins",
+    "billing": {
+      "monthly": "Mensuel",
+      "yearly": "Annuel",
+      "savePercent": "(Économie de 20 %)"
+    },
+    "plans": {
+      "free": {
+        "name": "Gratuit",
+        "price": "$0",
+        "period": "/mois",
+        "features": {
+          "jobMatching": "Recherche d'emploi de base",
+          "applications": "5 demandes par mois",
+          "resumeBuilder": "Constructeur de CV de base",
+          "support": "Soutien par courrier électronique"
+        },
+        "cta": "Commencer"
+      },
+      "plus": {
+        "name": "Plus",
+        "features": {
+          "unlimitedMatches": "Nombre illimité d'offres d'emploi",
+          "aiResume": "Construire un CV grâce à l'intelligence artificielle",
+          "prioritySupport": "Soutien prioritaire",
+          "analytics": "Analyse avancée",
+          "skillsGap": "Analyse des lacunes en matière de compétences"
+        },
+        "cta": "Choisir Plus"
+      },
+      "premium": {
+        "name": "Prime",
+        "badge": "Populaire",
+        "features": {
+          "everythingPlus": "Tout en plus",
+          "coaching": "Coaching personnalisé",
+          "workshops": "Ateliers exclusifs",
+          "careerAnalytics": "Analyse de carrière",
+          "mentorship": "sessions de mentorat en tête-à-tête"
+        },
+        "cta": "Choisir la prime"
+      }
+    },
+    "payment": {
+      "title": "Paiement complet",
+      "selected": "Vous avez choisi :",
+      "monthly": "mensuel",
+      "yearly": "annuellement"
+    },
+    "month": "mois",
+    "year": "année",
+    "success": "Méthode de paiement ajoutée avec succès !"
   }
 }

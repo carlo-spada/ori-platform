@@ -1042,5 +1042,70 @@
     "errors": {
       "emailRequired": "Inserisci il tuo indirizzo e-mail"
     }
+  },
+  "seo": {
+    "landing": {
+      "title": "Ori - Il vostro compagno di carriera AI",
+      "description": "Liberate il vostro potenziale con Ori, la piattaforma alimentata dall'intelligenza artificiale per scoprire, perseguire ed evolvere nei ruoli che corrispondono alle vostre capacità, valori e ambizioni.",
+      "jsonld": {
+        "name": "Ori",
+        "description": "Compagno di carriera dotato di intelligenza artificiale per la ricerca personalizzata di lavoro e la crescita professionale"
+      }
+    }
+  },
+  "selectPlan": {
+    "title": "Scegliete il vostro piano",
+    "subtitle": "Iniziate il vostro percorso professionale con il piano più adatto alle vostre esigenze",
+    "billing": {
+      "monthly": "Mensile",
+      "yearly": "Annuale",
+      "savePercent": "(Risparmio 20%)"
+    },
+    "plans": {
+      "free": {
+        "name": "Gratuito",
+        "price": "$0",
+        "period": "/mese",
+        "features": {
+          "jobMatching": "Corrispondenza tra domanda e offerta di lavoro",
+          "applications": "5 applicazioni al mese",
+          "resumeBuilder": "Creazione di un curriculum di base",
+          "support": "Email support"
+        },
+        "cta": "Iniziare"
+      },
+      "plus": {
+        "name": "Di più",
+        "features": {
+          "unlimitedMatches": "Corrispondenze di lavoro illimitate",
+          "aiResume": "Creatore di curriculum con intelligenza artificiale",
+          "prioritySupport": "Assistenza prioritaria",
+          "analytics": "Analisi avanzata",
+          "skillsGap": "Analisi del gap di competenze"
+        },
+        "cta": "Scegliere Plus"
+      },
+      "premium": {
+        "name": "Premio",
+        "badge": "Popolare",
+        "features": {
+          "everythingPlus": "Tutto in più",
+          "coaching": "Coaching personalizzato",
+          "workshops": "Workshop esclusivi",
+          "careerAnalytics": "Analisi della carriera",
+          "mentorship": "sessioni di mentorship 1 a 1"
+        },
+        "cta": "Scegliere Premium"
+      }
+    },
+    "payment": {
+      "title": "Pagamento completo",
+      "selected": "Avete selezionato:",
+      "monthly": "mensile",
+      "yearly": "annualmente"
+    },
+    "month": "mese",
+    "year": "anno",
+    "success": "Metodo di pagamento aggiunto con successo!"
   }
 }

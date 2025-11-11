@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { PublicLayout } from '@/components/layout/PublicLayout'
 import { HeroSection } from '@/components/landing/HeroSection'
 import { ValuePropositionSection } from '@/components/landing/ValuePropositionSection'
@@ -11,23 +12,22 @@ import { BottomCTASection } from '@/components/landing/BottomCTASection'
 import { setDocumentMeta, setJSONLD } from '@/lib/seo'
 
 const Index = () => {
+  const { t } = useTranslation()
+
   // Set SEO meta tags and JSON-LD on mount
   useEffect(() => {
     setDocumentMeta({
-      title: 'Ori - Your AI Career Companion',
-      description:
-        'Unlock your potential with Ori, the AI-powered platform for discovering, pursuing, and evolving within roles that fit your skills, values, and ambitions.',
+      title: t('seo.landing.title'),
+      description: t('seo.landing.description'),
       ogType: 'website',
       twitterCard: 'summary_large_image',
     })
 
-    // Note: JSON-LD would need to be converted to use t() as well, but for now keeping static
     setJSONLD({
       '@context': 'https://schema.org',
       '@type': 'WebApplication',
-      name: 'Ori',
-      description:
-        'AI-powered career companion for personalized job discovery and professional growth',
+      name: t('seo.landing.jsonld.name'),
+      description: t('seo.landing.jsonld.description'),
       applicationCategory: 'BusinessApplication',
       offers: {
         '@type': 'Offer',
@@ -35,7 +35,7 @@ const Index = () => {
         priceCurrency: 'USD',
       },
     })
-  }, [])
+  }, [t])
 
   return (
     <PublicLayout>

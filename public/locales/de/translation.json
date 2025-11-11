@@ -1045,5 +1045,70 @@
     "errors": {
       "emailRequired": "Bitte geben Sie Ihre E-Mail Adresse ein"
     }
+  },
+  "seo": {
+    "landing": {
+      "title": "Ori - Ihr AI-Karriere-Begleiter",
+      "description": "Entfalten Sie Ihr Potenzial mit Ori, der KI-gesteuerten Plattform zum Entdecken, Verfolgen und Weiterentwickeln in Rollen, die zu Ihren Fähigkeiten, Werten und Ambitionen passen.",
+      "jsonld": {
+        "name": "Ori",
+        "description": "KI-gestützter Karrierebegleiter für personalisierte Jobsuche und berufliches Wachstum"
+      }
+    }
+  },
+  "selectPlan": {
+    "title": "Wählen Sie Ihren Plan",
+    "subtitle": "Beginnen Sie Ihre berufliche Laufbahn mit dem Plan, der Ihren Bedürfnissen entspricht",
+    "billing": {
+      "monthly": "Monatlich",
+      "yearly": "Jährlich",
+      "savePercent": "(20% sparen)"
+    },
+    "plans": {
+      "free": {
+        "name": "Kostenlos",
+        "price": "$0",
+        "period": "/Monat",
+        "features": {
+          "jobMatching": "Basic Job Matching",
+          "applications": "5 Anträge pro Monat",
+          "resumeBuilder": "Basis-Lebenslauf-Erstellung",
+          "support": "E-Mail-Unterstützung"
+        },
+        "cta": "Los geht's"
+      },
+      "plus": {
+        "name": "Mehr",
+        "features": {
+          "unlimitedMatches": "Unbegrenzte Anzahl von Stellenangeboten",
+          "aiResume": "KI-gestützte Lebenslauferstellung",
+          "prioritySupport": "Vorrangige Unterstützung",
+          "analytics": "Erweiterte Analytik",
+          "skillsGap": "Analyse der Qualifikationslücke"
+        },
+        "cta": "Wählen Sie Plus"
+      },
+      "premium": {
+        "name": "Prämie",
+        "badge": "Beliebt",
+        "features": {
+          "everythingPlus": "Alles im Plus",
+          "coaching": "Personalisiertes Coaching",
+          "workshops": "Exklusive Workshops",
+          "careerAnalytics": "Karriere-Analytik",
+          "mentorship": "1-on-1-Mentoring-Sitzungen"
+        },
+        "cta": "Premium wählen"
+      }
+    },
+    "payment": {
+      "title": "Vollständige Zahlung",
+      "selected": "Sie haben ausgewählt:",
+      "monthly": "monatlich",
+      "yearly": "jährlich"
+    },
+    "month": "monat",
+    "year": "jahr",
+    "success": "Zahlungsmethode erfolgreich hinzugefügt!"
   }
 }
