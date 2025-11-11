@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: quick, start.md, notion, sync, minute, step, create
+priority: medium
+quick-read-time: 3min
+deep-dive-time: 4min
+---
+
 # Notion Sync - 5 Minute Quick Start
 
 **Your API Key**: (provided separately - do not commit)

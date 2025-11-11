@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: services, deepl, readme.md, server, endpoints, quick, start
+priority: medium
+quick-read-time: 1min
+deep-dive-time: 2min
+---
+
 # DeepL MCP Server
 
 This service provides a [Model Context Protocol (MCP)](https://developers.deepl.com/docs/learning-how-tos/examples-and-guides/deepl-mcp-server-how-to-build-and-use-translation-in-llm-applications) compliant server for interacting with the DeepL API. It allows AI agents and other services to perform translations.

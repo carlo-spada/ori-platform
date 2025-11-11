@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: archive, deprecated, database, quick, reference.md, postgresql, essential
+priority: medium
+quick-read-time: 4min
+deep-dive-time: 6min
+---
+
 # PostgreSQL Database Quick Reference - Ori Platform
 
 ## Essential Stats

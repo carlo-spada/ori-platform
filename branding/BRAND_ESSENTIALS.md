@@ -1,3 +1,15 @@
+---
+type: brand-guide
+role: branding
+scope: all
+audience: all
+last-updated: 2025-11-10
+relevance: branding, brand, essentials.md, essentials, core, identity, visual
+priority: medium
+quick-read-time: 3min
+deep-dive-time: 5min
+---
+
 # Ori Brand Essentials
 
 ## Core Identity

@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: cleanup, duplicates, report.md, duplicate, files, summary, detailed
+priority: medium
+quick-read-time: 5min
+deep-dive-time: 7min
+---
+
 # Duplicate Files Cleanup Report
 
 **Date**: 2025-11-10

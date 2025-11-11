@@ -1,3 +1,15 @@
+---
+type: reference-doc
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: reference, skills, quick, ref.md, analysis, what, does
+priority: medium
+quick-read-time: 1min
+deep-dive-time: 2min
+---
+
 # Skills Gap Analysis - Quick Reference
 
 **Status:** ✅ Production Ready (v1.0.1)

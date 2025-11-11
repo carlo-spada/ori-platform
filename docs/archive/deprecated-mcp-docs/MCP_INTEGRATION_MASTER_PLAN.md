@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: archive, deprecated, integration, master, plan.md, plan:, executive
+priority: medium
+quick-read-time: 14min
+deep-dive-time: 22min
+---
+
 # MCP Integration Master Plan: Phase 1 Implementation
 
 **Status**: Strategic Planning Phase

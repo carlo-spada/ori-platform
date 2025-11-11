@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: archive, 2024, phase1, transition, masterplan.md, masterplan:, platform
+priority: medium
+quick-read-time: 31min
+deep-dive-time: 51min
+---
+
 # TRANSITION MASTERPLAN: Ori Platform Workflow Optimization
 
 > **ONE-TIME FAST IMPLEMENTATION GUIDE**

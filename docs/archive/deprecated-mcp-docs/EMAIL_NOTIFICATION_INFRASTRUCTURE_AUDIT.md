@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: archive, deprecated, email, notification, infrastructure, audit.md, platform:
+priority: medium
+quick-read-time: 11min
+deep-dive-time: 18min
+---
+
 # Ori Platform: Email & Notification Infrastructure Overview
 
 **Date**: November 10, 2025

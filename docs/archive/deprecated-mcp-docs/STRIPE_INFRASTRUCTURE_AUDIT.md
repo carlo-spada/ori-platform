@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: archive, deprecated, stripe, infrastructure, audit.md, platform, payment
+priority: medium
+quick-read-time: 17min
+deep-dive-time: 28min
+---
+
 # Ori Platform Stripe Payment System Integration Audit
 
 **Date:** November 9, 2025

@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: all
+last-updated: 2025-11-10
+relevance: archive, brand, guidelines, full.md, identity, guide, table
+priority: medium
+quick-read-time: 58min
+deep-dive-time: 97min
+---
+
 # Ori – Brand Identity Guide
 
 ## Table of Contents

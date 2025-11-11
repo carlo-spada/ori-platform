@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: archive, deprecated, stripe, code, locations.md, implementation, file
+priority: medium
+quick-read-time: 8min
+deep-dive-time: 13min
+---
+
 # Stripe Implementation - File Locations & Code Map
 
 ## Frontend Files

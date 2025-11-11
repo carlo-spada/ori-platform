@@ -1,3 +1,15 @@
+---
+type: reference-doc
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: reference, onboarding, fields.md, implementation, field, mapping, step
+priority: medium
+quick-read-time: 10min
+deep-dive-time: 16min
+---
+
 # Onboarding Implementation - Field Reference Guide
 
 **Purpose**: Single source of truth for all onboarding form fields, their labels, validation, and storage locations

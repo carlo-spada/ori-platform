@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: notion, sync, setup, guide.md, quick, step, create
+priority: medium
+quick-read-time: 5min
+deep-dive-time: 8min
+---
+
 # Notion Sync - Quick Setup Guide
 
 **Your Notion API Key**: (provided by Carlo - do not commit to git)

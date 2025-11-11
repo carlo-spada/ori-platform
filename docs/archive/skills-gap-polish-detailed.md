@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: archive, skills, polish, detailed.md, analysis, quick, implementations
+priority: medium
+quick-read-time: 6min
+deep-dive-time: 10min
+---
+
 # Skills Gap Analysis - Polish & Enhancement Roadmap
 
 **Feature:** Skills Gap Analysis Display

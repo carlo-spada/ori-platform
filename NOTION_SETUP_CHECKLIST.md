@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: notion, setup, checklist.md, checklist, step, create, page
+priority: medium
+quick-read-time: 7min
+deep-dive-time: 11min
+---
+
 # Notion Setup Checklist - Step by Step
 
 **Time Required**: 15-20 minutes

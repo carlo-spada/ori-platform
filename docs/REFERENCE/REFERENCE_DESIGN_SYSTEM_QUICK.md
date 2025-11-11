@@ -1,3 +1,15 @@
+---
+type: reference-doc
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: reference, design, system, quick.md, quick, page, boilerplate
+priority: medium
+quick-read-time: 6min
+deep-dive-time: 10min
+---
+
 # Design System Quick Reference - Copy/Paste Ready
 
 ## 1. PAGE BOILERPLATE

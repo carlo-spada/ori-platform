@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: archive, deprecated, postgresql, phase4, roadmap.md, integration, phase
+priority: medium
+quick-read-time: 9min
+deep-dive-time: 15min
+---
+
 # PostgreSQL MCP Integration - Phase 4 Roadmap
 
 **Purpose:** Enable developers to interact with the PostgreSQL database through Claude Code with safety guardrails and productivity enhancements.

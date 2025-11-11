@@ -1,3 +1,15 @@
+---
+type: reference-doc
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: reference, design, system.md, platform, system, executive, summary
+priority: medium
+quick-read-time: 10min
+deep-dive-time: 17min
+---
+
 # Ori Platform - Design System & UI Patterns Analysis
 
 ## Executive Summary

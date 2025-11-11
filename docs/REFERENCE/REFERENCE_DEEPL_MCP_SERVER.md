@@ -1,3 +1,15 @@
+---
+type: reference-doc
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: reference, deepl, server.md, reference:, server, overview, purpose
+priority: medium
+quick-read-time: 3min
+deep-dive-time: 4min
+---
+
 # Reference: DeepL MCP Server
 
 **Status**: Active

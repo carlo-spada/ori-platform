@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: .github, auto, review, readme.md, system, what, does
+priority: medium
+quick-read-time: 1min
+deep-dive-time: 2min
+---
+
 # Auto PR Review System - Quick Reference
 
 ## 🤖 What It Does

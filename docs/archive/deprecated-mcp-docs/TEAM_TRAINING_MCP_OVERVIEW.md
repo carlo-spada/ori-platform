@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: archive, deprecated, team, training, overview.md, training:, (model
+priority: medium
+quick-read-time: 11min
+deep-dive-time: 18min
+---
+
 # Team Training: MCP (Model Context Protocol) Overview
 
 **Version**: 1.0

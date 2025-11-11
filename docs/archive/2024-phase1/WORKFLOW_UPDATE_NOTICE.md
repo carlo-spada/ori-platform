@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: archive, 2024, phase1, workflow, update, notice.md, important:
+priority: medium
+quick-read-time: 3min
+deep-dive-time: 4min
+---
+
 # IMPORTANT: Workflow Update Notice
 
 ## For Gemini and Codex - Please Read

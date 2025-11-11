@@ -1,3 +1,15 @@
+---
+type: operational-guide
+role: guide
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: operations, branch, protection, setup.md, setup, simplified, structure
+priority: medium
+quick-read-time: 3min
+deep-dive-time: 5min
+---
+
 # Branch Protection Setup Guide
 
 This document provides step-by-step instructions for setting up branch protection rules on the `main` branch.

@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: all-agents
+last-updated: 2025-11-10
+relevance: archive, 2024, phase1, claude, only, workflow.md, claude-only
+priority: medium
+quick-read-time: 4min
+deep-dive-time: 6min
+---
+
 # Claude-Only Workflow: Simplified & Accelerated
 
 > **10x faster with single-agent architecture**

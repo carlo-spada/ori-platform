@@ -1,3 +1,15 @@
+---
+type: operational-guide
+role: guide
+scope: all
+audience: devops
+last-updated: 2025-11-10
+relevance: operations, notion, documentation, strategy.md, strategy, executive, summary
+priority: medium
+quick-read-time: 13min
+deep-dive-time: 21min
+---
+
 # Git + Notion Documentation Strategy
 
 **Status**: Strategic Plan

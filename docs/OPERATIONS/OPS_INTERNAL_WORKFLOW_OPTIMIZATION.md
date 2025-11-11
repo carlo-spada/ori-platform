@@ -1,3 +1,15 @@
+---
+type: operational-guide
+role: guide
+scope: all
+audience: devops
+last-updated: 2025-11-10
+relevance: operations, internal, workflow, optimization.md, create, scripts/task, tool
+priority: medium
+quick-read-time: 3min
+deep-dive-time: 5min
+---
+
 🚨 TOP 10 AREAS OF IMPROVEMENT FOR AGENTIC EFFICIENCY (THAT NEED TO BE IMPLEMENTED)
 
 1. Implement Semantic Vector Documentation (RAG Pipeline)

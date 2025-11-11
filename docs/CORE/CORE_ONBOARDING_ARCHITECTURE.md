@@ -1,3 +1,15 @@
+---
+type: technical-reference
+role: reference
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: core, onboarding, architecture.md, implementation, complete, executive, summary
+priority: high
+quick-read-time: 13min
+deep-dive-time: 22min
+---
+
 # Onboarding Implementation - Complete Architecture Analysis
 
 **Date**: 2025-11-10  

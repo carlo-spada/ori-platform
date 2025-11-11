@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: archive, 2024, phase1, stripe, audit, summary.md, integration
+priority: medium
+quick-read-time: 7min
+deep-dive-time: 12min
+---
+
 # Stripe Integration Audit - Executive Summary
 
 **Date:** November 9, 2025

@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: .claude, setup, guide.md, servers, guide, quick, start
+priority: medium
+quick-read-time: 4min
+deep-dive-time: 6min
+---
+
 # MCP Servers Setup Guide
 
 **Version**: 1.0

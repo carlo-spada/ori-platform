@@ -1,3 +1,15 @@
+---
+type: operational-guide
+role: guide
+scope: all
+audience: devops
+last-updated: 2025-11-10
+relevance: operations, deployment, runbook.md, runbook, table, contents, overview
+priority: medium
+quick-read-time: 13min
+deep-dive-time: 22min
+---
+
 # Deployment Runbook
 
 Comprehensive guide for deploying the Ori Platform to production.

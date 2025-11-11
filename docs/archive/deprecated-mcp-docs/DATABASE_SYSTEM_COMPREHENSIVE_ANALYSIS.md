@@ -1,3 +1,15 @@
+---
+type: analysis-doc
+role: analysis
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: archive, deprecated, database, system, comprehensive, analysis.md, postgresql
+priority: medium
+quick-read-time: 17min
+deep-dive-time: 29min
+---
+
 # PostgreSQL Database System in Ori Platform - Comprehensive Analysis
 
 **Analysis Date:** November 9, 2025

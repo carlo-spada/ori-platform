@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: archive, skills, analysis, detailed.md, feature, overview, user
+priority: medium
+quick-read-time: 6min
+deep-dive-time: 10min
+---
+
 # Skills Gap Analysis Feature Documentation
 
 **Feature Status:** ✅ Production Ready (Core Implementation Complete)

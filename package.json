@@ -14,7 +14,8 @@
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
     "find-docs": "tsx scripts/find-docs.ts",
-    "update-doc-index": "tsx scripts/update-doc-index.ts"
+    "update-doc-index": "tsx scripts/update-doc-index.ts",
+    "add-frontmatter": "tsx scripts/add-frontmatter.ts"
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^10.2.9",

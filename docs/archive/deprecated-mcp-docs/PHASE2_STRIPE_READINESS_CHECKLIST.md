@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: archive, deprecated, phase2, stripe, readiness, checklist.md, phase
+priority: medium
+quick-read-time: 9min
+deep-dive-time: 14min
+---
+
 # Phase 2: Stripe MCP Integration - Readiness Checklist
 
 **Phase**: Phase 2 (Weeks 3-4)

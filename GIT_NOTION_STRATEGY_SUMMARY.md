@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: notion, strategy, summary.md, documentation, current, state:, what's
+priority: medium
+quick-read-time: 5min
+deep-dive-time: 9min
+---
+
 # Git + Notion Documentation Strategy - Executive Summary
 
 **Status**: ✅ Documentation audit complete, strategic plan ready

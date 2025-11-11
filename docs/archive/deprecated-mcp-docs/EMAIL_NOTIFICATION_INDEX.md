@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: archive, deprecated, email, notification, index.md, infrastructure, documents
+priority: medium
+quick-read-time: 7min
+deep-dive-time: 11min
+---
+
 # Email & Notification Infrastructure Documentation Index
 
 **Generated**: November 10, 2025

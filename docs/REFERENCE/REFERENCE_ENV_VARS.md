@@ -1,3 +1,15 @@
+---
+type: reference-doc
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: reference, vars.md, environment, variables, table, contents, frontend
+priority: medium
+quick-read-time: 11min
+deep-dive-time: 18min
+---
+
 # Environment Variables Reference
 
 Complete guide to all environment variables used across the Ori Platform.

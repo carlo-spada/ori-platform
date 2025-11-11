@@ -1,3 +1,15 @@
+---
+type: operational-guide
+role: guide
+scope: all
+audience: devops
+last-updated: 2025-11-10
+relevance: operations, auto, review.md, automated, review, merge, overview
+priority: medium
+quick-read-time: 4min
+deep-dive-time: 6min
+---
+
 # Automated PR Review & Merge System
 
 ## Overview

@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: archive, onboarding, issues, quick, reference.md, implementation, critical
+priority: medium
+quick-read-time: 6min
+deep-dive-time: 9min
+---
+
 # Onboarding Implementation - Issues Quick Reference
 
 **Date**: 2025-11-10  
