@@ -1,6 +1,20 @@
+---
+type: technical-reference
+role: backend-reference
+scope: backend, database
+audience: backend-developers, claude, codex
+last-updated: 2025-11-11
+relevance: database, schema, rls, migrations, types, supabase
+priority: critical
+quick-read-time: 5min
+deep-dive-time: 15min
+---
+
 # Database Schema Reference
 
-**Last Updated:** 2025-11-08
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](../../DOC_INDEX.md) first for current project status and navigation.**
+
+**Last Updated:** 2025-11-11
 **Database:** Supabase PostgreSQL
 
 ---

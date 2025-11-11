@@ -1,4 +1,18 @@
+---
+type: technical-reference
+role: mcp-guide
+scope: all
+audience: all-agents, developers
+last-updated: 2025-11-11
+relevance: mcp, tools, resources, integration, protocol, claude-code
+priority: critical
+quick-read-time: 5min
+deep-dive-time: 20min
+---
+
 # Model Context Protocol (MCP) - Complete Reference
+
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](../DOC_INDEX.md) first for current project status and navigation.**
 
 ## What is MCP?
 

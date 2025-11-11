@@ -1,4 +1,18 @@
+---
+type: project-overview
+role: onboarding
+scope: all
+audience: developers, contributors, stakeholders
+last-updated: 2025-11-11
+relevance: setup, installation, quick-start, architecture, contributing
+priority: high
+quick-read-time: 5min
+deep-dive-time: 15min
+---
+
 # Ori Platform — Your AI-Powered Career Companion
+
+**⚠️ For Agents: Read [DOC_INDEX.md](./DOC_INDEX.md) first for comprehensive navigation and current status.**
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/your-repo/assets/main/ori-logo.png" alt="Ori Logo" width="120px" />

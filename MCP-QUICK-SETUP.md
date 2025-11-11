@@ -1,4 +1,18 @@
+---
+type: quick-start
+role: setup-guide
+scope: all
+audience: all-agents, developers
+last-updated: 2025-11-11
+relevance: mcp, setup, configuration, quickstart, onboarding
+priority: high
+quick-read-time: 2min
+deep-dive-time: 5min
+---
+
 # MCP Quick Setup - 5 Minute Guide
+
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](./DOC_INDEX.md) first for current project status and navigation.**
 
 ## Step 1: Open Config (30 seconds)
 

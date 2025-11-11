@@ -1,4 +1,18 @@
+---
+type: quick-reference
+role: command-reference
+scope: all
+audience: gemini
+last-updated: 2025-11-11
+relevance: commands, quick-reference, research, planning
+priority: high
+quick-read-time: 1min
+deep-dive-time: 3min
+---
+
 # GEMINI QUICK REFERENCE CARD
+
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](./DOC_INDEX.md) first for current project status and navigation.**
 
 > Research and planning commands. Fast lookups only.
 

@@ -1,4 +1,18 @@
+---
+type: technical-reference
+role: ai-engine-reference
+scope: ai-engine
+audience: backend-developers, claude, codex
+last-updated: 2025-11-11
+relevance: ai, matching, embeddings, fastapi, python, ml
+priority: high
+quick-read-time: 5min
+deep-dive-time: 15min
+---
+
 # Ori AI Engine
+
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](../../DOC_INDEX.md) first for current project status and navigation.**
 
 The intelligent heart of the Ori Platform - providing semantic job matching, skill gap analysis, and personalized career recommendations.
 

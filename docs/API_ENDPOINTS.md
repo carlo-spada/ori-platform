@@ -1,4 +1,18 @@
+---
+type: api-reference
+role: backend-reference
+scope: backend, api
+audience: backend-developers, frontend-developers, claude, codex
+last-updated: 2025-11-11
+relevance: api, endpoints, routes, authentication, validation, rest
+priority: critical
+quick-read-time: 10min
+deep-dive-time: 45min
+---
+
 # Ori Platform - Complete API Documentation
+
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](../DOC_INDEX.md) first for current project status and navigation.**
 
 ## Overview
 

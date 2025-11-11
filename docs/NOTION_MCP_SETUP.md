@@ -1,4 +1,18 @@
+---
+type: setup-guide
+role: mcp-configuration
+scope: all
+audience: all-agents, developers
+last-updated: 2025-11-11
+relevance: notion, mcp, setup, integration, documentation
+priority: high
+quick-read-time: 3min
+deep-dive-time: 10min
+---
+
 # Notion MCP Server Setup Guide
+
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](../DOC_INDEX.md) first for current project status and navigation.**
 
 Complete guide to setting up the official Notion MCP server for seamless documentation sync and collaboration.
 

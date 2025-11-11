@@ -1,4 +1,18 @@
+---
+type: product-vision
+role: strategic-vision
+scope: all
+audience: all-agents, stakeholders, contributors, team
+last-updated: 2025-11-11
+relevance: vision, philosophy, product, brand, mission, values, purpose
+priority: high
+quick-read-time: 8min
+deep-dive-time: 15min
+---
+
 # Ori — The Autonomous Up-skilling & Role-Acquisition Agent
+
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](./DOC_INDEX.md) first for current project status and navigation.**
 
 ## A Manifesto for a More Fulfilled Humanity
 

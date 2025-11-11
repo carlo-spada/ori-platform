@@ -1,8 +1,22 @@
+---
+type: governance-guide
+role: task-management
+scope: all
+audience: all-agents
+last-updated: 2025-11-11
+relevance: tasks, workflow, governance, collaboration, agentic-workflow
+priority: critical
+quick-read-time: 5min
+deep-dive-time: 20min
+---
+
 # Task Governance & Best Practices
+
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](../DOC_INDEX.md) first for current project status and navigation.**
 
 **Purpose**: Maintain task board integrity for Claude-primary workflow with agentic speed (10x)
 **Status**: Active framework
-**Last Updated**: November 10, 2025
+**Last Updated**: November 11, 2025
 
 ---
 

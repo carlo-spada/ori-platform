@@ -1,4 +1,18 @@
+---
+type: security-policy
+role: security-compliance
+scope: security
+audience: all-agents, contributors, security-researchers
+last-updated: 2025-11-11
+relevance: security, vulnerability-reporting, best-practices, policies
+priority: critical
+quick-read-time: 3min
+deep-dive-time: 8min
+---
+
 # Security Policy
+
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](./DOC_INDEX.md) first for current project status and navigation.**
 
 The Ori Platform team takes security seriously. We appreciate your efforts to responsibly disclose your findings, and we will make every effort to acknowledge your contributions.
 

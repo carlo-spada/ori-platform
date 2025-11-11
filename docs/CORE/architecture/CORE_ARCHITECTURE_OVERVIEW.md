@@ -1,4 +1,18 @@
+---
+type: technical-reference
+role: architecture-reference
+scope: all
+audience: all-agents, backend-developers, architects
+last-updated: 2025-11-11
+relevance: architecture, system-design, patterns, tech-stack
+priority: critical
+quick-read-time: 8min
+deep-dive-time: 30min
+---
+
 # Architecture Overview
+
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](../../../DOC_INDEX.md) first for current project status and navigation.**
 
 Comprehensive architectural documentation for the Ori Platform.
 

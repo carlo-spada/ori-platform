@@ -1,4 +1,18 @@
+---
+type: api-reference
+role: quick-reference
+scope: backend, api
+audience: all-agents, developers
+last-updated: 2025-11-11
+relevance: api, endpoints, quick-reference, rest, summary
+priority: high
+quick-read-time: 3min
+deep-dive-time: 8min
+---
+
 # API Structure Summary
+
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](../DOC_INDEX.md) first for current project status and navigation.**
 
 ## Quick Reference
 

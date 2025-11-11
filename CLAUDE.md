@@ -1,4 +1,18 @@
+---
+type: agent-guide
+role: implementation
+scope: all
+audience: claude-ai
+last-updated: 2025-11-11
+relevance: implementation, coding, mcp-tools, patterns, standards
+priority: critical
+quick-read-time: 5min
+deep-dive-time: 20min
+---
+
 # Claude: Implementer & Builder
+
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](./DOC_INDEX.md) first for current project status and navigation.**
 
 My role: Execute plans from Gemini with precision, speed, and elegance. Implement features, maintain code quality, push frequently.
 

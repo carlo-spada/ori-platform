@@ -1,4 +1,18 @@
+---
+type: setup-guide
+role: configuration-guide
+scope: backend, authentication
+audience: backend-developers, claude, ops
+last-updated: 2025-11-11
+relevance: oauth, authentication, google, apple, supabase, setup
+priority: high
+quick-read-time: 5min
+deep-dive-time: 20min
+---
+
 # OAuth Setup Guide: Google & Apple Sign In
+
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](../DOC_INDEX.md) first for current project status and navigation.**
 
 This guide will help you configure Google and Apple OAuth providers in Supabase for your Ori platform.
 

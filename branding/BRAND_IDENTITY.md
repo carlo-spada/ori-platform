@@ -1,6 +1,20 @@
-Ori – Brand Identity Guide
+---
+type: brand-guide
+role: design-reference
+scope: frontend, design, marketing
+audience: designers, marketers, frontend-developers, all-agents
+last-updated: 2025-11-11
+relevance: brand, voice, visual, mascot, design-system, ui-ux, tone
+priority: high
+quick-read-time: 10min
+deep-dive-time: 40min
+---
 
-Brand Essence
+# Ori – Brand Identity Guide
+
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](../DOC_INDEX.md) first for current project status and navigation.**
+
+## Brand Essence
 
 Brand Essence Statement:
 Guiding every person to grow into their most fulfilled professional self – with wisdom, empathy, and a light in the dark.

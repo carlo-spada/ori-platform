@@ -1,4 +1,18 @@
+---
+type: quick-reference
+role: command-reference
+scope: all
+audience: claude
+last-updated: 2025-11-11
+relevance: commands, quick-reference, workflows, shortcuts
+priority: high
+quick-read-time: 1min
+deep-dive-time: 3min
+---
+
 # CLAUDE QUICK REFERENCE CARD
+
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](./DOC_INDEX.md) first for current project status and navigation.**
 
 > Copy-paste commands for immediate action. No reading required.
 

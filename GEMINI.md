@@ -1,4 +1,18 @@
+---
+type: agent-guide
+role: planning-research-ux
+scope: all
+audience: gemini-ai
+last-updated: 2025-11-11
+relevance: planning, research, architecture, ux, strategy, audits
+priority: critical
+quick-read-time: 5min
+deep-dive-time: 20min
+---
+
 # Gemini: Planner & Researcher / UX Guardian
+
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](./DOC_INDEX.md) first for current project status and navigation.**
 
 My role: Understand vision → Research solutions → Design plans → Create tasks → Audit progress → Improve UX
 

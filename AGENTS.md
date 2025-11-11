@@ -1,4 +1,18 @@
+---
+type: workflow-guide
+role: collaboration
+scope: all
+audience: all-agents
+last-updated: 2025-11-11
+relevance: workflow, collaboration, gemini-claude, governance, philosophy
+priority: critical
+quick-read-time: 3min
+deep-dive-time: 15min
+---
+
 # Repository Guidelines
+
+**⚠️ IMPORTANT: Always read [DOC_INDEX.md](./DOC_INDEX.md) first for current project status and navigation.**
 
 **Repository State**: Living, evolving system. Every change is an act of careful architecture. Favor clarity, safety, and long-term adaptability.
 
