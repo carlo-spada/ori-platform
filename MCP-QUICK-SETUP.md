@@ -93,9 +93,13 @@ deep-dive-time: 5min
 
 ## Full Documentation
 
-See `.tasks/in-progress/mcp-setup-guide.md` for complete guide including:
+For complete setup guide including all MCP servers, troubleshooting, and security best practices:
 
-- Troubleshooting
-- Stripe MCP (optional)
+**📖 [Complete MCP Setup Guide](docs/OPERATIONS/OPS_MCP_SETUP_GUIDE.md)**
+
+Includes:
+- All MCP servers (Filesystem, GitHub, Postgres, Stripe, Resend, Notion)
+- Detailed troubleshooting for each MCP
 - Security best practices
-- Advanced configuration options
+- Environment variable management
+- Verification checklist

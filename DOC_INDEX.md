@@ -20,21 +20,17 @@ deep-dive-time: 20min
 
 ## 🎯 CURRENT FOCUS (Read This First!)
 
-**Current Sprint**: Post-i18n completion, preparing for production deploy
-**Active Status**: ✅ All user-facing pages translated, footer redesigned, deployment pipeline fixed
+**Current Sprint**: Documentation consolidation and production deployment
+**Active Status**: ✅ Documentation cleanup complete, MCP setup guides consolidated
 **Next Priority**: Production deployment, monitoring, and Stripe production verification
 
-### 🚧 Active Work (In Progress)
-1. **Deploy Core API to Production** - `.tasks/in-progress/00-deploy-core-api-production.md`
-2. **Verify Stripe Payment Flow in Production** - `.tasks/in-progress/02-verify-stripe-production.md`
-3. **Stripe Production Verification Log** - `.tasks/in-progress/stripe-production-verification-log.md`
-
-
-### 🎉 Recent Wins (Last 5)
-- ✅ Add automated setup script and quick start guide
-- ✅ Add connection test and setup checklist
-- ✅ Finalize agent instructions with DOC_INDEX emphasis
-- ✅ Add automated Notion sync system
+### 🎉 Recent Wins (Last 7)
+- ✅ Consolidate MCP setup guides into single authoritative guide
+- ✅ Archive legacy Phase 1 documentation with clear supersession notices
+- ✅ Eliminate 85 duplicate files across the repository
+- ✅ Create comprehensive API endpoints documentation (41 endpoints)
+- ✅ Create operations runbook for deployment procedures
+- ✅ Add automated Notion sync system via MCP
 - ✅ Implement Phase 3 documentation search tool
 
 
@@ -198,12 +194,14 @@ MCP servers provide tools that agents can use without bash commands. They're alr
 | **Email (Resend)** | ✅ Active | Send emails (onboarding, notifications) | `CLAUDE.md#📧 Email` |
 | **Postgres** | ⚠️ Needs config | Read-only SQL queries | `CLAUDE.md#🗄️ Database` |
 | **GitHub** | ⚠️ Needs token | PR management, issues | `CLAUDE.md#🐙 GitHub` |
+| **Notion** | ⚠️ Needs token | Documentation sync, workspace search | `CLAUDE.md#📝 Notion` |
 | **Playwright** | ✅ Active | Browser automation, screenshots | `CLAUDE.md#🎭 Playwright` |
 
 ### Setup & Reference
-- `CLAUDE.md#MCP Tools Available` - Complete MCP reference with examples
-- `.claude/mcp-setup-guide.md` - Detailed MCP setup instructions
-- `MCP-QUICK-SETUP.md` - Quick start guide
+- **[Complete Setup Guide](docs/OPERATIONS/OPS_MCP_SETUP_GUIDE.md)** - Comprehensive guide for all MCP servers (authoritative)
+- **[MCP-QUICK-SETUP.md](MCP-QUICK-SETUP.md)** - 5-minute quick start for essential MCPs
+- **[MCP Protocol Reference](docs/MCP_REFERENCE.md)** - Deep dive into MCP architecture and usage
+- `CLAUDE.md#MCP Tools Available` - Quick MCP tool reference with examples
 
 ---
 
@@ -225,9 +223,11 @@ Git Push → GitHub Actions → Vercel Deploy
 - `.github/workflows/translate.yml` - Auto-translate on doc changes
 
 ### Operations Docs
-- `docs/OPERATIONS/OPS_DEPLOYMENT_RUNBOOK.md` - Step-by-step deploy guide
-- `docs/OPERATIONS/OPS_BRANCH_PROTECTION_SETUP.md` - Branch rules and protection
-- `docs/OPERATIONS/OPS_AUTO_PR_REVIEW.md` - Automated PR review system
+- **[OPS_DEPLOYMENT_RUNBOOK.md](docs/OPERATIONS/OPS_DEPLOYMENT_RUNBOOK.md)** - Step-by-step deployment procedures
+- **[OPS_MCP_SETUP_GUIDE.md](docs/OPERATIONS/OPS_MCP_SETUP_GUIDE.md)** - Complete MCP server setup (all servers)
+- **[OPS_BRANCH_PROTECTION_SETUP.md](docs/OPERATIONS/OPS_BRANCH_PROTECTION_SETUP.md)** - Branch rules and protection
+- **[OPS_AUTO_PR_REVIEW.md](docs/OPERATIONS/OPS_AUTO_PR_REVIEW.md)** - Automated PR review system
+- **[OPS_GIT_NOTION_DOCUMENTATION_STRATEGY.md](docs/OPERATIONS/OPS_GIT_NOTION_DOCUMENTATION_STRATEGY.md)** - Documentation sync strategy
 
 ### Pre-Deploy Checklist
 ```bash
@@ -311,6 +311,29 @@ pnpm find-docs --help
 ---
 
 ## 🧩 SPECIALIZED TOPICS
+
+### .claude Directory (Claude Code Configuration)
+
+The `.claude/` directory contains Claude Code-specific configuration and documentation.
+
+**Purpose**: Configuration files for Claude Desktop and MCP servers that are committed to git for team sharing.
+
+**Contents**:
+- **`mcp.json`** - MCP server configurations (Docker-based: Stripe, Resend, Web Fetch, Context7)
+- **`commands/`** - Custom slash commands for Claude Code (future)
+- **`prompts/`** - Reusable prompts for common tasks (future)
+
+**Key Files**:
+- `.claude/mcp.json` - Docker MCP gateway configuration (✅ committed to git)
+- `~/Library/Application Support/Claude/claude_desktop_config.json` - User-specific MCP config (❌ NOT in git)
+
+**Setup Instructions**:
+- **Quick**: [MCP-QUICK-SETUP.md](MCP-QUICK-SETUP.md) - 5 minutes
+- **Complete**: [docs/OPERATIONS/OPS_MCP_SETUP_GUIDE.md](docs/OPERATIONS/OPS_MCP_SETUP_GUIDE.md) - 15-30 minutes
+
+**What's the difference?**
+- `.claude/mcp.json` = Team-shared Docker MCP config (Stripe, Resend, etc.)
+- `claude_desktop_config.json` = Your personal config (tokens, file paths, GitHub, Postgres, Notion)
 
 ### Onboarding System
 - `docs/CORE/CORE_ONBOARDING_ARCHITECTURE.md` - Full onboarding flow architecture

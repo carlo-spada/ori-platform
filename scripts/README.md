@@ -1,3 +1,15 @@
+---
+type: documentation
+role: documentation
+scope: all
+audience: developers
+last-updated: 2025-11-10
+relevance: readme.md, translation, scripts, setup, deepl, environment, variable
+priority: medium
+quick-read-time: 3min
+deep-dive-time: 5min
+---
+
 # Translation Scripts
 
 This directory contains automated translation scripts powered by DeepL API for maintaining multi-language support across the entire application.

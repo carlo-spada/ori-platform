@@ -417,6 +417,59 @@ Status: ARCHIVED    ← No longer relevant
 
 ---
 
+## Archival Policy (Keep Task Board Clean)
+
+### When to Archive
+
+Tasks should be moved to `.tasks/archived/` in these cases:
+
+1. **Completed & Merged**: Tasks in `done/` after they've been merged to `main` (monthly cleanup)
+2. **Superseded**: Tasks made obsolete by newer implementation
+3. **Cancelled**: Requirements changed, feature no longer needed
+4. **Duplicate**: Duplicate of existing task
+
+### Archival Process
+
+```bash
+# Archive completed task after merge to main
+git mv .tasks/done/feature-name .tasks/archived/feature-name
+
+# Add archival note at top of task file
+echo "**ARCHIVED** [$(date +%Y-%m-%d)]: Merged to main in PR #123" | cat - .tasks/archived/feature-name/README.md > temp && mv temp .tasks/archived/feature-name/README.md
+
+# Commit
+git commit -m "chore(tasks): archive feature-name - merged to main"
+git push
+```
+
+### Monthly Cleanup Schedule
+
+**First Monday of each month**:
+
+```bash
+# Archive tasks that have been in done/ for 30+ days
+find .tasks/done -type f -name "*.md" -mtime +30
+
+# For each found task:
+# 1. Verify it was merged to main
+# 2. Move to archived/
+# 3. Add archival note with date and PR number
+```
+
+### Archival Note Format
+
+Add to top of archived task file:
+
+```markdown
+**ARCHIVED** [Date]: Reason
+- **Merged**: PR #123 on YYYY-MM-DD
+- **Status**: Completed and deployed to production
+
+---
+
+[Original task content below...]
+```
+
 ## Health Check (Quarterly Audit)
 
 **Run quarterly to prevent task board chaos:**
@@ -430,27 +483,31 @@ find .tasks/in-review -type f -name "*.md" | wc -l
 find .tasks/done -type f -name "*.md" | wc -l
 find .tasks/archived -type f -name "*.md" | wc -l
 
-# Check for stale tasks (in-progress for 2+ weeks)
-find .tasks/in-progress -type f -mtime +14
+# Check for stale tasks (in-progress for 30+ hours - agentic speed)
+find .tasks/in-progress -type f -mtime +1
 
-# Check for stale review tasks (in-review for 3+ days)
-find .tasks/in-review -type f -mtime +3
+# Check for stale review tasks (in-review for 4+ hours)
+find .tasks/in-review -type f -mtime +0.17
+
+# Check for tasks ready to archive (done for 30+ days)
+find .tasks/done -type f -mtime +30
 ```
 
-**Health Metrics** (target ranges):
+**Health Metrics** (target ranges for agentic workflow):
 
 - `todo/`: 20-50 tasks (reasonable backlog)
-- `in-progress/`: 2-5 features (focus)
-- `in-review/`: 0-3 items (awaiting review)
-- `done/`: 0-5 items (ready to merge to main)
-- `archived/`: Should grow over time (old tasks)
+- `in-progress/`: 2-5 features (focus, WIP limit)
+- `in-review/`: 0-3 items (fast review cycle, <4 hours)
+- `done/`: 0-10 items (awaiting merge to main)
+- `archived/`: Should grow monthly (historical record)
 
 **If metrics off**:
 
-- Too many in `todo`: Need to prioritize
-- Stuck in `in-progress`: Agent blocked?
-- Stuck in `in-review`: Reviewer bottleneck?
-- Too many in `done`: Time to merge to main?
+- Too many in `todo`: Need to prioritize or archive low-priority
+- Stuck in `in-progress` (>30 hours): Agent blocked? Break down task?
+- Stuck in `in-review` (>4 hours): Reviewer bottleneck? Needs attention
+- Too many in `done` (>10): Time to merge to main and archive
+- `done/` has old tasks (>30 days): Archive them!
 
 ---
 
