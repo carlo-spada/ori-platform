@@ -39,8 +39,6 @@ This architecture provides:
 - PWA that opens directly to the app subdomain
 - Automatic routing via Next.js middleware
 
-See [`docs/SUBDOMAIN_MIGRATION.md`](./docs/SUBDOMAIN_MIGRATION.md) for deployment details.
-
 ## 🛠️ Technology Stack
 
 Our platform is built with a modern, scalable, and polyglot architecture:
@@ -113,15 +111,20 @@ You will need to run three separate services in different terminal windows.
 
     - The AI service will be available at `http://localhost:3002`.
 
-## 🔄 Current Phase: MCP Refactoring
+## 📖 Documentation
 
-We're currently refactoring Phases 2 and 3 to use **MCP (Model Context Protocol)** servers instead of direct API integrations for better security, maintainability, and architecture consistency.
+**Quick Reference**:
 
-**Quick Links**:
+- **[`CLAUDE.md`](./CLAUDE.md)** - Implementation guide for Claude (MCP tools, patterns, standards)
+- **[`GEMINI.md`](./GEMINI.md)** - Planning guide for Gemini
+- **[`AGENTS.md`](./AGENTS.md)** - Agent roles, workflow, and collaboration
+- **[`docs/MCP_REFERENCE.md`](./docs/MCP_REFERENCE.md)** - Complete MCP protocol reference
+- **[`MCP-QUICK-SETUP.md`](./MCP-QUICK-SETUP.md)** - 5-minute MCP setup guide
 
-- **[`docs/NEXT_STEPS.md`](./docs/NEXT_STEPS.md)** - What's happening and what's next (start here!)
-- **[`docs/MCP_REFACTORING_PLAN.md`](./docs/MCP_REFACTORING_PLAN.md)** - Detailed implementation strategy
-- **[`docs/MCP_DOCUMENTATION_INDEX.md`](./docs/MCP_DOCUMENTATION_INDEX.md)** - Complete guide to all MCP documentation
+**Technical Documentation**:
+
+- **[`docs/CORE/CORE_DATABASE_SCHEMA.md`](./docs/CORE/CORE_DATABASE_SCHEMA.md)** - Database schema & RLS policies
+- **[`docs/CORE/architecture/`](./docs/CORE/architecture/)** - Architecture overview
 
 ## 🏗️ Project Management
 

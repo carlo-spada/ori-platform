@@ -301,9 +301,8 @@ Push Code → GitHub Actions → Agent Reviews → PR Comments → Fix Issues �
 
 **Technical Docs**:
 
-- `docs/DATABASE_SCHEMA.md`: Schema & RLS policies
-- `docs/API_ENDPOINTS.md`: Endpoint reference
-- `docs/SUBDOMAIN_MIGRATION.md`: Subdomain routing setup
+- `docs/CORE/CORE_DATABASE_SCHEMA.md`: Schema & RLS policies
+- `docs/MCP_REFERENCE.md`: Complete MCP protocol reference
 - `services/ai-engine/README.md`: AI Engine architecture
 
 **Keep these synchronized**:

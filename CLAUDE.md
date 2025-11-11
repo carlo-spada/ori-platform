@@ -257,7 +257,7 @@ const { data: profile, isLoading, error } = useProfile()
 5. Create API client in `src/integrations/api/`
 6. Create hook in `src/hooks/`
 7. Use hook in component (never mock data)
-8. Document in `docs/API_ENDPOINTS.md`
+8. Document in code comments and route handlers
 
 ---
 
@@ -405,8 +405,7 @@ After landing a significant feature:
 - `README.md`: Setup, structure, new features
 - `AGENTS.md`: If workflow changed
 - `CLAUDE.md` (this file): If implementation patterns changed
-- `docs/API_ENDPOINTS.md`: If new endpoints
-- `docs/DATABASE_SCHEMA.md`: If schema changed
+- `docs/CORE/CORE_DATABASE_SCHEMA.md`: If schema changed
 
 ---
 
@@ -428,6 +427,6 @@ After landing a significant feature:
 
 - Check `.tasks/TASK_GOVERNANCE.md` (task rules)
 - Check `AGENTS.md` (workflow, architecture)
-- Check `docs/DATABASE_SCHEMA.md` (if database question)
-- Check `docs/API_ENDPOINTS.md` (if endpoint question)
+- Check `docs/CORE/CORE_DATABASE_SCHEMA.md` (if database question)
+- Check route handlers in `services/core-api/src/routes/` (if endpoint question)
 - Check relevant component test for pattern example

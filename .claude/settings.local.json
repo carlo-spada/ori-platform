@@ -136,7 +136,8 @@
       "Bash(if grep -q \"useTranslation\\|''react-i18next''\" \"$page\")",
       "Bash(npm search:*)",
       "Bash(gh secret list:*)",
-      "Bash(DEEPL_API_KEY=c6ce738f-0b82-4af0-85d7-47c36f95bd00 pnpm exec tsx:*)"
+      "Bash(DEEPL_API_KEY=c6ce738f-0b82-4af0-85d7-47c36f95bd00 pnpm exec tsx:*)",
+      "Bash(gh secret set:*)"
     ],
     "deny": [],
     "ask": []

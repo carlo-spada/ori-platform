@@ -142,7 +142,7 @@ Always reference these when planning:
 - **Project Vision**: README.md
 - **Workflows**: AGENTS.md
 - **Task Rules**: `.tasks/TASK_GOVERNANCE.md` (CRITICAL)
-- **Architecture**: CLAUDE.md, docs/DATABASE_SCHEMA.md
+- **Architecture**: CLAUDE.md, docs/CORE/CORE_DATABASE_SCHEMA.md
 - **Tech Docs**: docs/ folder
 
 ---
