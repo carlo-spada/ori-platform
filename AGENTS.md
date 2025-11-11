@@ -303,6 +303,18 @@ Push Code → GitHub Actions → Agent Reviews → PR Comments → Fix Issues �
 
 ## Documentation Index
 
+**📚 Navigation System** (NEW):
+
+- **`DOC_INDEX.md`**: Master navigation document - **START HERE for all agents**
+  - Current sprint status, recent wins, known issues
+  - Architecture overview and technology stack
+  - Essential reading guide with priorities
+  - Quick reference for finding any topic
+- **`pnpm find-docs "<keyword>"`**: Search tool across 300+ docs
+  - Searches titles, frontmatter, headings, content
+  - Ranked results with metadata and snippets
+  - Example: `pnpm find-docs "authentication"`
+
 **Core Guides**:
 
 - `README.md`: Project overview & setup
@@ -316,13 +328,24 @@ Push Code → GitHub Actions → Agent Reviews → PR Comments → Fix Issues �
 **Technical Docs**:
 
 - `docs/CORE/CORE_DATABASE_SCHEMA.md`: Schema & RLS policies
+- `docs/API_ENDPOINTS.md`: Complete API reference
 - `docs/MCP_REFERENCE.md`: Complete MCP protocol reference
+- `docs/CORE/architecture/CORE_ARCHITECTURE_OVERVIEW.md`: System architecture
 - `services/ai-engine/README.md`: AI Engine architecture
+
+**Documentation Search Best Practices**:
+
+1. **New session?** Read `DOC_INDEX.md` first for current context
+2. **Need specific info?** Use `pnpm find-docs "<keyword>"`
+3. **Working on code?** Consult `CLAUDE.md` for patterns
+4. **Planning features?** Check `GEMINI.md` for workflow
+5. **Stuck?** Check `.tasks/TASK_GOVERNANCE.md` or `AGENTS.md`
 
 **Keep these synchronized**:
 
 - AGENTS.md ↔ CLAUDE.md ↔ GEMINI.md (when workflows change)
 - AGENTS.md ↔ `.tasks/TASK_GOVERNANCE.md` (when task rules change)
+- DOC_INDEX.md ↔ All docs (when project status changes)
 
 ---
 

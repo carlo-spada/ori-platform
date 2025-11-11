@@ -34,6 +34,19 @@ deep-dive-time: 3min
 ./scripts/task list done     # Awaiting review
 ```
 
+## DOCUMENTATION SEARCH
+
+```bash
+# Find docs by keyword (searches 300+ files)
+pnpm find-docs "authentication"
+pnpm find-docs "stripe payment"
+pnpm find-docs "database schema"
+pnpm find-docs "mcp setup" --limit 3
+
+# Always start here for context
+cat DOC_INDEX.md
+```
+
 ## ADD API ENDPOINT (5 steps)
 
 ```bash

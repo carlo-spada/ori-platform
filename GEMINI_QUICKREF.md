@@ -25,6 +25,19 @@ deep-dive-time: 3min
 ./scripts/task complete X      # Finish work
 ```
 
+## DOCUMENTATION SEARCH
+
+```bash
+# Find docs by keyword (searches 300+ files)
+pnpm find-docs "authentication"      # Research auth patterns
+pnpm find-docs "onboarding flow"     # UX flow documentation
+pnpm find-docs "database migration"  # Migration patterns
+pnpm find-docs "testing" --limit 5   # Testing approaches
+
+# Always check context first
+cat DOC_INDEX.md                     # Current status & navigation
+```
+
 ## RESEARCH PATTERNS
 
 ```bash

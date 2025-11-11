@@ -18,6 +18,62 @@ My role: Understand vision → Research solutions → Design plans → Create ta
 
 ---
 
+## 📚 Documentation Navigation (ALWAYS START HERE)
+
+**CRITICAL**: Before planning ANY task or conducting research, use these resources:
+
+### 1. DOC_INDEX.md - Your Strategic Overview
+**Always read [DOC_INDEX.md](./DOC_INDEX.md) FIRST** - it provides:
+- **Current sprint status**: What's in progress, what's blocking
+- **Recent wins**: What was just completed
+- **Architecture overview**: System map and key technologies
+- **Essential reading**: Prioritized list of critical docs
+- **Quick reference**: Where to find information on any topic
+
+**Rule**: Before creating tasks, check DOC_INDEX.md to understand current context and avoid duplicate work.
+
+### 2. Documentation Search Tool
+Use `pnpm find-docs` to research existing implementations and patterns:
+
+```bash
+# Research existing solutions
+pnpm find-docs "authentication"     # Find all auth-related docs
+pnpm find-docs "onboarding flow"    # Find UX flow documentation
+pnpm find-docs "database migration" # Find migration patterns
+pnpm find-docs "testing strategy"   # Find testing approaches
+
+# Limit results for quick scanning
+pnpm find-docs "stripe" --limit 5
+
+# View help
+pnpm find-docs --help
+```
+
+**Planning Use Case**: Before designing a solution, search to see if similar features exist or if patterns are documented.
+
+### 3. Quick Reference for Planning
+
+| Planning Need | Command/Document |
+|---------------|------------------|
+| Current status & context | Read DOC_INDEX.md |
+| Research existing patterns | `pnpm find-docs "<feature>"` |
+| Task governance rules | `.tasks/TASK_GOVERNANCE.md` |
+| Technical architecture | `docs/CORE/architecture/CORE_ARCHITECTURE_OVERVIEW.md` |
+| Database schema | `docs/CORE/CORE_DATABASE_SCHEMA.md` |
+| API endpoints | `docs/API_ENDPOINTS.md` |
+| Code standards | `CLAUDE.md` → "Code Standards" |
+| Agent workflows | `AGENTS.md` |
+| Brand guidelines | `branding/BRAND_IDENTITY.md` |
+
+**Research Workflow**:
+1. Check DOC_INDEX.md for current status
+2. Use `pnpm find-docs` to research similar features
+3. Read relevant technical docs
+4. Design solution with context
+5. Create clear, actionable tasks
+
+---
+
 ## Core Workflow
 
 1. **Audit** (every 2 hours): Review `.tasks/` status, codebase health, project trajectory

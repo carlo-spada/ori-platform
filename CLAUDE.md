@@ -18,6 +18,56 @@ My role: Execute plans from Gemini with precision, speed, and elegance. Implemen
 
 ---
 
+## 📚 Documentation Navigation (ALWAYS START HERE)
+
+**CRITICAL**: Before starting ANY task, use these resources in order:
+
+### 1. DOC_INDEX.md - Your Starting Point
+**Always read [DOC_INDEX.md](./DOC_INDEX.md) FIRST** - it provides:
+- Current sprint status and active work
+- Recent wins and known issues
+- Architecture overview
+- Essential reading guide
+- Quick reference for all major topics
+
+**Rule**: If you're unsure where to find information, start with DOC_INDEX.md.
+
+### 2. Documentation Search Tool
+Use `pnpm find-docs` to instantly find relevant documentation:
+
+```bash
+# Find docs by keyword
+pnpm find-docs "authentication"     # Find auth-related docs
+pnpm find-docs "stripe payment"     # Find payment integration docs
+pnpm find-docs "database schema"    # Find database docs
+pnpm find-docs "mcp setup"          # Find MCP configuration docs
+
+# Limit results
+pnpm find-docs "testing" --limit 3
+
+# View help
+pnpm find-docs --help
+```
+
+**How it works**: Searches 300+ markdown files using YAML frontmatter, titles, headings, and content. Results are ranked by relevance.
+
+### 3. Quick Reference by Topic
+
+| Need | Command/Document |
+|------|------------------|
+| Current status | Read DOC_INDEX.md |
+| Find any doc | `pnpm find-docs "<keyword>"` |
+| Task workflow | `.tasks/TASK_GOVERNANCE.md` |
+| Code patterns | This file (CLAUDE.md) |
+| API reference | `docs/API_ENDPOINTS.md` or `pnpm find-docs "api"` |
+| Database schema | `docs/CORE/CORE_DATABASE_SCHEMA.md` |
+| MCP tools | This file → "MCP Tools Available" section |
+| Architecture | `docs/CORE/architecture/CORE_ARCHITECTURE_OVERVIEW.md` |
+
+**Remember**: Documentation is your source of truth. When in doubt, search first with `pnpm find-docs`.
+
+---
+
 ## Task Workflow (CRITICAL)
 
 See `.tasks/TASK_GOVERNANCE.md` for complete rules. Quick version:
