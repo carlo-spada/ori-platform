@@ -96,6 +96,38 @@ mcp__MCP_DOCKER__send -
 - `mcp__MCP_DOCKER__fetch_stripe_resources` - Get by ID
   **Use for**: All Stripe operations (customers, subscriptions, payments)
 
+### 📝 Notion (Notion MCP)
+
+**Status**: ✅ Active (configured, needs token)
+**Tools**:
+- `mcp__notion__search` - Search workspace for pages/databases
+- `mcp__notion__retrieve_page` - Get specific page content
+- `mcp__notion__create_page` - Create new pages
+- `mcp__notion__update_page` - Update existing pages
+- `mcp__notion__append_blocks` - Add content to pages
+- `mcp__notion__query_database` - Query databases with filters
+- `mcp__notion__create_comment` - Add comments to pages
+
+**Use for**: Documentation sync, Notion workspace management, knowledge base search
+
+**Setup**: See `docs/NOTION_MCP_SETUP.md` for complete guide
+1. Create Notion integration at notion.so/profile/integrations
+2. Copy integration token (starts with `ntn_`)
+3. Add token to `~/Library/Application Support/Claude/claude_desktop_config.json`
+4. Restart Claude Desktop
+
+**Usage Examples**:
+```typescript
+// Search Notion
+"Search my Notion for pages about authentication"
+
+// Sync documentation
+"Read docs/OAUTH_SETUP_GUIDE.md and create a Notion page for it"
+
+// Update existing page
+"Update the Notion page titled 'API Docs' with latest changes"
+```
+
 ### 🌐 Web Fetch (Web MCP via Docker)
 
 **Status**: ✅ Active via MCP Docker

@@ -131,12 +131,19 @@
       "mcp__filesystem__read_text_file",
       "Bash(npx next dev --webpack)",
       "Bash(lsof:*)",
-      "mcp__filesystem__write_file"
+      "mcp__filesystem__write_file",
+      "Bash(for page in src/app/app/dashboard/page.tsx src/app/app/profile/page.tsx src/app/app/applications/page.tsx src/app/app/recommendations/page.tsx src/app/app/settings/page.tsx src/app/select-plan/page.tsx src/app/onboarding/page.tsx)",
+      "Bash(if grep -q \"useTranslation\\|''react-i18next''\" \"$page\")",
+      "Bash(npm search:*)",
+      "Bash(gh secret list:*)",
+      "Bash(DEEPL_API_KEY=c6ce738f-0b82-4af0-85d7-47c36f95bd00 pnpm exec tsx:*)"
     ],
     "deny": [],
     "ask": []
   },
   "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": ["MCP_DOCKER"],
+  "enabledMcpjsonServers": [
+    "MCP_DOCKER"
+  ],
   "outputStyle": "default"
 }
