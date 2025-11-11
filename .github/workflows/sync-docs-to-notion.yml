@@ -1,0 +1,55 @@
+name: Sync Docs to Notion
+
+on:
+  push:
+    branches: [main, dev]
+    paths:
+      - '**.md'
+      - 'CLAUDE.md'
+      - 'GEMINI.md'
+      - 'AGENTS.md'
+      - 'README.md'
+      - 'docs/**'
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  sync-to-notion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # Need previous commit for diff
+
+      - name: Get changed markdown files
+        id: changed-files
+        uses: tj-actions/changed-files@v41
+        with:
+          files: |
+            **.md
+
+      - name: Setup Node.js
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: npm install @notionhq/client gray-matter
+
+      - name: Sync to Notion
+        if: steps.changed-files.outputs.any_changed == 'true'
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+        run: |
+          node scripts/sync-docs-to-notion.js "${{ steps.changed-files.outputs.all_changed_files }}"
+
+      - name: Update staleness database
+        if: steps.changed-files.outputs.any_changed == 'true'
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+        run: |
+          node scripts/update-notion-staleness.js

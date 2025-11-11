@@ -1,0 +1,57 @@
+name: Daily Documentation Health Check
+
+on:
+  schedule:
+    - cron: '0 9 * * *' # Every day at 9 AM UTC (1 AM PST, 10 AM CET)
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  check-doc-health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install @notionhq/client
+
+      - name: Check documentation staleness
+        id: staleness-check
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+        run: |
+          node scripts/update-notion-staleness.js | tee staleness-report.txt
+          if grep -q "STALE DOCUMENTATION DETECTED" staleness-report.txt; then
+            echo "has_stale=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_stale=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create GitHub issue if stale docs found
+        if: steps.staleness-check.outputs.has_stale == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('staleness-report.txt', 'utf8');
+
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '📚 Stale Documentation Detected',
+              body: `## Documentation Health Alert\n\nAutomated daily check found documentation that hasn't been updated in 30+ days.\n\n\`\`\`\n${report}\n\`\`\`\n\n**Action Required**: Review and update stale documentation, or mark as reviewed if still current.\n\n[View in Notion](https://notion.so) | [Documentation Strategy](./docs/OPERATIONS/OPS_GIT_NOTION_DOCUMENTATION_STRATEGY.md)`,
+              labels: ['documentation', 'maintenance', 'automated']
+            });
+
+      - name: Generate health summary
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+        run: |
+          node scripts/generate-weekly-doc-report.js
