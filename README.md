@@ -129,6 +129,25 @@ This project is managed using a **"Task-as-File"** system. All work is tracked i
 
 For a detailed explanation of our collaborative workflow, agent roles, and branching strategy, please see **[`AGENTS.md`](./AGENTS.md)**.
 
+## 📚 Documentation Sync
+
+We use Notion to review and collaborate on documentation. You can sync any markdown file from `/docs` to Notion:
+
+```bash
+# Quick setup (3 minutes)
+# See docs/QUICK_START_NOTION_SYNC.md
+
+# Sync all docs
+tsx scripts/sync-to-notion.ts
+
+# Sync one file
+tsx scripts/sync-to-notion.ts docs/OAUTH_SETUP_GUIDE.md
+```
+
+**Resources:**
+- **[Quick Start Guide](./docs/QUICK_START_NOTION_SYNC.md)** - Get started in 3 minutes
+- **[Complete Guide](./docs/NOTION_SYNC_GUIDE.md)** - Full documentation and troubleshooting
+
 ## 🚀 Deployment
 
 Our production architecture is designed for simplicity and scalability:
