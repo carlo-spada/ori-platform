@@ -72,3 +72,6 @@ gha-creds-*.json
 
 # Shared packages build output
 shared/*/dist
+
+# Claude settings with API keys
+.claude/settings.local.json
