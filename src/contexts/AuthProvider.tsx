@@ -27,6 +27,8 @@ interface AuthContextType {
     email: string
     password: string
   }) => Promise<{ error: AuthError | null }>
+  signInWithGoogle: () => Promise<{ error: AuthError | null }>
+  signInWithApple: () => Promise<{ error: AuthError | null }>
   signOut: () => Promise<{ error: AuthError | null }>
 }
 
@@ -75,7 +77,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             email,
             password,
             options: {
-              emailRedirectTo: `https://app.getori.app/select-plan`,
+              emailRedirectTo: `${window.location.origin}/auth/callback`,
             },
           })
           return { error }
@@ -84,6 +86,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const { error } = await supabase.auth.signInWithPassword({
             email,
             password,
+          })
+          return { error }
+        },
+        signInWithGoogle: async () => {
+          const { error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+              redirectTo: `${window.location.origin}/auth/callback`,
+              queryParams: {
+                access_type: 'offline',
+                prompt: 'consent',
+              },
+            },
+          })
+          return { error }
+        },
+        signInWithApple: async () => {
+          const { error } = await supabase.auth.signInWithOAuth({
+            provider: 'apple',
+            options: {
+              redirectTo: `${window.location.origin}/auth/callback`,
+            },
           })
           return { error }
         },
@@ -97,6 +121,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         user: null,
         signUp: missingClientError,
         signInWithPassword: missingClientError,
+        signInWithGoogle: missingClientError,
+        signInWithApple: missingClientError,
         signOut: missingClientError,
       }
 

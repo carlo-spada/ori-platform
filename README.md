@@ -129,6 +129,26 @@ This project is managed using a **"Task-as-File"** system. All work is tracked i
 
 For a detailed explanation of our collaborative workflow, agent roles, and branching strategy, please see **[`AGENTS.md`](./AGENTS.md)**.
 
+## 📚 Notion Integration (MCP)
+
+We use Notion for documentation review and collaboration. Claude can directly interact with your Notion workspace through the official Notion MCP server.
+
+**Capabilities:**
+- Sync documentation from `/docs` to Notion
+- Search Notion workspace
+- Create and update pages
+- Query databases
+- Add comments
+
+**Setup (5 minutes):**
+1. Create Notion integration at [notion.so/profile/integrations](https://www.notion.so/profile/integrations)
+2. Copy integration token (starts with `ntn_`)
+3. Add token to Claude Desktop config
+4. Restart Claude Desktop
+
+**Resources:**
+- **[Complete Setup Guide](./docs/NOTION_MCP_SETUP.md)** - Step-by-step configuration and usage
+
 ## 🚀 Deployment
 
 Our production architecture is designed for simplicity and scalability:
