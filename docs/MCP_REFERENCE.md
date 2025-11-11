@@ -264,7 +264,22 @@ mcp__MCP_DOCKER__get_library_docs({
 })
 ```
 
-#### 4. Notion MCP
+#### 4. DeepL MCP Server
+**Status**: Active
+**Tools**: `translate`
+**Use for**: On-demand translation of dynamic text.
+**Reference**: [DeepL MCP Server Documentation](./REFERENCE/REFERENCE_DEEPL_MCP_SERVER.md)
+
+```typescript
+// This is a conceptual example of how an agent would call the tool.
+// The actual implementation is a POST request to the /translate endpoint.
+deepl_mcp__translate({
+  text: 'Hello, world!',
+  target_lang: 'DE'
+})
+```
+
+#### 5. Notion MCP
 **Status**: Configured (needs token)
 **Tools**: `search`, `retrieve_page`, `create_page`, `update_page`, `query_database`, `append_blocks`, `create_comment`
 **Use for**: Documentation sync, knowledge base management

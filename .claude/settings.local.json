@@ -140,7 +140,8 @@
       "Bash(gh secret set:*)",
       "Bash(for component in HeroSection ValuePropositionSection HowItWorksSection SocialProofSection FAQSection BottomCTASection)",
       "Bash(file=\"src/components/landing/$component.tsx\")",
-      "Bash(if grep -q \"useTranslation\\|''react-i18next''\" \"$file\")"
+      "Bash(if grep -q \"useTranslation\\|''react-i18next''\" \"$file\")",
+      "mcp__filesystem__list_directory"
     ],
     "deny": [],
     "ask": []
