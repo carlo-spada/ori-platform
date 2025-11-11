@@ -141,7 +141,14 @@
       "Bash(for component in HeroSection ValuePropositionSection HowItWorksSection SocialProofSection FAQSection BottomCTASection)",
       "Bash(file=\"src/components/landing/$component.tsx\")",
       "Bash(if grep -q \"useTranslation\\|''react-i18next''\" \"$file\")",
-      "mcp__filesystem__list_directory"
+      "mcp__filesystem__list_directory",
+      "Bash(md5 .claude/mcp.json .claude/mcp 2.json)",
+      "Bash(md5:*)",
+      "Bash(for file in \"docs/MCP_DOCUMENTATION_INDEX 2.md\" \"docs/NEXT_STEPS 2.md\" \"docs/DOCUMENTATION_GOVERNANCE 2.md\")",
+      "Bash(original=\"$file% 2.md.md\")",
+      "Bash(if [ -f \"$original\" ])",
+      "Bash(do echo \"$f\")",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []

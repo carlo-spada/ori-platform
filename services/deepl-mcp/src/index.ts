@@ -74,7 +74,8 @@ app.post('/translate', async (req: Request, res: Response) => {
 
   try {
     const result = await translator.translateText(text, null, target_lang as deepl.TargetLanguageCode);
-    res.json({ translation: result.text });
+    const translatedText = Array.isArray(result) ? result[0].text : result.text;
+    res.json({ translation: translatedText });
   } catch (error) {
     console.error('DeepL API error:', error);
     res.status(500).json({ error: 'Failed to translate text' });
