@@ -12,26 +12,28 @@ deep-dive-time: 20min
 
 # 🗺️ Ori Platform - Agent Navigation Map
 
-**Last Updated**: 2025-11-10
+**Last Updated**: 2025-01-13
 **Status**: Production-ready with active development
 **Purpose**: Master index for rapid agent onboarding and context discovery
+
+**⭐ NEW**: Brownfield documentation now available - comprehensive AI-ready codebase analysis (75k+ words)
 
 ---
 
 ## 🎯 CURRENT FOCUS (Read This First!)
 
-**Current Sprint**: Documentation consolidation and production deployment
-**Active Status**: ✅ Documentation cleanup complete, MCP setup guides consolidated
-**Next Priority**: Production deployment, monitoring, and Stripe production verification
+**Current Sprint**: Brownfield documentation complete, single source of truth established
+**Active Status**: ✅ Exhaustive codebase analysis complete (570+ files, 75k+ words)
+**Next Priority**: Leverage brownfield docs for AI-assisted development
 
 ### 🎉 Recent Wins (Last 7)
-- ✅ Consolidate MCP setup guides into single authoritative guide
-- ✅ Archive legacy Phase 1 documentation with clear supersession notices
-- ✅ Eliminate 85 duplicate files across the repository
-- ✅ Create comprehensive API endpoints documentation (41 endpoints)
-- ✅ Create operations runbook for deployment procedures
-- ✅ Add automated Notion sync system via MCP
-- ✅ Implement Phase 3 documentation search tool
+- ✅ Complete exhaustive brownfield documentation (75,000+ words)
+- ✅ Generate comprehensive architecture documentation (15k words)
+- ✅ Document all 41 API endpoints with examples
+- ✅ Analyze 100+ React components and data flows
+- ✅ Create AI-ready development operations guide
+- ✅ Consolidate into single source of truth (brownfield docs)
+- ✅ Archive pre-brownfield documentation
 
 
 ### ⚠️ Known Issues
@@ -77,13 +79,25 @@ deep-dive-time: 20min
 
 ## 📚 ESSENTIAL READING (Start Here)
 
+### Brownfield Documentation (Primary Source of Truth)
+
+**⭐ NEW**: Comprehensive AI-ready documentation generated from exhaustive codebase analysis.
+
+| Document | Purpose | When to Read |
+|----------|---------|--------------|
+| **[docs/BROWNFIELD_DOCUMENTATION_INDEX.md](./docs/BROWNFIELD_DOCUMENTATION_INDEX.md)** | Master navigation for all brownfield docs | Start here for complete system understanding |
+| **[docs/BROWNFIELD_ARCHITECTURE.md](./docs/BROWNFIELD_ARCHITECTURE.md)** | Complete system architecture (15k words) | Planning features, understanding data flows |
+| **[FRONTEND_CODEBASE_ANALYSIS.md](./FRONTEND_CODEBASE_ANALYSIS.md)** | Exhaustive frontend documentation (12k words) | Frontend development, component reference |
+| **[CORE_API_ANALYSIS.md](./CORE_API_ANALYSIS.md)** | Exhaustive backend documentation (10k words) | Backend development, API reference |
+| **[docs/DEVELOPMENT_OPERATIONS_GUIDE.md](./docs/DEVELOPMENT_OPERATIONS_GUIDE.md)** | Complete operational procedures (10k words) | Setup, testing, deployment |
+
+**Quick Stats**: 75,000+ words, 570+ files analyzed, 41 API endpoints documented, 100+ components documented
+
 ### For Implementation Work
 
 | Document | Purpose | When to Read |
 |----------|---------|--------------|
 | **[CLAUDE.md](./CLAUDE.md)** | Claude's implementation guide, MCP tools, patterns | Every task - your primary reference |
-| **[GEMINI.md](./GEMINI.md)** | Gemini's planning and architecture role | Before planning features |
-| **[AGENTS.md](./AGENTS.md)** | How Claude & Gemini collaborate | When unsure about workflow |
 | **[.tasks/TASK_GOVERNANCE.md](./.tasks/TASK_GOVERNANCE.md)** | Task workflow rules (claim→implement→complete) | Before starting any task |
 
 ### For Context & Understanding

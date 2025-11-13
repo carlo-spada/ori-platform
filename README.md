@@ -12,7 +12,9 @@ deep-dive-time: 15min
 
 # Ori Platform — Your AI-Powered Career Companion
 
-**⚠️ For Agents: Read [DOC_INDEX.md](./DOC_INDEX.md) first for comprehensive navigation and current status.**
+**⚠️ For Agents & Developers**:
+- **Start here**: [DOC_INDEX.md](./DOC_INDEX.md) for comprehensive navigation and current status
+- **⭐ NEW**: [Brownfield Documentation](./docs/BROWNFIELD_DOCUMENTATION_INDEX.md) - 75k+ words of AI-ready codebase analysis
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/your-repo/assets/main/ori-logo.png" alt="Ori Logo" width="120px" />

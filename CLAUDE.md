@@ -30,7 +30,13 @@ My role: Execute plans from Gemini with precision, speed, and elegance. Implemen
 - Essential reading guide
 - Quick reference for all major topics
 
-**Rule**: If you're unsure where to find information, start with DOC_INDEX.md.
+**⭐ Brownfield Documentation**: Comprehensive AI-ready codebase analysis (75k+ words):
+- [docs/BROWNFIELD_DOCUMENTATION_INDEX.md](./docs/BROWNFIELD_DOCUMENTATION_INDEX.md) - Master navigation
+- [docs/BROWNFIELD_ARCHITECTURE.md](./docs/BROWNFIELD_ARCHITECTURE.md) - Complete system architecture (15k words)
+- [FRONTEND_CODEBASE_ANALYSIS.md](./FRONTEND_CODEBASE_ANALYSIS.md) - Frontend deep dive (12k words)
+- [CORE_API_ANALYSIS.md](./CORE_API_ANALYSIS.md) - Backend deep dive (10k words)
+
+**Rule**: If you're unsure where to find information, start with DOC_INDEX.md → Brownfield Documentation.
 
 ### 2. Documentation Search Tool
 Use `pnpm find-docs` to instantly find relevant documentation:
@@ -59,10 +65,12 @@ pnpm find-docs --help
 | Find any doc | `pnpm find-docs "<keyword>"` |
 | Task workflow | `.tasks/TASK_GOVERNANCE.md` |
 | Code patterns | This file (CLAUDE.md) |
-| API reference | `docs/API_ENDPOINTS.md` or `pnpm find-docs "api"` |
-| Database schema | `docs/CORE/CORE_DATABASE_SCHEMA.md` |
+| API reference | CORE_API_ANALYSIS.md (41 endpoints) or `pnpm find-docs "api"` |
+| Database schema | docs/BROWNFIELD_ARCHITECTURE.md → Database Schema |
 | MCP tools | This file → "MCP Tools Available" section |
-| Architecture | `docs/CORE/architecture/CORE_ARCHITECTURE_OVERVIEW.md` |
+| Architecture | docs/BROWNFIELD_ARCHITECTURE.md (complete system) |
+| Frontend components | FRONTEND_CODEBASE_ANALYSIS.md (100+ components) |
+| Operations/deployment | docs/DEVELOPMENT_OPERATIONS_GUIDE.md |
 
 **Remember**: Documentation is your source of truth. When in doubt, search first with `pnpm find-docs`.
 

@@ -28,6 +28,15 @@
       },
       "disabled": false,
       "description": "PostgreSQL database access for schema inspection, querying, and RLS testing"
+    },
+    "notion": {
+      "command": "npx",
+      "args": ["-y", "@notionhq/notion-mcp-server"],
+      "env": {
+        "NOTION_TOKEN": "${NOTION_TOKEN}"
+      },
+      "disabled": false,
+      "description": "Notion workspace integration for documentation sync"
     }
   }
 }

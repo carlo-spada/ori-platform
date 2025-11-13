@@ -75,3 +75,12 @@ shared/*/dist
 
 # Claude settings with API keys
 .claude/settings.local.json
+
+# BMAD Generated Artifacts (working files, not source of truth)
+docs/sprint-artifacts/
+docs/stories/
+docs/*-context/
+docs/test-bmad/
+
+# BMAD Personal Settings (if you customize agents)
+# bmad/_cfg/agents/*.customize.yaml    # Uncomment if you want these ignored
