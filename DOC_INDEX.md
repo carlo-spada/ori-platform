@@ -123,7 +123,7 @@ deep-dive-time: 20min
 **Design & Branding**
 - `branding/BRAND_IDENTITY.md` - Logo usage, colors, typography, voice
 - `branding/BRAND_ESSENTIALS.md` - Quick brand reference
-- `docs/REFERENCE/REFERENCE_DESIGN_SYSTEM.md` - Component patterns and Tailwind usage
+- `FRONTEND_CODEBASE_ANALYSIS.md` - Complete component patterns and architecture
 
 **i18n System**
 - `CLAUDE.md#MCP Tools → Context7` - How to use translation MCP
@@ -131,16 +131,13 @@ deep-dive-time: 20min
 - `scripts/translate.ts` - DeepL translation script
 - **Command**: `DEEPL_API_KEY=xxx pnpm exec tsx scripts/translate.ts --sync`
 
-**Component Architecture**
-- `src/components/layout/` - SharedHeader, SharedFooter, PublicLayout
-- `src/components/landing/` - Homepage sections (all i18n-enabled)
-- `src/components/auth/` - Authentication components
-- `src/components/ui/` - shadcn/ui components (button, card, dialog, etc.)
-
-**Data Fetching**
-- `src/integrations/api/` - API client functions (typed)
-- `src/hooks/` - React Query hooks (useProfile, useApplications, etc.)
-- **Pattern**: API client → React Query hook → Component (NO mock data)
+**For Complete Frontend Reference**
+- See `FRONTEND_CODEBASE_ANALYSIS.md` for:
+  - Component architecture (100+ components)
+  - Data fetching patterns (React Query hooks)
+  - API client integration
+  - Authentication flows
+  - Routing structure
 
 ---
 
@@ -154,23 +151,19 @@ deep-dive-time: 20min
 
 ### Critical Docs
 
-**API Reference**
-- `docs/API_ENDPOINTS.md` - Complete API documentation
-- `docs/API_SUMMARY.md` - Quick API overview
+**For Complete Backend Reference**
+- See `CORE_API_ANALYSIS.md` for:
+  - Complete API documentation (41 endpoints with examples)
+  - Database schema and RLS policies
+  - Business logic and services
+  - Middleware stack (auth, validation, errors)
+  - Integration patterns (Supabase, Stripe, AI Engine)
+  - Testing infrastructure
 
-**Database**
-- `docs/CORE/CORE_DATABASE_SCHEMA.md` - PostgreSQL schema and RLS policies
+**Quick Reference**
+- `CLAUDE.md#Architecture Patterns` - Adding API endpoints, auth, validation
 - `supabase/migrations/` - All database migrations (timestamped)
 - **Supabase Dashboard**: https://supabase.com/dashboard/project/zvngsecxzcgxafbzjewh
-
-**Patterns & Architecture**
-- `CLAUDE.md#Architecture Patterns` - Adding API endpoints, auth, validation
-- `services/core-api/src/middleware/` - Auth, validation, error handling
-
-**Testing**
-- Setup: `services/core-api/src/__tests__/setup.ts` (loads env vars FIRST)
-- Pattern: Mock Supabase completely, never hit real database
-- Run: `pnpm test` (runs all tests)
 
 ---
 
@@ -212,10 +205,9 @@ MCP servers provide tools that agents can use without bash commands. They're alr
 | **Playwright** | ✅ Active | Browser automation, screenshots | `CLAUDE.md#🎭 Playwright` |
 
 ### Setup & Reference
-- **[Complete Setup Guide](docs/OPERATIONS/OPS_MCP_SETUP_GUIDE.md)** - Comprehensive guide for all MCP servers (authoritative)
-- **[MCP-QUICK-SETUP.md](MCP-QUICK-SETUP.md)** - 5-minute quick start for essential MCPs
-- **[MCP Protocol Reference](docs/MCP_REFERENCE.md)** - Deep dive into MCP architecture and usage
-- `CLAUDE.md#MCP Tools Available` - Quick MCP tool reference with examples
+- **`CLAUDE.md#MCP Tools Available`** - Complete MCP tool reference with examples and setup instructions
+- **`.claude/mcp.json`** - Docker MCP gateway configuration (team-shared)
+- **`~/Library/Application Support/Claude/claude_desktop_config.json`** - Personal MCP config (tokens, paths)
 
 ---
 
@@ -236,12 +228,17 @@ Git Push → GitHub Actions → Vercel Deploy
 - `.github/workflows/pull-request-ci.yml` - PR checks
 - `.github/workflows/translate.yml` - Auto-translate on doc changes
 
-### Operations Docs
-- **[OPS_DEPLOYMENT_RUNBOOK.md](docs/OPERATIONS/OPS_DEPLOYMENT_RUNBOOK.md)** - Step-by-step deployment procedures
-- **[OPS_MCP_SETUP_GUIDE.md](docs/OPERATIONS/OPS_MCP_SETUP_GUIDE.md)** - Complete MCP server setup (all servers)
-- **[OPS_BRANCH_PROTECTION_SETUP.md](docs/OPERATIONS/OPS_BRANCH_PROTECTION_SETUP.md)** - Branch rules and protection
-- **[OPS_AUTO_PR_REVIEW.md](docs/OPERATIONS/OPS_AUTO_PR_REVIEW.md)** - Automated PR review system
-- **[OPS_GIT_NOTION_DOCUMENTATION_STRATEGY.md](docs/OPERATIONS/OPS_GIT_NOTION_DOCUMENTATION_STRATEGY.md)** - Documentation sync strategy
+### Operations Reference
+
+**For Complete Operational Guide**
+- See `docs/DEVELOPMENT_OPERATIONS_GUIDE.md` for:
+  - Local development setup (step-by-step)
+  - Running the application (3 services)
+  - Testing (Vitest, Jest, pytest)
+  - Git workflow & branching strategy
+  - Deployment procedures (Vercel, Cloud Run)
+  - Monitoring & debugging
+  - Common issues & solutions
 
 ### Pre-Deploy Checklist
 ```bash
@@ -282,12 +279,12 @@ pnpm test       # Must pass (or skip with --skip-tests)
 |----------|----------|---------|
 | How do I add a new API endpoint? | `CLAUDE.md` | "Adding API Endpoints" |
 | How do I translate new text? | `CLAUDE.md` | "MCP Tools → Context7" |
-| What's the database schema? | `docs/CORE/CORE_DATABASE_SCHEMA.md` | Full schema |
-| How do auth flows work? | `CLAUDE.md` | "Authentication" |
+| What's the database schema? | `docs/BROWNFIELD_ARCHITECTURE.md` | Database Schema section |
+| How do auth flows work? | `docs/BROWNFIELD_ARCHITECTURE.md` | Authentication & Authorization |
 | What are the code standards? | `CLAUDE.md` | "Code Standards" table |
-| How do agents collaborate? | `AGENTS.md` | Full workflow |
+| What API endpoints exist? | `CORE_API_ANALYSIS.md` | Complete API reference |
 | Where are Stripe webhooks? | `CLAUDE.md` | "Critical Technical Constraints" |
-| How do I run the dev server? | `README.md` | "Getting Started" |
+| How do I run the dev server? | `docs/DEVELOPMENT_OPERATIONS_GUIDE.md` | Local Development Setup |
 
 ### Documentation Search Tool
 
@@ -315,12 +312,12 @@ pnpm find-docs --help
 
 ### Search Strategy
 1. **Start here**: DOC_INDEX.md (you are here!)
-2. **Quick search**: `pnpm find-docs "<keyword>"` for instant results
-3. **Implementation questions**: CLAUDE.md
-4. **Planning questions**: GEMINI.md or AGENTS.md
-4. **Specific feature**: Search `docs/` by topic
-5. **API details**: `docs/API_ENDPOINTS.md`
-6. **When stuck**: `.tasks/TASK_GOVERNANCE.md` or `AGENTS.md`
+2. **Brownfield docs**: Start with `docs/BROWNFIELD_DOCUMENTATION_INDEX.md` for complete system understanding
+3. **Quick search**: `pnpm find-docs "<keyword>"` for instant results
+4. **Implementation questions**: CLAUDE.md
+5. **API details**: CORE_API_ANALYSIS.md
+6. **Architecture questions**: docs/BROWNFIELD_ARCHITECTURE.md
+7. **When stuck**: `.tasks/TASK_GOVERNANCE.md`
 
 ---
 
@@ -342,31 +339,37 @@ The `.claude/` directory contains Claude Code-specific configuration and documen
 - `~/Library/Application Support/Claude/claude_desktop_config.json` - User-specific MCP config (❌ NOT in git)
 
 **Setup Instructions**:
-- **Quick**: [MCP-QUICK-SETUP.md](MCP-QUICK-SETUP.md) - 5 minutes
-- **Complete**: [docs/OPERATIONS/OPS_MCP_SETUP_GUIDE.md](docs/OPERATIONS/OPS_MCP_SETUP_GUIDE.md) - 15-30 minutes
+- See `CLAUDE.md#MCP Tools Available` for complete setup and usage
 
 **What's the difference?**
 - `.claude/mcp.json` = Team-shared Docker MCP config (Stripe, Resend, etc.)
 - `claude_desktop_config.json` = Your personal config (tokens, file paths, GitHub, Postgres, Notion)
 
-### Onboarding System
-- `docs/CORE/CORE_ONBOARDING_ARCHITECTURE.md` - Full onboarding flow architecture
-- `src/app/onboarding/` - Onboarding pages (v1 and v2)
-- `src/components/onboarding/v2/` - Latest onboarding components
-- `supabase/migrations/20251112000000_onboarding_v2_enhancement.sql` - Latest schema
+### BMAD Workflows
 
-### Skills Gap Analysis
-- `docs/REFERENCE/REFERENCE_SKILLS_GAP_QUICK_REF.md` - Quick reference
-- Implementation: Part of recommendations system
+The `.claude/commands/bmad/` directory contains the BMAD (Better Method for Agentic Development) framework:
 
-### Environment Variables
-- `docs/REFERENCE/REFERENCE_ENV_VARS.md` - Complete env var reference
-- `.env.example` - Example configuration
-- **Never commit**: `.env`, `.env.local` (in .gitignore)
+**Modules**:
+- **BMM (BMAD Method)** - Complete software development lifecycle workflows
+- **BMB (BMAD Builder)** - Tools for creating agents, workflows, and modules
+- **CIS (Creative Intelligence Suite)** - Innovation, design thinking, problem-solving workflows
+- **Core** - Foundation tools and utilities
 
-### OAuth & Social Auth
-- `docs/OAUTH_SETUP_GUIDE.md` - Setting up social providers
-- Status: Not yet implemented (future work)
+**Key Workflows**:
+- `/bmad:bmm:workflows:document-project` - Generate brownfield documentation
+- `/bmad:bmm:workflows:prd` - Create Product Requirements Document
+- `/bmad:bmm:workflows:architecture` - Design system architecture
+- `/bmad:bmm:workflows:dev-story` - Implement user stories
+
+See `.claude/commands/bmad/` for complete workflow catalog.
+
+### For Complete System Reference
+
+All specialized topics (onboarding, skills gap, environment variables, OAuth) are comprehensively documented in the brownfield documentation:
+- **Architecture**: `docs/BROWNFIELD_ARCHITECTURE.md`
+- **Frontend Details**: `FRONTEND_CODEBASE_ANALYSIS.md`
+- **Backend Details**: `CORE_API_ANALYSIS.md`
+- **Operations**: `docs/DEVELOPMENT_OPERATIONS_GUIDE.md`
 
 ---
 
