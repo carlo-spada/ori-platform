@@ -1,8 +1,0 @@
-packages:
-  # Root Next.js app lives here at the workspace root
-
-  # Backend microservices
-  - 'services/*'
-
-  # Shared packages
-  - 'shared/*'
