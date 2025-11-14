@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git log:*)",
+      "Bash(README.md)",
+      "Bash(ORI_MANIFESTO.md)",
+      "Bash(git fetch:*)",
+      "Bash(find:*)",
+      "Bash(cat:*)",
+      "Bash(node --version:*)",
+      "Bash(tree:*)",
+      "WebSearch",
+      "WebFetch(domain:serpapi.com)",
+      "WebFetch(domain:rapidapi.com)",
+      "WebFetch(domain:www.jobspikr.com)",
+      "WebFetch(domain:developer.adzuna.com)",
+      "Bash(mkdir:*)",
+      "Bash(test:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git reset:*)",
+      "Bash(.gitignore)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
